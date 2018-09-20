@@ -5,12 +5,20 @@
 #include "Factories/Factory.h"
 #include "UObject/ObjectMacros.h"
 
+#include "CoreMinimal.h"
+#include "Templates/SubclassOf.h"
+#include "ClassViewer/Public/ClassViewerFilter.h"
+#include "Kismet2/KismetEditorUtilities.h"
+
 #include "VarSystemFactory.generated.h"
 
 
 /**
  * Implements a factory for UVarSystem objects.
  */
+
+class UVarSystem;
+
 UCLASS(hidecategories=Object)
 class UVarSystemFactory
 	: public UFactory
@@ -21,6 +29,55 @@ public:
 
 	//~ UFactory Interface
 
-//	virtual UObject* FactoryCreateBinary(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, const TCHAR* Type, const uint8*& Buffer, const uint8* BufferEnd, FFeedbackContext* Warn) override;
+	UPROPERTY(EditAnywhere, Category = DataAsset)
+		TSubclassOf<UVarSystem> DataAssetClass;
+
+	//	virtual UObject* FactoryCreateBinary(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, const TCHAR* Type, const uint8*& Buffer, const uint8* BufferEnd, FFeedbackContext* Warn) override;
 	virtual UObject* FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled) override;
+	virtual UObject* FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
+	virtual bool ConfigureProperties() override;
+};
+
+class FAssetClassParentFilter : public IClassViewerFilter
+{
+public:
+	FAssetClassParentFilter()
+		: DisallowedClassFlags(CLASS_None), bDisallowBlueprintBase(false)
+	{}
+
+	/** All children of these classes will be included unless filtered out by another setting. */
+	TSet< const UClass* > AllowedChildrenOfClasses;
+
+	/** Disallowed class flags. */
+	EClassFlags DisallowedClassFlags;
+
+	/** Disallow blueprint base classes. */
+	bool bDisallowBlueprintBase;
+
+	virtual bool IsClassAllowed(const FClassViewerInitializationOptions& InInitOptions, const UClass* InClass, TSharedRef< FClassViewerFilterFuncs > InFilterFuncs) override
+	{
+		bool bAllowed = !InClass->HasAnyClassFlags(DisallowedClassFlags)
+			&& InFilterFuncs->IfInChildOfClassesSet(AllowedChildrenOfClasses, InClass) != EFilterReturn::Failed;
+
+		if (bAllowed && bDisallowBlueprintBase)
+		{
+			if (FKismetEditorUtilities::CanCreateBlueprintOfClass(InClass))
+			{
+				return false;
+			}
+		}
+
+		return bAllowed;
+	}
+
+	virtual bool IsUnloadedClassAllowed(const FClassViewerInitializationOptions& InInitOptions, const TSharedRef< const IUnloadedBlueprintData > InUnloadedClassData, TSharedRef< FClassViewerFilterFuncs > InFilterFuncs) override
+	{
+		if (bDisallowBlueprintBase)
+		{
+			return false;
+		}
+
+		return !InUnloadedClassData->HasAnyClassFlags(DisallowedClassFlags)
+			&& InFilterFuncs->IfInChildOfClassesSet(AllowedChildrenOfClasses, InUnloadedClassData) != EFilterReturn::Failed;
+	}
 };

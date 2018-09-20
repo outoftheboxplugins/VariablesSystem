@@ -5,12 +5,15 @@
 #include "Containers/UnrealString.h"
 #include "VarSystem.h"
 #include "Misc/FileHelper.h"
+#include "ClassViewerModule.h"
+#include "Modules/ModuleManager.h"
+#include "Kismet2/SClassPickerDialog.h"
 
 
-/* UVarSystemFactory structors
+/* UVarSystemFactory constructors
  *****************************************************************************/
 
-UVarSystemFactory::UVarSystemFactory( const FObjectInitializer& ObjectInitializer )
+UVarSystemFactory::UVarSystemFactory(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	Formats.Add(FString(TEXT("txt;")) + NSLOCTEXT("UVarSystemFactory", "FormatTxt", "Text File").ToString());
@@ -18,26 +21,6 @@ UVarSystemFactory::UVarSystemFactory( const FObjectInitializer& ObjectInitialize
 	bCreateNew = false;
 	bEditorImport = true;
 }
-
-
-/* UFactory overrides
- *****************************************************************************/
-
-/* This is the old API (only for demonstration purposes)
-UObject* UVarSystemFactory::FactoryCreateBinary(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, const TCHAR* Type, const uint8*& Buffer, const uint8* BufferEnd, FFeedbackContext* Warn)
-{
-	UVarSystem* VarSystem = nullptr;
-	FString TextString;
-
-	if (FFileHelper::LoadFileToString(TextString, *CurrentFilename))
-	{
-		VarSystem = NewObject<UVarSystem>(InParent, Class, Name, Flags);
-		VarSystem->Text = FText::FromString(TextString);
-	}
-
-	return VarSystem;
-}*/
-
 
 UObject* UVarSystemFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
 {
@@ -53,4 +36,48 @@ UObject* UVarSystemFactory::FactoryCreateFile(UClass* InClass, UObject* InParent
 	bOutOperationCanceled = false;
 
 	return VarSystem;
+}
+
+bool UVarSystemFactory::ConfigureProperties()
+{
+	// nullptr the DataAssetClass so we can check for selection
+	DataAssetClass = nullptr;
+
+	// Load the classviewer module to display a class picker
+	FClassViewerModule& ClassViewerModule = FModuleManager::LoadModuleChecked<FClassViewerModule>("ClassViewer");
+
+	// Fill in options
+	FClassViewerInitializationOptions Options;
+	Options.Mode = EClassViewerMode::ClassPicker;
+
+	TSharedPtr<FAssetClassParentFilter> Filter = MakeShareable(new FAssetClassParentFilter);
+	Options.ClassFilter = Filter;
+
+	Filter->DisallowedClassFlags = CLASS_Abstract | CLASS_Deprecated | CLASS_NewerVersionExists | CLASS_HideDropDown;
+	Filter->AllowedChildrenOfClasses.Add(UVarSystem::StaticClass());
+
+	const FText TitleText = LOCTEXT("CreateDataAssetOptions", "Pick Data Asset Class");
+	UClass* ChosenClass = nullptr;
+	const bool bPressedOk = SClassPickerDialog::PickClass(TitleText, Options, ChosenClass, UVarSystem::StaticClass());
+
+	if (bPressedOk)
+	{
+		DataAssetClass = ChosenClass;
+	}
+
+	return bPressedOk;
+}
+
+UObject* UVarSystemFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
+{
+	if (DataAssetClass != nullptr)
+	{
+		return NewObject<UVarSystem>(InParent, DataAssetClass, Name, Flags | RF_Transactional);
+	}
+	else
+	{
+		// if we have no data asset class, use the passed-in class instead
+		check(Class->IsChildOf(UVarSystem::StaticClass()));
+		return NewObject<UVarSystem>(InParent, Class, Name, Flags);
+	}
 }

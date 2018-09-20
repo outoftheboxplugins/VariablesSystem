@@ -4,13 +4,14 @@
 
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
+#include "Engine/DataAsset.h"
 #include "IntVariable.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class VARSYSTEM_API UIntVariable : public UObject
+class VARSYSTEM_API UIntVariable : public UDataAsset
 {
 	GENERATED_BODY()
 	
