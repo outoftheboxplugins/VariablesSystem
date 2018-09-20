@@ -9,9 +9,9 @@ class ISlateStyle;
 
 
 /**
- * Implements an action for UTextAsset assets.
+ * Implements an action for UVarSystem assets.
  */
-class FTextAssetActions
+class FVarSystemActions
 	: public FAssetTypeActions_Base
 {
 public:
@@ -21,7 +21,7 @@ public:
 	 *
 	 * @param InStyle The style set to use for asset editor toolkits.
 	 */
-	FTextAssetActions(const TSharedRef<ISlateStyle>& InStyle);
+	FVarSystemActions(const TSharedRef<ISlateStyle>& InStyle);
 
 public:
 

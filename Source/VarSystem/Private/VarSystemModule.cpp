@@ -5,9 +5,9 @@
 
 
 /**
- * Implements the TextAsset module.
+ * Implements the VarSystem module.
  */
-class FTextAssetModule
+class FVarSystemModule
 	: public IModuleInterface
 {
 public:
@@ -24,4 +24,4 @@ public:
 };
 
 
-IMPLEMENT_MODULE(FTextAssetModule, TextAsset);
+IMPLEMENT_MODULE(FVarSystemModule, VarSystem);

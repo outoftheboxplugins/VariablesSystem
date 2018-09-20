@@ -3,7 +3,7 @@
 	"Version" : 8,
 	"VersionName" : "8.0",
 	"EngineVersion" : "4.19.0",
-	"FriendlyName" : "Text Asset",
+	"FriendlyName" : "Var System",
 	"Description" : "Adds an editable text content asset for personal notes.",
 	"Category" : "Editor",
 	"CreatedBy" : "Epic Games Inc",
@@ -18,12 +18,12 @@
 	"Modules" :
 	[
 		{
-			"Name" : "TextAsset",
+			"Name" : "VarSystem",
 			"Type" : "Runtime",
 			"LoadingPhase" : "Default"
 		},
 		{
-			"Name" : "TextAssetEditor",
+			"Name" : "VarSystemEditor",
 			"Type" : "Editor",
 			"LoadingPhase" : "Default"
 		}

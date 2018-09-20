@@ -9,33 +9,33 @@
 
 class FText;
 class ISlateStyle;
-class UTextAsset;
+class UVarSystem;
 
 
 /**
- * Implements the UTextAsset asset editor widget.
+ * Implements the UVarSystem asset editor widget.
  */
-class STextAssetEditor
+class SVarSystemEditor
 	: public SCompoundWidget
 {
 public:
 
-	SLATE_BEGIN_ARGS(STextAssetEditor) { }
+	SLATE_BEGIN_ARGS(SVarSystemEditor) { }
 	SLATE_END_ARGS()
 
 public:
 
 	/** Virtual destructor. */
-	virtual ~STextAssetEditor();
+	virtual ~SVarSystemEditor();
 
 	/**
 	 * Construct this widget
 	 *
 	 * @param InArgs The declaration data for this widget.
-	 * @param InTextAsset The UTextAsset asset to edit.
+	 * @param InVarSystem The UVarSystem asset to edit.
 	 * @param InStyleSet The style set to use.
 	 */
-	void Construct(const FArguments& InArgs, UTextAsset* InTextAsset, const TSharedRef<ISlateStyle>& InStyle);
+	void Construct(const FArguments& InArgs, UVarSystem* InVarSystem, const TSharedRef<ISlateStyle>& InStyle);
 
 private:
 
@@ -46,7 +46,7 @@ private:
 	void HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType);
 
 	/** Callback for property changes in the text asset. */
-	void HandleTextAssetPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent);
+	void HandleVarSystemPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent);
 
 private:
 
@@ -54,5 +54,5 @@ private:
 	TSharedPtr<SMultiLineEditableTextBox> EditableTextBox;
 
 	/** Pointer to the text asset that is being edited. */
-	UTextAsset* TextAsset;
+	UVarSystem* VarSystem;
 };

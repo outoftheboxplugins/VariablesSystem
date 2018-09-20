@@ -11,13 +11,13 @@ class FSpawnTabArgs;
 class ISlateStyle;
 class IToolkitHost;
 class SDockTab;
-class UTextAsset;
+class UVarSystem;
 
 
 /**
  * Implements an Editor toolkit for textures.
  */
-class FTextAssetEditorToolkit
+class FVarSystemEditorToolkit
 	: public FAssetEditorToolkit
 	, public FEditorUndoClient
 	, public FGCObject
@@ -29,21 +29,21 @@ public:
 	 *
 	 * @param InStyle The style set to use.
 	 */
-	FTextAssetEditorToolkit(const TSharedRef<ISlateStyle>& InStyle);
+	FVarSystemEditorToolkit(const TSharedRef<ISlateStyle>& InStyle);
 
 	/** Virtual destructor. */
-	virtual ~FTextAssetEditorToolkit();
+	virtual ~FVarSystemEditorToolkit();
 
 public:
 
 	/**
 	 * Initializes the editor tool kit.
 	 *
-	 * @param InTextAsset The UTextAsset asset to edit.
+	 * @param InVarSystem The UVarSystem asset to edit.
 	 * @param InMode The mode to create the toolkit in.
 	 * @param InToolkitHost The toolkit host.
 	 */
-	void Initialize(UTextAsset* InTextAsset, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
+	void Initialize(UVarSystem* InVarSystem, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
 
 public:
 
@@ -83,7 +83,7 @@ private:
 private:
 
 	/** The text asset being edited. */
-	UTextAsset* TextAsset;
+	UVarSystem* VarSystem;
 
 	/** Pointer to the style set to use for toolkits. */
 	TSharedRef<ISlateStyle> Style;

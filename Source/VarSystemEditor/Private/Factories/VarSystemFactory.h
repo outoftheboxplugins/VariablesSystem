@@ -5,14 +5,14 @@
 #include "Factories/Factory.h"
 #include "UObject/ObjectMacros.h"
 
-#include "TextAssetFactory.generated.h"
+#include "VarSystemFactory.generated.h"
 
 
 /**
- * Implements a factory for UTextAsset objects.
+ * Implements a factory for UVarSystem objects.
  */
 UCLASS(hidecategories=Object)
-class UTextAssetFactory
+class UVarSystemFactory
 	: public UFactory
 {
 	GENERATED_UCLASS_BODY()
