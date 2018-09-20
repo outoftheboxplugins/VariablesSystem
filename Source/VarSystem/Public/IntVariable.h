@@ -18,7 +18,7 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
 	int32 value;
 	
-	UFUNCTION(BlueprintCallable, Category = "Var System")
+	UFUNCTION(BlueprintPure, Category = "Var System")
 		static int32 GetValue(UIntVariable* var);
 
 	UFUNCTION(BlueprintCallable, Category = "Var System")
