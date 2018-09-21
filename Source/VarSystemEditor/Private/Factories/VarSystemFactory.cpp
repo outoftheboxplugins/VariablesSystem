@@ -9,6 +9,7 @@
 #include "Modules/ModuleManager.h"
 #include "Kismet2/SClassPickerDialog.h"
 
+#define LOCTEXT_NAMESPACE "VarSystemFactories"
 
 /* UVarSystemFactory constructors
  *****************************************************************************/
@@ -38,6 +39,8 @@ UObject* UVarSystemFactory::FactoryCreateFile(UClass* InClass, UObject* InParent
 	return VarSystem;
 }
 
+
+
 bool UVarSystemFactory::ConfigureProperties()
 {
 	// nullptr the DataAssetClass so we can check for selection
@@ -56,7 +59,7 @@ bool UVarSystemFactory::ConfigureProperties()
 	Filter->DisallowedClassFlags = CLASS_Abstract | CLASS_Deprecated | CLASS_NewerVersionExists | CLASS_HideDropDown;
 	Filter->AllowedChildrenOfClasses.Add(UVarSystem::StaticClass());
 
-	const FText TitleText = LOCTEXT("CreateDataAssetOptions", "Pick Data Asset Class");
+	const FText TitleText = LOCTEXT("CreatAssetOptions", "Pick Asset Class");
 	UClass* ChosenClass = nullptr;
 	const bool bPressedOk = SClassPickerDialog::PickClass(TitleText, Options, ChosenClass, UVarSystem::StaticClass());
 
@@ -72,12 +75,15 @@ UObject* UVarSystemFactory::FactoryCreateNew(UClass* Class, UObject* InParent, F
 {
 	if (DataAssetClass != nullptr)
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Here."))
 		return NewObject<UVarSystem>(InParent, DataAssetClass, Name, Flags | RF_Transactional);
 	}
 	else
 	{
+		UE_LOG(LogTemp, Warning, TEXT("Better."))
 		// if we have no data asset class, use the passed-in class instead
 		check(Class->IsChildOf(UVarSystem::StaticClass()));
 		return NewObject<UVarSystem>(InParent, Class, Name, Flags);
 	}
 }
+#undef LOCTEXT_NAMESPACE
