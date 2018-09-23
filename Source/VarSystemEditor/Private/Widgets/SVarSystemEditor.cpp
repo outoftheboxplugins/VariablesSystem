@@ -4,7 +4,7 @@
 
 #include "Fonts/SlateFontInfo.h"
 #include "Internationalization/Text.h"
-#include "VarSystem.h"
+#include "BaseVariable.h"
 #include "UObject/Class.h"
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
@@ -24,9 +24,9 @@ SVarSystemEditor::~SVarSystemEditor()
 }
 
 
-void SVarSystemEditor::Construct(const FArguments& InArgs, UVarSystem* InVarSystem, const TSharedRef<ISlateStyle>& InStyle)
+void SVarSystemEditor::Construct(const FArguments& InArgs, UBaseVariable* InBaseVariable, const TSharedRef<ISlateStyle>& InStyle)
 {
-	VarSystem = InVarSystem;
+	BaseVariable = InBaseVariable;
 
 	auto Settings = GetDefault<UVarSystemEditorSettings>();
 
@@ -44,7 +44,7 @@ void SVarSystemEditor::Construct(const FArguments& InArgs, UVarSystem* InVarSyst
 					.Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
 					.OnTextChanged(this, &SVarSystemEditor::HandleEditableTextBoxTextChanged)
 					.OnTextCommitted(this, &SVarSystemEditor::HandleEditableTextBoxTextCommitted)
-					.Text(VarSystem->Text)
+					.Text(BaseVariable->Text)
 			]
 	];
 
@@ -57,21 +57,21 @@ void SVarSystemEditor::Construct(const FArguments& InArgs, UVarSystem* InVarSyst
 
 void SVarSystemEditor::HandleEditableTextBoxTextChanged(const FText& NewText)
 {
-	VarSystem->MarkPackageDirty();
+	BaseVariable->MarkPackageDirty();
 }
 
 
 void SVarSystemEditor::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
 {
-	VarSystem->Text = EditableTextBox->GetText();
+	BaseVariable->Text = EditableTextBox->GetText();
 }
 
 
 void SVarSystemEditor::HandleVarSystemPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent)
 {
-	if (Object == VarSystem)
+	if (Object == BaseVariable)
 	{
-		EditableTextBox->SetText(VarSystem->Text);
+		EditableTextBox->SetText(BaseVariable->Text);
 	}
 }
 

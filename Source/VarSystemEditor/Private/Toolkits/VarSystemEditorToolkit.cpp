@@ -6,7 +6,7 @@
 #include "EditorReimportHandler.h"
 #include "EditorStyleSet.h"
 #include "SVarSystemEditor.h"
-#include "VarSystem.h"
+#include "BaseVariable.h"
 #include "UObject/NameTypes.h"
 #include "Widgets/Docking/SDockTab.h"
 
@@ -29,7 +29,7 @@ namespace VarSystemEditor
  *****************************************************************************/
 
 FVarSystemEditorToolkit::FVarSystemEditorToolkit(const TSharedRef<ISlateStyle>& InStyle)
-	: VarSystem(nullptr)
+	: BaseVariable(nullptr)
 	, Style(InStyle)
 { }
 
@@ -46,12 +46,12 @@ FVarSystemEditorToolkit::~FVarSystemEditorToolkit()
 /* FVarSystemEditorToolkit interface
  *****************************************************************************/
 
-void FVarSystemEditorToolkit::Initialize(UVarSystem* InVarSystem, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
+void FVarSystemEditorToolkit::Initialize(UBaseVariable* InBaseVariable, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
 {
-	VarSystem = InVarSystem;
+	BaseVariable = InBaseVariable;
 
 	// Support undo/redo
-	VarSystem->SetFlags(RF_Transactional);
+	BaseVariable->SetFlags(RF_Transactional);
 	GEditor->RegisterForUndo(this);
 
 	// create tab layout
@@ -90,7 +90,7 @@ void FVarSystemEditorToolkit::Initialize(UVarSystem* InVarSystem, const EToolkit
 		Layout,
 		true /*bCreateDefaultStandaloneMenu*/,
 		true /*bCreateDefaultToolbar*/,
-		InVarSystem
+		InBaseVariable
 	);
 
 	RegenerateMenusAndToolbars();
@@ -160,7 +160,7 @@ FString FVarSystemEditorToolkit::GetWorldCentricTabPrefix() const
 
 void FVarSystemEditorToolkit::AddReferencedObjects(FReferenceCollector& Collector)
 {
-	Collector.AddReferencedObject(VarSystem);
+	Collector.AddReferencedObject(BaseVariable);
 }
 
 
@@ -186,7 +186,7 @@ TSharedRef<SDockTab> FVarSystemEditorToolkit::HandleTabManagerSpawnTab(const FSp
 
 	if (TabIdentifier == VarSystemEditor::TabId)
 	{
-		TabWidget = SNew(SVarSystemEditor, VarSystem, Style);
+		TabWidget = SNew(SVarSystemEditor, BaseVariable, Style);
 	}
 
 	return SNew(SDockTab)

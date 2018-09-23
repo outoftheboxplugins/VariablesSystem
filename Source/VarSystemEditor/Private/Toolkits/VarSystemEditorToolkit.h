@@ -43,7 +43,7 @@ public:
 	 * @param InMode The mode to create the toolkit in.
 	 * @param InToolkitHost The toolkit host.
 	 */
-	void Initialize(UVarSystem* InVarSystem, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
+	void Initialize(UBaseVariable* InVarSystem, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
 
 public:
 
@@ -83,7 +83,7 @@ private:
 private:
 
 	/** The text asset being edited. */
-	UVarSystem* VarSystem;
+	UBaseVariable* BaseVariable;
 
 	/** Pointer to the style set to use for toolkits. */
 	TSharedRef<ISlateStyle> Style;

@@ -9,7 +9,7 @@
 
 class FText;
 class ISlateStyle;
-class UVarSystem;
+class UBaseVariable;
 
 
 /**
@@ -35,7 +35,7 @@ public:
 	 * @param InVarSystem The UVarSystem asset to edit.
 	 * @param InStyleSet The style set to use.
 	 */
-	void Construct(const FArguments& InArgs, UVarSystem* InVarSystem, const TSharedRef<ISlateStyle>& InStyle);
+	void Construct(const FArguments& InArgs, UBaseVariable* InBaseVariable, const TSharedRef<ISlateStyle>& InStyle);
 
 private:
 
@@ -54,5 +54,5 @@ private:
 	TSharedPtr<SMultiLineEditableTextBox> EditableTextBox;
 
 	/** Pointer to the text asset that is being edited. */
-	UVarSystem* VarSystem;
+	UBaseVariable* BaseVariable;
 };

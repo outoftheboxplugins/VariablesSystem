@@ -14,10 +14,10 @@
 
 
 /**
- * Implements a factory for UVarSystem objects.
+ * Implements a factory for UBaseVariable objects.
  */
 
-class UVarSystem;
+class UBaseVariable;
 
 UCLASS(hidecategories=Object)
 class UVarSystemFactory
@@ -30,7 +30,7 @@ public:
 	//~ UFactory Interface
 
 	UPROPERTY(EditAnywhere, Category = DataAsset)
-		TSubclassOf<UVarSystem> DataAssetClass;
+		TSubclassOf<UBaseVariable> DataAssetClass;
 
 	//	virtual UObject* FactoryCreateBinary(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, const TCHAR* Type, const uint8*& Buffer, const uint8* BufferEnd, FFeedbackContext* Warn) override;
 	virtual UObject* FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled) override;

@@ -6,7 +6,7 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 
-#include "VarSystem.generated.h"
+#include "BaseVariable.generated.h"
 
 
 /**
@@ -14,7 +14,7 @@
  * or documentation.
  */
 UCLASS(BlueprintType, hidecategories=(Object))
-class VARSYSTEM_API UVarSystem
+class VARSYSTEM_API UBaseVariable
 	: public UObject
 {
 	GENERATED_BODY()

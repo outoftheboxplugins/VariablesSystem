@@ -3,7 +3,7 @@
 #include "VarSystemActions.h"
 
 #include "Framework/MultiBox/MultiBoxBuilder.h"
-#include "VarSystem.h"
+#include "BaseVariable.h"
 #include "Styling/SlateStyle.h"
 
 #include "VarSystemEditorToolkit.h"
@@ -33,7 +33,7 @@ void FVarSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuild
 {
 	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
 
-	auto VarSystems = GetTypedWeakObjectPtrs<UVarSystem>(InObjects);
+	auto BaseVariables = GetTypedWeakObjectPtrs<UBaseVariable>(InObjects);
 
 	MenuBuilder.AddMenuEntry(
 		LOCTEXT("VarSystem_ReverseText", "Reverse Text"),
@@ -41,20 +41,20 @@ void FVarSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuild
 		FSlateIcon(),
 		FUIAction(
 			FExecuteAction::CreateLambda([=]{
-				for (auto& VarSystem : VarSystems)
+				for (auto& BaseVariable : BaseVariables)
 				{
-					if (VarSystem.IsValid() && !VarSystem->Text.IsEmpty())
+					if (BaseVariable.IsValid() && !BaseVariable->Text.IsEmpty())
 					{
-						VarSystem->Text = FText::FromString(VarSystem->Text.ToString().Reverse());
-						VarSystem->PostEditChange();
-						VarSystem->MarkPackageDirty();
+						BaseVariable->Text = FText::FromString(BaseVariable->Text.ToString().Reverse());
+						BaseVariable->PostEditChange();
+						BaseVariable->MarkPackageDirty();
 					}
 				}
 			}),
 			FCanExecuteAction::CreateLambda([=] {
-				for (auto& VarSystem : VarSystems)
+				for (auto& BaseVariable : BaseVariables)
 				{
-					if (VarSystem.IsValid() && !VarSystem->Text.IsEmpty())
+					if (BaseVariable.IsValid() && !BaseVariable->Text.IsEmpty())
 					{
 						return true;
 					}
@@ -80,7 +80,7 @@ FText FVarSystemActions::GetName() const
 
 UClass* FVarSystemActions::GetSupportedClass() const
 {
-	return UVarSystem::StaticClass();
+	return UBaseVariable::StaticClass();
 }
 
 
@@ -104,12 +104,12 @@ void FVarSystemActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TShar
 
 	for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
 	{
-		auto VarSystem = Cast<UVarSystem>(*ObjIt);
+		auto BaseVariable = Cast<UBaseVariable>(*ObjIt);
 
-		if (VarSystem != nullptr)
+		if (BaseVariable != nullptr)
 		{
 			TSharedRef<FVarSystemEditorToolkit> EditorToolkit = MakeShareable(new FVarSystemEditorToolkit(Style));
-			EditorToolkit->Initialize(VarSystem, Mode, EditWithinLevelEditor);
+			EditorToolkit->Initialize(BaseVariable, Mode, EditWithinLevelEditor);
 		}
 	}
 }

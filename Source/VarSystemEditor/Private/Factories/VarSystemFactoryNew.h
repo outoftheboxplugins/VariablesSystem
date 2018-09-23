@@ -17,7 +17,7 @@
  * Implements a factory for UVarSystem objects.
  */
 
-class UVarSystem;
+class UBaseVariable;
 
 UCLASS(hidecategories = Object)
 class UVarSystemFactoryNew
@@ -30,7 +30,7 @@ public:
 	//~ UFactory Interface
 
 	UPROPERTY(EditAnywhere, Category = DataAsset)
-		TSubclassOf<UVarSystem> DataAssetClass;
+		TSubclassOf<UBaseVariable> DataAssetClass;
 
 	virtual bool ShouldShowInNewMenu() const override;
 	//	virtual UObject* FactoryCreateBinary(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, const TCHAR* Type, const uint8*& Buffer, const uint8* BufferEnd, FFeedbackContext* Warn) override;

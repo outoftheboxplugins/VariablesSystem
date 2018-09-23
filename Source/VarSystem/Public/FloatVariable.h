@@ -4,14 +4,14 @@
 
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
-#include "VarSystem.h"
+#include "BaseVariable.h"
 #include "FloatVariable.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class VARSYSTEM_API UFloatVariable : public UVarSystem
+class VARSYSTEM_API UFloatVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 	
