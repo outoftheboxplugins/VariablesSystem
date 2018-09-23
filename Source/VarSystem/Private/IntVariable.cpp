@@ -5,17 +5,17 @@
 
 
 
-int32 UIntVariable::GetValue(UIntVariable* var)
+int32 UIntVariable::GetIntValue(UIntVariable* var)
 {
 	return var->value;
 }
 
-void UIntVariable::SetValue(UIntVariable* var, int32 _value)
+void UIntVariable::SetIntValue(UIntVariable* var, int32 _value)
 {
 	var->value = _value;
 }
 
-void UIntVariable::CopyValue(UIntVariable* var, UIntVariable* other)
+void UIntVariable::CopyIntValue(UIntVariable* var, UIntVariable* other)
 {
 	var->value = other->value;
 }

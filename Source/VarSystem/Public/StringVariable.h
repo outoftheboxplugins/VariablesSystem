@@ -5,27 +5,27 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "IntVariable.generated.h"
+#include "StringVariable.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS(BlueprintType)
-class VARSYSTEM_API UIntVariable : public UBaseVariable
+class VARSYSTEM_API UStringVariable : public UBaseVariable
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	int32 value;
-	
+		FString value;
+
 	UFUNCTION(BlueprintPure, Category = "Var System")
-		static int32 GetIntValue(UIntVariable* var);
+		static FString GetStringValue(UStringVariable* var);
 
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SetIntValue(UIntVariable* var, int32 _value);
+		static void SetStringValue(UStringVariable* var, FString _value);
 
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void CopyIntValue(UIntVariable* var, UIntVariable* other);
+		static void CopyStringValue(UStringVariable* var, UStringVariable* other);
 
 };

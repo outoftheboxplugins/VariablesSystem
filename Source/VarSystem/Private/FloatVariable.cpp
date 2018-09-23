@@ -5,17 +5,17 @@
 
 
 
-float UFloatVariable::GetValue(UFloatVariable* var)
+float UFloatVariable::GetFloatValue(UFloatVariable* var)
 {
 	return var->value;
 }
 
-void UFloatVariable::SetValue(UFloatVariable* var, float _value)
+void UFloatVariable::SetFloatValue(UFloatVariable* var, float _value)
 {
 	var->value = _value;
 }
 
-void UFloatVariable::CopyValue(UFloatVariable* var, UFloatVariable* other)
+void UFloatVariable::CopyFloatValue(UFloatVariable* var, UFloatVariable* other)
 {
 	var->value = other->value;
 }

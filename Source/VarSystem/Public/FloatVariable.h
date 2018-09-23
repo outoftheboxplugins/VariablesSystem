@@ -20,12 +20,12 @@ public:
 	float value;
 	
 	UFUNCTION(BlueprintPure, Category = "Var System")
-		static float GetValue(UFloatVariable* var);
+		static float GetFloatValue(UFloatVariable* var);
 
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SetValue(UFloatVariable* var, float _value);
+		static void SetFloatValue(UFloatVariable* var, float _value);
 
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void CopyValue(UFloatVariable* var, UFloatVariable* other);
+		static void CopyFloatValue(UFloatVariable* var, UFloatVariable* other);
 
 };
