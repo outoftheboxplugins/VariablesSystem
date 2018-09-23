@@ -5,27 +5,27 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "VarSystem.h"
-#include "IntVariable.generated.h"
+#include "FloatVariable.generated.h"
 
 /**
  * 
  */
 UCLASS(BlueprintType)
-class VARSYSTEM_API UIntVariable : public UVarSystem
+class VARSYSTEM_API UFloatVariable : public UVarSystem
 {
 	GENERATED_BODY()
 	
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	int32 value;
+	float value;
 	
 	UFUNCTION(BlueprintPure, Category = "Var System")
-		static int32 GetValue(UIntVariable* var);
+		static float GetValue(UFloatVariable* var);
 
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SetValue(UIntVariable* var, int32 _value);
+		static void SetValue(UFloatVariable* var, float _value);
 
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void CopyValue(UIntVariable* var, UIntVariable* other);
+		static void CopyValue(UFloatVariable* var, UFloatVariable* other);
 
 };
