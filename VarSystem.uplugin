@@ -9,7 +9,7 @@
 	"CreatedBy" : "Oprea Alexandru",
 	"CreatedByURL" : "http://alexandruoprea.fragmentedpixel.com/",
 	"DocsURL" : "https://docs.google.com/document/d/1-dlzPgrIgHmBonNAXbPcFAJukqZxWX1lGqqpdrIUmQ8/edit?usp=sharing",
-	"MarketplaceURL" : "",
+	"MarketplaceURL" : "com.epicgames.launcher://ue/marketplace/content/ba8559b2aa794f20b6e84e7ce338b96f",
 	"SupportURL" : "http://alexandruoprea.fragmentedpixel.com/contact/",
 	"EnabledByDefault" : true,
 	"CanContainContent" : false,
@@ -21,13 +21,13 @@
 			"Name" : "VarSystem",
 			"Type" : "Runtime",
 			"LoadingPhase" : "Default",
-			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ]
+			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux", "PS4", "XboxOne", "Oculus", "SteamVR" ]
 		},
 		{
 			"Name" : "VarSystemEditor",
 			"Type" : "Editor",
 			"LoadingPhase" : "Default",
-			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux" ]
+			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux", "PS4", "XboxOne", "Oculus", "SteamVR" ]
 		}
 
 	]

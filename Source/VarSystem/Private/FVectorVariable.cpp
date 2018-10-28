@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #include "FVectorVariable.h"
 
