@@ -40,6 +40,7 @@ public class VarSystemEditor : ModuleRules
 				"SlateCore",
 				"VarSystem",
 				"UnrealEd",
+                "Projects"
 			});
 
 		PrivateIncludePathModuleNames.AddRange(
