@@ -2,7 +2,7 @@
 	"FileVersion" : 3,
 	"Version" : 1,
 	"VersionName" : "0.1",
-	"EngineVersion" : "4.20.0",
+	"EngineVersion" : "4.21.0",
 	"FriendlyName" : "Var System",
 	"Description" : "Variable system for better data management and data oriented design Blueprints",
 	"Category" : "Editor",
