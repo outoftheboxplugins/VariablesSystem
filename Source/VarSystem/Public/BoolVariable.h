@@ -28,4 +28,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 		static void CopyBoolValue(UBoolVariable* var, UBoolVariable* other);
 
+	/**** Base Variable Overrides ****/
+
+	virtual void Save() override;
+
+	virtual void Load() override;
 };

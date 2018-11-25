@@ -21,5 +21,9 @@ public:
 
 	/** Holds the stored text. */
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="VarSystem")
-	FText Text;
+	FText SaveName;
+
+	virtual void Save() {};
+
+	virtual void Load() {};
 };

@@ -28,4 +28,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 		static void CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other);
 
+	/**** Base Variable Overrides ****/
+
+	virtual void Save() override;
+
+	virtual void Load() override;
+
 };

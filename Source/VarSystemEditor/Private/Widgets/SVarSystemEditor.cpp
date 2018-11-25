@@ -44,7 +44,7 @@ void SVarSystemEditor::Construct(const FArguments& InArgs, UBaseVariable* InBase
 					.Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
 					.OnTextChanged(this, &SVarSystemEditor::HandleEditableTextBoxTextChanged)
 					.OnTextCommitted(this, &SVarSystemEditor::HandleEditableTextBoxTextCommitted)
-					.Text(BaseVariable->Text)
+					.Text(BaseVariable->SaveName)
 			]
 	];
 
@@ -63,7 +63,7 @@ void SVarSystemEditor::HandleEditableTextBoxTextChanged(const FText& NewText)
 
 void SVarSystemEditor::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
 {
-	BaseVariable->Text = EditableTextBox->GetText();
+	BaseVariable->SaveName = EditableTextBox->GetText();
 }
 
 
@@ -71,7 +71,7 @@ void SVarSystemEditor::HandleVarSystemPropertyChanged(UObject* Object, FProperty
 {
 	if (Object == BaseVariable)
 	{
-		EditableTextBox->SetText(BaseVariable->Text);
+		EditableTextBox->SetText(BaseVariable->SaveName);
 	}
 }
 

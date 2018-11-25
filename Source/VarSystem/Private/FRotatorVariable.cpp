@@ -1,7 +1,7 @@
 // Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #include "FRotatorVariable.h"
-
+#include "Kismet/GameplayStatics.h"
 
 
 
@@ -18,5 +18,18 @@ void UFRotatorVariable::SetFRotatorValue(UFRotatorVariable* var, FRotator _value
 void UFRotatorVariable::CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other)
 {
 	var->value = other->value;
+}
+
+void UFRotatorVariable::Save()
+{
+	UGameplayStatics::SaveGameToSlot(this, SaveName.ToString(), 0);
+}
+
+void UFRotatorVariable::Load()
+{
+	UFRotatorVariable* LoadGameInstance = Cast<UFRotatorVariable>(UGameplayStatics::CreateSaveGameObject(UFRotatorVariable::StaticClass()));
+	LoadGameInstance = Cast<UFRotatorVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
+
+	this->value = LoadGameInstance->value;
 }
 

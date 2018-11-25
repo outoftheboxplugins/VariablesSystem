@@ -28,4 +28,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 		static void CopyStringValue(UStringVariable* var, UStringVariable* other);
 
+	/**** Base Variable Overrides ****/
+
+	virtual void Save() override;
+
+	virtual void Load() override;
+
 };

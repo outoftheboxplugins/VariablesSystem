@@ -36,7 +36,7 @@ UObject* UVarSystemFactoryNew::FactoryCreateFile(UClass* InClass, UObject* InPar
 	if (FFileHelper::LoadFileToString(TextString, *Filename))
 	{
 		BaseVariable = NewObject<UBaseVariable>(InParent, InClass, InName, Flags);
-		BaseVariable->Text = FText::FromString(TextString);
+		BaseVariable->SaveName = FText::FromString(TextString);
 	}
 
 	bOutOperationCanceled = false;

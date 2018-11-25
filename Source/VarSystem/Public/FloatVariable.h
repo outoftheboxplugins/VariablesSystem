@@ -28,4 +28,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 		static void CopyFloatValue(UFloatVariable* var, UFloatVariable* other);
 
+	/**** Base Variable Overrides ****/
+
+	virtual void Save() override;
+
+	virtual void Load() override;
+
 };

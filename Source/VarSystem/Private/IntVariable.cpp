@@ -1,7 +1,7 @@
 // Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
 
 #include "IntVariable.h"
-
+#include "Kismet/GameplayStatics.h"
 
 
 
@@ -18,5 +18,18 @@ void UIntVariable::SetIntValue(UIntVariable* var, int32 _value)
 void UIntVariable::CopyIntValue(UIntVariable* var, UIntVariable* other)
 {
 	var->value = other->value;
+}
+
+void UIntVariable::Save()
+{
+	UGameplayStatics::SaveGameToSlot(this, SaveName.ToString(), 0);
+}
+
+void UIntVariable::Load()
+{
+	UIntVariable* LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::CreateSaveGameObject(UIntVariable::StaticClass()));
+	LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
+
+	this->value = LoadGameInstance->value;
 }
 
