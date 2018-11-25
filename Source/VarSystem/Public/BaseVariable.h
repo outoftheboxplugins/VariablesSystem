@@ -3,11 +3,9 @@
 #pragma once
 
 #include "Internationalization/Text.h"
-#include "UObject/Object.h"
+#include "GameFramework/SaveGame.h"
 #include "UObject/ObjectMacros.h"
-
 #include "BaseVariable.generated.h"
-
 
 /**
  * Implements an asset that can be used to store arbitrary text, such as notes
@@ -15,7 +13,7 @@
  */
 UCLASS(BlueprintType, hidecategories=(Object))
 class VARSYSTEM_API UBaseVariable
-	: public UObject
+	: public USaveGame
 {
 	GENERATED_BODY()
 
