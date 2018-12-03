@@ -31,6 +31,9 @@ void UFloatVariable::Load()
 	UFloatVariable* LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::CreateSaveGameObject(UFloatVariable::StaticClass()));
 	LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
 
-	this->value = LoadGameInstance->value;
+	if (LoadGameInstance != nullptr)
+	{
+		this->value = LoadGameInstance->value;
+	}
 }
 

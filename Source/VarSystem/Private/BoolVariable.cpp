@@ -29,7 +29,10 @@ void UBoolVariable::Load()
 {
 	UBoolVariable* LoadGameInstance = Cast<UBoolVariable>(UGameplayStatics::CreateSaveGameObject(UBoolVariable::StaticClass()));
 	LoadGameInstance = Cast<UBoolVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
-
-	this->value = LoadGameInstance->value;
+	
+	if (LoadGameInstance != nullptr)
+	{
+		this->value = LoadGameInstance->value;
+	}
 }
 

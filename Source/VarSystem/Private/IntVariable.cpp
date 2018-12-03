@@ -30,6 +30,9 @@ void UIntVariable::Load()
 	UIntVariable* LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::CreateSaveGameObject(UIntVariable::StaticClass()));
 	LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
 
-	this->value = LoadGameInstance->value;
+	if (LoadGameInstance != nullptr)
+	{
+		this->value = LoadGameInstance->value;
+	}
 }
 

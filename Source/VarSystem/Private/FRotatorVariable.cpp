@@ -30,6 +30,9 @@ void UFRotatorVariable::Load()
 	UFRotatorVariable* LoadGameInstance = Cast<UFRotatorVariable>(UGameplayStatics::CreateSaveGameObject(UFRotatorVariable::StaticClass()));
 	LoadGameInstance = Cast<UFRotatorVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
 
-	this->value = LoadGameInstance->value;
+	if (LoadGameInstance != nullptr)
+	{
+		this->value = LoadGameInstance->value;
+	}
 }
 

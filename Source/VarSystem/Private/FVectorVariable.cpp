@@ -30,6 +30,9 @@ void UFVectorVariable::Load()
 	UFVectorVariable* LoadGameInstance = Cast<UFVectorVariable>(UGameplayStatics::CreateSaveGameObject(UFVectorVariable::StaticClass()));
 	LoadGameInstance = Cast<UFVectorVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
 
-	this->value = LoadGameInstance->value;
+	if (LoadGameInstance != nullptr)
+	{
+		this->value = LoadGameInstance->value;
+	}
 }
 

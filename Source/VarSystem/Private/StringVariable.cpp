@@ -29,7 +29,10 @@ void UStringVariable::Load()
 {
 	UStringVariable* LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::CreateSaveGameObject(UStringVariable::StaticClass()));
 	LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
-
-	this->value = LoadGameInstance->value;
+	
+	if (LoadGameInstance != nullptr)
+	{
+		this->value = LoadGameInstance->value;
+	}
 }
 
