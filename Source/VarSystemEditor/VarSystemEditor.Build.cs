@@ -12,7 +12,6 @@ public class VarSystemEditor : ModuleRules
 			new string[] {
 				"AssetTools",
 				"MainFrame",
-//				"WorkspaceMenuStructure",
 			});
 
 		PrivateIncludePaths.AddRange(
@@ -28,7 +27,8 @@ public class VarSystemEditor : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(
 			new string[] {
-				"ContentBrowser",
+                "ClassViewer",
+                "ContentBrowser",
 				"Core",
 				"CoreUObject",
 				"DesktopWidgets",
@@ -45,9 +45,9 @@ public class VarSystemEditor : ModuleRules
 
 		PrivateIncludePathModuleNames.AddRange(
 			new string[] {
-				"AssetTools",
+                "ClassViewer",
+                "AssetTools",
 				"UnrealEd",
-//				"WorkspaceMenuStructure",
 			});
 	}
 }

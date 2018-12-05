@@ -5,7 +5,8 @@
 #include "Containers/UnrealString.h"
 #include "BaseVariable.h"
 #include "Misc/FileHelper.h"
-#include "ClassViewerModule.h"
+#include "ClassViewer/Public/ClassViewerFilter.h"
+#include "ClassViewer/Public/ClassViewerModule.h"
 #include "Modules/ModuleManager.h"
 #include "Kismet2/SClassPickerDialog.h"
 
