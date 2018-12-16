@@ -12,7 +12,8 @@ public class VarSystemEditor : ModuleRules
 			new string[] {
 				"AssetTools",
 				"MainFrame",
-			});
+                "ClassViewer"
+            } );
 
 		PrivateIncludePaths.AddRange(
 			new string[] {
@@ -27,7 +28,6 @@ public class VarSystemEditor : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(
 			new string[] {
-                "ClassViewer",
                 "ContentBrowser",
 				"Core",
 				"CoreUObject",

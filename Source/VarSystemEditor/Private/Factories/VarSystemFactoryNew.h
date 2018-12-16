@@ -4,10 +4,10 @@
 
 #include "Factories/Factory.h"
 #include "UObject/ObjectMacros.h"
-
+#include "UnrealEd.h"
 #include "CoreMinimal.h"
 #include "Templates/SubclassOf.h"
-#include "ClassViewer/Public/ClassViewerFilter.h"
+#include "ClassViewerFilter.h"
 #include "Kismet2/KismetEditorUtilities.h"
 
 #include "VarSystemFactoryNew.generated.h"
