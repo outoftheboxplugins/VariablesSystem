@@ -10,16 +10,31 @@ FRotator UFRotatorVariable::GetFRotatorValue(UFRotatorVariable* var)
 	return var->value;
 }
 
+FRotator UFRotatorVariable::GetFRotatorValue()
+{
+	return GetFRotatorValue(this);
+}
+
 void UFRotatorVariable::SetFRotatorValue(UFRotatorVariable* var, FRotator _value)
 {
 	var->value = _value;
 	var->dirty = true;
 }
 
+void UFRotatorVariable::SetFRotatorValue(FRotator _value)
+{
+	SetFRotatorValue(this, _value);
+}
+
 void UFRotatorVariable::CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other)
 {
 	var->value = other->value;
 	var->dirty = true;
+}
+
+void UFRotatorVariable::CopyFRotatorValue(UFRotatorVariable* other)
+{
+	CopyFRotatorValue(this, other);
 }
 
 void UFRotatorVariable::Save()

@@ -17,16 +17,28 @@ class VARSYSTEM_API UFRotatorVariable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-		FRotator value;
+	FRotator value;
 
+	// Get the value of a FRotator variable.
 	UFUNCTION(BlueprintPure, Category = "Var System")
-		static FRotator GetFRotatorValue(UFRotatorVariable* var);
+	static FRotator GetFRotatorValue(UFRotatorVariable* var);
 
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SetFRotatorValue(UFRotatorVariable* var, FRotator _value);
+	// Get the value of a FRotator variable.
+	FRotator GetFRotatorValue();
 
+	// Set the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other);
+	static void SetFRotatorValue(UFRotatorVariable* var, FRotator _value);
+
+	// Set the value of a FRotator variable.
+	void SetFRotatorValue(FRotator _value);
+
+	// Copy the value of a FRotator variable.
+	UFUNCTION(BlueprintCallable, Category = "Var System")
+	static void CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other);
+
+	// Copy the value of a FRotator variable.
+	void CopyFRotatorValue(UFRotatorVariable* other);
 
 	/**** Base Variable Overrides ****/
 

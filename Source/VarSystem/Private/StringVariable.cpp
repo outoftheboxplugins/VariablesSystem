@@ -10,16 +10,31 @@ FString UStringVariable::GetStringValue(UStringVariable* var)
 	return var->value;
 }
 
+FString UStringVariable::GetStringValue()
+{
+	return GetStringValue(this);
+}
+
 void UStringVariable::SetStringValue(UStringVariable* var, FString _value)
 {
 	var->value = _value;
 	var->dirty = true;
 }
 
+void UStringVariable::SetStringValue(FString _value)
+{
+	SetStringValue(this, _value);
+}
+
 void UStringVariable::CopyStringValue(UStringVariable* var, UStringVariable* other)
 {
 	var->value = other->value;
 	var->dirty = true;
+}
+
+void UStringVariable::CopyStringValue(UStringVariable* other)
+{
+	CopyStringValue(this, other);
 }
 
 void UStringVariable::Save()

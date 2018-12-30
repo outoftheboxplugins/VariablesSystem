@@ -19,14 +19,26 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
 	int32 value;
 	
+	// Get the value of a int variable.
 	UFUNCTION(BlueprintPure, Category = "Var System")
-		static int32 GetIntValue(UIntVariable* var);
+	static int32 GetIntValue(UIntVariable* var);
 
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SetIntValue(UIntVariable* var, int32 _value);
+	// Get the value of a int variable.
+	int32 GetIntValue();
 
+	// Set the value of a int variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void CopyIntValue(UIntVariable* var, UIntVariable* other);
+	static void SetIntValue(UIntVariable* var, int32 _value);
+	
+	// Set the value of a int variable.
+	void SetIntValue(int32 _value);
+
+	// Copy the value of a int variable.
+	UFUNCTION(BlueprintCallable, Category = "Var System")
+	static void CopyIntValue(UIntVariable* var, UIntVariable* other);
+		
+	// Copy the value of a int variable.
+	void CopyIntValue(UIntVariable* other);
 
 	/**** Base Variable Overrides ****/
 
