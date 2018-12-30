@@ -2,6 +2,7 @@
 
 #include "BoolVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "UObjectBaseUtility.h"
 
 
 
@@ -22,13 +23,15 @@ void UBoolVariable::CopyBoolValue(UBoolVariable* var, UBoolVariable* other)
 
 void UBoolVariable::Save()
 {
-	UGameplayStatics::SaveGameToSlot(this, SaveName.ToString(), 0);
+	UGameplayStatics::SaveGameToSlot(this, VariableDescription.ToString(), 0);
 }
 
 void UBoolVariable::Load()
 {
+	FString SaveDestination;
+	UObjectBaseUtility::GetName(SaveDestination);
 	UBoolVariable* LoadGameInstance = Cast<UBoolVariable>(UGameplayStatics::CreateSaveGameObject(UBoolVariable::StaticClass()));
-	LoadGameInstance = Cast<UBoolVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
+	LoadGameInstance = Cast<UBoolVariable>(UGameplayStatics::LoadGameFromSlot(SaveDestination, 0));
 	
 	if (LoadGameInstance != nullptr)
 	{

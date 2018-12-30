@@ -22,13 +22,13 @@ void UIntVariable::CopyIntValue(UIntVariable* var, UIntVariable* other)
 
 void UIntVariable::Save()
 {
-	UGameplayStatics::SaveGameToSlot(this, SaveName.ToString(), 0);
+	UGameplayStatics::SaveGameToSlot(this, VariableDescription.ToString(), 0);
 }
 
 void UIntVariable::Load()
 {
 	UIntVariable* LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::CreateSaveGameObject(UIntVariable::StaticClass()));
-	LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
+	LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::LoadGameFromSlot(VariableDescription.ToString(), 0));
 
 	if (LoadGameInstance != nullptr)
 	{

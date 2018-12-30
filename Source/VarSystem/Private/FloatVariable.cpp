@@ -23,13 +23,13 @@ void UFloatVariable::CopyFloatValue(UFloatVariable* var, UFloatVariable* other)
 
 void UFloatVariable::Save()
 {
-	UGameplayStatics::SaveGameToSlot(this, SaveName.ToString(), 0);
+	UGameplayStatics::SaveGameToSlot(this, VariableDescription.ToString(), 0);
 }
 
 void UFloatVariable::Load()
 {
 	UFloatVariable* LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::CreateSaveGameObject(UFloatVariable::StaticClass()));
-	LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
+	LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::LoadGameFromSlot(VariableDescription.ToString(), 0));
 
 	if (LoadGameInstance != nullptr)
 	{

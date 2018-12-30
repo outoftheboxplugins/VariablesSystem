@@ -8,22 +8,22 @@
 #include "BaseVariable.generated.h"
 
 /**
- * Implements an asset that can be used to store arbitrary text, such as notes
- * or documentation.
+ * Implements an asset that can store specific types of variables.
  */
-UCLASS(BlueprintType, hidecategories=(Object))
-class VARSYSTEM_API UBaseVariable
-	: public USaveGame
+UCLASS(Abstract, BlueprintType, hidecategories=(Object)) 
+class VARSYSTEM_API UBaseVariable : public USaveGame
 {
 	GENERATED_BODY()
 
 public:
 
-	/** Holds the stored text. */
+	/** Full description of the variable usage.. */
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="VarSystem")
-	FText SaveName;
+	FText VariableDescription;
 
+	/* Saves the current data of a variable.*/
 	virtual void Save() {};
 
+	/* Loads the data of a variable and assignees it. */
 	virtual void Load() {};
 };

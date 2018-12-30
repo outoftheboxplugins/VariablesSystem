@@ -22,13 +22,13 @@ void UStringVariable::CopyStringValue(UStringVariable* var, UStringVariable* oth
 
 void UStringVariable::Save()
 {
-	UGameplayStatics::SaveGameToSlot(this, SaveName.ToString(), 0);
+	UGameplayStatics::SaveGameToSlot(this, VariableDescription.ToString(), 0);
 }
 
 void UStringVariable::Load()
 {
 	UStringVariable* LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::CreateSaveGameObject(UStringVariable::StaticClass()));
-	LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::LoadGameFromSlot(SaveName.ToString(), 0));
+	LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::LoadGameFromSlot(VariableDescription.ToString(), 0));
 	
 	if (LoadGameInstance != nullptr)
 	{
