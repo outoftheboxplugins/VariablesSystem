@@ -13,22 +13,30 @@ FVector UFVectorVariable::GetFVectorValue(UFVectorVariable* var)
 void UFVectorVariable::SetFVectorValue(UFVectorVariable* var, FVector _value)
 {
 	var->value = _value;
+	var->dirty = true;
 }
 
 void UFVectorVariable::CopyFVectorValue(UFVectorVariable* var, UFVectorVariable* other)
 {
 	var->value = other->value;
+	var->dirty = true;
 }
 
 void UFVectorVariable::Save()
 {
-	UGameplayStatics::SaveGameToSlot(this, VariableDescription.ToString(), 0);
+	if (dirty == false)
+	{
+		return;
+	}
+
+	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
+	dirty = false;
 }
 
 void UFVectorVariable::Load()
 {
 	UFVectorVariable* LoadGameInstance = Cast<UFVectorVariable>(UGameplayStatics::CreateSaveGameObject(UFVectorVariable::StaticClass()));
-	LoadGameInstance = Cast<UFVectorVariable>(UGameplayStatics::LoadGameFromSlot(VariableDescription.ToString(), 0));
+	LoadGameInstance = Cast<UFVectorVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
 
 	if (LoadGameInstance != nullptr)
 	{

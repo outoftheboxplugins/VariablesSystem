@@ -5,7 +5,6 @@
 
 
 
-
 float UFloatVariable::GetFloatValue(UFloatVariable* var)
 {
 	return var->value;
@@ -14,22 +13,30 @@ float UFloatVariable::GetFloatValue(UFloatVariable* var)
 void UFloatVariable::SetFloatValue(UFloatVariable* var, float _value)
 {
 	var->value = _value;
+	var->dirty = true;
 }
 
 void UFloatVariable::CopyFloatValue(UFloatVariable* var, UFloatVariable* other)
 {
 	var->value = other->value;
+	var->dirty = true;
 }
 
 void UFloatVariable::Save()
 {
-	UGameplayStatics::SaveGameToSlot(this, VariableDescription.ToString(), 0);
+	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
+	dirty = false;
 }
 
 void UFloatVariable::Load()
 {
+	if (dirty == false)
+	{
+		return;
+	}
+
 	UFloatVariable* LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::CreateSaveGameObject(UFloatVariable::StaticClass()));
-	LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::LoadGameFromSlot(VariableDescription.ToString(), 0));
+	LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
 
 	if (LoadGameInstance != nullptr)
 	{

@@ -16,7 +16,6 @@ class VARSYSTEM_API UBaseVariable : public USaveGame
 	GENERATED_BODY()
 
 public:
-
 	/** Full description of the variable usage.. */
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="VarSystem")
 	FText VariableDescription;
@@ -26,4 +25,9 @@ public:
 
 	/* Loads the data of a variable and assignees it. */
 	virtual void Load() {};
+
+protected:
+	bool dirty = false;
+
+	FString GetSaveLocation();
 };

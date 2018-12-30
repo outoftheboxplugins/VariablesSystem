@@ -13,22 +13,30 @@ FString UStringVariable::GetStringValue(UStringVariable* var)
 void UStringVariable::SetStringValue(UStringVariable* var, FString _value)
 {
 	var->value = _value;
+	var->dirty = true;
 }
 
 void UStringVariable::CopyStringValue(UStringVariable* var, UStringVariable* other)
 {
 	var->value = other->value;
+	var->dirty = true;
 }
 
 void UStringVariable::Save()
 {
-	UGameplayStatics::SaveGameToSlot(this, VariableDescription.ToString(), 0);
+	if (dirty == false)
+	{
+		return;
+	}
+
+	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
+	dirty = false;
 }
 
 void UStringVariable::Load()
 {
 	UStringVariable* LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::CreateSaveGameObject(UStringVariable::StaticClass()));
-	LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::LoadGameFromSlot(VariableDescription.ToString(), 0));
+	LoadGameInstance = Cast<UStringVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
 	
 	if (LoadGameInstance != nullptr)
 	{
