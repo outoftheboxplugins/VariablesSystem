@@ -10,16 +10,31 @@ bool UBoolVariable::GetBoolValue(UBoolVariable* var)
 	return var->value;
 }
 
+bool UBoolVariable::GetBoolValue()
+{
+	return GetBoolValue(this);
+}
+
 void UBoolVariable::SetBoolValue(UBoolVariable* var, bool _value)
 {
 	var->value = _value;
 	var->dirty = true;
 }
 
+void UBoolVariable::SetBoolValue(bool _value)
+{
+	SetBoolValue(this, _value);
+}
+
 void UBoolVariable::CopyBoolValue(UBoolVariable* var, UBoolVariable* other)
 {
 	var->value = other->value;
 	var->dirty = true;
+}
+
+void UBoolVariable::CopyBoolValue(UBoolVariable* other)
+{
+	CopyBoolValue(this, other);
 }
 
 void UBoolVariable::Save()

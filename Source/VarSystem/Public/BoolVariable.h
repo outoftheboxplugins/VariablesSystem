@@ -19,14 +19,26 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
 		bool value;
 
+	// Get the value of a bool variable.
 	UFUNCTION(BlueprintPure, Category = "Var System")
-		static bool GetBoolValue(UBoolVariable* var);
+	static bool GetBoolValue(UBoolVariable* var);
 
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SetBoolValue(UBoolVariable* var, bool _value);
+	// Get the value of a bool variable.
+	bool GetBoolValue();
 
+	// Set the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void CopyBoolValue(UBoolVariable* var, UBoolVariable* other);
+	static void SetBoolValue(UBoolVariable* var, bool _value);
+
+	// Set the value of a bool variable.
+	void SetBoolValue(bool _value);
+	
+	// Copy the value of a bool variable.
+	UFUNCTION(BlueprintCallable, Category = "Var System")
+	static void CopyBoolValue(UBoolVariable* var, UBoolVariable* other);
+
+	// Copy the value of a bool variable.
+	void CopyBoolValue(UBoolVariable* other);
 
 	/**** Base Variable Overrides ****/
 

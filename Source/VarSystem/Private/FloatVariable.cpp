@@ -10,16 +10,31 @@ float UFloatVariable::GetFloatValue(UFloatVariable* var)
 	return var->value;
 }
 
+float UFloatVariable::GetFloatValue()
+{
+	return GetFloatValue(this);
+}
+
 void UFloatVariable::SetFloatValue(UFloatVariable* var, float _value)
 {
 	var->value = _value;
 	var->dirty = true;
 }
 
+void UFloatVariable::SetFloatValue(float _value)
+{
+	SetFloatValue(this, _value);
+}
+
 void UFloatVariable::CopyFloatValue(UFloatVariable* var, UFloatVariable* other)
 {
 	var->value = other->value;
 	var->dirty = true;
+}
+
+void UFloatVariable::CopyFloatValue(UFloatVariable* other)
+{
+	CopyFloatValue(this, other);
 }
 
 void UFloatVariable::Save()

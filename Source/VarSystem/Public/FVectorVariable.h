@@ -19,14 +19,26 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
 		FVector value;
 
+	// Get the value of a FVector variable.
 	UFUNCTION(BlueprintPure, Category = "Var System")
-		static FVector GetFVectorValue(UFVectorVariable* var);
+	static FVector GetFVectorValue(UFVectorVariable* var);
 
+	// Get the value of a FVector variable.
+	FVector GetFVectorValue();
+	
+	// Set the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SetFVectorValue(UFVectorVariable* var, FVector _value);
+	static void SetFVectorValue(UFVectorVariable* var, FVector _value);
 
+	// Set the value of a FVector variable.
+	void SetFVectorValue(FVector _value);
+
+	// Copy the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void CopyFVectorValue(UFVectorVariable* var, UFVectorVariable* other);
+	static void CopyFVectorValue(UFVectorVariable* var, UFVectorVariable* other);
+
+	// Copy the value of a FVector variable.
+	void CopyFVectorValue(UFVectorVariable* other);
 
 	/**** Base Variable Overrides ****/
 
