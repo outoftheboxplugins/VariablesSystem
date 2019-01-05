@@ -2,7 +2,7 @@
 
 #include "BoolVariable.h"
 #include "Kismet/GameplayStatics.h"
-#include "UObjectBaseUtility.h"
+
 
 
 bool UBoolVariable::GetBoolValue(UBoolVariable* var)
