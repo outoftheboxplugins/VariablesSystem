@@ -4,14 +4,14 @@
 
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "SaveManager.generated.h"
+#include "VariablesSaver.generated.h"
 
 /**
  * Implements an asset that can be used to store arbitrary text, such as notes
  * or documentation.
  */
 UCLASS(BlueprintType, hidecategories=(Object))
-class VARSYSTEM_API USaveManager
+class VARSYSTEM_API UVariablesSaver
 	: public UBaseVariable
 {
 	GENERATED_BODY()
@@ -24,9 +24,9 @@ public:
 
 	/** Save all the current variables. */
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SaveAllData(USaveManager* Manager);
+		static void SaveAllData(UVariablesSaver* Manager);
 
 	/** Loads all the current variables. */
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void LoadAllDaa(USaveManager* Manager);
+		static void LoadAllDaa(UVariablesSaver* Manager);
 };

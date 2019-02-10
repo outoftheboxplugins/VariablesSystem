@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "SaveManager.h"
+#include "VariablesSaver.h"
 
-void USaveManager::SaveAllData(USaveManager* Manager)
+void UVariablesSaver::SaveAllData(UVariablesSaver* Manager)
 {
 	for (int32 i = 0; i < Manager->Variables.Num(); i++)
 	{
@@ -12,7 +12,7 @@ void USaveManager::SaveAllData(USaveManager* Manager)
 	}
 }
 
-void USaveManager::LoadAllDaa(USaveManager* Manager)
+void UVariablesSaver::LoadAllDaa(UVariablesSaver* Manager)
 {
 	for (int32 i = 0; i < Manager->Variables.Num(); i++)
 	{
