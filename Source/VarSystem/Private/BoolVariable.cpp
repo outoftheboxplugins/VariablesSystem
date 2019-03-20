@@ -7,7 +7,15 @@
 
 bool UBoolVariable::GetBoolValue(UBoolVariable* var)
 {
-	return var->value;
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return false;
+	}
+	else
+	{
+		return var->value;
+	}
 }
 
 bool UBoolVariable::GetBoolValue()
@@ -17,6 +25,8 @@ bool UBoolVariable::GetBoolValue()
 
 void UBoolVariable::SetBoolValue(UBoolVariable* var, bool _value)
 {
+	if (!var) return;
+
 	var->value = _value;
 	var->dirty = true;
 }
@@ -28,6 +38,8 @@ void UBoolVariable::SetBoolValue(bool _value)
 
 void UBoolVariable::CopyBoolValue(UBoolVariable* var, UBoolVariable* other)
 {
+	if (!var) return;
+
 	var->value = other->value;
 	var->dirty = true;
 }

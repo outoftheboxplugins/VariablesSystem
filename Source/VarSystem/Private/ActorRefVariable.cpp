@@ -7,7 +7,15 @@
 
 AActor* UActorRefVariable::GetAActorValue(UActorRefVariable* var)
 {
-	return var->value;
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return nullptr;
+	}
+	else
+	{
+		return var->value;
+	}
 }
 
 AActor* UActorRefVariable::GetAActorValue()
@@ -17,6 +25,8 @@ AActor* UActorRefVariable::GetAActorValue()
 
 void UActorRefVariable::SetAActorValue(UActorRefVariable* var, AActor* _value)
 {
+	if (!var) return;
+
 	var->value = _value;
 	var->dirty = true;
 }
@@ -28,6 +38,8 @@ void UActorRefVariable::SetAActorValue(AActor* _value)
 
 void UActorRefVariable::CopyAActorValue(UActorRefVariable* var, UActorRefVariable* other)
 {
+	if (!var) return;
+
 	var->value = other->value;
 	var->dirty = true;
 }

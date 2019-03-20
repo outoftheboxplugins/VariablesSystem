@@ -7,7 +7,15 @@
 
 FRotator UFRotatorVariable::GetFRotatorValue(UFRotatorVariable* var)
 {
-	return var->value;
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return FRotator::ZeroRotator;
+	}
+	else
+	{
+		return var->value;
+	}
 }
 
 FRotator UFRotatorVariable::GetFRotatorValue()
@@ -17,6 +25,8 @@ FRotator UFRotatorVariable::GetFRotatorValue()
 
 void UFRotatorVariable::SetFRotatorValue(UFRotatorVariable* var, FRotator _value)
 {
+	if (!var) return;
+
 	var->value = _value;
 	var->dirty = true;
 }
@@ -28,6 +38,8 @@ void UFRotatorVariable::SetFRotatorValue(FRotator _value)
 
 void UFRotatorVariable::CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other)
 {
+	if (!var) return;
+
 	var->value = other->value;
 	var->dirty = true;
 }

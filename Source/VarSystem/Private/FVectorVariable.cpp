@@ -7,7 +7,15 @@
 
 FVector UFVectorVariable::GetFVectorValue(UFVectorVariable* var)
 {
-	return var->value;
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return FVector::ZeroVector;
+	}
+	else
+	{
+		return var->value;
+	}
 }
 
 FVector UFVectorVariable::GetFVectorValue()
@@ -17,6 +25,8 @@ FVector UFVectorVariable::GetFVectorValue()
 
 void UFVectorVariable::SetFVectorValue(UFVectorVariable* var, FVector _value)
 {
+	if (!var) return;
+
 	var->value = _value;
 	var->dirty = true;
 }
@@ -28,6 +38,8 @@ void UFVectorVariable::SetFVectorValue(FVector _value)
 
 void UFVectorVariable::CopyFVectorValue(UFVectorVariable* var, UFVectorVariable* other)
 {
+	if (!var) return;
+
 	var->value = other->value;
 	var->dirty = true;
 }

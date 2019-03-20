@@ -7,7 +7,15 @@
 
 int32 UIntVariable::GetIntValue(UIntVariable* var)
 {
-	return var->value;
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return 0;
+	}
+	else
+	{
+		return var->value;
+	}
 }
 
 int32 UIntVariable::GetIntValue()
@@ -17,6 +25,8 @@ int32 UIntVariable::GetIntValue()
 
 void UIntVariable::SetIntValue(UIntVariable* var, int32 _value)
 {
+	if (!var) return;
+
 	var->value = _value;
 	var->dirty = true;
 }
@@ -28,6 +38,8 @@ void UIntVariable::SetIntValue(int32 _value)
 
 void UIntVariable::CopyIntValue(UIntVariable* var, UIntVariable* other)
 {
+	if (!var) return;
+
 	var->value = other->value;
 	var->dirty = true;
 }

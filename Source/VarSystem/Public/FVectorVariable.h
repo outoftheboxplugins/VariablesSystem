@@ -5,11 +5,13 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "FVectorVariable.generated.h"
 
 /**
  *
  */
+
 UCLASS(BlueprintType)
 class VARSYSTEM_API UFVectorVariable : public UBaseVariable
 {

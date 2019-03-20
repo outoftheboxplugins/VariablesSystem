@@ -7,7 +7,15 @@
 
 float UFloatVariable::GetFloatValue(UFloatVariable* var)
 {
-	return var->value;
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return 0.0f;
+	}
+	else
+	{
+		return var->value;
+	}
 }
 
 float UFloatVariable::GetFloatValue()
@@ -17,6 +25,8 @@ float UFloatVariable::GetFloatValue()
 
 void UFloatVariable::SetFloatValue(UFloatVariable* var, float _value)
 {
+	if (!var) return;
+
 	var->value = _value;
 	var->dirty = true;
 }
@@ -28,6 +38,8 @@ void UFloatVariable::SetFloatValue(float _value)
 
 void UFloatVariable::CopyFloatValue(UFloatVariable* var, UFloatVariable* other)
 {
+	if (!var) return;
+
 	var->value = other->value;
 	var->dirty = true;
 }

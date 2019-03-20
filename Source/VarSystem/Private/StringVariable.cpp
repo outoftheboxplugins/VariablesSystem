@@ -3,11 +3,17 @@
 #include "StringVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-
-
 FString UStringVariable::GetStringValue(UStringVariable* var)
 {
-	return var->value;
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return FString("");
+	}
+	else
+	{
+		return var->value;
+	}
 }
 
 FString UStringVariable::GetStringValue()
@@ -17,6 +23,8 @@ FString UStringVariable::GetStringValue()
 
 void UStringVariable::SetStringValue(UStringVariable* var, FString _value)
 {
+	if (!var) return;
+	
 	var->value = _value;
 	var->dirty = true;
 }
@@ -28,6 +36,8 @@ void UStringVariable::SetStringValue(FString _value)
 
 void UStringVariable::CopyStringValue(UStringVariable* var, UStringVariable* other)
 {
+	if (!var) return;
+
 	var->value = other->value;
 	var->dirty = true;
 }
