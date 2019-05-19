@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
 
@@ -20,7 +20,7 @@ public:
 	FRotator value;
 
 	// Get the value of a FRotator variable.
-	UFUNCTION(BlueprintPure, Category = "Var System")
+	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
 	static FRotator GetFRotatorValue(UFRotatorVariable* var);
 
 	// Get the value of a FRotator variable.

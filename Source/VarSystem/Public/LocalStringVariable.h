@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
 
@@ -22,7 +22,7 @@ public:
 	FString& GetLocalFStringRef(UObject* owner);
 	
 	// Get the value of a LocalFString variable.
-	UFUNCTION(BlueprintPure, Category = "Var System Local")
+	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
 	static FString GetLocalFString(UObject* owner, ULocalFStringVariable* var);
 
 	// Set the value of a LocalFString variable.

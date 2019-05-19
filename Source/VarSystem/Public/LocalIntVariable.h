@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
 
@@ -22,7 +22,7 @@ public:
 	int32& GetLocalIntRef(UObject* owner);
 	
 	// Get the value of a LocalInt variable.
-	UFUNCTION(BlueprintPure, Category = "Var System Local")
+	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
 	static int32 GetLocalInt(UObject* owner, ULocalIntVariable* var);
 
 	// Set the value of a LocalInt variable.

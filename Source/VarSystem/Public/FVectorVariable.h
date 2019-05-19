@@ -1,4 +1,4 @@
-// Copyright Alexandru pasotee Oprea 2018. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
 
@@ -22,7 +22,7 @@ public:
 		FVector value;
 
 	// Get the value of a FVector variable.
-	UFUNCTION(BlueprintPure, Category = "Var System")
+	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
 	static FVector GetFVectorValue(UFVectorVariable* var);
 
 	// Get the value of a FVector variable.
