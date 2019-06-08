@@ -10,6 +10,7 @@
 /**
  *
  */
+
 UCLASS(BlueprintType)
 class VARSYSTEM_API UBoolVariable : public UBaseVariable
 {
@@ -18,7 +19,7 @@ class VARSYSTEM_API UBoolVariable : public UBaseVariable
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
 		bool value;
-
+	
 	// Get the value of a bool variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
 	static bool GetBoolValue(UBoolVariable* var);

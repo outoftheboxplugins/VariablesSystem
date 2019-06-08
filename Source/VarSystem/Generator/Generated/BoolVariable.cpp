@@ -3,8 +3,6 @@
 #include "BoolVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-
-
 bool UBoolVariable::GetBoolValue(UBoolVariable* var)
 {
 	if (var == nullptr)
@@ -70,4 +68,5 @@ void UBoolVariable::Load()
 		this->value = LoadGameInstance->value;
 	}
 }
+
 

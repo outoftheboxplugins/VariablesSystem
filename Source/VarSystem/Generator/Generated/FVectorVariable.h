@@ -5,7 +5,6 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-
 #include "FVectorVariable.generated.h"
 
 /**
@@ -20,21 +19,21 @@ class VARSYSTEM_API UFVectorVariable : public UBaseVariable
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
 		FVector value;
-
+	
 	// Get the value of a FVector variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
 	static FVector GetFVectorValue(UFVectorVariable* var);
 
 	// Get the value of a FVector variable.
 	FVector GetFVectorValue();
-	
+
 	// Set the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetFVectorValue(UFVectorVariable* var, FVector _value);
 
 	// Set the value of a FVector variable.
 	void SetFVectorValue(FVector _value);
-
+	
 	// Copy the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyFVectorValue(UFVectorVariable* var, UFVectorVariable* other);
@@ -47,5 +46,4 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
-
 };

@@ -1,3 +1,5 @@
+
+
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
@@ -10,6 +12,7 @@
 /**
  *
  */
+
 UCLASS(BlueprintType)
 class VARSYSTEM_API UActorRefVariable : public UBaseVariable
 {
@@ -17,28 +20,28 @@ class VARSYSTEM_API UActorRefVariable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	AActor* value;
-
+		AActor* value;
+	
 	// Get the value of a AActor* variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static AActor* GetAActorValue(UActorRefVariable* var);
+	static AActor* GetActorRefValue(UActorRefVariable* var);
 
 	// Get the value of a AActor* variable.
-	AActor* GetAActorValue();
+	AActor* GetActorRefValue();
 
 	// Set the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetAActorValue(UActorRefVariable* var, AActor* _value);
+	static void SetActorRefValue(UActorRefVariable* var, AActor* _value);
 
 	// Set the value of a AActor* variable.
-	void SetAActorValue(AActor* _value);
+	void SetActorRefValue(AActor* _value);
 	
 	// Copy the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyAActorValue(UActorRefVariable* var, UActorRefVariable* other);
+	static void CopyActorRefValue(UActorRefVariable* var, UActorRefVariable* other);
 
 	// Copy the value of a AActor* variable.
-	void CopyAActorValue(UActorRefVariable* other);
+	void CopyActorRefValue(UActorRefVariable* other);
 
 	/**** Base Variable Overrides ****/
 

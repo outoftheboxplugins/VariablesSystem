@@ -8,36 +8,37 @@
 #include "IntVariable.generated.h"
 
 /**
- * 
+ *
  */
+
 UCLASS(BlueprintType)
 class VARSYSTEM_API UIntVariable : public UBaseVariable
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	int32 value;
+		int32 value;
 	
-	// Get the value of a int variable.
+	// Get the value of a int32 variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
 	static int32 GetIntValue(UIntVariable* var);
 
-	// Get the value of a int variable.
+	// Get the value of a int32 variable.
 	int32 GetIntValue();
 
-	// Set the value of a int variable.
+	// Set the value of a int32 variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetIntValue(UIntVariable* var, int32 _value);
-	
-	// Set the value of a int variable.
-	void SetIntValue(int32 _value);
 
-	// Copy the value of a int variable.
+	// Set the value of a int32 variable.
+	void SetIntValue(int32 _value);
+	
+	// Copy the value of a int32 variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyIntValue(UIntVariable* var, UIntVariable* other);
-		
-	// Copy the value of a int variable.
+
+	// Copy the value of a int32 variable.
 	void CopyIntValue(UIntVariable* other);
 
 	/**** Base Variable Overrides ****/
@@ -45,5 +46,4 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
-
 };

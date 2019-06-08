@@ -10,6 +10,7 @@
 /**
  *
  */
+
 UCLASS(BlueprintType)
 class VARSYSTEM_API UStringVariable : public UBaseVariable
 {
@@ -17,27 +18,27 @@ class VARSYSTEM_API UStringVariable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	FString value;
-
-	// Get the value of a string variable.
+		FString value;
+	
+	// Get the value of a FString variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
 	static FString GetStringValue(UStringVariable* var);
 
-	// Get the value of a string variable.
+	// Get the value of a FString variable.
 	FString GetStringValue();
 
-	// Set the value of a string variable.
+	// Set the value of a FString variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetStringValue(UStringVariable* var, FString _value);
 
-	// Set the value of a string variable.
+	// Set the value of a FString variable.
 	void SetStringValue(FString _value);
-
-	// Copy the value of a string variable.
+	
+	// Copy the value of a FString variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyStringValue(UStringVariable* var, UStringVariable* other);
 
-	// Copy the value of a string variable.
+	// Copy the value of a FString variable.
 	void CopyStringValue(UStringVariable* other);
 
 	/**** Base Variable Overrides ****/
@@ -45,5 +46,4 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
-
 };

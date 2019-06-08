@@ -10,6 +10,7 @@
 /**
  *
  */
+
 UCLASS(BlueprintType)
 class VARSYSTEM_API UFRotatorVariable : public UBaseVariable
 {
@@ -17,8 +18,8 @@ class VARSYSTEM_API UFRotatorVariable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	FRotator value;
-
+		FRotator value;
+	
 	// Get the value of a FRotator variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
 	static FRotator GetFRotatorValue(UFRotatorVariable* var);
@@ -32,7 +33,7 @@ public:
 
 	// Set the value of a FRotator variable.
 	void SetFRotatorValue(FRotator _value);
-
+	
 	// Copy the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other);
@@ -45,5 +46,4 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
-
 };

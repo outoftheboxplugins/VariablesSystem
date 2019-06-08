@@ -3,8 +3,6 @@
 #include "FloatVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-
-
 float UFloatVariable::GetFloatValue(UFloatVariable* var)
 {
 	if (var == nullptr)
@@ -51,23 +49,24 @@ void UFloatVariable::CopyFloatValue(UFloatVariable* other)
 
 void UFloatVariable::Save()
 {
+	if (dirty == false)
+	{
+		return;
+	}
+
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
 	dirty = false;
 }
 
 void UFloatVariable::Load()
 {
-	if (dirty == false)
-	{
-		return;
-	}
-
 	UFloatVariable* LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::CreateSaveGameObject(UFloatVariable::StaticClass()));
 	LoadGameInstance = Cast<UFloatVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-
+	
 	if (LoadGameInstance != nullptr)
 	{
 		this->value = LoadGameInstance->value;
 	}
 }
+
 

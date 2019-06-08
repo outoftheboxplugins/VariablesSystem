@@ -8,16 +8,17 @@
 #include "FloatVariable.generated.h"
 
 /**
- * 
+ *
  */
+
 UCLASS(BlueprintType)
 class VARSYSTEM_API UFloatVariable : public UBaseVariable
 {
 	GENERATED_BODY()
-	
+
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	float value;
+		float value;
 	
 	// Get the value of a float variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
@@ -32,7 +33,7 @@ public:
 
 	// Set the value of a float variable.
 	void SetFloatValue(float _value);
-
+	
 	// Copy the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyFloatValue(UFloatVariable* var, UFloatVariable* other);
@@ -45,5 +46,4 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
-
 };

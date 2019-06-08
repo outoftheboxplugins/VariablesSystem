@@ -3,8 +3,6 @@
 #include "FVectorVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-
-
 FVector UFVectorVariable::GetFVectorValue(UFVectorVariable* var)
 {
 	if (var == nullptr)
@@ -64,10 +62,11 @@ void UFVectorVariable::Load()
 {
 	UFVectorVariable* LoadGameInstance = Cast<UFVectorVariable>(UGameplayStatics::CreateSaveGameObject(UFVectorVariable::StaticClass()));
 	LoadGameInstance = Cast<UFVectorVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-
+	
 	if (LoadGameInstance != nullptr)
 	{
 		this->value = LoadGameInstance->value;
 	}
 }
+
 

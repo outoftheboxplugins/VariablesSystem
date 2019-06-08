@@ -3,8 +3,6 @@
 #include "IntVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-
-
 int32 UIntVariable::GetIntValue(UIntVariable* var)
 {
 	if (var == nullptr)
@@ -64,10 +62,11 @@ void UIntVariable::Load()
 {
 	UIntVariable* LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::CreateSaveGameObject(UIntVariable::StaticClass()));
 	LoadGameInstance = Cast<UIntVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-
+	
 	if (LoadGameInstance != nullptr)
 	{
 		this->value = LoadGameInstance->value;
 	}
 }
+
 

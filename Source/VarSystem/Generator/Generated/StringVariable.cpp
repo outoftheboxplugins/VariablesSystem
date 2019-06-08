@@ -8,7 +8,7 @@ FString UStringVariable::GetStringValue(UStringVariable* var)
 	if (var == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return FString("");
+		return "";
 	}
 	else
 	{
@@ -24,7 +24,7 @@ FString UStringVariable::GetStringValue()
 void UStringVariable::SetStringValue(UStringVariable* var, FString _value)
 {
 	if (!var) return;
-	
+
 	var->value = _value;
 	var->dirty = true;
 }
@@ -68,4 +68,5 @@ void UStringVariable::Load()
 		this->value = LoadGameInstance->value;
 	}
 }
+
 

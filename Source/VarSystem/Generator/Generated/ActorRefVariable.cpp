@@ -3,9 +3,7 @@
 #include "ActorRefVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-
-
-AActor* UActorRefVariable::GetAActorValue(UActorRefVariable* var)
+AActor* UActorRefVariable::GetActorRefValue(UActorRefVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +16,12 @@ AActor* UActorRefVariable::GetAActorValue(UActorRefVariable* var)
 	}
 }
 
-AActor* UActorRefVariable::GetAActorValue()
+AActor* UActorRefVariable::GetActorRefValue()
 {
-	return GetAActorValue(this);
+	return GetActorRefValue(this);
 }
 
-void UActorRefVariable::SetAActorValue(UActorRefVariable* var, AActor* _value)
+void UActorRefVariable::SetActorRefValue(UActorRefVariable* var, AActor* _value)
 {
 	if (!var) return;
 
@@ -31,12 +29,12 @@ void UActorRefVariable::SetAActorValue(UActorRefVariable* var, AActor* _value)
 	var->dirty = true;
 }
 
-void UActorRefVariable::SetAActorValue(AActor* _value)
+void UActorRefVariable::SetActorRefValue(AActor* _value)
 {
-	SetAActorValue(this, _value);
+	SetActorRefValue(this, _value);
 }
 
-void UActorRefVariable::CopyAActorValue(UActorRefVariable* var, UActorRefVariable* other)
+void UActorRefVariable::CopyActorRefValue(UActorRefVariable* var, UActorRefVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +42,9 @@ void UActorRefVariable::CopyAActorValue(UActorRefVariable* var, UActorRefVariabl
 	var->dirty = true;
 }
 
-void UActorRefVariable::CopyAActorValue(UActorRefVariable* other)
+void UActorRefVariable::CopyActorRefValue(UActorRefVariable* other)
 {
-	CopyAActorValue(this, other);
+	CopyActorRefValue(this, other);
 }
 
 void UActorRefVariable::Save()
@@ -70,4 +68,5 @@ void UActorRefVariable::Load()
 		this->value = LoadGameInstance->value;
 	}
 }
+
 

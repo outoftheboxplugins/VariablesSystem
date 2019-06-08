@@ -3,8 +3,6 @@
 #include "FRotatorVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-
-
 FRotator UFRotatorVariable::GetFRotatorValue(UFRotatorVariable* var)
 {
 	if (var == nullptr)
@@ -64,10 +62,11 @@ void UFRotatorVariable::Load()
 {
 	UFRotatorVariable* LoadGameInstance = Cast<UFRotatorVariable>(UGameplayStatics::CreateSaveGameObject(UFRotatorVariable::StaticClass()));
 	LoadGameInstance = Cast<UFRotatorVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-
+	
 	if (LoadGameInstance != nullptr)
 	{
 		this->value = LoadGameInstance->value;
 	}
 }
+
 
