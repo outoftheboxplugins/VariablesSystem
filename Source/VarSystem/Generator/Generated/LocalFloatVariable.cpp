@@ -22,13 +22,13 @@ float ULocalFloatVariable::GetLocalFloat(UObject* owner, ULocalFloatVariable* va
 	if (owner == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Missing owner"));
-		return false;
+		return 0.0f;
 	}
 
 	if (var == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return false;
+		return 0.0f;
 	}
 	else
 	{
@@ -48,8 +48,8 @@ void ULocalFloatVariable::SetLocalFloatValue(UObject* owner, ULocalFloatVariable
 	if (!var)	return;
 	if (!owner) return;
 
-	float& floatRef = var->GetLocalFloatRef(owner);
-	floatRef = _value;
+	float& FloatRef = var->GetLocalFloatRef(owner);
+	FloatRef = _value;
 	var->dirty = true;
 }
 
@@ -60,9 +60,11 @@ void ULocalFloatVariable::CopyLocalFloatValue(UObject* owner, ULocalFloatVariabl
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	float& floatRef = var->GetLocalFloatRef(owner);
+	float& FloatRef = var->GetLocalFloatRef(owner);
 	float& otherFloatRef = other->GetLocalFloatRef(otherOwner);
 
-	floatRef = otherFloatRef;
+	FloatRef = otherFloatRef;
 	var->dirty = true;
 }
+
+

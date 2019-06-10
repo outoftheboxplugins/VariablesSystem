@@ -33,3 +33,4 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalFRotatorValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other);
 };
+

@@ -10,7 +10,7 @@
 //
 
 //
-//void UInt	Variable::CopyIntValue(UIntVariable* other)
+//void UIntVariable::CopyIntValue(UIntVariable* other)
 //{
 //	CopyIntValue(this, other);
 //}
@@ -22,13 +22,13 @@ int32 ULocalIntVariable::GetLocalInt(UObject* owner, ULocalIntVariable* var)
 	if (owner == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Missing owner"));
-		return false;
+		return 0;
 	}
 
 	if (var == nullptr)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return false;
+		return 0;
 	}
 	else
 	{
@@ -48,8 +48,8 @@ void ULocalIntVariable::SetLocalIntValue(UObject* owner, ULocalIntVariable* var,
 	if (!var)	return;
 	if (!owner) return;
 
-	int32& int32Ref = var->GetLocalIntRef(owner);
-	int32Ref = _value;
+	int32& IntRef = var->GetLocalIntRef(owner);
+	IntRef = _value;
 	var->dirty = true;
 }
 
@@ -60,9 +60,11 @@ void ULocalIntVariable::CopyLocalIntValue(UObject* owner, ULocalIntVariable* var
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	int32& int32Ref = var->GetLocalIntRef(owner);
+	int32& IntRef = var->GetLocalIntRef(owner);
 	int32& otherIntRef = other->GetLocalIntRef(otherOwner);
 
-	int32Ref = otherIntRef;
+	IntRef = otherIntRef;
 	var->dirty = true;
 }
+
+

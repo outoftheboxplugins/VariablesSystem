@@ -66,3 +66,5 @@ void ULocalFVectorVariable::CopyLocalFVectorValue(UObject* owner, ULocalFVectorV
 	FVectorRef = otherFVectorRef;
 	var->dirty = true;
 }
+
+

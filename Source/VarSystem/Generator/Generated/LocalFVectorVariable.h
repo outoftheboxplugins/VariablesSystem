@@ -33,3 +33,4 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalFVectorValue(UObject* owner, ULocalFVectorVariable* var, UObject* otherOwner, ULocalFVectorVariable* other);
 };
+

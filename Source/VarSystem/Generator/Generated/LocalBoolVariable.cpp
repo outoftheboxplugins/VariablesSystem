@@ -48,8 +48,8 @@ void ULocalBoolVariable::SetLocalBoolValue(UObject* owner, ULocalBoolVariable* v
 	if (!var)	return;
 	if (!owner) return;
 
-	bool& boolRef = var->GetLocalBoolRef(owner);
-	boolRef = _value;
+	bool& BoolRef = var->GetLocalBoolRef(owner);
+	BoolRef = _value;
 	var->dirty = true;
 }
 
@@ -60,9 +60,11 @@ void ULocalBoolVariable::CopyLocalBoolValue(UObject* owner, ULocalBoolVariable* 
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	bool& boolRef = var->GetLocalBoolRef(owner);
+	bool& BoolRef = var->GetLocalBoolRef(owner);
 	bool& otherBoolRef = other->GetLocalBoolRef(otherOwner);
 
-	boolRef = otherBoolRef;
+	BoolRef = otherBoolRef;
 	var->dirty = true;
 }
+
+

@@ -33,3 +33,4 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalFloatValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other);
 };
+

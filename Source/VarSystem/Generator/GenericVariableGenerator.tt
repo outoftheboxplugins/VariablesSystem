@@ -17,12 +17,14 @@ for (Int32 i = 0; i < classNames.Length; ++i) {
   // End of file.
   SaveGlobalHOutput(classNames[i], classTypes[i], classDefaults[i]);
   SaveGlobalCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
+  SaveLocalHOutput(classNames[i], classTypes[i], classDefaults[i]);
+  SaveLocalCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
 }
 #>
 <#+
 private void SaveGlobalHOutput(string className, string classType, string classDefault) 
 {
-	GenerateHFile(className, classType, classDefault);
+	GenerateGlobalHFile(className, classType, classDefault);
 	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
 	string outputFilePath = Path.Combine(templateDirectory, "Generated/Global" + className + "Variable.h");
 	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
@@ -31,9 +33,27 @@ private void SaveGlobalHOutput(string className, string classType, string classD
 
 private void SaveGlobalCPPOutput(string className, string classType, string classDefault) 
 {
-	GenerateCPPFile(className, classType, classDefault);
+	GenerateGlobalCPPFile(className, classType, classDefault);
 	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
 	string outputFilePath = Path.Combine(templateDirectory, "Generated/Global" + className + "Variable.cpp");
+	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void SaveLocalHOutput(string className, string classType, string classDefault) 
+{
+	GenerateLocalHFile(className, classType, classDefault);
+	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	string outputFilePath = Path.Combine(templateDirectory, "Generated/Local" + className + "Variable.h");
+	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
+	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void SaveLocalCPPOutput(string className, string classType, string classDefault) 
+{
+	GenerateLocalCPPFile(className, classType, classDefault);
+	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+	string outputFilePath = Path.Combine(templateDirectory, "Generated/Local" + className + "Variable.cpp");
 	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
 	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }

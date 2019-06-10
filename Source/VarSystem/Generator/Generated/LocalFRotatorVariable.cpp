@@ -66,3 +66,5 @@ void ULocalFRotatorVariable::CopyLocalFRotatorValue(UObject* owner, ULocalFRotat
 	FRotatorRef = otherFRotatorRef;
 	var->dirty = true;
 }
+
+

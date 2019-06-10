@@ -33,3 +33,4 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalBoolValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other);
 };
+
