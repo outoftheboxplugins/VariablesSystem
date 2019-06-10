@@ -5,14 +5,14 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "FVectorVariable.generated.h"
+#include "GlobalFVectorVariable.generated.h"
 
 /**
  *
  */
 
 UCLASS(BlueprintType)
-class VARSYSTEM_API UFVectorVariable : public UBaseVariable
+class VARSYSTEM_API UGlobalFVectorVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a FVector variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static FVector GetFVectorValue(UFVectorVariable* var);
+	static FVector GetGlobalFVectorValue(UGlobalFVectorVariable* var);
 
 	// Get the value of a FVector variable.
-	FVector GetFVectorValue();
+	FVector GetGlobalFVectorValue();
 
 	// Set the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetFVectorValue(UFVectorVariable* var, FVector _value);
+	static void SetGlobalFVectorValue(UGlobalFVectorVariable* var, FVector _value);
 
 	// Set the value of a FVector variable.
-	void SetFVectorValue(FVector _value);
+	void SetGlobalFVectorValue(FVector _value);
 	
 	// Copy the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyFVectorValue(UFVectorVariable* var, UFVectorVariable* other);
+	static void CopyGlobalFVectorValue(UGlobalFVectorVariable* var, UGlobalFVectorVariable* other);
 
 	// Copy the value of a FVector variable.
-	void CopyFVectorValue(UFVectorVariable* other);
+	void CopyGlobalFVectorValue(UGlobalFVectorVariable* other);
 
 	/**** Base Variable Overrides ****/
 

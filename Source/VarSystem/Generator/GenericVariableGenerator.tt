@@ -4,36 +4,36 @@
 <#@ import namespace="System" #>
 <#@ import namespace="System.IO" #>
 <#@ import namespace="System.Collections.Generic" #>
-<#@ output extension=".txt" #>
+
 <#
- string[] classNames	= {"ActorRef",	"Bool",		"Int",		"Float",	"FRotator",					"FVector",				"String"};
- string[] classTypes	= {"AActor*",	"bool",		"int32",	"float",	"FRotator",					"FVector",				"FString"};
- string[] classDefaults = {"nullptr",	"false",	"0",		"0.0f",		"FRotator::ZeroRotator",	"FVector::ZeroVector",	"\"\""};
+ string[] classNames	= {"ActorRef",	"Bool",		"Int",		"Float",	"FRotator",					"FVector",				"String",	"FVector2D"};
+ string[] classTypes	= {"AActor*",	"bool",		"int32",	"float",	"FRotator",					"FVector",				"FString",	"FVector2D"};
+ string[] classDefaults = {"nullptr",	"false",	"0",		"0.0f",		"FRotator::ZeroRotator",	"FVector::ZeroVector",	"\"\"",		"FVector2D::ZeroVector"};
 #>
 <#
 for (Int32 i = 0; i < classNames.Length; ++i) {
 #>
 <#
   // End of file.
-  SaveHOutput(classNames[i], classTypes[i], classDefaults[i]);
-  SaveCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
+  SaveGlobalHOutput(classNames[i], classTypes[i], classDefaults[i]);
+  SaveGlobalCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
 }
 #>
 <#+
-private void SaveHOutput(string className, string classType, string classDefault) 
+private void SaveGlobalHOutput(string className, string classType, string classDefault) 
 {
 	GenerateHFile(className, classType, classDefault);
 	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-	string outputFilePath = Path.Combine(templateDirectory, "Generated/" + className + "Variable.h");
+	string outputFilePath = Path.Combine(templateDirectory, "Generated/Global" + className + "Variable.h");
 	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
 	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }
 
-private void SaveCPPOutput(string className, string classType, string classDefault) 
+private void SaveGlobalCPPOutput(string className, string classType, string classDefault) 
 {
 	GenerateCPPFile(className, classType, classDefault);
 	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-	string outputFilePath = Path.Combine(templateDirectory, "Generated/" + className + "Variable.cpp");
+	string outputFilePath = Path.Combine(templateDirectory, "Generated/Global" + className + "Variable.cpp");
 	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
 	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }

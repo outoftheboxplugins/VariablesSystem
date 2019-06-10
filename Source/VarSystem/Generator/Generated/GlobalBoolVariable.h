@@ -5,14 +5,14 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "BoolVariable.generated.h"
+#include "GlobalBoolVariable.generated.h"
 
 /**
  *
  */
 
 UCLASS(BlueprintType)
-class VARSYSTEM_API UBoolVariable : public UBaseVariable
+class VARSYSTEM_API UGlobalBoolVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a bool variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static bool GetBoolValue(UBoolVariable* var);
+	static bool GetGlobalBoolValue(UGlobalBoolVariable* var);
 
 	// Get the value of a bool variable.
-	bool GetBoolValue();
+	bool GetGlobalBoolValue();
 
 	// Set the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetBoolValue(UBoolVariable* var, bool _value);
+	static void SetGlobalBoolValue(UGlobalBoolVariable* var, bool _value);
 
 	// Set the value of a bool variable.
-	void SetBoolValue(bool _value);
+	void SetGlobalBoolValue(bool _value);
 	
 	// Copy the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyBoolValue(UBoolVariable* var, UBoolVariable* other);
+	static void CopyGlobalBoolValue(UGlobalBoolVariable* var, UGlobalBoolVariable* other);
 
 	// Copy the value of a bool variable.
-	void CopyBoolValue(UBoolVariable* other);
+	void CopyGlobalBoolValue(UGlobalBoolVariable* other);
 
 	/**** Base Variable Overrides ****/
 

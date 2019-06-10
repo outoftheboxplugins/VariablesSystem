@@ -5,14 +5,14 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "FloatVariable.generated.h"
+#include "GlobalFloatVariable.generated.h"
 
 /**
  *
  */
 
 UCLASS(BlueprintType)
-class VARSYSTEM_API UFloatVariable : public UBaseVariable
+class VARSYSTEM_API UGlobalFloatVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a float variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static float GetFloatValue(UFloatVariable* var);
+	static float GetGlobalFloatValue(UGlobalFloatVariable* var);
 
 	// Get the value of a float variable.
-	float GetFloatValue();
+	float GetGlobalFloatValue();
 
 	// Set the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetFloatValue(UFloatVariable* var, float _value);
+	static void SetGlobalFloatValue(UGlobalFloatVariable* var, float _value);
 
 	// Set the value of a float variable.
-	void SetFloatValue(float _value);
+	void SetGlobalFloatValue(float _value);
 	
 	// Copy the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyFloatValue(UFloatVariable* var, UFloatVariable* other);
+	static void CopyGlobalFloatValue(UGlobalFloatVariable* var, UGlobalFloatVariable* other);
 
 	// Copy the value of a float variable.
-	void CopyFloatValue(UFloatVariable* other);
+	void CopyGlobalFloatValue(UGlobalFloatVariable* other);
 
 	/**** Base Variable Overrides ****/
 

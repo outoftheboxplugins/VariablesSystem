@@ -5,14 +5,14 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "FRotatorVariable.generated.h"
+#include "GlobalFRotatorVariable.generated.h"
 
 /**
  *
  */
 
 UCLASS(BlueprintType)
-class VARSYSTEM_API UFRotatorVariable : public UBaseVariable
+class VARSYSTEM_API UGlobalFRotatorVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a FRotator variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static FRotator GetFRotatorValue(UFRotatorVariable* var);
+	static FRotator GetGlobalFRotatorValue(UGlobalFRotatorVariable* var);
 
 	// Get the value of a FRotator variable.
-	FRotator GetFRotatorValue();
+	FRotator GetGlobalFRotatorValue();
 
 	// Set the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetFRotatorValue(UFRotatorVariable* var, FRotator _value);
+	static void SetGlobalFRotatorValue(UGlobalFRotatorVariable* var, FRotator _value);
 
 	// Set the value of a FRotator variable.
-	void SetFRotatorValue(FRotator _value);
+	void SetGlobalFRotatorValue(FRotator _value);
 	
 	// Copy the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyFRotatorValue(UFRotatorVariable* var, UFRotatorVariable* other);
+	static void CopyGlobalFRotatorValue(UGlobalFRotatorVariable* var, UGlobalFRotatorVariable* other);
 
 	// Copy the value of a FRotator variable.
-	void CopyFRotatorValue(UFRotatorVariable* other);
+	void CopyGlobalFRotatorValue(UGlobalFRotatorVariable* other);
 
 	/**** Base Variable Overrides ****/
 

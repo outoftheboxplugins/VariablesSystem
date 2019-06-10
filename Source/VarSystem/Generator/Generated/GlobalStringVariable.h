@@ -5,14 +5,14 @@
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "StringVariable.generated.h"
+#include "GlobalStringVariable.generated.h"
 
 /**
  *
  */
 
 UCLASS(BlueprintType)
-class VARSYSTEM_API UStringVariable : public UBaseVariable
+class VARSYSTEM_API UGlobalStringVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a FString variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static FString GetStringValue(UStringVariable* var);
+	static FString GetGlobalStringValue(UGlobalStringVariable* var);
 
 	// Get the value of a FString variable.
-	FString GetStringValue();
+	FString GetGlobalStringValue();
 
 	// Set the value of a FString variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetStringValue(UStringVariable* var, FString _value);
+	static void SetGlobalStringValue(UGlobalStringVariable* var, FString _value);
 
 	// Set the value of a FString variable.
-	void SetStringValue(FString _value);
+	void SetGlobalStringValue(FString _value);
 	
 	// Copy the value of a FString variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyStringValue(UStringVariable* var, UStringVariable* other);
+	static void CopyGlobalStringValue(UGlobalStringVariable* var, UGlobalStringVariable* other);
 
 	// Copy the value of a FString variable.
-	void CopyStringValue(UStringVariable* other);
+	void CopyGlobalStringValue(UGlobalStringVariable* other);
 
 	/**** Base Variable Overrides ****/
 

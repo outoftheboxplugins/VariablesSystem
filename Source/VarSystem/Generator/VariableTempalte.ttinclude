@@ -14,14 +14,14 @@ void GenerateHFile(string ClassName, string ClassType, string classDefault)
 #include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "<#=ClassName#>Variable.generated.h"
+#include "Global<#=ClassName#>Variable.generated.h"
 
 /**
  *
  */
 
 UCLASS(BlueprintType)
-class VARSYSTEM_API U<#=ClassName#>Variable : public UBaseVariable
+class VARSYSTEM_API UGlobal<#=ClassName#>Variable : public UBaseVariable
 {
 	GENERATED_BODY()
 
@@ -31,24 +31,24 @@ public:
 	
 	// Get the value of a <#=ClassType#> variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static <#=ClassType#> Get<#=ClassName#>Value(U<#=ClassName#>Variable* var);
+	static <#=ClassType#> GetGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var);
 
 	// Get the value of a <#=ClassType#> variable.
-	<#=ClassType#> Get<#=ClassName#>Value();
+	<#=ClassType#> GetGlobal<#=ClassName#>Value();
 
 	// Set the value of a <#=ClassType#> variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void Set<#=ClassName#>Value(U<#=ClassName#>Variable* var, <#=ClassType#> _value);
+	static void SetGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var, <#=ClassType#> _value);
 
 	// Set the value of a <#=ClassType#> variable.
-	void Set<#=ClassName#>Value(<#=ClassType#> _value);
+	void SetGlobal<#=ClassName#>Value(<#=ClassType#> _value);
 	
 	// Copy the value of a <#=ClassType#> variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void Copy<#=ClassName#>Value(U<#=ClassName#>Variable* var, U<#=ClassName#>Variable* other);
+	static void CopyGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var, UGlobal<#=ClassName#>Variable* other);
 
 	// Copy the value of a <#=ClassType#> variable.
-	void Copy<#=ClassName#>Value(U<#=ClassName#>Variable* other);
+	void CopyGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* other);
 
 	/**** Base Variable Overrides ****/
 
@@ -66,10 +66,10 @@ void GenerateCPPFile(string ClassName, string ClassType, string classDefault)
 #>
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "<#=ClassName#>Variable.h"
+#include "Global<#=ClassName#>Variable.h"
 #include "Kismet/GameplayStatics.h"
 
-<#=ClassType#> U<#=ClassName#>Variable::Get<#=ClassName#>Value(U<#=ClassName#>Variable* var)
+<#=ClassType#> UGlobal<#=ClassName#>Variable::GetGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var)
 {
 	if (var == nullptr)
 	{
@@ -82,12 +82,12 @@ void GenerateCPPFile(string ClassName, string ClassType, string classDefault)
 	}
 }
 
-<#=ClassType#> U<#=ClassName#>Variable::Get<#=ClassName#>Value()
+<#=ClassType#> UGlobal<#=ClassName#>Variable::GetGlobal<#=ClassName#>Value()
 {
-	return Get<#=ClassName#>Value(this);
+	return GetGlobal<#=ClassName#>Value(this);
 }
 
-void U<#=ClassName#>Variable::Set<#=ClassName#>Value(U<#=ClassName#>Variable* var, <#=ClassType#> _value)
+void UGlobal<#=ClassName#>Variable::SetGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var, <#=ClassType#> _value)
 {
 	if (!var) return;
 
@@ -95,12 +95,12 @@ void U<#=ClassName#>Variable::Set<#=ClassName#>Value(U<#=ClassName#>Variable* va
 	var->dirty = true;
 }
 
-void U<#=ClassName#>Variable::Set<#=ClassName#>Value(<#=ClassType#> _value)
+void UGlobal<#=ClassName#>Variable::SetGlobal<#=ClassName#>Value(<#=ClassType#> _value)
 {
-	Set<#=ClassName#>Value(this, _value);
+	SetGlobal<#=ClassName#>Value(this, _value);
 }
 
-void U<#=ClassName#>Variable::Copy<#=ClassName#>Value(U<#=ClassName#>Variable* var, U<#=ClassName#>Variable* other)
+void UGlobal<#=ClassName#>Variable::CopyGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var, UGlobal<#=ClassName#>Variable* other)
 {
 	if (!var) return;
 
@@ -108,12 +108,12 @@ void U<#=ClassName#>Variable::Copy<#=ClassName#>Value(U<#=ClassName#>Variable* v
 	var->dirty = true;
 }
 
-void U<#=ClassName#>Variable::Copy<#=ClassName#>Value(U<#=ClassName#>Variable* other)
+void UGlobal<#=ClassName#>Variable::CopyGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* other)
 {
-	Copy<#=ClassName#>Value(this, other);
+	CopyGlobal<#=ClassName#>Value(this, other);
 }
 
-void U<#=ClassName#>Variable::Save()
+void UGlobal<#=ClassName#>Variable::Save()
 {
 	if (dirty == false)
 	{
@@ -124,10 +124,10 @@ void U<#=ClassName#>Variable::Save()
 	dirty = false;
 }
 
-void U<#=ClassName#>Variable::Load()
+void UGlobal<#=ClassName#>Variable::Load()
 {
-	U<#=ClassName#>Variable* LoadGameInstance = Cast<U<#=ClassName#>Variable>(UGameplayStatics::CreateSaveGameObject(U<#=ClassName#>Variable::StaticClass()));
-	LoadGameInstance = Cast<U<#=ClassName#>Variable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
+	UGlobal<#=ClassName#>Variable* LoadGameInstance = Cast<UGlobal<#=ClassName#>Variable>(UGameplayStatics::CreateSaveGameObject(UGlobal<#=ClassName#>Variable::StaticClass()));
+	LoadGameInstance = Cast<UGlobal<#=ClassName#>Variable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
 	
 	if (LoadGameInstance != nullptr)
 	{
