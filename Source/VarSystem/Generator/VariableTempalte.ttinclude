@@ -226,7 +226,6 @@ void GenerateLocalHFile(string ClassName, string ClassType, string classDefault)
 
 #pragma once
 
-#include "UObject/Object.h"
 #include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
 #include "Local<#=ClassName#>Variable.generated.h"
