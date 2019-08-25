@@ -117,7 +117,7 @@ void UBPNode_GetGenericVariableValue::ExpandNode(class FKismetCompilerContext& C
     else
     {
         // Connect Class pin.
-        UEdGraphPin* ClassPin = GetClassPin();
+        UEdGraphPin* ClassPin = GetVariablePin();
         UEdGraphPin* VariableInput = CallCreateNode->FindPin(TEXT("var"));
         bSucceeded &= ClassPin && VariableInput && CompilerContext.CopyPinLinksToIntermediate(*ClassPin, *VariableInput).CanSafeConnect();
 
@@ -193,36 +193,10 @@ FEdGraphPinType UBPNode_GetGenericVariableValue::GetPinTypeFromVariable()
 }
 
 //////////////////////////////////////////////////////////////////////////
-UEdGraphPin* UBPNode_GetGenericVariableValue::GetVariablePin() const
-{
-    UEdGraphPin* Pin = FindPin(FGetPinName::GetVariableTextPin());
-    ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
-    return Pin;
-}
-
-UBaseVariable* UBPNode_GetGenericVariableValue::GetVariableToUse(const TArray<UEdGraphPin*>* InPinsToSearch /*=NULL*/) const
-{
-    UBaseVariable* VariableToSpawn = nullptr;
-    const TArray<UEdGraphPin*>* PinsToSearch = InPinsToSearch ? InPinsToSearch : &Pins;
-
-    UEdGraphPin* ClassPin = GetClassPin(PinsToSearch);
-    if (ClassPin && ClassPin->DefaultObject && ClassPin->LinkedTo.Num() == 0)
-    {
-        VariableToSpawn = CastChecked<UBaseVariable>(ClassPin->DefaultObject);
-    }
-    else if (ClassPin && ClassPin->LinkedTo.Num())
-    {
-        UEdGraphPin* ClassSource = ClassPin->LinkedTo[0];
-        VariableToSpawn = ClassSource ? Cast<UBaseVariable>(ClassSource->PinType.PinSubCategoryObject.Get()) : nullptr;
-    }
-
-    return VariableToSpawn;
-}
-
-FName UBPNode_GetGenericVariableValue::GetVariableNameToUse() const 
+FName UBPNode_GetGenericVariableValue::GetVariableNameToUse() const
 {
     FName VariableClassName;
-    UEdGraphPin* ClassPin = GetClassPin(&Pins);
+    UEdGraphPin* ClassPin = GetVariablePin();
 
     if (ClassPin && ClassPin->DefaultObject && ClassPin->LinkedTo.Num() == 0)
     {
@@ -236,34 +210,6 @@ FName UBPNode_GetGenericVariableValue::GetVariableNameToUse() const
 
     return VariableClassName;
 }
-
-UEdGraphPin* UBPNode_GetGenericVariableValue::GetClassPin(const TArray<UEdGraphPin*>* InPinsToSearch /*= NULL*/) const
-{
-    const TArray<UEdGraphPin*>* PinsToSearch = InPinsToSearch ? InPinsToSearch : &Pins;
-
-    UEdGraphPin* Pin = nullptr;
-    for (UEdGraphPin* TestPin : *PinsToSearch)
-    {
-        if (TestPin && TestPin->PinName == FGetPinName::GetVariableTextPin())
-        {
-            Pin = TestPin;
-            break;
-        }
-    }
-    check(Pin == nullptr || Pin->Direction == EGPD_Input);
-    return Pin;
-}
-
-UEdGraphPin* UBPNode_GetGenericVariableValue::GetResultPin() const
-{
-    UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_ReturnValue);
-    check(Pin->Direction == EGPD_Output);
-    return Pin;
-}
-
-
-
-
 
 void UBPNode_GetGenericVariableValue::PropagatePinType(FEdGraphPinType& InType)
 {
@@ -294,6 +240,21 @@ void UBPNode_GetGenericVariableValue::PropagatePinType(FEdGraphPinType& InType)
             ResultPin->BreakLinkTo(ConnectedPin);
         }
     }
+}
+
+//////////////////////////////////////////////////////////////////////////
+UEdGraphPin* UBPNode_GetGenericVariableValue::GetVariablePin() const
+{
+    UEdGraphPin* Pin = FindPin(FGetPinName::GetVariableTextPin());
+    ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
+    return Pin;
+}
+
+UEdGraphPin* UBPNode_GetGenericVariableValue::GetResultPin() const
+{
+    UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_ReturnValue);
+    check(Pin->Direction == EGPD_Output);
+    return Pin;
 }
 
 #undef LOCTEXT_NAMESPACE

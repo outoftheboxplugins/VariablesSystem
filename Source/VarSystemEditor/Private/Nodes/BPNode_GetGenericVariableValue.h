@@ -39,21 +39,12 @@ private:
     UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph);
     FEdGraphPinType GetPinTypeFromVariable();
 
-    // Getters
-    /** Get the blueprint input pin */
-    UEdGraphPin* GetClassPin(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
-
-    /** Get the class that we are going to spawn, if it's defined as default value */
-    UBaseVariable* GetVariableToUse(const TArray<UEdGraphPin*>* InPinsToSearch = NULL) const;
-
+    // Information about current node
     FName GetVariableNameToUse() const;
-    /** Get the variable input pin */
-    UEdGraphPin* GetVariablePin() const;
+    void PropagatePinType(FEdGraphPinType& InType);
 
-    /** Get the result pin */
+    // Pin Getter
+    UEdGraphPin* GetVariablePin() const;
     UEdGraphPin* GetResultPin() const;
 
-protected:
-    /** Propagates pin type to the between the input and output pins */
-    void PropagatePinType(FEdGraphPinType& InType);
 };
