@@ -25,21 +25,21 @@ public:
 	static bool GetGlobalBoolValue(UGlobalBoolVariable* var);
 
 	// Get the value of a bool variable.
-	bool GetGlobalBoolValue();
+	bool GetGlobalInternalBoolValue();
 
 	// Set the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetGlobalBoolValue(UGlobalBoolVariable* var, bool _value);
 
 	// Set the value of a bool variable.
-	void SetGlobalBoolValue(bool _value);
+	void SetGlobalInternalBoolValue(bool _value);
 	
 	// Copy the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyGlobalBoolValue(UGlobalBoolVariable* var, UGlobalBoolVariable* other);
 
 	// Copy the value of a bool variable.
-	void CopyGlobalBoolValue(UGlobalBoolVariable* other);
+	void CopyGlobalInternalBoolValue(UGlobalBoolVariable* other);
 
 	/**** Base Variable Overrides ****/
 

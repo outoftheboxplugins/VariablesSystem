@@ -24,6 +24,7 @@ public class VarSystemEditor : ModuleRules
 				"VarSystemEditor/Private/Styles",
 				"VarSystemEditor/Private/Toolkits",
 				"VarSystemEditor/Private/Widgets",
+				"VarSystemEditor/Private/Nodes",
 			});
 
 		PrivateDependencyModuleNames.AddRange(
@@ -40,8 +41,11 @@ public class VarSystemEditor : ModuleRules
 				"SlateCore",
 				"VarSystem",
 				"UnrealEd",
-                "Projects"
-			});
+                "Projects",
+                "BlueprintGraph",
+                "GraphEditor",
+                "KismetCompiler",
+            } );
 
 		PrivateIncludePathModuleNames.AddRange(
 			new string[] {

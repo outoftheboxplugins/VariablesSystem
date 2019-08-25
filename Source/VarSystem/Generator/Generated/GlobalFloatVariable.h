@@ -25,21 +25,21 @@ public:
 	static float GetGlobalFloatValue(UGlobalFloatVariable* var);
 
 	// Get the value of a float variable.
-	float GetGlobalFloatValue();
+	float GetGlobalInternalFloatValue();
 
 	// Set the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetGlobalFloatValue(UGlobalFloatVariable* var, float _value);
 
 	// Set the value of a float variable.
-	void SetGlobalFloatValue(float _value);
+	void SetGlobalInternalFloatValue(float _value);
 	
 	// Copy the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyGlobalFloatValue(UGlobalFloatVariable* var, UGlobalFloatVariable* other);
 
 	// Copy the value of a float variable.
-	void CopyGlobalFloatValue(UGlobalFloatVariable* other);
+	void CopyGlobalInternalFloatValue(UGlobalFloatVariable* other);
 
 	/**** Base Variable Overrides ****/
 

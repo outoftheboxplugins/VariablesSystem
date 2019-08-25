@@ -1,0 +1,8 @@
+#include"Generator/Generated/GlobalActorRefVariable.h"
+#include"Generator/Generated/GlobalBoolVariable.h"
+#include"Generator/Generated/GlobalIntVariable.h"
+#include"Generator/Generated/GlobalFloatVariable.h"
+#include"Generator/Generated/GlobalFRotatorVariable.h"
+#include"Generator/Generated/GlobalFVectorVariable.h"
+#include"Generator/Generated/GlobalStringVariable.h"
+#include"Generator/Generated/GlobalFVector2DVariable.h"

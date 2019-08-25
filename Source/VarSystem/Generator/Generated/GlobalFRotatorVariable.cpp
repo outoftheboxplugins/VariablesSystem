@@ -16,7 +16,7 @@ FRotator UGlobalFRotatorVariable::GetGlobalFRotatorValue(UGlobalFRotatorVariable
 	}
 }
 
-FRotator UGlobalFRotatorVariable::GetGlobalFRotatorValue()
+FRotator UGlobalFRotatorVariable::GetGlobalInternalFRotatorValue()
 {
 	return GetGlobalFRotatorValue(this);
 }
@@ -29,7 +29,7 @@ void UGlobalFRotatorVariable::SetGlobalFRotatorValue(UGlobalFRotatorVariable* va
 	var->dirty = true;
 }
 
-void UGlobalFRotatorVariable::SetGlobalFRotatorValue(FRotator _value)
+void UGlobalFRotatorVariable::SetGlobalInternalFRotatorValue(FRotator _value)
 {
 	SetGlobalFRotatorValue(this, _value);
 }
@@ -42,7 +42,7 @@ void UGlobalFRotatorVariable::CopyGlobalFRotatorValue(UGlobalFRotatorVariable* v
 	var->dirty = true;
 }
 
-void UGlobalFRotatorVariable::CopyGlobalFRotatorValue(UGlobalFRotatorVariable* other)
+void UGlobalFRotatorVariable::CopyGlobalInternalFRotatorValue(UGlobalFRotatorVariable* other)
 {
 	CopyGlobalFRotatorValue(this, other);
 }

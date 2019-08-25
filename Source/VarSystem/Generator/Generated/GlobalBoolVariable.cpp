@@ -16,7 +16,7 @@ bool UGlobalBoolVariable::GetGlobalBoolValue(UGlobalBoolVariable* var)
 	}
 }
 
-bool UGlobalBoolVariable::GetGlobalBoolValue()
+bool UGlobalBoolVariable::GetGlobalInternalBoolValue()
 {
 	return GetGlobalBoolValue(this);
 }
@@ -29,7 +29,7 @@ void UGlobalBoolVariable::SetGlobalBoolValue(UGlobalBoolVariable* var, bool _val
 	var->dirty = true;
 }
 
-void UGlobalBoolVariable::SetGlobalBoolValue(bool _value)
+void UGlobalBoolVariable::SetGlobalInternalBoolValue(bool _value)
 {
 	SetGlobalBoolValue(this, _value);
 }
@@ -42,7 +42,7 @@ void UGlobalBoolVariable::CopyGlobalBoolValue(UGlobalBoolVariable* var, UGlobalB
 	var->dirty = true;
 }
 
-void UGlobalBoolVariable::CopyGlobalBoolValue(UGlobalBoolVariable* other)
+void UGlobalBoolVariable::CopyGlobalInternalBoolValue(UGlobalBoolVariable* other)
 {
 	CopyGlobalBoolValue(this, other);
 }

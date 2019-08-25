@@ -16,7 +16,7 @@ FVector UGlobalFVectorVariable::GetGlobalFVectorValue(UGlobalFVectorVariable* va
 	}
 }
 
-FVector UGlobalFVectorVariable::GetGlobalFVectorValue()
+FVector UGlobalFVectorVariable::GetGlobalInternalFVectorValue()
 {
 	return GetGlobalFVectorValue(this);
 }
@@ -29,7 +29,7 @@ void UGlobalFVectorVariable::SetGlobalFVectorValue(UGlobalFVectorVariable* var, 
 	var->dirty = true;
 }
 
-void UGlobalFVectorVariable::SetGlobalFVectorValue(FVector _value)
+void UGlobalFVectorVariable::SetGlobalInternalFVectorValue(FVector _value)
 {
 	SetGlobalFVectorValue(this, _value);
 }
@@ -42,7 +42,7 @@ void UGlobalFVectorVariable::CopyGlobalFVectorValue(UGlobalFVectorVariable* var,
 	var->dirty = true;
 }
 
-void UGlobalFVectorVariable::CopyGlobalFVectorValue(UGlobalFVectorVariable* other)
+void UGlobalFVectorVariable::CopyGlobalInternalFVectorValue(UGlobalFVectorVariable* other)
 {
 	CopyGlobalFVectorValue(this, other);
 }

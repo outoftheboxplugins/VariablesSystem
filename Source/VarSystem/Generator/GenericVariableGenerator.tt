@@ -6,21 +6,27 @@
 <#@ import namespace="System.Collections.Generic" #>
 
 <#
- string[] classNames	= {"ActorRef",	"Bool",		"Int",		"Float",	"FRotator",					"FVector",				"String",	"FVector2D"};
- string[] classTypes	= {"AActor*",	"bool",		"int32",	"float",	"FRotator",					"FVector",				"FString",	"FVector2D"};
- string[] classDefaults = {"nullptr",	"false",	"0",		"0.0f",		"FRotator::ZeroRotator",	"FVector::ZeroVector",	"\"\"",		"FVector2D::ZeroVector"};
-#>
-<#
-for (Int32 i = 0; i < classNames.Length; ++i) {
-#>
-<#
+ string[] classNames	    = {"ActorRef",	                "Bool",		"Int",		"Float",	"FRotator",					        "FVector",				            "String",	"FVector2D"};
+ string[] classTypes	    = {"AActor*",	                "bool",		"int32",	"float",	"FRotator",					        "FVector",				            "FString",	"FVector2D"};
+ string[] classDefaults     = {"nullptr",	                "false",	"0",		"0.0f",		"FRotator::ZeroRotator",	        "FVector::ZeroVector",	            "\"\"",		"FVector2D::ZeroVector"};
+ string[] classNodeTypes    = {"Object",                    "Boolean",  "Int",      "Float",    "Struct",                           "Struct",                           "String",   "Struct" };
+ string[] classNodeSubType =  {"AActor::StaticClass()",     "",         "",         "",         "TBaseStructure<FRotator>::Get()",  "TBaseStructure<FVector>::Get()",   "",         "TBaseStructure<FVector2D>::Get()" };
+
+for (Int32 i = 0; i < classNames.Length; ++i) 
+{
   // End of file.
   SaveGlobalHOutput(classNames[i], classTypes[i], classDefaults[i]);
   SaveGlobalCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
   SaveLocalHOutput(classNames[i], classTypes[i], classDefaults[i]);
   SaveLocalCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
 }
+
+CreateK2PinTypeFromVariable(classNames, classNodeTypes, classNodeSubType);
+CreateK2CreateSpecificNode(classNames, classNodeTypes, classNodeSubType);
+CreateK2IncludeAll(classNames, classNodeTypes, classNodeSubType);
+
 #>
+
 <#+
 private void SaveGlobalHOutput(string className, string classType, string classDefault) 
 {
@@ -56,5 +62,32 @@ private void SaveLocalCPPOutput(string className, string classType, string class
 	string outputFilePath = Path.Combine(templateDirectory, "Generated/Local" + className + "Variable.cpp");
 	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 
 	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void CreateK2PinTypeFromVariable(string[] classes, string[] types, string[] subTypes)
+{
+    GeneratePinTypeFromVariable(classes, types, subTypes);
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, "Generated/Node/PinTypeFromVariable.h");
+    File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void CreateK2CreateSpecificNode(string[] classes, string[] types, string[] subTypes)
+{
+    GenerateCreateSpecificNode(classes, types, subTypes);
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, "Generated/Node/CreateSpecificNode.h");
+    File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void CreateK2IncludeAll(string[] classes, string[] types, string[] subTypes)
+{
+    GenerateIncludeAll(classes, types, subTypes);
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, "Generated/Node/IncludeAll.h");
+    File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }
 #>

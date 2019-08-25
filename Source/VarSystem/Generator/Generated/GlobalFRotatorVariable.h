@@ -25,21 +25,21 @@ public:
 	static FRotator GetGlobalFRotatorValue(UGlobalFRotatorVariable* var);
 
 	// Get the value of a FRotator variable.
-	FRotator GetGlobalFRotatorValue();
+	FRotator GetGlobalInternalFRotatorValue();
 
 	// Set the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetGlobalFRotatorValue(UGlobalFRotatorVariable* var, FRotator _value);
 
 	// Set the value of a FRotator variable.
-	void SetGlobalFRotatorValue(FRotator _value);
+	void SetGlobalInternalFRotatorValue(FRotator _value);
 	
 	// Copy the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyGlobalFRotatorValue(UGlobalFRotatorVariable* var, UGlobalFRotatorVariable* other);
 
 	// Copy the value of a FRotator variable.
-	void CopyGlobalFRotatorValue(UGlobalFRotatorVariable* other);
+	void CopyGlobalInternalFRotatorValue(UGlobalFRotatorVariable* other);
 
 	/**** Base Variable Overrides ****/
 

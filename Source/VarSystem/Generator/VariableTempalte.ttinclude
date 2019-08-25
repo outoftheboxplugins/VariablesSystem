@@ -34,21 +34,21 @@ public:
 	static <#=ClassType#> GetGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var);
 
 	// Get the value of a <#=ClassType#> variable.
-	<#=ClassType#> GetGlobal<#=ClassName#>Value();
+	<#=ClassType#> GetGlobalInternal<#=ClassName#>Value();
 
 	// Set the value of a <#=ClassType#> variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var, <#=ClassType#> _value);
 
 	// Set the value of a <#=ClassType#> variable.
-	void SetGlobal<#=ClassName#>Value(<#=ClassType#> _value);
+	void SetGlobalInternal<#=ClassName#>Value(<#=ClassType#> _value);
 	
 	// Copy the value of a <#=ClassType#> variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var, UGlobal<#=ClassName#>Variable* other);
 
 	// Copy the value of a <#=ClassType#> variable.
-	void CopyGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* other);
+	void CopyGlobalInternal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* other);
 
 	/**** Base Variable Overrides ****/
 
@@ -82,7 +82,7 @@ void GenerateGlobalCPPFile(string ClassName, string ClassType, string classDefau
 	}
 }
 
-<#=ClassType#> UGlobal<#=ClassName#>Variable::GetGlobal<#=ClassName#>Value()
+<#=ClassType#> UGlobal<#=ClassName#>Variable::GetGlobalInternal<#=ClassName#>Value()
 {
 	return GetGlobal<#=ClassName#>Value(this);
 }
@@ -95,7 +95,7 @@ void UGlobal<#=ClassName#>Variable::SetGlobal<#=ClassName#>Value(UGlobal<#=Class
 	var->dirty = true;
 }
 
-void UGlobal<#=ClassName#>Variable::SetGlobal<#=ClassName#>Value(<#=ClassType#> _value)
+void UGlobal<#=ClassName#>Variable::SetGlobalInternal<#=ClassName#>Value(<#=ClassType#> _value)
 {
 	SetGlobal<#=ClassName#>Value(this, _value);
 }
@@ -108,7 +108,7 @@ void UGlobal<#=ClassName#>Variable::CopyGlobal<#=ClassName#>Value(UGlobal<#=Clas
 	var->dirty = true;
 }
 
-void UGlobal<#=ClassName#>Variable::CopyGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* other)
+void UGlobal<#=ClassName#>Variable::CopyGlobalInternal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* other)
 {
 	CopyGlobal<#=ClassName#>Value(this, other);
 }
@@ -258,5 +258,56 @@ public:
 };
 
 <#+
+}
+#>
+
+
+<#+
+void GeneratePinTypeFromVariable(string[] Classes, string[] Types, string[] SubTypes)
+{
+    for (int i = 0; i < Classes.Length; i++)
+    {
+#>
+    if (VariableClassName == FName("Global<#=Classes[i]#>Variable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=Types[i]#>;
+        <#+
+            if (SubTypes[i] != "")
+            {
+		#>
+                ResultPinType.PinSubCategoryObject = <#=SubTypes[i]#>;
+        <#+
+            }
+		#>
+	}
+<#+
+    }
+}
+#>
+
+<#+
+void GenerateCreateSpecificNode(string[] Classes, string[] Types, string[] SubTypes)
+{
+    for (int i = 0; i < Classes.Length; i++)
+    {
+#>
+	if (VariableClassName == FName("Global<#=Classes[i]#>Variable"))
+	{
+		resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=Classes[i]#>Variable, GetGlobal<#=Classes[i]#>Value), UGlobal<#=Classes[i]#>Variable::StaticClass());
+	}
+<#+
+	}       
+}
+#>
+
+<#+
+void GenerateIncludeAll(string[] Classes, string[] Types, string[] SubTypes)
+{
+    for (int i = 0; i < Classes.Length; i++)
+	{
+#>
+#include"Generator/Generated/Global<#=Classes[i]#>Variable.h"
+<#+
+	}
 }
 #>

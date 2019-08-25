@@ -28,21 +28,21 @@ public:
 	static AActor* GetGlobalActorRefValue(UGlobalActorRefVariable* var);
 
 	// Get the value of a AActor* variable.
-	AActor* GetGlobalActorRefValue();
+	AActor* GetGlobalInternalActorRefValue();
 
 	// Set the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void SetGlobalActorRefValue(UGlobalActorRefVariable* var, AActor* _value);
 
 	// Set the value of a AActor* variable.
-	void SetGlobalActorRefValue(AActor* _value);
+	void SetGlobalInternalActorRefValue(AActor* _value);
 	
 	// Copy the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
 	static void CopyGlobalActorRefValue(UGlobalActorRefVariable* var, UGlobalActorRefVariable* other);
 
 	// Copy the value of a AActor* variable.
-	void CopyGlobalActorRefValue(UGlobalActorRefVariable* other);
+	void CopyGlobalInternalActorRefValue(UGlobalActorRefVariable* other);
 
 	/**** Base Variable Overrides ****/
 

@@ -16,7 +16,7 @@ float UGlobalFloatVariable::GetGlobalFloatValue(UGlobalFloatVariable* var)
 	}
 }
 
-float UGlobalFloatVariable::GetGlobalFloatValue()
+float UGlobalFloatVariable::GetGlobalInternalFloatValue()
 {
 	return GetGlobalFloatValue(this);
 }
@@ -29,7 +29,7 @@ void UGlobalFloatVariable::SetGlobalFloatValue(UGlobalFloatVariable* var, float 
 	var->dirty = true;
 }
 
-void UGlobalFloatVariable::SetGlobalFloatValue(float _value)
+void UGlobalFloatVariable::SetGlobalInternalFloatValue(float _value)
 {
 	SetGlobalFloatValue(this, _value);
 }
@@ -42,7 +42,7 @@ void UGlobalFloatVariable::CopyGlobalFloatValue(UGlobalFloatVariable* var, UGlob
 	var->dirty = true;
 }
 
-void UGlobalFloatVariable::CopyGlobalFloatValue(UGlobalFloatVariable* other)
+void UGlobalFloatVariable::CopyGlobalInternalFloatValue(UGlobalFloatVariable* other)
 {
 	CopyGlobalFloatValue(this, other);
 }

@@ -16,7 +16,7 @@ int32 UGlobalIntVariable::GetGlobalIntValue(UGlobalIntVariable* var)
 	}
 }
 
-int32 UGlobalIntVariable::GetGlobalIntValue()
+int32 UGlobalIntVariable::GetGlobalInternalIntValue()
 {
 	return GetGlobalIntValue(this);
 }
@@ -29,7 +29,7 @@ void UGlobalIntVariable::SetGlobalIntValue(UGlobalIntVariable* var, int32 _value
 	var->dirty = true;
 }
 
-void UGlobalIntVariable::SetGlobalIntValue(int32 _value)
+void UGlobalIntVariable::SetGlobalInternalIntValue(int32 _value)
 {
 	SetGlobalIntValue(this, _value);
 }
@@ -42,7 +42,7 @@ void UGlobalIntVariable::CopyGlobalIntValue(UGlobalIntVariable* var, UGlobalIntV
 	var->dirty = true;
 }
 
-void UGlobalIntVariable::CopyGlobalIntValue(UGlobalIntVariable* other)
+void UGlobalIntVariable::CopyGlobalInternalIntValue(UGlobalIntVariable* other)
 {
 	CopyGlobalIntValue(this, other);
 }

@@ -16,7 +16,7 @@ FString UGlobalStringVariable::GetGlobalStringValue(UGlobalStringVariable* var)
 	}
 }
 
-FString UGlobalStringVariable::GetGlobalStringValue()
+FString UGlobalStringVariable::GetGlobalInternalStringValue()
 {
 	return GetGlobalStringValue(this);
 }
@@ -29,7 +29,7 @@ void UGlobalStringVariable::SetGlobalStringValue(UGlobalStringVariable* var, FSt
 	var->dirty = true;
 }
 
-void UGlobalStringVariable::SetGlobalStringValue(FString _value)
+void UGlobalStringVariable::SetGlobalInternalStringValue(FString _value)
 {
 	SetGlobalStringValue(this, _value);
 }
@@ -42,7 +42,7 @@ void UGlobalStringVariable::CopyGlobalStringValue(UGlobalStringVariable* var, UG
 	var->dirty = true;
 }
 
-void UGlobalStringVariable::CopyGlobalStringValue(UGlobalStringVariable* other)
+void UGlobalStringVariable::CopyGlobalInternalStringValue(UGlobalStringVariable* other)
 {
 	CopyGlobalStringValue(this, other);
 }

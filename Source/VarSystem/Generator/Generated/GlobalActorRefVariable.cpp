@@ -16,7 +16,7 @@ AActor* UGlobalActorRefVariable::GetGlobalActorRefValue(UGlobalActorRefVariable*
 	}
 }
 
-AActor* UGlobalActorRefVariable::GetGlobalActorRefValue()
+AActor* UGlobalActorRefVariable::GetGlobalInternalActorRefValue()
 {
 	return GetGlobalActorRefValue(this);
 }
@@ -29,7 +29,7 @@ void UGlobalActorRefVariable::SetGlobalActorRefValue(UGlobalActorRefVariable* va
 	var->dirty = true;
 }
 
-void UGlobalActorRefVariable::SetGlobalActorRefValue(AActor* _value)
+void UGlobalActorRefVariable::SetGlobalInternalActorRefValue(AActor* _value)
 {
 	SetGlobalActorRefValue(this, _value);
 }
@@ -42,7 +42,7 @@ void UGlobalActorRefVariable::CopyGlobalActorRefValue(UGlobalActorRefVariable* v
 	var->dirty = true;
 }
 
-void UGlobalActorRefVariable::CopyGlobalActorRefValue(UGlobalActorRefVariable* other)
+void UGlobalActorRefVariable::CopyGlobalInternalActorRefValue(UGlobalActorRefVariable* other)
 {
 	CopyGlobalActorRefValue(this, other);
 }
