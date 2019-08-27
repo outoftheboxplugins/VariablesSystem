@@ -1,6 +1,6 @@
 #include "BPNode_GetGenericVariableValue.h"
 
-#include "Generator/Generated/Node/IncludeAll.h"
+#include "VarSystem/Generator/Generated/Node/IncludeAll.h"
 #include "K2Node_CallFunction.h"
 #include "KismetCompiler.h"
 #include "BlueprintActionDatabaseRegistrar.h"
