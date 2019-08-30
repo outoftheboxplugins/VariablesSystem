@@ -306,7 +306,7 @@ void GenerateIncludeAll(string[] Classes, string[] Types, string[] SubTypes)
     for (int i = 0; i < Classes.Length; i++)
 	{
 #>
-#include"Generator/Generated/Global<#=Classes[i]#>Variable.h"
+#include "VarSystem/Generator/Generated/Global<#=Classes[i]#>Variable.h"
 <#+
 	}
 }
