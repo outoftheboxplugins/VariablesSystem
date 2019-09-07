@@ -175,7 +175,7 @@ UK2Node_CallFunction* UBPNode_GetGenericVariableValue::CreateSpecificNode(FName 
     UK2Node_CallFunction* resultCreateNode = nullptr;
     resultCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
 
-    #include "Generator/Generated/Node/CreateSpecificNode.h"
+    #include "VarSystem/Generator/Generated/Node/CreateSpecificNode.h"
 
     resultCreateNode->AllocateDefaultPins();
     return resultCreateNode;
@@ -187,7 +187,7 @@ FEdGraphPinType UBPNode_GetGenericVariableValue::GetPinTypeFromVariable()
 
     FEdGraphPinType ResultPinType;
 
-#include "Generator/Generated/Node/PinTypeFromVariable.h"
+    #include "VarSystem/Generator/Generated/Node/PinTypeFromVariable.h"
 
     return ResultPinType;
 }

@@ -21,7 +21,7 @@
 			"Name" : "VarSystem",
 			"Type" : "Runtime",
 			"LoadingPhase" : "Default",
-			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux", "PS4", "XboxOne", "Oculus", "SteamVR" ]
+			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux", "PS4", "XboxOne"]
 		},
 		{
 			"Name" : "VarSystemEditor",
