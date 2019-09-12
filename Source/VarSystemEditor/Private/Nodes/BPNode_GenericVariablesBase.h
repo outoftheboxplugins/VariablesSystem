@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "K2Node.h"
-#include "BPNode_GetGenericVariableValue.generated.h"
+#include "BPNode_GenericVariablesBase.generated.h"
 
 class FBlueprintActionDatabaseRegistrar;
 class UEdGraphPin;
@@ -10,7 +10,7 @@ class UK2Node_CallFunction;
 class UBaseVariable;
 
 UCLASS(MinimalAPI, meta = (Keywords = "variable value"))
-class UBPNode_GetGenericVariableValue : public UK2Node
+class UBPNode_GenericVariablesBase : public UK2Node
 {
     GENERATED_BODY()
 public:
