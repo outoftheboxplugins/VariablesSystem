@@ -9,8 +9,8 @@
  string[] classNames	    = {"ActorRef",	                "Bool",		"Int",		"Float",	"FRotator",					        "FVector",				            "String",	"FVector2D"};
  string[] classTypes	    = {"AActor*",	                "bool",		"int32",	"float",	"FRotator",					        "FVector",				            "FString",	"FVector2D"};
  string[] classDefaults     = {"nullptr",	                "false",	"0",		"0.0f",		"FRotator::ZeroRotator",	        "FVector::ZeroVector",	            "\"\"",		"FVector2D::ZeroVector"};
- string[] classNodeTypes    = {"Object",                    "Boolean",  "Int",      "Float",    "Struct",                           "Struct",                           "String",   "Struct" };
- string[] classNodeSubType =  {"AActor::StaticClass()",     "",         "",         "",         "TBaseStructure<FRotator>::Get()",  "TBaseStructure<FVector>::Get()",   "",         "TBaseStructure<FVector2D>::Get()" };
+ string[] classNodeTypes    = {"Object",                    "Boolean",  "Int",      "Float",    "Struct",                           "Struct",                           "String",   "Struct"};
+ string[] classNodeSubType =  {"AActor::StaticClass()",     "",         "",         "",         "TBaseStructure<FRotator>::Get()",  "TBaseStructure<FVector>::Get()",   "",         "TBaseStructure<FVector2D>::Get()"};
 
 for (Int32 i = 0; i < classNames.Length; ++i) 
 {
@@ -22,7 +22,8 @@ for (Int32 i = 0; i < classNames.Length; ++i)
 }
 
 CreateK2PinTypeFromVariable(classNames, classNodeTypes, classNodeSubType);
-CreateK2CreateSpecificNode(classNames, classNodeTypes, classNodeSubType);
+CreateK2CreateSpecificNodeGet(classNames, classNodeTypes, classNodeSubType);
+CreateK2CreateSpecificNodeSet(classNames, classNodeTypes, classNodeSubType);
 CreateK2IncludeAll(classNames, classNodeTypes, classNodeSubType);
 
 #>
@@ -73,11 +74,20 @@ private void CreateK2PinTypeFromVariable(string[] classes, string[] types, strin
     this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }
 
-private void CreateK2CreateSpecificNode(string[] classes, string[] types, string[] subTypes)
+private void CreateK2CreateSpecificNodeGet(string[] classes, string[] types, string[] subTypes)
 {
-    GenerateCreateSpecificNode(classes, types, subTypes);
+    GenerateCreateSpecificNodeGet(classes, types, subTypes);
     string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
-    string outputFilePath = Path.Combine(templateDirectory, "Generated/Node/CreateSpecificNode.h");
+    string outputFilePath = Path.Combine(templateDirectory, "Generated/Node/CreateSpecificNodeGet.h");
+    File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void CreateK2CreateSpecificNodeSet(string[] classes, string[] types, string[] subTypes)
+{
+    GenerateCreateSpecificNodeSet(classes, types, subTypes);
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, "Generated/Node/CreateSpecificNodeSet.h");
     File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
     this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }

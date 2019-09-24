@@ -17,26 +17,24 @@ public:
 
     //UEdGraphNode implementation
     virtual void AllocateDefaultPins() override;
-    virtual FText GetNodeTitle(ENodeTitleType::Type TitleType) const override;
-    virtual FText GetTooltipText() const override;
     //UEdGraphNode implementation
 
     //K2Node implementation
-    virtual FText GetMenuCategory() const override;
     virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
     
     virtual void PostReconstructNode() override;
     virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
     virtual void PinDefaultValueChanged(UEdGraphPin* Pin) override;
 
-    virtual bool IsNodePure() const override { return true; }
     virtual void ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
-    /*virtual void PinTypeChanged(UEdGraphPin* Pin) override;*/
     //K2Node implementation
 
 private:
+    // Nodes Detaisl
+    virtual bool AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* nodeFunction) { return true; };
+
     //Generated Methods
-    UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph);
+    virtual UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph);
     FEdGraphPinType GetPinTypeFromVariable();
 
     // Information about current node
@@ -44,7 +42,7 @@ private:
     void PropagatePinType(FEdGraphPinType& InType);
 
     // Pin Getter
+    virtual UEdGraphPin* GetVariableValuePin() const;
+    virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const;
     UEdGraphPin* GetVariablePin() const;
-    UEdGraphPin* GetResultPin() const;
-
 };

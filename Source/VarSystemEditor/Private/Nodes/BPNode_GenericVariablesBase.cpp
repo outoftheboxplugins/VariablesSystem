@@ -22,25 +22,8 @@ void UBPNode_GenericVariablesBase::AllocateDefaultPins()
     const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
     
     UEdGraphPin* InVariablePin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UBaseVariable::StaticClass(), FGetPinName::GetVariableTextPin());
-    UEdGraphPin* ResultPin = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Wildcard, UEdGraphSchema_K2::PN_ReturnValue);
 
     Super::AllocateDefaultPins();
-}
-
-FText UBPNode_GenericVariablesBase::GetNodeTitle(ENodeTitleType::Type TitleType) const
-{
-    return LOCTEXT("GetVariableValue", "GetVariableValue");
-}
-
-FText UBPNode_GenericVariablesBase::GetTooltipText() const
-{
-    return LOCTEXT("GetVariableValue_Tooltip", "Return the value of a Generic Variable");
-}
-
-//////////////////////////////////////////////////////////////////////////
-FText UBPNode_GenericVariablesBase::GetMenuCategory() const
-{
-    return LOCTEXT("GetVariableValue_Category", "Variables System");
 }
 
 void UBPNode_GenericVariablesBase::GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const
@@ -122,10 +105,12 @@ void UBPNode_GenericVariablesBase::ExpandNode(class FKismetCompilerContext& Comp
         bSucceeded &= ClassPin && VariableInput && CompilerContext.CopyPinLinksToIntermediate(*ClassPin, *VariableInput).CanSafeConnect();
 
         // Connect Result pin.
-        UEdGraphPin* ResultPin = GetResultPin();
-        UEdGraphPin* ReturnPin = CallCreateNode->GetReturnValuePin();
+        UEdGraphPin* ResultPin = GetVariableValuePin();
+        UEdGraphPin* ReturnPin = GetVariableLinkPin(CallCreateNode);
         bSucceeded &= ResultPin && ReturnPin && CompilerContext.MovePinLinksToIntermediate(*ResultPin, *ReturnPin).CanSafeConnect();
     }
+
+    bSucceeded &= AdditionalExpand(CompilerContext, CallCreateNode);
 
     BreakAllNodeLinks();
 
@@ -138,13 +123,7 @@ void UBPNode_GenericVariablesBase::ExpandNode(class FKismetCompilerContext& Comp
 //////////////////////////////////////////////////////////////////////////
 UK2Node_CallFunction* UBPNode_GenericVariablesBase::CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
 {
-    UK2Node_CallFunction* resultCreateNode = nullptr;
-    resultCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
-
-    #include "VarSystem/Generator/Generated/Node/CreateSpecificNode.h"
-
-    resultCreateNode->AllocateDefaultPins();
-    return resultCreateNode;
+    return nullptr;
 }
 
 FEdGraphPinType UBPNode_GenericVariablesBase::GetPinTypeFromVariable()
@@ -189,7 +168,7 @@ void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType)
         }
     }
 
-    UEdGraphPin* ResultPin = GetResultPin();
+    UEdGraphPin* ResultPin = GetVariableValuePin();
 
     ResultPin->PinType = InType;
     ResultPin->PinType.ContainerType = EPinContainerType::None;
@@ -216,11 +195,14 @@ UEdGraphPin* UBPNode_GenericVariablesBase::GetVariablePin() const
     return Pin;
 }
 
-UEdGraphPin* UBPNode_GenericVariablesBase::GetResultPin() const
+UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableValuePin() const
 {
-    UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_ReturnValue);
-    check(Pin->Direction == EGPD_Output);
-    return Pin;
+    return nullptr;
+}
+
+UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const
+{
+    return nullptr;
 }
 
 #undef LOCTEXT_NAMESPACE
