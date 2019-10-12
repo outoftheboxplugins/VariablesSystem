@@ -32,6 +32,27 @@ public:
         return true;
     }
 
+
+    static TArray<UBaseVariable*> GetAllVariables()
+    {
+        TArray<UBaseVariable*> Variables;
+
+        if (FModuleManager::Get().IsModuleLoaded("AssetRegistry"))
+        {
+            FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+            TArray<FAssetData> AssetData;
+            AssetRegistryModule.Get().GetAssetsByClass(FName("BaseVariable"), AssetData);
+            for (int i = 0; i < AssetData.Num(); i++) {
+                UBaseVariable* VariableFound = Cast<UBaseVariable>(AssetData[i].GetAsset());
+                if (VariableFound != NULL) {
+                    Variables.Add(VariableFound);
+                }
+            }
+        }
+
+        return Variables;
+    }
+
 private:
     
     void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
@@ -56,26 +77,6 @@ private:
                 variable->Save();
             }
         }
-    }
-
-    TArray<UBaseVariable*> GetAllVariables() const
-    {
-        TArray<UBaseVariable*> Variables;
-        
-        if (FModuleManager::Get().IsModuleLoaded("AssetRegistry"))
-        {
-            FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-            TArray<FAssetData> AssetData;
-            AssetRegistryModule.Get().GetAssetsByClass(FName("BaseVariable"), AssetData);
-            for (int i = 0; i < AssetData.Num(); i++) {
-                UBaseVariable* VariableFound = Cast<UBaseVariable>(AssetData[i].GetAsset());
-                if (VariableFound != NULL) {
-                    Variables.Add(VariableFound);
-                }
-            }
-        }
-        
-        return Variables;
     }
 };
 

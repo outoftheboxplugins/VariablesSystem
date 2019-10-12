@@ -9,6 +9,33 @@
 #include "BaseVariable.h"
 #include "UObject/NameTypes.h"
 #include "Widgets/Docking/SDockTab.h"
+#include "Window/CustomWindow.h"
+
+//TODO: Delete those after moving.
+#include "ModuleManager.h"
+#include "AssetRegistryModule.h"
+
+
+//TODO: delete duplicate.
+static TArray<UBaseVariable*> GetAllVariables()
+{
+    TArray<UBaseVariable*> Variables;
+
+    if (FModuleManager::Get().IsModuleLoaded("AssetRegistry"))
+    {
+        FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+        TArray<FAssetData> AssetData;
+        AssetRegistryModule.Get().GetAssetsByClass(FName("BaseVariable"), AssetData);
+        for (int i = 0; i < AssetData.Num(); i++) {
+            UBaseVariable* VariableFound = Cast<UBaseVariable>(AssetData[i].GetAsset());
+            if (VariableFound != NULL) {
+                Variables.Add(VariableFound);
+            }
+        }
+    }
+
+    return Variables;
+}
 
 #define LOCTEXT_NAMESPACE "FVarSystemEditorToolkit"
 
@@ -186,7 +213,9 @@ TSharedRef<SDockTab> FVarSystemEditorToolkit::HandleTabManagerSpawnTab(const FSp
 
 	if (TabIdentifier == VarSystemEditor::TabId)
 	{
-		TabWidget = SNew(SVarSystemEditor, BaseVariable, Style);
+		//TabWidget = SNew(SVarSystemEditor, BaseVariable, Style);
+        TArray<UBaseVariable*> variables = GetAllVariables();
+		TabWidget = SNew(SVarEditorWindow, variables, Style);
 	}
 
 	return SNew(SDockTab)
@@ -195,6 +224,5 @@ TSharedRef<SDockTab> FVarSystemEditorToolkit::HandleTabManagerSpawnTab(const FSp
 			TabWidget.ToSharedRef()
 		];
 }
-
 
 #undef LOCTEXT_NAMESPACE

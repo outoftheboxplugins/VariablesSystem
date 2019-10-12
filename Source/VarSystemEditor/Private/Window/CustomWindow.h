@@ -1,0 +1,65 @@
+// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+
+#pragma once
+
+#include "Templates/SharedPointer.h"
+#include "Widgets/DeclarativeSyntaxSupport.h"
+#include "Widgets/SCompoundWidget.h"
+#include "Widgets/Input/SMultiLineEditableTextBox.h"
+#include "STreeView.h"
+
+class FText;
+class ISlateStyle;
+class UBaseVariable;
+
+
+/**
+ * Implements the UVarSystem asset editor widget.
+ */
+class SVarEditorWindow
+    : public SCompoundWidget
+{
+public:
+
+    SLATE_BEGIN_ARGS(SVarEditorWindow) { }
+    SLATE_END_ARGS()
+
+public:
+
+    /** Virtual destructor. */
+    virtual ~SVarEditorWindow();
+
+    /**
+     * Construct this widget
+     *
+     * @param InArgs The declaration data for this widget.
+     * @param InVarSystem The UVarSystem asset to edit.
+     * @param InStyleSet The style set to use.
+     */
+    void Construct(const FArguments& InArgs, TArray<UBaseVariable*> InBaseVariables, const TSharedRef<ISlateStyle>& InStyle);
+
+private:
+
+    /** Callback for text changes in the editable text box. */
+    void HandleEditableTextBoxTextChanged(const FText& NewText);
+
+    /** Callback for committed text in the editable text box. */
+    void HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType);
+
+    /** Callback for property changes in the text asset. */
+    void HandleVarSystemPropertyChanged(UObject* Object, FPropertyChangedEvent& PropertyChangedEvent);
+
+    // Helper functions for building the subject tree UI
+    TSharedRef<ITableRow> MakeTreeRowWidget(UBaseVariable* InInfo, const TSharedRef<STableViewBase>& OwnerTable);
+    
+private:
+
+    // Subject tree widget
+    TSharedPtr<STreeView<UBaseVariable*>> SubjectsTreeView;
+
+    /** Holds the editable text box widget. */
+    TSharedPtr<SMultiLineEditableTextBox> EditableTextBox;
+
+    /** Pointer to the text asset that is being edited. */
+    TArray<UBaseVariable*> BaseVariables;
+};
