@@ -16,6 +16,7 @@ class UBaseVariable;
 /**
  * Implements the UVarSystem asset editor widget.
  */
+
 class SVarEditorWindow
     : public SCompoundWidget
 {

@@ -12,8 +12,22 @@ namespace UnrealBuildTool.Rules
 				new string[] {
 					"Core",
 					"CoreUObject",
-                    "Engine"
-				});
+                    "Engine",
+                    "AssetTools",
+                "ContentBrowser",
+                "Core",
+                "CoreUObject",
+                "DesktopWidgets",
+                "EditorStyle",
+                "Engine",
+                "InputCore",
+                "Projects",
+                "Slate",
+                "SlateCore",
+                "UnrealEd",
+                "Projects",
+                "MainFrame",
+                });
 
 			PrivateIncludePaths.AddRange(
 				new string[] {

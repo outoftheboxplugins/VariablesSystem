@@ -52,43 +52,43 @@ FColor FVarSystemActions::GetTypeColor() const
 	return FColor::Orange;
 }
 
-bool FVarSystemActions::HasActions(const TArray<UObject*>& InObjects) const
-{
-    return true;
-}
-
-void FVarSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
-{
-    FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
-
-    auto BaseVariables = GetTypedWeakObjectPtrs<UBaseVariable>(InObjects);
-
-    MenuBuilder.AddMenuEntry(
-        LOCTEXT("VarSystem_ReverseText", "Reverse Text"),
-        LOCTEXT("VarSystem_ReverseTextToolTip", "Reverse the text stored in the selected text asset(s)."),
-        FSlateIcon(),
-        FUIAction(
-            FExecuteAction::CreateLambda([=] {}),
-            FCanExecuteAction::CreateLambda([=] { return true;}))
-        );
-}
-
-void FVarSystemActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
-{
-    EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid()
-        ? EToolkitMode::WorldCentric
-        : EToolkitMode::Standalone;
-
-    for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
-    {
-        auto BaseVariable = Cast<UBaseVariable>(*ObjIt);
-
-        if (BaseVariable != nullptr)
-        {
-            TSharedRef<FVarSystemEditorToolkit> EditorToolkit = MakeShareable(new FVarSystemEditorToolkit(Style));
-            EditorToolkit->Initialize(BaseVariable, Mode, EditWithinLevelEditor);
-        }
-    }
-}
+//bool FVarSystemActions::HasActions(const TArray<UObject*>& InObjects) const
+//{
+//    return true;
+//}
+//
+//void FVarSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
+//{
+//    FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
+//
+//    auto BaseVariables = GetTypedWeakObjectPtrs<UBaseVariable>(InObjects);
+//
+//    MenuBuilder.AddMenuEntry(
+//        LOCTEXT("VarSystem_ReverseText", "Reverse Text"),
+//        LOCTEXT("VarSystem_ReverseTextToolTip", "Reverse the text stored in the selected text asset(s)."),
+//        FSlateIcon(),
+//        FUIAction(
+//            FExecuteAction::CreateLambda([=] {}),
+//            FCanExecuteAction::CreateLambda([=] { return true;}))
+//        );
+//}
+//
+//void FVarSystemActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
+//{
+//    EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid()
+//        ? EToolkitMode::WorldCentric
+//        : EToolkitMode::Standalone;
+//
+//    for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
+//    {
+//        auto BaseVariable = Cast<UBaseVariable>(*ObjIt);
+//
+//        if (BaseVariable != nullptr)
+//        {
+//            TSharedRef<FVarSystemEditorToolkit> EditorToolkit = MakeShareable(new FVarSystemEditorToolkit(Style));
+//            EditorToolkit->Initialize(BaseVariable, Mode, EditWithinLevelEditor);
+//        }
+//    }
+//}
 
 #undef LOCTEXT_NAMESPACE
