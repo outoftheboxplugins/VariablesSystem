@@ -326,3 +326,51 @@ void GenerateIncludeAll(string[] Classes, string[] Types, string[] SubTypes)
 	}
 }
 #>
+
+<#+
+void GenerateBlueprintLibraryH(string[] Classes, string[] Types)
+{
+#>
+#include "Kismet/BlueprintFunctionLibrary.h"
+#include "VarSystem/Generator/Generated/Node/IncludeAll.h"
+#include "GlobalVariablesBPLibrary.generated.h"
+
+UCLASS(meta = (BlueprintThreadSafe))
+class UGlobalVariablesBPLibrary : public UBlueprintFunctionLibrary
+{
+    GENERATED_BODY()
+
+<#+
+    for (int i = 0; i < Classes.Length; i++)
+	{
+#>
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global <#=Classes[i]#> Variable (Thread Safe)"), Category = "VarSystem")
+    static <#=Types[i]#> GetGlobal<#=Classes[i]#>VariableSafe(UGlobal<#=Classes[i]#>Variable* variable);
+
+<#+
+	}
+#>
+};
+<#+
+}
+#>
+
+<#+
+void GenerateBlueprintLibraryCPP(string[] Classes, string[] Types)
+{
+#>
+#include "GlobalVariablesBPLibrary.h"
+
+<#+
+    for (int i = 0; i < Classes.Length; i++)
+	{
+#>
+    /* STATIC */ <#=Types[i]#> UGlobalVariablesBPLibrary::GetGlobal<#=Classes[i]#>VariableSafe(UGlobal<#=Classes[i]#>Variable* variable)
+    {
+        return UGlobal<#=Classes[i]#>Variable::GetGlobal<#=Classes[i]#>Value(variable);
+    }
+
+<#+
+	}
+}
+#>

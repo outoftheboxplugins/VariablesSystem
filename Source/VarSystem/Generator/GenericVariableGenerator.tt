@@ -26,6 +26,9 @@ CreateK2CreateSpecificNodeGet(classNames, classNodeTypes, classNodeSubType);
 CreateK2CreateSpecificNodeSet(classNames, classNodeTypes, classNodeSubType);
 CreateK2IncludeAll(classNames, classNodeTypes, classNodeSubType);
 
+CreateBlueprintLibraryH(classNames, classTypes);
+CreateBlueprintLibraryCPP(classNames, classTypes);
+
 #>
 
 <#+
@@ -97,6 +100,24 @@ private void CreateK2IncludeAll(string[] classes, string[] types, string[] subTy
     GenerateIncludeAll(classes, types, subTypes);
     string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
     string outputFilePath = Path.Combine(templateDirectory, "Generated/Node/IncludeAll.h");
+    File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void CreateBlueprintLibraryH(string[] classes, string[] types)
+{
+    GenerateBlueprintLibraryH(classes, types);
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, "Generated/Library/GlobalVariablesBPLibrary.h");
+    File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+
+private void CreateBlueprintLibraryCPP(string[] classes, string[] types)
+{
+    GenerateBlueprintLibraryCPP(classes, types);
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = Path.Combine(templateDirectory, "Generated/Library/GlobalVariablesBPLibrary.cpp");
     File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
     this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }
