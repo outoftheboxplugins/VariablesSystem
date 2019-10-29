@@ -56,7 +56,7 @@ private:
 private:
 
     // Subject tree widget
-    TSharedPtr<STreeView<UBaseVariable*>> SubjectsTreeView;
+    TSharedPtr< SListView< UBaseVariable* > > SubjectsListView;
 
     /** Holds the editable text box widget. */
     TSharedPtr<SMultiLineEditableTextBox> EditableTextBox;

@@ -12,6 +12,17 @@
 #include "VarSystemEditorSettings.h"
 #include "ITypedTableView.h"
 
+#include "CoreMinimal.h"
+#include "Modules/ModuleManager.h"
+#include "Templates/SharedPointer.h"
+#include "Framework/MultiBox/MultiBoxExtender.h"
+#include "Framework/MultiBox/MultiBoxBuilder.h"
+#include "Containers/Array.h"
+#include "AssetData.h"
+#include "AssetRegistryModule.h"
+
+#include "VarSystem/Generator/Generated/Node/IncludeAll.h"
+
 #define LOCTEXT_NAMESPACE "SVarEditorWindow"
 
 /* SVarEditorWindow interface
@@ -19,23 +30,37 @@
 
 SVarEditorWindow::~SVarEditorWindow()
 {
-    FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);
+    //FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);
 }
 
 void SVarEditorWindow::Construct(const FArguments& InArgs, TArray<UBaseVariable*> InBaseVariables, const TSharedRef<ISlateStyle>& InStyle)
 {
-    BaseVariables = InBaseVariables;
+    if (FModuleManager::Get().IsModuleLoaded("AssetRegistry"))
+    {
+        FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+        TArray<FAssetData> AssetData;
+        AssetRegistryModule.Get().GetAssetsByClass(UGlobalBoolVariable::StaticClass()->GetFName(), AssetData);
+        for (int i = 0; i < AssetData.Num(); i++) {
+            UBaseVariable* VariableFound = Cast<UBaseVariable>(AssetData[i].GetAsset());
+            if (VariableFound != NULL) {
+                InBaseVariables.Add(VariableFound);
+            }
+        }
+    }
+
+    for (auto& variable : InBaseVariables)
+    {
+        BaseVariables.Push(variable);
+    }
 
     ChildSlot
-    [
-        SAssignNew(SubjectsTreeView, STreeView<UBaseVariable*>)
-        .TreeItemsSource(&InBaseVariables)
+    [ 
+        SAssignNew(SubjectsListView, SListView<UBaseVariable*>)
+        .ListItemsSource(&BaseVariables)
         .OnGenerateRow(this, &SVarEditorWindow::MakeTreeRowWidget)
-        //.OnSelectionChanged(this, &SLiveLinkClientPanel::OnSubjectTreeSelectionChanged)
-        .SelectionMode(ESelectionMode::None)
     ];
 
-    FCoreUObjectDelegates::OnObjectPropertyChanged.AddSP(this, &SVarEditorWindow::HandleVarSystemPropertyChanged);
+    //FCoreUObjectDelegates::OnObjectPropertyChanged.AddSP(this, &SVarEditorWindow::HandleVarSystemPropertyChanged);
 }
 
 
