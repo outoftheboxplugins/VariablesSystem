@@ -12,7 +12,7 @@
 #include "Window/CustomWindow.h"
 
 //TODO: Delete those after moving.
-#include "ModuleManager.h"
+#include "Modules/ModuleManager.h"
 #include "AssetRegistryModule.h"
 
 
