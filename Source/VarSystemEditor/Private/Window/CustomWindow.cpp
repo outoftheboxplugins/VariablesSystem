@@ -10,7 +10,7 @@
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
 
 #include "VarSystemEditorSettings.h"
-#include "ITypedTableView.h"
+#include "Framework/Views/ITypedTableView.h"
 
 #define LOCTEXT_NAMESPACE "SVarEditorWindow"
 
