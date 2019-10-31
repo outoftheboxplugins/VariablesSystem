@@ -133,26 +133,26 @@ FString FVarSystemEditorToolkit::GetDocumentationLink() const
 }
 
 
-void FVarSystemEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
-{
-	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_VarSystemEditor", "Var System Editor"));
-	auto WorkspaceMenuCategoryRef = WorkspaceMenuCategory.ToSharedRef();
-
-	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
-
-	InTabManager->RegisterTabSpawner(VarSystemEditor::TabId, FOnSpawnTab::CreateSP(this, &FVarSystemEditorToolkit::HandleTabManagerSpawnTab, VarSystemEditor::TabId))
-		.SetDisplayName(LOCTEXT("TextEditorTabName", "Text Editor"))
-		.SetGroup(WorkspaceMenuCategoryRef)
-		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
-}
-
-
-void FVarSystemEditorToolkit::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
-{
-	FAssetEditorToolkit::UnregisterTabSpawners(InTabManager);
-
-	InTabManager->UnregisterTabSpawner(VarSystemEditor::TabId);
-}
+//void FVarSystemEditorToolkit::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
+//{
+//    WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_VarSystemEditor", "Var System Editor"));
+//	auto WorkspaceMenuCategoryRef = WorkspaceMenuCategory.ToSharedRef();
+//
+//	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
+//
+//	InTabManager->RegisterTabSpawner(VarSystemEditor::TabId, FOnSpawnTab::CreateSP(this, &FVarSystemEditorToolkit::HandleTabManagerSpawnTab, VarSystemEditor::TabId))
+//		.SetDisplayName(LOCTEXT("TextEditorTabName", "Text Editor"))
+//		.SetGroup(WorkspaceMenuCategoryRef)
+//		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
+//}
+//
+//
+//void FVarSystemEditorToolkit::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
+//{
+//	FAssetEditorToolkit::UnregisterTabSpawners(InTabManager);
+//
+//	InTabManager->UnregisterTabSpawner(VarSystemEditor::TabId);
+//}
 
 
 /* IToolkit interface
