@@ -40,18 +40,26 @@ public class VarSystemEditor : ModuleRules
 				"Slate",
 				"SlateCore",
 				"VarSystem",
-				"UnrealEd",
                 "Projects",
                 "BlueprintGraph",
                 "GraphEditor",
                 "KismetCompiler",
             } );
 
-		PrivateIncludePathModuleNames.AddRange(
+        if (Target.Type == TargetRules.TargetType.Editor)
+        {
+            PrivateDependencyModuleNames.AddRange(
+            new string[]
+            {
+            "UnrealEd"
+            }
+            );
+        }
+
+        PrivateIncludePathModuleNames.AddRange(
 			new string[] {
                 "ClassViewer",
                 "AssetTools",
-				"UnrealEd",
 			});
 	}
 }

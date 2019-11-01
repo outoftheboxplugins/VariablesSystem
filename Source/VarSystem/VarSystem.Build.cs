@@ -14,22 +14,31 @@ namespace UnrealBuildTool.Rules
 					"CoreUObject",
                     "Engine",
                     "AssetTools",
-                "ContentBrowser",
-                "Core",
-                "CoreUObject",
-                "DesktopWidgets",
-                "EditorStyle",
-                "Engine",
-                "InputCore",
-                "Projects",
-                "Slate",
-                "SlateCore",
-                "UnrealEd",
-                "Projects",
-                "MainFrame",
+                    "ContentBrowser",
+                    "Core",
+                    "CoreUObject",
+                    "DesktopWidgets",
+                    "EditorStyle",
+                    "Engine",
+                    "InputCore",
+                    "Projects",
+                    "Slate",
+                    "SlateCore",
+                    "Projects",
+                    "MainFrame",
                 });
 
-			PrivateIncludePaths.AddRange(
+            if (Target.Type == TargetRules.TargetType.Editor)
+            {
+                PrivateDependencyModuleNames.AddRange(
+                new string[]
+                {
+                    "UnrealEd"
+                }
+                );
+            }
+
+            PrivateIncludePaths.AddRange(
 				new string[] {
 				});
 		}
