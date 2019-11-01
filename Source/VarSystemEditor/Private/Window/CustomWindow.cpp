@@ -92,7 +92,7 @@ TSharedRef<ITableRow> SVarEditorWindow::MakeTreeRowWidget(UBaseVariable* InInfo,
     auto Settings = GetDefault<UVarSystemEditorSettings>();
 
     return
-        SNew(STableRow< TSharedPtr<FString> >, OwnerTable)
+        SNew(STableRow< UBaseVariable* >, OwnerTable)
         .ShowSelection(true)
         [
             SNew(SBox)
