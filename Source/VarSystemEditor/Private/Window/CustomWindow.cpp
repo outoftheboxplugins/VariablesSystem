@@ -99,7 +99,7 @@ TSharedRef<ITableRow> SVarEditorWindow::MakeTreeRowWidget(UBaseVariable* InInfo,
             .Padding(1.f)
         [
             SNew(STextBlock)
-            .Text(FText::FromString(FString::FString("da")))
+            .Text(LOCTEXT("ButtonName", "Button"))
         ]
         ];
 
