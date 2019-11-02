@@ -44,7 +44,7 @@ void SVariablesSystemEditor::Construct(const FArguments& InArgs, UBaseVariable* 
 					.Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
 					.OnTextChanged(this, &SVariablesSystemEditor::HandleEditableTextBoxTextChanged)
 					.OnTextCommitted(this, &SVariablesSystemEditor::HandleEditableTextBoxTextCommitted)
-					.Text(BaseVariable->VariableDescription)
+					.Text(BaseVariable->GetDescription())
 			]
 	];
 
@@ -63,7 +63,7 @@ void SVariablesSystemEditor::HandleEditableTextBoxTextChanged(const FText& NewTe
 
 void SVariablesSystemEditor::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
 {
-	BaseVariable->VariableDescription = EditableTextBox->GetText();
+	BaseVariable->GetDescription() = EditableTextBox->GetText();
 }
 
 
@@ -71,7 +71,7 @@ void SVariablesSystemEditor::HandleVariablesSystemPropertyChanged(UObject* Objec
 {
 	if (Object == BaseVariable)
 	{
-		EditableTextBox->SetText(BaseVariable->VariableDescription);
+		EditableTextBox->SetText(BaseVariable->GetDescription());
 	}
 }
 

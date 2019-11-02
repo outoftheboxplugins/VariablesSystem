@@ -2,31 +2,34 @@
 
 #pragma once
 
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "VariablesSystemSaver.generated.h"
 
+//TODO: <ale the Variable System Saver a different asset alltogheter so we do not inherit from UBasevariable anymore.
+
 /**
- * Implements an asset that can be used to store arbitrary text, such as notes
- * or documentation.
+ * Executes Save & Load operation on an list of variables.
  */
+
 UCLASS(BlueprintType, hidecategories=(Object))
-class VARIABLESSYSTEM_API UVariablesSystemSaver
-	: public UBaseVariable
+class VARIABLESSYSTEM_API UVariablesSystemSaver : public UBaseVariable
 {
 	GENERATED_BODY()
 
+// Save & Load commands
 public:
+    /** Save all the current variables. */
+    UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
+        static void SaveAllData(UVariablesSystemSaver* Manager);
 
-	/** Holds the stored text. */
+    /** Loads all the current variables. */
+    UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
+        static void LoadAllData(UVariablesSystemSaver* Manager);
+
+protected:
+	/** Variables that should be loaded/saved.. */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
-		TArray<UBaseVariable*> Variables;
+    TArray<UBaseVariable*> Variables;
 
-	/** Save all the current variables. */
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void SaveAllData(UVariablesSystemSaver* Manager);
-
-	/** Loads all the current variables. */
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-		static void LoadAllDaa(UVariablesSystemSaver* Manager);
 };

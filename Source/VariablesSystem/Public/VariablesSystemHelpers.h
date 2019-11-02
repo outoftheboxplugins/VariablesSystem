@@ -1,10 +1,17 @@
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
+#pragma once 
+
+#include "AssetRegistryModule.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
+#include "Modules/ModuleManager.h"
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
 
-#include "Modules/ModuleManager.h"
-#include "AssetRegistryModule.h"
-
 #include "VariablesSystemHelpers.generated.h"
+
+/**
+ * Various helpers to simply working with/within the Variables System.
+ */
 
 UCLASS(meta = (BlueprintThreadSafe))
 class VARIABLESSYSTEM_API UVariablesSystemHelpersBPLibrary : public UBlueprintFunctionLibrary
@@ -12,32 +19,38 @@ class VARIABLESSYSTEM_API UVariablesSystemHelpersBPLibrary : public UBlueprintFu
 public:
     GENERATED_BODY()
 
+    // Returns all the variables (UObjects) assets from the content browser.
     static TArray<UBaseVariable*> GetAllVariables();
     
+    // Returns all assets of a certain type from the content browser.
     template<class T>
-    static FORCEINLINE TArray<T*> GetAllAssetsOfType()
+    static TArray<T*> GetAllAssetsOfType();
+};
+
+template<class T>
+static TArray<T*> UVariablesSystemHelpersBPLibrary::GetAllAssetsOfType()
+{
+    TArray<T*> Assets;
+
+    if (FModuleManager::Get().IsModuleLoaded("AssetRegistry"))
     {
-        TArray<T*> Variables;
+        FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
+        TArray<FAssetData> assetDatas;
 
-        if (FModuleManager::Get().IsModuleLoaded("AssetRegistry"))
+        FARFilter SearchFilter;
+        SearchFilter.ClassNames.Add(T::StaticClass()->GetFName());
+        SearchFilter.bRecursiveClasses = true;
+
+        AssetRegistryModule.Get().GetAssets(SearchFilter, assetDatas);
+
+        for (auto& assetData : assetDatas)
         {
-            FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-            TArray<FAssetData> AssetData;
-
-            FARFilter SearchFilter;
-            SearchFilter.ClassNames.Add(T::StaticClass()->GetFName());
-            SearchFilter.bRecursiveClasses = true;
-
-            AssetRegistryModule.Get().GetAssets(SearchFilter, AssetData);
-
-            for (int i = 0; i < AssetData.Num(); i++) {
-                T* VariableFound = Cast<T>(AssetData[i].GetAsset());
-                if (VariableFound != NULL) {
-                    Variables.Add(VariableFound);
-                }
+            T* VariableFound = Cast<T>(assetData.GetAsset());
+            if (VariableFound != NULL) {
+                Assets.Add(VariableFound);
             }
         }
-
-        return Variables;
     }
-};
+
+    return Assets;
+}

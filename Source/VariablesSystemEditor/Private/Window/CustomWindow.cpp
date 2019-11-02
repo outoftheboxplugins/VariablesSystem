@@ -73,7 +73,7 @@ void SVarEditorWindow::HandleEditableTextBoxTextChanged(const FText& NewText)
 
 void SVarEditorWindow::HandleEditableTextBoxTextCommitted(const FText& Comment, ETextCommit::Type CommitType)
 {
-    BaseVariables[0]->VariableDescription = EditableTextBox->GetText();
+    BaseVariables[0]->GetDescription() = EditableTextBox->GetText();
 }
 
 
@@ -81,7 +81,7 @@ void SVarEditorWindow::HandleVariablesSystemPropertyChanged(UObject* Object, FPr
 {
     if (Object == BaseVariables[0])
     {
-        EditableTextBox->SetText(BaseVariables[0]->VariableDescription);
+        EditableTextBox->SetText(BaseVariables[0]->GetDescription());
     }
 }
 

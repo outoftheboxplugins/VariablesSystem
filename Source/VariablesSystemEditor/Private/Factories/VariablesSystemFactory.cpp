@@ -30,7 +30,7 @@ UObject* UVariablesSystemFactory::FactoryCreateFile(UClass* InClass, UObject* In
 	if (FFileHelper::LoadFileToString(TextString, *Filename))
 	{
 		BaseVariable = NewObject<UBaseVariable>(InParent, InClass, InName, Flags);
-		BaseVariable->VariableDescription = FText::FromString(TextString);
+		BaseVariable->GetDescription() = FText::FromString(TextString);
 	}
 
 	bOutOperationCanceled = false;
