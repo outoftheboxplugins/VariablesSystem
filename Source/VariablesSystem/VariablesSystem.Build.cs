@@ -10,22 +10,9 @@ namespace UnrealBuildTool.Rules
 
 			PublicDependencyModuleNames.AddRange(
 				new string[] {
-					"Core",
-					"CoreUObject",
-                    "Engine",
-                    "AssetTools",
-                    "ContentBrowser",
                     "Core",
                     "CoreUObject",
-                    "DesktopWidgets",
-                    "EditorStyle",
                     "Engine",
-                    "InputCore",
-                    "Projects",
-                    "Slate",
-                    "SlateCore",
-                    "Projects",
-                    "MainFrame",
                 });
 		}
 	}
