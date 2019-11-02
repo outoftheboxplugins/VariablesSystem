@@ -11,10 +11,11 @@
 #include "AssetTools/VarSystemActions.h"
 #include "Styles/VarSystemEditorStyle.h"
 #include "VarSystemEditorSettings.h"
+#include "UIAction.h"
+#include "MultiBoxBuilder.h"
 
 
 #define LOCTEXT_NAMESPACE "FVarSystemEditorModule"
-
 
 /**
  * Implements the VarSystemEditor module.
@@ -135,11 +136,30 @@ protected:
 
 protected:
 
+    struct Local
+    {
+        static void AddMenuCommands(FMenuBuilder& MenuBuilder)
+        {
+            MenuBuilder.AddSubMenu(LOCTEXT("VariablesSystem", "Variables Watch"),
+                LOCTEXT("VariablesSystem", "See the values of all the variables of your project."),
+                FNewMenuDelegate::CreateStatic(&FVarSystemEditorModule::CreateToolListMenu));
+        }
+    };
+
 	/** Registers main menu and tool bar menu extensions. */
 	void RegisterMenuExtensions()
 	{
 		MenuExtensibilityManager = MakeShareable(new FExtensibilityManager);
 		ToolBarExtensibilityManager = MakeShareable(new FExtensibilityManager);
+
+        TSharedRef<FExtender> VariablesWatch(new FExtender());
+        VariablesWatch->AddMenuExtension(
+            "EditMain",
+            EExtensionHook::After,
+            nullptr,
+            FMenuExtensionDelegate::CreateStatic(&Local::AddMenuCommands));
+
+        MenuExtensibilityManager->AddExtender(VariablesWatch);
 	}
 
 	/** Unregisters main menu and tool bar menu extensions. */
@@ -148,6 +168,23 @@ protected:
 		MenuExtensibilityManager.Reset();
 		ToolBarExtensibilityManager.Reset();
 	}
+
+    static void OpenVariablesWatch()
+    {
+
+    }
+
+    static void CreateToolListMenu(FMenuBuilder& MenuBuilder)
+    {
+        FUIAction action(FExecuteAction::CreateStatic(&FVarSystemEditorModule::OpenVariablesWatch));
+
+        MenuBuilder.AddMenuEntry(
+            LOCTEXT("Variables", "VariablesCategory"),
+            LOCTEXT("Variables", "VariablesCategoryTooltip"),
+            FSlateIcon(),
+            action
+        );
+    }
 
 private:
 

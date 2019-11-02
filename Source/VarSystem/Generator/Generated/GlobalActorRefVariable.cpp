@@ -2,6 +2,8 @@
 
 #include "GlobalActorRefVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 AActor* UGlobalActorRefVariable::GetGlobalActorRefValue(UGlobalActorRefVariable* var)
 {
@@ -69,4 +71,9 @@ void UGlobalActorRefVariable::Load()
 	}
 }
 
+
+FString UGlobalActorRefVariable::GetStringValue() const
+{
+	return value->GetName();
+}
 

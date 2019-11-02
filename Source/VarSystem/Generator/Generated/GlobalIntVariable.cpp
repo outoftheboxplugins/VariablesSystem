@@ -2,6 +2,8 @@
 
 #include "GlobalIntVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 int32 UGlobalIntVariable::GetGlobalIntValue(UGlobalIntVariable* var)
 {
@@ -69,4 +71,9 @@ void UGlobalIntVariable::Load()
 	}
 }
 
+
+FString UGlobalIntVariable::GetStringValue() const
+{
+	return UKismetStringLibrary::Conv_IntToString(value);
+}
 

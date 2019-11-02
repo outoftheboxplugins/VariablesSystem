@@ -2,6 +2,8 @@
 
 #include "GlobalFVector2DVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DValue(UGlobalFVector2DVariable* var)
 {
@@ -69,4 +71,9 @@ void UGlobalFVector2DVariable::Load()
 	}
 }
 
+
+FString UGlobalFVector2DVariable::GetStringValue() const
+{
+	return UKismetStringLibrary::Conv_Vector2dToString(value);
+}
 

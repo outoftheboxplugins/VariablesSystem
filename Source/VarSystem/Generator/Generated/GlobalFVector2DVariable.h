@@ -18,7 +18,7 @@ class VARSYSTEM_API UGlobalFVector2DVariable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-		FVector2D value;
+	FVector2D value;
 	
 	// Get the value of a FVector2D variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
@@ -46,4 +46,6 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };

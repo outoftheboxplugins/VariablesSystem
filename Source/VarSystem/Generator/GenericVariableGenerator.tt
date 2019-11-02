@@ -10,13 +10,15 @@
  string[] classTypes	    = {"AActor*",	                "bool",		"int32",	"float",	"FRotator",					        "FVector",				            "FString",	"FVector2D"};
  string[] classDefaults     = {"nullptr",	                "false",	"0",		"0.0f",		"FRotator::ZeroRotator",	        "FVector::ZeroVector",	            "\"\"",		"FVector2D::ZeroVector"};
  string[] classNodeTypes    = {"Object",                    "Boolean",  "Int",      "Float",    "Struct",                           "Struct",                           "String",   "Struct"};
- string[] classNodeSubType =  {"AActor::StaticClass()",     "",         "",         "",         "TBaseStructure<FRotator>::Get()",  "TBaseStructure<FVector>::Get()",   "",         "TBaseStructure<FVector2D>::Get()"};
+ string[] classNodeSubType  = {"AActor::StaticClass()",     "",         "",         "",         "TBaseStructure<FRotator>::Get()",  "TBaseStructure<FVector>::Get()",   "",         "TBaseStructure<FVector2D>::Get()"};
+ string[] toStringFunction  = {"value->GetName()", "UKismetStringLibrary::Conv_BoolToString(value)", "UKismetStringLibrary::Conv_IntToString(value)", "UKismetStringLibrary::Conv_FloatToString(value)",
+ "UKismetStringLibrary::Conv_RotatorToString(value)", "UKismetStringLibrary::Conv_VectorToString(value)", "value", "UKismetStringLibrary::Conv_Vector2dToString(value)" };
 
 for (Int32 i = 0; i < classNames.Length; ++i) 
 {
   // End of file.
   SaveGlobalHOutput(classNames[i], classTypes[i], classDefaults[i]);
-  SaveGlobalCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
+  SaveGlobalCPPOutput(classNames[i], classTypes[i], classDefaults[i], toStringFunction[i]);
   SaveLocalHOutput(classNames[i], classTypes[i], classDefaults[i]);
   SaveLocalCPPOutput(classNames[i], classTypes[i], classDefaults[i]);
 }
@@ -41,9 +43,9 @@ private void SaveGlobalHOutput(string className, string classType, string classD
 	this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
 }
 
-private void SaveGlobalCPPOutput(string className, string classType, string classDefault) 
+private void SaveGlobalCPPOutput(string className, string classType, string classDefault, string toStringFunction) 
 {
-	GenerateGlobalCPPFile(className, classType, classDefault);
+	GenerateGlobalCPPFile(className, classType, classDefault, toStringFunction);
 	string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
 	string outputFilePath = Path.Combine(templateDirectory, "Generated/Global" + className + "Variable.cpp");
 	File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString()); 

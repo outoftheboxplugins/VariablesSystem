@@ -2,6 +2,8 @@
 
 #include "GlobalBoolVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 bool UGlobalBoolVariable::GetGlobalBoolValue(UGlobalBoolVariable* var)
 {
@@ -69,4 +71,9 @@ void UGlobalBoolVariable::Load()
 	}
 }
 
+
+FString UGlobalBoolVariable::GetStringValue() const
+{
+	return UKismetStringLibrary::Conv_BoolToString(value);
+}
 

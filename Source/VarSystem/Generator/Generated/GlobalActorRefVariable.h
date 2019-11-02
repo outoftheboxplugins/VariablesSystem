@@ -21,7 +21,7 @@ class VARSYSTEM_API UGlobalActorRefVariable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-		AActor* value;
+	AActor* value;
 	
 	// Get the value of a AActor* variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
@@ -49,4 +49,6 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };

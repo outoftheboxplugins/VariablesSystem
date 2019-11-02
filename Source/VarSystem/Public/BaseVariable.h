@@ -42,6 +42,8 @@ public:
     bool ShouldSave() const { return SaveBehavior == EVarSystemSaveType::VSST_SaveOnFinish || SaveBehavior == EVarSystemSaveType::VSST_StartAndFinish; }
     bool ShouldLoad() const { return SaveBehavior == EVarSystemSaveType::VSST_LoadOnStart || SaveBehavior == EVarSystemSaveType::VSST_StartAndFinish; }
 
+    virtual FString GetStringValue() const { return FString("Invalid Value"); };
+
 protected:
 	bool dirty = false;
 

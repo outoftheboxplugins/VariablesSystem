@@ -2,6 +2,8 @@
 
 #include "CustomWindow.h"
 
+#include "VariablesSystemHelpers.h"
+
 #include "Fonts/SlateFontInfo.h"
 #include "Internationalization/Text.h"
 #include "BaseVariable.h"
@@ -22,6 +24,7 @@
 #include "AssetRegistryModule.h"
 
 #include "VarSystem/Generator/Generated/Node/IncludeAll.h"
+#include "AssetEditorManager.h"
 
 #define LOCTEXT_NAMESPACE "SVarEditorWindow"
 
@@ -35,18 +38,7 @@ SVarEditorWindow::~SVarEditorWindow()
 
 void SVarEditorWindow::Construct(const FArguments& InArgs, TArray<UBaseVariable*> InBaseVariables, const TSharedRef<ISlateStyle>& InStyle)
 {
-    if (FModuleManager::Get().IsModuleLoaded("AssetRegistry"))
-    {
-        FAssetRegistryModule& AssetRegistryModule = FModuleManager::LoadModuleChecked<FAssetRegistryModule>("AssetRegistry");
-        TArray<FAssetData> AssetData;
-        AssetRegistryModule.Get().GetAssetsByClass(UGlobalBoolVariable::StaticClass()->GetFName(), AssetData);
-        for (int i = 0; i < AssetData.Num(); i++) {
-            UBaseVariable* VariableFound = Cast<UBaseVariable>(AssetData[i].GetAsset());
-            if (VariableFound != NULL) {
-                InBaseVariables.Add(VariableFound);
-            }
-        }
-    }
+    InBaseVariables = UVariablesSystemHelpersBPLibrary::GetAllVariables();
 
     for (auto& variable : InBaseVariables)
     {
@@ -58,6 +50,12 @@ void SVarEditorWindow::Construct(const FArguments& InArgs, TArray<UBaseVariable*
         SAssignNew(SubjectsListView, SListView<UBaseVariable*>)
         .ListItemsSource(&BaseVariables)
         .OnGenerateRow(this, &SVarEditorWindow::MakeTreeRowWidget)
+        .OnMouseButtonDoubleClick(this, &SVarEditorWindow::HandleSelectionChanged)
+        .HeaderRow(
+            SNew(SHeaderRow)
+            + SHeaderRow::Column("Name").DefaultLabel(LOCTEXT("Name", "Name"))
+            + SHeaderRow::Column("Value").DefaultLabel(LOCTEXT("Value", "Value"))
+        )
     ];
 
     //FCoreUObjectDelegates::OnObjectPropertyChanged.AddSP(this, &SVarEditorWindow::HandleVarSystemPropertyChanged);
@@ -91,35 +89,66 @@ TSharedRef<ITableRow> SVarEditorWindow::MakeTreeRowWidget(UBaseVariable* InInfo,
 {
     auto Settings = GetDefault<UVarSystemEditorSettings>();
 
-    return
-        SNew(STableRow< UBaseVariable* >, OwnerTable)
-        .ShowSelection(true)
-        [
-            SNew(SBox)
-            .Padding(1.f)
-        [
-            SNew(STextBlock)
-            .Text(LOCTEXT("ButtonName", "Button"))
-        ]
-        ];
+    FString variableName;
+    InInfo->GetName(variableName);
 
-    //return SNew(SVerticalBox)
-    //    + SVerticalBox::Slot()
-    //    .FillHeight(1.0f)
-    //    [
-    //        SAssignNew(EditableTextBox, SMultiLineEditableTextBox)
-    //        .BackgroundColor((Settings != nullptr) ? Settings->BackgroundColor : FLinearColor::White)
-    //    .Font((Settings != nullptr) ? Settings->Font : FSlateFontInfo())
-    //    .ForegroundColor((Settings != nullptr) ? Settings->ForegroundColor : FLinearColor::Black)
-    //    .Margin((Settings != nullptr) ? Settings->Margin : 4.0f)
-    //    .OnTextChanged(this, &SVarEditorWindow::HandleEditableTextBoxTextChanged)
-    //    .OnTextCommitted(this, &SVarEditorWindow::HandleEditableTextBoxTextCommitted)
-    //    .Text(/*BaseVariables[0]->VariableDescription*/ FText::FromString("da"))
-    //    ];
-    //        
+    class SModuleItemWidget : public SMultiColumnTableRow< UBaseVariable* >
+    {
+    public:
+        SLATE_BEGIN_ARGS(SModuleItemWidget) {}
+        SLATE_END_ARGS()
+
+            void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, UBaseVariable* InListItem)
+        {
+            Item = InListItem;
+
+            SMultiColumnTableRow< UBaseVariable* >::Construct(FSuperRowType::FArguments(), InOwnerTable);
+        }
+
+        TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName)
+        {
+            if (ColumnName == "Name")
+            {
+                return
+                    SNew(STextBlock)
+                    .Text(FText::FromName(Item->GetFName()));
+            }
+            else if (ColumnName == "Value")
+            {
+                return
+                    SNew(STextBlock)
+                    .Text(FText::FromString(Item->GetStringValue()));
+            }
+            else
+            {
+                return SNew(STextBlock).Text(LOCTEXT("UnknownColumn", "Unknown Column"));
+            }
+
+        }
+
+        UBaseVariable* Item;
+    };
+
+    return SNew(SModuleItemWidget, OwnerTable, InInfo);
+     
+    //FString rowText = FString::Printf(L"%s - %s", *variableName, *variableValue);
     //
-    // SNew(SLiveLinkClientPanelSubjectRow, OwnerTable)
-    //    .Entry(InInfo);
+    //return
+    //    SNew(STableRow< UBaseVariable* >, OwnerTable)
+    //    .ShowSelection(true)
+    //    [
+    //        SNew(SBox)
+    //        .Padding(1.f)
+    //    [
+    //        SNew(STextBlock)
+    //        .Text(rowText)
+    //    ]
+    //    ];
+}
+
+void SVarEditorWindow::HandleSelectionChanged(UBaseVariable* InItem)
+{
+    FAssetEditorManager::Get().OpenEditorForAsset(InItem);
 }
 
 #undef LOCTEXT_NAMESPACE

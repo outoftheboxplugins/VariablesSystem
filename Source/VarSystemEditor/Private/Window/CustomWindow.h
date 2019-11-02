@@ -53,6 +53,10 @@ private:
     // Helper functions for building the subject tree UI
     TSharedRef<ITableRow> MakeTreeRowWidget(UBaseVariable* InInfo, const TSharedRef<STableViewBase>& OwnerTable);
     
+    /** Callback for selecting an activity in the list view. */
+    void HandleSelectionChanged(UBaseVariable* InItem);
+
+
 private:
 
     // Subject tree widget

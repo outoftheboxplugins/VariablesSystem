@@ -2,6 +2,8 @@
 
 #include "GlobalFRotatorVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 FRotator UGlobalFRotatorVariable::GetGlobalFRotatorValue(UGlobalFRotatorVariable* var)
 {
@@ -69,4 +71,9 @@ void UGlobalFRotatorVariable::Load()
 	}
 }
 
+
+FString UGlobalFRotatorVariable::GetStringValue() const
+{
+	return UKismetStringLibrary::Conv_RotatorToString(value);
+}
 

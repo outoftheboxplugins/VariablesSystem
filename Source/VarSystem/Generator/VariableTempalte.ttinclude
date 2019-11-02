@@ -27,7 +27,7 @@ class VARSYSTEM_API UGlobal<#=ClassName#>Variable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-		<#=ClassType#> value;
+	<#=ClassType#> value;
 	
 	// Get the value of a <#=ClassType#> variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
@@ -55,19 +55,23 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };
 <#+
 }
 #>
 
 <#+ // Start of class feature control block.
-void GenerateGlobalCPPFile(string ClassName, string ClassType, string classDefault)
+void GenerateGlobalCPPFile(string ClassName, string ClassType, string classDefault, string toStringFunction)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "Global<#=ClassName#>Variable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 <#=ClassType#> UGlobal<#=ClassName#>Variable::GetGlobal<#=ClassName#>Value(UGlobal<#=ClassName#>Variable* var)
 {
@@ -135,6 +139,11 @@ void UGlobal<#=ClassName#>Variable::Load()
 	}
 }
 
+
+FString UGlobal<#=ClassName#>Variable::GetStringValue() const
+{
+	return <#=toStringFunction#>;
+}
 
 <#+
 }

@@ -2,6 +2,8 @@
 
 #include "GlobalStringVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 FString UGlobalStringVariable::GetGlobalStringValue(UGlobalStringVariable* var)
 {
@@ -69,4 +71,9 @@ void UGlobalStringVariable::Load()
 	}
 }
 
+
+FString UGlobalStringVariable::GetStringValue() const
+{
+	return value;
+}
 

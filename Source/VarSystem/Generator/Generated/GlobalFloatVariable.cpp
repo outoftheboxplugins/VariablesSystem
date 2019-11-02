@@ -2,6 +2,8 @@
 
 #include "GlobalFloatVariable.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
 
 float UGlobalFloatVariable::GetGlobalFloatValue(UGlobalFloatVariable* var)
 {
@@ -69,4 +71,9 @@ void UGlobalFloatVariable::Load()
 	}
 }
 
+
+FString UGlobalFloatVariable::GetStringValue() const
+{
+	return UKismetStringLibrary::Conv_FloatToString(value);
+}
 

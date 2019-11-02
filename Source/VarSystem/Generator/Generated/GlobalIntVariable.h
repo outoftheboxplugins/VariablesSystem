@@ -18,7 +18,7 @@ class VARSYSTEM_API UGlobalIntVariable : public UBaseVariable
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-		int32 value;
+	int32 value;
 	
 	// Get the value of a int32 variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
@@ -46,4 +46,6 @@ public:
 	virtual void Save() override;
 
 	virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };
