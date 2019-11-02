@@ -1,8 +1,0 @@
-#include "VarSystem/Generator/Generated/GlobalActorRefVariable.h"
-#include "VarSystem/Generator/Generated/GlobalBoolVariable.h"
-#include "VarSystem/Generator/Generated/GlobalIntVariable.h"
-#include "VarSystem/Generator/Generated/GlobalFloatVariable.h"
-#include "VarSystem/Generator/Generated/GlobalFRotatorVariable.h"
-#include "VarSystem/Generator/Generated/GlobalFVectorVariable.h"
-#include "VarSystem/Generator/Generated/GlobalStringVariable.h"
-#include "VarSystem/Generator/Generated/GlobalFVector2DVariable.h"

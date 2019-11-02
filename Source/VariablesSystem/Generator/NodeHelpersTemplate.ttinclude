@@ -1,0 +1,57 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#+
+void GeneratePinTypeFromVariable(string[] Classes, string[] Types, string[] SubTypes)
+{
+    for (int i = 0; i < Classes.Length; i++)
+    {
+#>
+    if (VariableClassName == FName("Global<#=Classes[i]#>Variable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=Types[i]#>;
+        <#+
+            if (SubTypes[i] != "")
+            {
+		#>
+                ResultPinType.PinSubCategoryObject = <#=SubTypes[i]#>;
+        <#+
+            }
+		#>
+	}
+<#+
+    }
+}
+#>
+
+<#+
+void GenerateCreateSpecificNodeGet(string[] Classes, string[] Types, string[] SubTypes)
+{
+    for (int i = 0; i < Classes.Length; i++)
+    {
+#>
+	if (VariableClassName == FName("Global<#=Classes[i]#>Variable"))
+	{
+		resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=Classes[i]#>Variable, GetGlobal<#=Classes[i]#>Value), UGlobal<#=Classes[i]#>Variable::StaticClass());
+	}
+<#+
+	}       
+}
+#>
+
+<#+
+void GenerateCreateSpecificNodeSet(string[] Classes, string[] Types, string[] SubTypes)
+{
+    for (int i = 0; i < Classes.Length; i++)
+    {
+#>
+        if (VariableClassName == FName("Global<#=Classes[i]#>Variable"))
+        {
+            resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=Classes[i]#>Variable, SetGlobal<#=Classes[i]#>Value), UGlobal<#=Classes[i]#>Variable::StaticClass());
+        }
+        <#+
+    }
+}
+#>

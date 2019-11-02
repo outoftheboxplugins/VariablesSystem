@@ -1,0 +1,47 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#+ // Generate the H file for a generic local variable.
+void GenerateLocalHFile(string ClassName, string ClassType, string classDefault)
+{
+#>
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
+#pragma once
+
+#include "UObject/ObjectMacros.h"
+#include "BaseVariable.h"
+#include "Local<#=ClassName#>Variable.generated.h"
+
+/**
+ *
+ */
+UCLASS(BlueprintType)
+class VARIABLESSYSTEM_API ULocal<#=ClassName#>Variable : public UBaseVariable
+{
+	GENERATED_BODY()
+
+public:
+	TMap<UObject*, <#=ClassType#>> variables;
+
+	// Get the value of a Local<#=ClassName#> variable.
+	<#=ClassType#>& GetLocal<#=ClassName#>Ref(UObject* owner);
+	
+	// Get the value of a Local<#=ClassName#> variable.
+	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
+	static <#=ClassType#> GetLocal<#=ClassName#>(UObject* owner, ULocal<#=ClassName#>Variable* var);
+
+	// Set the value of a Local<#=ClassName#> variable.
+	UFUNCTION(BlueprintCallable, Category = "Var System Local")
+	static void SetLocal<#=ClassName#>Value(UObject* owner, ULocal<#=ClassName#>Variable* var, <#=ClassType#> _value);
+	
+	// Copy the value of a Local<#=ClassName#> variable.
+	UFUNCTION(BlueprintCallable, Category = "Var System Local")
+	static void CopyLocal<#=ClassName#>Value(UObject* owner, ULocal<#=ClassName#>Variable* var, UObject* otherOwner, ULocal<#=ClassName#>Variable* other);
+};
+
+<#+
+}
+#>
