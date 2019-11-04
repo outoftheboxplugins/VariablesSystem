@@ -54,10 +54,6 @@ public:
     {
         FWorldDelegates::OnWorldInitializedActors.AddRaw(this, &FVarSystemModule::OnWorldCreationEvent);
         FWorldDelegates::OnPostWorldCleanup.AddRaw(this, &FVarSystemModule::OnWorldDestructionEvent);
-
-        // Register main menu dropdown entry
-        TSharedPtr<FExtender> MenuExtender = MakeShareable(new FExtender);
-        MenuExtender->AddMenuExtension("FileLoadAndSave", EExtensionHook::After, nullptr, FMenuExtensionDelegate::CreateRaw(this, &FVarSystemModule::CreateDepenCheckerMainMenuEntry));
     }
     virtual void ShutdownModule() override
     {
@@ -115,23 +111,6 @@ private:
                 variable->Save();
             }
         }
-    }
-
-    // Extend main menu for to add depend checker delegate
-    void CreateDepenCheckerMainMenuEntry(FMenuBuilder& MenuBuilder)
-    {
-        MenuBuilder.BeginSection("VariablesSystem", LOCTEXT("WatchWindow", "WatchWindow"));
-        MenuBuilder.AddMenuEntry(
-            FText(LOCTEXT("VariablesWatch", "Variables Watch")),
-            LOCTEXT("VariablesWatchTooltip", "Show all the variables inside a watch"),
-            FSlateIcon(FEditorStyle::GetStyleSetName(), "DeveloperTools.MenuIcon"),
-            FUIAction(FExecuteAction::CreateRaw(this, &FVarSystemModule::OnExtendMainMenu)));
-        MenuBuilder.EndSection();
-    }
-
-    void OnExtendMainMenu()
-    {
-
     }
 };
 

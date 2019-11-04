@@ -6,41 +6,15 @@ namespace UnrealBuildTool.Rules
 	{
 		public VarSystem(ReadOnlyTargetRules Target) : base(Target)
 		{
-			PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+            PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-			PublicDependencyModuleNames.AddRange(
-				new string[] {
-					"Core",
-					"CoreUObject",
-                    "Engine",
-                    "AssetTools",
-                    "ContentBrowser",
+            PublicDependencyModuleNames.AddRange(
+                new string[] {
                     "Core",
                     "CoreUObject",
-                    "DesktopWidgets",
-                    "EditorStyle",
                     "Engine",
-                    "InputCore",
-                    "Projects",
-                    "Slate",
-                    "SlateCore",
-                    "Projects",
-                    "MainFrame",
                 });
-
-            if (Target.Type == TargetRules.TargetType.Editor)
-            {
-                PrivateDependencyModuleNames.AddRange(
-                new string[]
-                {
-                    "UnrealEd"
-                }
-                );
-            }
-
-            PrivateIncludePaths.AddRange(
-				new string[] {
-				});
-		}
+        }
 	}
 }
+  
