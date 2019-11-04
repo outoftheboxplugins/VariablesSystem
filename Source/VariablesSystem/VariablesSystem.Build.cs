@@ -1,5 +1,7 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
+//TODO: Investigate if we should use a PCH and how.
+
 namespace UnrealBuildTool.Rules
 {
 	public class VariablesSystem : ModuleRules
