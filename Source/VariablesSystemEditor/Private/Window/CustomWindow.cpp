@@ -24,7 +24,7 @@
 #include "AssetRegistryModule.h"
 
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
-#include "AssetEditorManager.h"
+#include "Toolkits/AssetEditorManager.h"
 
 #define LOCTEXT_NAMESPACE "SVarEditorWindow"
 

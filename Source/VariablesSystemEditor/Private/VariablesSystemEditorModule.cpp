@@ -11,8 +11,8 @@
 #include "AssetTools/VariablesSystemActions.h"
 #include "Styles/VariablesSystemEditorStyle.h"
 #include "VariablesSystemEditorSettings.h"
-#include "UIAction.h"
-#include "MultiBoxBuilder.h"
+#include "Framework/Commands/UIAction.h"
+#include "Framework/MultiBox/MultiBoxBuilder.h"
 
 
 #define LOCTEXT_NAMESPACE "FVariablesSystemEditorModule"
