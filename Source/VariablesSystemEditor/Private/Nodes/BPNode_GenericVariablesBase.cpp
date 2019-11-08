@@ -7,7 +7,8 @@
 #include "BlueprintNodeSpawner.h"
 #include "Kismet2/BlueprintEditorUtils.h"
 
-#define LOCTEXT_NAMESPACE "K2Node_GenericVariableValue"
+#define LOCTEXT_NAMESPACE "VariablesSystem"
+
 
 struct FGetPinName {
     static const FName& GetVariableTextPin() {

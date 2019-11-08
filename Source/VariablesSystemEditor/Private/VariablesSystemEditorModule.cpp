@@ -14,8 +14,8 @@
 #include "Framework/Commands/UIAction.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 
+#define LOCTEXT_NAMESPACE "VariablesSystem"
 
-#define LOCTEXT_NAMESPACE "FVariablesSystemEditorModule"
 
 /**
  * Implements the VariablesSystemEditor module.
@@ -77,7 +77,7 @@ protected:
 	{
 		IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
 
-		RegisterAssetTypeAction(AssetTools, MakeShareable(new FVariablesSystemActions(Style.ToSharedRef())));
+		RegisterAssetTypeAction(AssetTools, MakeShareable(new FVariablesSystemActions()));
 	}
 
 	/**

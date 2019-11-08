@@ -1,24 +1,12 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "VariablesSystemActions.h"
 
-#include "Framework/MultiBox/MultiBoxBuilder.h"
-#include "BaseVariable.h"
-#include "Styling/SlateStyle.h"
+#include "VariablesSystem/Public/BaseVariable.h"
 
-#include "VariablesSystemEditorToolkit.h"
+#define VARIABLESSYSTEM_COLOR FColor(224.0f, 20.0f, 23.0f)
 
-
-#define LOCTEXT_NAMESPACE "AssetTypeActions"
-
-
-/* FVariablesSystemActions constructors
- *****************************************************************************/
-
-FVariablesSystemActions::FVariablesSystemActions(const TSharedRef<ISlateStyle>& InStyle)
-	: Style(InStyle)
-{ }
-
+#define LOCTEXT_NAMESPACE "VariablesSystem"
 
 /* FAssetTypeActions_Base overrides
  *****************************************************************************/
@@ -28,67 +16,25 @@ bool FVariablesSystemActions::CanFilter()
 	return true;
 }
 
-
 uint32 FVariablesSystemActions::GetCategories()
 {
+    //TODO: We should move this to our own category really soon.
 	return EAssetTypeCategories::Misc;
 }
 
-
 FText FVariablesSystemActions::GetName() const
 {
-	return NSLOCTEXT("AssetTypeActions", "AssetTypeActions_VariablesSystem", "Var System");
+	return LOCTEXT("VariablesSystem_PluginName", "Variables System");
 }
-
 
 UClass* FVariablesSystemActions::GetSupportedClass() const
 {
 	return UBaseVariable::StaticClass();
 }
 
-
 FColor FVariablesSystemActions::GetTypeColor() const
 {
-	return FColor::Orange;
-}
-
-bool FVariablesSystemActions::HasActions(const TArray<UObject*>& InObjects) const
-{
-    return true;
-}
-
-void FVariablesSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
-{
-    FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
-
-    auto BaseVariables = GetTypedWeakObjectPtrs<UBaseVariable>(InObjects);
-
-    MenuBuilder.AddMenuEntry(
-        LOCTEXT("VariablesSystem_ReverseText", "Reverse Text"),
-        LOCTEXT("VariablesSystem_ReverseTextToolTip", "Reverse the text stored in the selected text asset(s)."),
-        FSlateIcon(),
-        FUIAction(
-            FExecuteAction::CreateLambda([=] {}),
-            FCanExecuteAction::CreateLambda([=] { return true;}))
-        );
-}
-
-void FVariablesSystemActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
-{
-    EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid()
-        ? EToolkitMode::WorldCentric
-        : EToolkitMode::Standalone;
-
-    for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
-    {
-        auto BaseVariable = Cast<UBaseVariable>(*ObjIt);
-
-        if (BaseVariable != nullptr)
-        {
-            TSharedRef<FVariablesSystemEditorToolkit> EditorToolkit = MakeShareable(new FVariablesSystemEditorToolkit(Style));
-            EditorToolkit->Initialize(BaseVariable, Mode, EditWithinLevelEditor);
-        }
-    }
+	return VARIABLESSYSTEM_COLOR;
 }
 
 #undef LOCTEXT_NAMESPACE

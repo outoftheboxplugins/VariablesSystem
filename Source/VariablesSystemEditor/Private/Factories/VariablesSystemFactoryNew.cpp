@@ -8,7 +8,8 @@
 #include "Modules/ModuleManager.h"
 #include "Kismet2/SClassPickerDialog.h"
 
-#define LOCTEXT_NAMESPACE "VariablesSystemFactory"
+#define LOCTEXT_NAMESPACE "VariablesSystem"
+
 
 /* UVariablesSystemFactory constructors
  *****************************************************************************/

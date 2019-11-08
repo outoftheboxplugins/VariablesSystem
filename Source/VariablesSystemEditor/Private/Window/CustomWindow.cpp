@@ -26,7 +26,8 @@
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
 #include "Toolkits/AssetEditorManager.h"
 
-#define LOCTEXT_NAMESPACE "SVarEditorWindow"
+#define LOCTEXT_NAMESPACE "VariablesSystem"
+
 
 /* SVarEditorWindow interface
  *****************************************************************************/

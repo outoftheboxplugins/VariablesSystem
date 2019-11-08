@@ -36,8 +36,8 @@ static TArray<UBaseVariable*> GetAllVariables()
 
     return Variables;
 }
+#define LOCTEXT_NAMESPACE "VariablesSystem"
 
-#define LOCTEXT_NAMESPACE "FVariablesSystemEditorToolkit"
 
 DEFINE_LOG_CATEGORY_STATIC(LogVariablesSystemEditor, Log, All);
 

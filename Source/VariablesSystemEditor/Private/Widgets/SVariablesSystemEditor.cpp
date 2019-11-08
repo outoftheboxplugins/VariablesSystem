@@ -12,7 +12,8 @@
 #include "VariablesSystemEditorSettings.h"
 
 
-#define LOCTEXT_NAMESPACE "SVariablesSystemEditor"
+#define LOCTEXT_NAMESPACE "VariablesSystem"
+
 
 
 /* SVariablesSystemEditor interface
