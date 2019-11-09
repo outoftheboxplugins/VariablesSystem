@@ -11,7 +11,6 @@
 #include "Widgets/SBoxPanel.h"
 #include "Widgets/Input/SMultiLineEditableTextBox.h"
 
-#include "VariablesSystemEditorSettings.h"
 #include "Framework/Views/ITypedTableView.h"
 
 #include "CoreMinimal.h"
@@ -88,8 +87,6 @@ void SVarEditorWindow::HandleVariablesSystemPropertyChanged(UObject* Object, FPr
 
 TSharedRef<ITableRow> SVarEditorWindow::MakeTreeRowWidget(UBaseVariable* InInfo, const TSharedRef<STableViewBase>& OwnerTable)
 {
-    auto Settings = GetDefault<UVariablesSystemEditorSettings>();
-
     FString variableName;
     InInfo->GetName(variableName);
 

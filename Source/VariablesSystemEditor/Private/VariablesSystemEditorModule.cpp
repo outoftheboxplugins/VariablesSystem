@@ -9,8 +9,6 @@
 #include "Toolkits/AssetEditorToolkit.h"
 
 #include "AssetTools/VariablesSystemActions.h"
-#include "Styles/VariablesSystemEditorStyle.h"
-#include "VariablesSystemEditorSettings.h"
 #include "Framework/Commands/UIAction.h"
 #include "Framework/MultiBox/MultiBoxBuilder.h"
 
@@ -49,20 +47,14 @@ public:
 
 	virtual void StartupModule() override
 	{
-		Style = MakeShareable(new FVariablesSystemEditorStyle());
-
-//		FVariablesSystemEditorCommands::Register();
-
 		RegisterAssetTools();
 		RegisterMenuExtensions();
-		RegisterSettings();
 	}
 
 	virtual void ShutdownModule() override
 	{
 		UnregisterAssetTools();
 		UnregisterMenuExtensions();
-		UnregisterSettings();
 	}
 
 	virtual bool SupportsDynamicReloading() override
@@ -92,20 +84,7 @@ protected:
 		RegisteredAssetTypeActions.Add(Action);
 	}
 
-	/** Register the text asset editor settings. */
-	void RegisterSettings()
-	{
-		ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings");
-
-		if (SettingsModule != nullptr)
-		{
-			ISettingsSectionPtr SettingsSection = SettingsModule->RegisterSettings("Editor", "Plugins", "VariablesSystem",
-				LOCTEXT("VariablesSystemSettingsName", "Var System"),
-				LOCTEXT("VariablesSystemSettingsDescription", "Configure the Var System plug-in."),
-				GetMutableDefault<UVariablesSystemEditorSettings>()
-			);
-		}
-	}
+	
 
 	/** Unregisters asset tool actions. */
 	void UnregisterAssetTools()
@@ -123,16 +102,6 @@ protected:
 		}
 	}
 
-	/** Unregister the text asset editor settings. */
-	void UnregisterSettings()
-	{
-		ISettingsModule* SettingsModule = FModuleManager::GetModulePtr<ISettingsModule>("Settings");
-
-		if (SettingsModule != nullptr)
-		{
-			SettingsModule->UnregisterSettings("Editor", "Plugins", "VariablesSystem");
-		}
-	}
 
 protected:
 

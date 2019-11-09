@@ -24,7 +24,7 @@ uint32 FVariablesSystemActions::GetCategories()
 
 FText FVariablesSystemActions::GetName() const
 {
-	return LOCTEXT("VariablesSystem_PluginName", "Variables System");
+	return LOCTEXT("VariablesSystem_AssetName", "Variable");
 }
 
 UClass* FVariablesSystemActions::GetSupportedClass() const
