@@ -1,3 +1,5 @@
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
 #include "BPNode_GenericVariablesGetValue.h"
 
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
@@ -5,10 +7,8 @@
 #include "KismetCompiler.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
-#include "Kismet2/BlueprintEditorUtils.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
-
 
 //////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesGetValue::AllocateDefaultPins()
@@ -20,22 +20,19 @@ void UBPNode_GenericVariablesGetValue::AllocateDefaultPins()
     Super::AllocateDefaultPins();
 }
 
+//////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesGetValue::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-    return LOCTEXT("GetVariableValue", "GetVariableValue");
-}
-
-FText UBPNode_GenericVariablesGetValue::GetTooltipText() const
-{
-    return LOCTEXT("GetVariableValue_Tooltip", "Return the value of a Generic Variable");
+    return LOCTEXT("VariablesSystem_GetVariableNodeName", "Get Generic Global Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////
-FText UBPNode_GenericVariablesGetValue::GetMenuCategory() const
+FText UBPNode_GenericVariablesGetValue::GetTooltipText() const
 {
-    return LOCTEXT("GetVariableValue_Category", "Variables System");
+    return LOCTEXT("VariablesSystem_GetVariableNodetTooltip", "Returns the value of a Global Generic Variable");
 }
 
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesGetValue::GetVariableValuePin() const
 {
     UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_ReturnValue);
@@ -55,6 +52,7 @@ UK2Node_CallFunction* UBPNode_GenericVariablesGetValue::CreateSpecificNode(FName
     return resultCreateNode;
 }
 
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesGetValue::GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const
 {
     return nodeFunction->GetReturnValuePin();

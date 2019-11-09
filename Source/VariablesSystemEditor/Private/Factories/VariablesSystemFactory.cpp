@@ -1,71 +1,52 @@
-// Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #include "VariablesSystemFactory.h"
 
-#include "Containers/UnrealString.h"
-#include "BaseVariable.h"
-#include "Misc/FileHelper.h"
-#include "Modules/ModuleManager.h"
+#include "VariablesSystem/Public/BaseVariable.h"
+#include "VariablesSystemEditor/Private/Factories/VariablesSystemCreateNewFilter.h"
+
 #include "Kismet2/SClassPickerDialog.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 
-
-/* UVariablesSystemFactory constructors
- *****************************************************************************/
-
 UVariablesSystemFactory::UVariablesSystemFactory(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	Formats.Add(FString(TEXT("txt;")) + NSLOCTEXT("UVariablesSystemFactory", "FormatTxt", "Text File").ToString());
+	Formats.Add(FString(TEXT("variable;")) + LOCTEXT("VariablesSystem_ExtensionTooltip", "VariablesSystem variable asset").ToString());
 	SupportedClass = UBaseVariable::StaticClass();
 	bCreateNew = false;
 	bEditorImport = true;
 }
 
-UObject* UVariablesSystemFactory::FactoryCreateFile(UClass* InClass, UObject* InParent, FName InName, EObjectFlags Flags, const FString& Filename, const TCHAR* Parms, FFeedbackContext* Warn, bool& bOutOperationCanceled)
+bool UVariablesSystemFactory::ShouldShowInNewMenu() const
 {
-	UBaseVariable* BaseVariable = nullptr;
-	FString TextString;
-
-	if (FFileHelper::LoadFileToString(TextString, *Filename))
-	{
-		BaseVariable = NewObject<UBaseVariable>(InParent, InClass, InName, Flags);
-		BaseVariable->GetDescription() = FText::FromString(TextString);
-	}
-
-	bOutOperationCanceled = false;
-
-	return BaseVariable;
+	return true;
 }
-
-
 
 bool UVariablesSystemFactory::ConfigureProperties()
 {
-	// nullptr the DataAssetClass so we can check for selection
-	DataAssetClass = nullptr;
+    // Reset selection each time a new variable's properties should be selected.
+    ChoosenVariableType = nullptr;
 
-	// Load the classviewer module to display a class picker
-	FClassViewerModule& ClassViewerModule = FModuleManager::LoadModuleChecked<FClassViewerModule>("ClassViewer");
+    // Prepare the configuration options.
+    FClassViewerInitializationOptions Options;
+    Options.Mode = EClassViewerMode::ClassPicker;
 
-	// Fill in options
-	FClassViewerInitializationOptions Options;
-	Options.Mode = EClassViewerMode::ClassPicker;
-
-	TSharedPtr<FAssetClassParentFilter> Filter = MakeShareable(new FAssetClassParentFilter);
-	Options.ClassFilter = Filter;
-
-	Filter->DisallowedClassFlags = CLASS_Abstract | CLASS_Deprecated | CLASS_NewerVersionExists | CLASS_HideDropDown;
+    // Use Custom Filter to allow only for options provided by the variables system.
+    TSharedPtr<FVariablesSystemCreateNewFilter> Filter = MakeShareable(new FVariablesSystemCreateNewFilter);
+    Options.ClassFilter = Filter;
+    Filter->DisallowedClassFlags = CLASS_Abstract | CLASS_Deprecated | CLASS_NewerVersionExists | CLASS_HideDropDown | CLASS_CompiledFromBlueprint;
 	Filter->AllowedChildrenOfClasses.Add(UBaseVariable::StaticClass());
 
-	const FText TitleText = LOCTEXT("CreatAssetOptions", "Pick Asset Class");
+    // Show the class picker dialog to choose a class.
+	const FText TitleText = LOCTEXT("VariablesSystem_SelectClass", "Select the variable type.");
 	UClass* ChosenClass = nullptr;
 	const bool bPressedOk = SClassPickerDialog::PickClass(TitleText, Options, ChosenClass, UBaseVariable::StaticClass());
 
+    // Copy the selection after dialog closed.
 	if (bPressedOk)
 	{
-		DataAssetClass = ChosenClass;
+		ChoosenVariableType = ChosenClass;
 	}
 
 	return bPressedOk;
@@ -73,17 +54,15 @@ bool UVariablesSystemFactory::ConfigureProperties()
 
 UObject* UVariablesSystemFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn)
 {
-	if (DataAssetClass != nullptr)
+	if (ChoosenVariableType != nullptr)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Here."))
-		return NewObject<UBaseVariable>(InParent, DataAssetClass, Name, Flags | RF_Transactional);
+		return NewObject<UBaseVariable>(InParent, ChoosenVariableType, Name, Flags | RF_Transactional);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Better."))
-		// if we have no data asset class, use the passed-in class instead
-		check(Class->IsChildOf(UBaseVariable::StaticClass()));
-		return NewObject<UBaseVariable>(InParent, Class, Name, Flags);
+        UE_LOG(LogTemp, Error, TEXT("VariablesSystem - Could not create variable based on class. No class was selected."));
+        return nullptr;
 	}
 }
+
 #undef LOCTEXT_NAMESPACE

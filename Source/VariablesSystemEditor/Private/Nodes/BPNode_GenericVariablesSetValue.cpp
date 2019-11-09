@@ -1,3 +1,5 @@
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
 #include "BPNode_GenericVariablesSetValue.h"
 
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
@@ -5,10 +7,8 @@
 #include "KismetCompiler.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
-#include "Kismet2/BlueprintEditorUtils.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
-
 
 const FName PN_InputValue(TEXT("InputValue"));
 
@@ -25,20 +25,16 @@ void UBPNode_GenericVariablesSetValue::AllocateDefaultPins()
     Super::AllocateDefaultPins();
 }
 
+//////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-    return LOCTEXT("SetVariableValue", "SetVariableValue");
-}
-
-FText UBPNode_GenericVariablesSetValue::GetTooltipText() const
-{
-    return LOCTEXT("SetVariableValue_Tooltip", "Set the value of a Generic Variable");
+    return LOCTEXT("VariablesSystem_SetVariableNodeName", "Set Generic Global Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////
-FText UBPNode_GenericVariablesSetValue::GetMenuCategory() const
+FText UBPNode_GenericVariablesSetValue::GetTooltipText() const
 {
-    return LOCTEXT("SetVariableValue_Category", "Variables System");
+    return LOCTEXT("VariablesSystem_SetVariableNodetTooltip", "Sets the value of a Global Generic Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -62,6 +58,7 @@ bool UBPNode_GenericVariablesSetValue::AdditionalExpand(FKismetCompilerContext& 
     return bSucceeded;
 }
 
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableValuePin() const
 {
     UEdGraphPin* Pin = FindPinChecked(PN_InputValue);
@@ -81,11 +78,13 @@ UK2Node_CallFunction* UBPNode_GenericVariablesSetValue::CreateSpecificNode(FName
     return resultCreateNode;
 }
 
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const
 {
     return nodeFunction->FindPin(TEXT("_value"));
 }
 
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetThenPin()const
 {
     UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_Then);

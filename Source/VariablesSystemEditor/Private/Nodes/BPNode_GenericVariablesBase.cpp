@@ -1,3 +1,5 @@
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
 #include "BPNode_GenericVariablesBase.h"
 
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
@@ -5,12 +7,10 @@
 #include "KismetCompiler.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
-#include "Kismet2/BlueprintEditorUtils.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 
-
-struct FGetPinName {
+struct FPinNames {
     static const FName& GetVariableTextPin() {
         static const FName VariableTextPin(TEXT("VariableToReference"));
         return VariableTextPin;
@@ -22,11 +22,12 @@ void UBPNode_GenericVariablesBase::AllocateDefaultPins()
 {
     const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
     
-    UEdGraphPin* InVariablePin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UBaseVariable::StaticClass(), FGetPinName::GetVariableTextPin());
+    UEdGraphPin* InVariablePin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UBaseVariable::StaticClass(), FPinNames::GetVariableTextPin());
 
     Super::AllocateDefaultPins();
 }
 
+//////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesBase::GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const
 {
     Super::GetMenuActions(ActionRegistrar);
@@ -42,6 +43,12 @@ void UBPNode_GenericVariablesBase::GetMenuActions(FBlueprintActionDatabaseRegist
 }
 
 //////////////////////////////////////////////////////////////////////////
+FText UBPNode_GenericVariablesBase::GetMenuCategory() const
+{
+    return LOCTEXT("VariablesSystem_CustomNodeFailedExpand", "VariablesSystem");
+}
+
+//////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesBase::PostReconstructNode()
 {
     Super::PostReconstructNode();
@@ -50,6 +57,7 @@ void UBPNode_GenericVariablesBase::PostReconstructNode()
     PropagatePinType(pinType);
 }
 
+//////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesBase::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
 {
     Super::NotifyPinConnectionListChanged(Pin);
@@ -66,6 +74,7 @@ void UBPNode_GenericVariablesBase::NotifyPinConnectionListChanged(UEdGraphPin* P
     }
 }
 
+//////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesBase::PinDefaultValueChanged(UEdGraphPin* Pin)
 {
     Super::PinDefaultValueChanged(Pin);
@@ -117,7 +126,7 @@ void UBPNode_GenericVariablesBase::ExpandNode(class FKismetCompilerContext& Comp
 
     if (!bSucceeded)
     {
-        CompilerContext.MessageLog.Error(*LOCTEXT("GetGenericVariable", "Get Generic Variable function expand failed.").ToString(), this);
+        CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedExpand", "VariablesSystem - Failed to expand custom node.").ToString(), this);
     }
 }
 
@@ -127,6 +136,7 @@ UK2Node_CallFunction* UBPNode_GenericVariablesBase::CreateSpecificNode(FName Var
     return nullptr;
 }
 
+//////////////////////////////////////////////////////////////////////////
 FEdGraphPinType UBPNode_GenericVariablesBase::GetPinTypeFromVariable()
 {
     FName VariableClassName = GetVariableNameToUse();
@@ -157,6 +167,7 @@ FName UBPNode_GenericVariablesBase::GetVariableNameToUse() const
     return VariableClassName;
 }
 
+//////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType)
 {
     UClass const* CallingContext = NULL;
@@ -191,16 +202,18 @@ void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType)
 //////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesBase::GetVariablePin() const
 {
-    UEdGraphPin* Pin = FindPin(FGetPinName::GetVariableTextPin());
+    UEdGraphPin* Pin = FindPin(FPinNames::GetVariableTextPin());
     ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
     return Pin;
 }
 
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableValuePin() const
 {
     return nullptr;
 }
 
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const
 {
     return nullptr;

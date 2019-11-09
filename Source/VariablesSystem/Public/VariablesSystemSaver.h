@@ -6,7 +6,7 @@
 
 #include "VariablesSystemSaver.generated.h"
 
-//TODO: <ale the Variable System Saver a different asset alltogheter so we do not inherit from UBasevariable anymore.
+//TODO: make the Variable System Saver a different asset alltogheter so we do not inherit from UBasevariable anymore.
 
 /**
  * Executes Save & Load operation on an list of variables.
