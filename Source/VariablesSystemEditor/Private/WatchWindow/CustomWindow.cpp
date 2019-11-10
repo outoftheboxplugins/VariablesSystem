@@ -36,14 +36,9 @@ SVarEditorWindow::~SVarEditorWindow()
     //FCoreUObjectDelegates::OnObjectPropertyChanged.RemoveAll(this);
 }
 
-void SVarEditorWindow::Construct(const FArguments& InArgs, TArray<UBaseVariable*> InBaseVariables, const TSharedRef<ISlateStyle>& InStyle)
+void SVarEditorWindow::Construct(const FArguments& InArgs)
 {
-    InBaseVariables = UVariablesSystemHelpersBPLibrary::GetAllVariables();
-
-    for (auto& variable : InBaseVariables)
-    {
-        BaseVariables.Push(variable);
-    }
+    BaseVariables = UVariablesSystemHelpersBPLibrary::GetAllVariables();
 
     ChildSlot
     [ 

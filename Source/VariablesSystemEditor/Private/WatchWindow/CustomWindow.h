@@ -37,7 +37,7 @@ public:
      * @param InVariablesSystem The UVariablesSystem asset to edit.
      * @param InStyleSet The style set to use.
      */
-    void Construct(const FArguments& InArgs, TArray<UBaseVariable*> InBaseVariables, const TSharedRef<ISlateStyle>& InStyle);
+    void Construct(const FArguments& InArgs);
 
 private:
 
