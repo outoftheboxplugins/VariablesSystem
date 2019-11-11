@@ -5,7 +5,7 @@
 #include "AssetTools/VariablesSystemActions.h"
 #include "EditorStyleSet.h"
 #include "Modules/ModuleManager.h"
-#include "SDockTab.h"
+#include "Widgets/Docking/SDockTab.h"
 #include "VariablesSystemEditor/Private/WatchWidget/VariablesWatchWidget.h"
 #include "WorkspaceMenuStructure/Public/WorkspaceMenuStructureModule.h"
 #include "WorkspaceMenuStructure/Public/WorkspaceMenuStructure.h"
