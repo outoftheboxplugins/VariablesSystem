@@ -26,13 +26,12 @@ protected:
 
 // Extensions
 private:
-    void AddMenuExtension(FMenuBuilder& MenuBuilder);
-    void OpenVariablesWatch();
+    TSharedRef<SDockTab> SpawnVariablesWatchTab(const FSpawnTabArgs& Args);
 
 private:
-    // Extension of the Menu to start the variables watch
-    TSharedPtr<FExtender> WatchMenuExtender;
-	
+    /** The name under which the take variables watch tab is registered and invoked */
+    static FName VariablesWatchTabName;
+
     // Register actions for the variable assets type.
 	TSharedPtr<FVariablesSystemActions> AssetActions;
 };
