@@ -57,6 +57,13 @@ void SVarEditorWindow::Construct(const FArguments& InArgs)
 }
 
 
+void SVarEditorWindow::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+{
+    SCompoundWidget::Tick(AllottedGeometry, InCurrentTime, InDeltaTime);
+    
+    SubjectsListView->RebuildList();
+}
+
 /* SVarEditorWindow callbacks
  *****************************************************************************/
 

@@ -39,6 +39,8 @@ public:
      */
     void Construct(const FArguments& InArgs);
 
+    virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
+
 private:
 
     /** Callback for text changes in the editable text box. */
