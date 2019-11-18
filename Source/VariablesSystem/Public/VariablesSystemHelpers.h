@@ -28,7 +28,7 @@ public:
 };
 
 template<class T>
-static TArray<T*> UVariablesSystemHelpersBPLibrary::GetAllAssetsOfType()
+TArray<T*> UVariablesSystemHelpersBPLibrary::GetAllAssetsOfType()
 {
     TArray<T*> Assets;
 
