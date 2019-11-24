@@ -28,17 +28,24 @@ void FVariablesSystemEditorModule::ShutdownModule()
 
 void FVariablesSystemEditorModule::RegisterAssetTools()
 {
-    IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+    FAssetToolsModule* AssetTools = FModuleManager::GetModulePtr<FAssetToolsModule>("AssetTools");
 
-    AssetActions = MakeShareable(new FVariablesSystemActions);
-    AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
+    if (AssetTools)
+    {
+        AssetActions = MakeShareable(new FVariablesSystemActions);
+        AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
+    }
 }
 
 void FVariablesSystemEditorModule::UnregisterAssetTools()
 {
-    IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+    FAssetToolsModule* AssetTools = FModuleManager::GetModulePtr<FAssetToolsModule>("AssetTools");
 
-    AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
+    if (AssetTools)
+    {
+        AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
+    }
+
 }
 
 void FVariablesSystemEditorModule::RegisterMenuExtensions()
