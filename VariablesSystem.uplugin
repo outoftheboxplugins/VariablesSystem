@@ -16,7 +16,7 @@
     {
       "Name": "VariablesSystem",
       "Type": "Runtime",
-      "LoadingPhase": "Default",
+      "LoadingPhase": "Default"
     },
     {
       "Name": "VariablesSystemEditor",
