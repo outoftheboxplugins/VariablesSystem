@@ -17,7 +17,6 @@
       "Name": "VariablesSystem",
       "Type": "Runtime",
       "LoadingPhase": "Default",
-      "WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android", "HTML5", "Linux", "PS4", "XboxOne" ]
     },
     {
       "Name": "VariablesSystemEditor",
