@@ -47,16 +47,32 @@ public:
      * @param InArgs The declaration data for this widget.
      * @param Variables The variables we should use put inside the watch (Default = all)
      */
-    void Construct(const FArguments& InArgs, TArray<UBaseVariable*> Variables = TArray<UBaseVariable*>());
+    void Construct(const FArguments& InArgs);
 
     virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
+    virtual FReply OnDrop(const FGeometry& MyGeometry, const FDragDropEvent& DragDropEvent) override;
 
 private:
     // Creates a row for a variable from a table.
     TSharedRef<ITableRow> MakeVariableTableRow(UBaseVariable* InInfo, const TSharedRef<STableViewBase>& OwnerTable);
-    
+
+    // Create the menu drop-down for right-clicking.
+    TSharedPtr< SWidget > CreateContextMenu();
+
     // Handles selecting a variable from the table.
     void HandleVariableSelected(UBaseVariable* InItem);
+
+public:
+    void AddAllVariables();
+    void RemoveAllVariables();
+
+    void AddVariables(TArray<UBaseVariable*> selected);
+    void OpenVariables(TArray<UBaseVariable*> selected);
+    void RemoveVariables(TArray<UBaseVariable*> selected);
+
+private:
+    FReply OnAddButtonClicked();
+    FReply OnRemoveButtonClicked();
 
 private:
     // Slate widget displaying the list of variables.
