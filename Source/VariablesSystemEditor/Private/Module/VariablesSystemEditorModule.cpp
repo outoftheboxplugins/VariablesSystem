@@ -5,12 +5,13 @@
 #include "AssetTools/VariablesSystemActions.h"
 #include "EditorStyleSet.h"
 #include "Modules/ModuleManager.h"
-#include "Widgets/Docking/SDockTab.h"
+#include "VariablesSystemEditor/Private/EditorHelpers/VariablesSystemEditorHelpers.h"
 #include "VariablesSystemEditor/Private/WatchWidget/VariablesWatchWidget.h"
-#include "WorkspaceMenuStructure/Public/WorkspaceMenuStructureModule.h"
+#include "Widgets/Docking/SDockTab.h"
 #include "WorkspaceMenuStructure/Public/WorkspaceMenuStructure.h"
+#include "WorkspaceMenuStructure/Public/WorkspaceMenuStructureModule.h"
 
-FName FVariablesSystemEditorModule::VariablesWatchTabName = FName("VariablesWatchTab");
+const FName FVariablesSystemEditorModule::VariablesWatchTabName = FName("VariablesWatchTab");
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 
@@ -45,7 +46,7 @@ void FVariablesSystemEditorModule::UnregisterAssetTools()
 
 void FVariablesSystemEditorModule::RegisterMenuExtensions()
 {
-    FTabSpawnerEntry& WatchTab = FGlobalTabmanager::Get()->RegisterNomadTabSpawner(FName("VariablesWatchTab"), FOnSpawnTab::CreateRaw(this, &FVariablesSystemEditorModule::SpawnVariablesWatchTab));
+    FTabSpawnerEntry& WatchTab = FGlobalTabmanager::Get()->RegisterNomadTabSpawner(VariablesWatchTabName, FOnSpawnTab::CreateRaw(this, &FVariablesSystemEditorModule::SpawnVariablesWatchTab));
 
     WatchTab
         .SetDisplayName(LOCTEXT("VariablesSystem_OpenWatchDisplayName", "Variables Watch"))
@@ -68,4 +69,4 @@ TSharedRef<SDockTab> FVariablesSystemEditorModule::SpawnVariablesWatchTab(const 
         ];
 }
 
-#undef LOCTEXT_NAMESPACE7
+#undef LOCTEXT_NAMESPACE

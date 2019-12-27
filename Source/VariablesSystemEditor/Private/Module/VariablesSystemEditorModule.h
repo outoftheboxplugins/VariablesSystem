@@ -10,6 +10,10 @@
 
 class FVariablesSystemEditorModule : public IModuleInterface
 {
+public:
+    /** The name under which the take variables watch tab is registered and invoked */
+    const static FName VariablesWatchTabName;
+
 //IModuleInterface interface
 public:
 	virtual void StartupModule() override;
@@ -29,9 +33,6 @@ private:
     TSharedRef<SDockTab> SpawnVariablesWatchTab(const FSpawnTabArgs& Args);
 
 private:
-    /** The name under which the take variables watch tab is registered and invoked */
-    static FName VariablesWatchTabName;
-
     // Register actions for the variable assets type.
 	TSharedPtr<FVariablesSystemActions> AssetActions;
 };
