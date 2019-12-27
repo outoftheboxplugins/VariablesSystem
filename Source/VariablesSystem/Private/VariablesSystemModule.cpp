@@ -2,7 +2,7 @@
 
 #include "VariablesSystemModule.h"
 
-#include "VariablesSystemHelpers.h"
+#include "VariablesSystem/Public/VariablesSystemHelpers.h"
 
 void FVariablesSystemModule::StartupModule()
 {

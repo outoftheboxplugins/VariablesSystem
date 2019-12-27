@@ -2,12 +2,12 @@
 
 #include "VariablesSystemEditorModule.h"
 
-#include "AssetTools/VariablesSystemActions.h"
-#include "EditorStyleSet.h"
-#include "Modules/ModuleManager.h"
+#include "Core/Public/Modules/ModuleManager.h"
+#include "EditorStyle/Public/EditorStyleSet.h"
+#include "Slate/Public/Widgets/Docking/SDockTab.h"
+#include "VariablesSystemEditor/Private/AssetTools/VariablesSystemActions.h"
 #include "VariablesSystemEditor/Private/EditorHelpers/VariablesSystemEditorHelpers.h"
 #include "VariablesSystemEditor/Private/WatchWidget/VariablesWatchWidget.h"
-#include "Widgets/Docking/SDockTab.h"
 #include "WorkspaceMenuStructure/Public/WorkspaceMenuStructure.h"
 #include "WorkspaceMenuStructure/Public/WorkspaceMenuStructureModule.h"
 

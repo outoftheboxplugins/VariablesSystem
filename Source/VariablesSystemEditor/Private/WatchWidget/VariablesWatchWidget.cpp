@@ -2,15 +2,15 @@
 
 #include "VariablesWatchWidget.h"
 
-#include "AssetData.h"
-#include "AssetDragDropOp.h"
-#include "AssetRegistryModule.h"
-#include "BaseVariable.h"
+#include "AssetRegistry/Public/AssetData.h"
+#include "AssetRegistry/Public/AssetRegistryModule.h"
 #include "Slate/Public/Framework/MultiBox/MultiBoxBuilder.h"
 #include "Slate/Public/Widgets/Layout/SSpacer.h"
-#include "Toolkits/AssetEditorManager.h"
+#include "UnrealEd/Public/DragAndDrop/AssetDragDropOp.h"
+#include "UnrealEd/Public/Toolkits/AssetEditorManager.h"
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
-#include "VariablesSystemHelpers.h"
+#include "VariablesSystem/Public/BaseVariable.h"
+#include "VariablesSystem/Public/VariablesSystemHelpers.h"
 
 const FName ColumnVariableName = FName("Name");
 const FName ColumnVariableValue = FName("Value");

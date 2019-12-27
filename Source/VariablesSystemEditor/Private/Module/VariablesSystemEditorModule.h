@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "Modules/ModuleInterface.h"
+#include "Core/Public/Modules/ModuleInterface.h"
 
 /**
  * Implements the VariablesSystemEditor module.

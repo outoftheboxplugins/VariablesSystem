@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Core/Public/CoreMinimal.h"
 #include "VariablesSystemEditor/Private/Nodes/BPNode_GenericVariablesBase.h"
 
 #include "BPNode_GenericVariablesGetValue.generated.h"

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
-#include "K2Node.h"
+#include "Core/Public/CoreMinimal.h"
+#include "BlueprintGraph/Classes/K2Node.h"
 
 #include "BPNode_GenericVariablesBase.generated.h"
 

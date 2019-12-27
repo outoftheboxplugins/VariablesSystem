@@ -2,11 +2,11 @@
 
 #include "BPNode_GenericVariablesGetValue.h"
 
+#include "BlueprintGraph/Classes/K2Node_CallFunction.h"
+#include "BlueprintGraph/Public/BlueprintActionDatabaseRegistrar.h"
+#include "BlueprintGraph/Public/BlueprintNodeSpawner.h"
+#include "KismetCompiler/Public/KismetCompiler.h"
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
-#include "K2Node_CallFunction.h"
-#include "KismetCompiler.h"
-#include "BlueprintActionDatabaseRegistrar.h"
-#include "BlueprintNodeSpawner.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "ClassViewerFilter.h"
-#include "CoreMinimal.h"
+#include "ClassViewer/Public/ClassViewerFilter.h"
+#include "Core/Public/CoreMinimal.h"
 
 /**
  * Filter used for the Class picker dialog. Allows for filtering by class type and class flags.

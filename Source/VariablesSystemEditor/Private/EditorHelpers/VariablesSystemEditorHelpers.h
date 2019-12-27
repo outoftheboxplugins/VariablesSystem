@@ -2,8 +2,8 @@
 
 #pragma once 
 
-#include "CoreMinimal.h"
-#include "Kismet/BlueprintFunctionLibrary.h"
+#include "Core/Public/CoreMinimal.h"
+#include "Engine/Classes/Kismet/BlueprintFunctionLibrary.h"
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
 
 #include "VariablesSystemEditorHelpers.generated.h"

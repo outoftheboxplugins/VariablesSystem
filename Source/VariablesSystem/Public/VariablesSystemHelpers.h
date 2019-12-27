@@ -2,9 +2,9 @@
 
 #pragma once 
 
-#include "AssetRegistryModule.h"
-#include "Kismet/BlueprintFunctionLibrary.h"
-#include "Modules/ModuleManager.h"
+#include "AssetRegistry/Public/AssetRegistryModule.h"
+#include "Core/Public/Modules/ModuleManager.h"
+#include "Engine/Classes/Kismet/BlueprintFunctionLibrary.h"
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
 
 #include "VariablesSystemHelpers.generated.h"

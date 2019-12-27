@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Factories/Factory.h"
-#include "CoreMinimal.h"
+#include "Core/Public/CoreMinimal.h"
+#include "UnrealEd/Classes/Factories/Factory.h"
 
 #include "VariablesSystemFactory.generated.h"
 

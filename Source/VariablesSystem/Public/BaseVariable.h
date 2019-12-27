@@ -5,6 +5,7 @@
 #include "Internationalization/Text.h"
 #include "GameFramework/SaveGame.h"
 #include "UObject/ObjectMacros.h"
+
 #include "BaseVariable.generated.h"
 
 UENUM(BlueprintType)
