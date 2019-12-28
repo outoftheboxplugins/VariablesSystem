@@ -3,21 +3,21 @@
 #include "LocalFVector2DVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFVector2DVariable::SetFVector2DValue(FVector2D _value)
+//void UFVector2DVariable::SetFVector2DVariableValue(FVector2D _value)
 //{
-//	SetFVector2DValue(this, _value);
+//	SetFVector2DVariableValue(this, _value);
 //}
 //
 
 //
-//void UFVector2DVariable::CopyFVector2DValue(UFVector2DVariable* other)
+//void UFVector2DVariable::CopyFVector2DVariableValue(UFVector2DVariable* other)
 //{
-//	CopyFVector2DValue(this, other);
+//	CopyFVector2DVariableValue(this, other);
 //}
 //
 
 
-FVector2D ULocalFVector2DVariable::GetLocalFVector2D(UObject* owner, ULocalFVector2DVariable* var)
+FVector2D ULocalFVector2DVariable::GetLocalFVector2DVariable(UObject* owner, ULocalFVector2DVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +32,38 @@ FVector2D ULocalFVector2DVariable::GetLocalFVector2D(UObject* owner, ULocalFVect
 	}
 	else
 	{
-		return var->GetLocalFVector2DRef(owner);
+		return var->GetLocalFVector2DVariableRef(owner);
 	}
 }
 
-FVector2D& ULocalFVector2DVariable::GetLocalFVector2DRef(UObject* owner)
+FVector2D& ULocalFVector2DVariable::GetLocalFVector2DVariableRef(UObject* owner)
 {
 	FVector2D& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalFVector2DVariable::SetLocalFVector2DValue(UObject* owner, ULocalFVector2DVariable* var, FVector2D _value)
+void ULocalFVector2DVariable::SetLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var, FVector2D _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	FVector2D& FVector2DRef = var->GetLocalFVector2DRef(owner);
-	FVector2DRef = _value;
+	FVector2D& FVector2DVariableRef = var->GetLocalFVector2DVariableRef(owner);
+	FVector2DVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalFVector2DVariable::CopyLocalFVector2DValue(UObject* owner, ULocalFVector2DVariable* var, UObject* otherOwner, ULocalFVector2DVariable* other)
+void ULocalFVector2DVariable::CopyLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var, UObject* otherOwner, ULocalFVector2DVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	FVector2D& FVector2DRef = var->GetLocalFVector2DRef(owner);
-	FVector2D& otherFVector2DRef = other->GetLocalFVector2DRef(otherOwner);
+	FVector2D& FVector2DVariableRef = var->GetLocalFVector2DVariableRef(owner);
+	FVector2D& otherFVector2DVariableRef = other->GetLocalFVector2DVariableRef(otherOwner);
 
-	FVector2DRef = otherFVector2DRef;
+	FVector2DVariableRef = otherFVector2DVariableRef;
 	var->dirty = true;
 }
 

@@ -3,21 +3,21 @@
 #include "LocalFRotatorVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFRotatorVariable::SetFRotatorValue(FRotator _value)
+//void UFRotatorVariable::SetFRotatorVariableValue(FRotator _value)
 //{
-//	SetFRotatorValue(this, _value);
+//	SetFRotatorVariableValue(this, _value);
 //}
 //
 
 //
-//void UFRotatorVariable::CopyFRotatorValue(UFRotatorVariable* other)
+//void UFRotatorVariable::CopyFRotatorVariableValue(UFRotatorVariable* other)
 //{
-//	CopyFRotatorValue(this, other);
+//	CopyFRotatorVariableValue(this, other);
 //}
 //
 
 
-FRotator ULocalFRotatorVariable::GetLocalFRotator(UObject* owner, ULocalFRotatorVariable* var)
+FRotator ULocalFRotatorVariable::GetLocalFRotatorVariable(UObject* owner, ULocalFRotatorVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +32,38 @@ FRotator ULocalFRotatorVariable::GetLocalFRotator(UObject* owner, ULocalFRotator
 	}
 	else
 	{
-		return var->GetLocalFRotatorRef(owner);
+		return var->GetLocalFRotatorVariableRef(owner);
 	}
 }
 
-FRotator& ULocalFRotatorVariable::GetLocalFRotatorRef(UObject* owner)
+FRotator& ULocalFRotatorVariable::GetLocalFRotatorVariableRef(UObject* owner)
 {
 	FRotator& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalFRotatorVariable::SetLocalFRotatorValue(UObject* owner, ULocalFRotatorVariable* var, FRotator _value)
+void ULocalFRotatorVariable::SetLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, FRotator _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	FRotator& FRotatorRef = var->GetLocalFRotatorRef(owner);
-	FRotatorRef = _value;
+	FRotator& FRotatorVariableRef = var->GetLocalFRotatorVariableRef(owner);
+	FRotatorVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalFRotatorVariable::CopyLocalFRotatorValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other)
+void ULocalFRotatorVariable::CopyLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	FRotator& FRotatorRef = var->GetLocalFRotatorRef(owner);
-	FRotator& otherFRotatorRef = other->GetLocalFRotatorRef(otherOwner);
+	FRotator& FRotatorVariableRef = var->GetLocalFRotatorVariableRef(owner);
+	FRotator& otherFRotatorVariableRef = other->GetLocalFRotatorVariableRef(otherOwner);
 
-	FRotatorRef = otherFRotatorRef;
+	FRotatorVariableRef = otherFRotatorVariableRef;
 	var->dirty = true;
 }
 

@@ -3,21 +3,21 @@
 #include "LocalIntVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UIntVariable::SetIntValue(int32 _value)
+//void UIntVariable::SetIntVariableValue(int32 _value)
 //{
-//	SetIntValue(this, _value);
+//	SetIntVariableValue(this, _value);
 //}
 //
 
 //
-//void UIntVariable::CopyIntValue(UIntVariable* other)
+//void UIntVariable::CopyIntVariableValue(UIntVariable* other)
 //{
-//	CopyIntValue(this, other);
+//	CopyIntVariableValue(this, other);
 //}
 //
 
 
-int32 ULocalIntVariable::GetLocalInt(UObject* owner, ULocalIntVariable* var)
+int32 ULocalIntVariable::GetLocalIntVariable(UObject* owner, ULocalIntVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +32,38 @@ int32 ULocalIntVariable::GetLocalInt(UObject* owner, ULocalIntVariable* var)
 	}
 	else
 	{
-		return var->GetLocalIntRef(owner);
+		return var->GetLocalIntVariableRef(owner);
 	}
 }
 
-int32& ULocalIntVariable::GetLocalIntRef(UObject* owner)
+int32& ULocalIntVariable::GetLocalIntVariableRef(UObject* owner)
 {
 	int32& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalIntVariable::SetLocalIntValue(UObject* owner, ULocalIntVariable* var, int32 _value)
+void ULocalIntVariable::SetLocalIntVariableValue(UObject* owner, ULocalIntVariable* var, int32 _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	int32& IntRef = var->GetLocalIntRef(owner);
-	IntRef = _value;
+	int32& IntVariableRef = var->GetLocalIntVariableRef(owner);
+	IntVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalIntVariable::CopyLocalIntValue(UObject* owner, ULocalIntVariable* var, UObject* otherOwner, ULocalIntVariable* other)
+void ULocalIntVariable::CopyLocalIntVariableValue(UObject* owner, ULocalIntVariable* var, UObject* otherOwner, ULocalIntVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	int32& IntRef = var->GetLocalIntRef(owner);
-	int32& otherIntRef = other->GetLocalIntRef(otherOwner);
+	int32& IntVariableRef = var->GetLocalIntVariableRef(owner);
+	int32& otherIntVariableRef = other->GetLocalIntVariableRef(otherOwner);
 
-	IntRef = otherIntRef;
+	IntVariableRef = otherIntVariableRef;
 	var->dirty = true;
 }
 

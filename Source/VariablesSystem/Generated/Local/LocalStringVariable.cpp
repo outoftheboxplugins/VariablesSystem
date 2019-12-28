@@ -3,21 +3,21 @@
 #include "LocalStringVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UStringVariable::SetStringValue(FString _value)
+//void UStringVariable::SetStringVariableValue(FString _value)
 //{
-//	SetStringValue(this, _value);
+//	SetStringVariableValue(this, _value);
 //}
 //
 
 //
-//void UStringVariable::CopyStringValue(UStringVariable* other)
+//void UStringVariable::CopyStringVariableValue(UStringVariable* other)
 //{
-//	CopyStringValue(this, other);
+//	CopyStringVariableValue(this, other);
 //}
 //
 
 
-FString ULocalStringVariable::GetLocalString(UObject* owner, ULocalStringVariable* var)
+FString ULocalStringVariable::GetLocalStringVariable(UObject* owner, ULocalStringVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +32,38 @@ FString ULocalStringVariable::GetLocalString(UObject* owner, ULocalStringVariabl
 	}
 	else
 	{
-		return var->GetLocalStringRef(owner);
+		return var->GetLocalStringVariableRef(owner);
 	}
 }
 
-FString& ULocalStringVariable::GetLocalStringRef(UObject* owner)
+FString& ULocalStringVariable::GetLocalStringVariableRef(UObject* owner)
 {
 	FString& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalStringVariable::SetLocalStringValue(UObject* owner, ULocalStringVariable* var, FString _value)
+void ULocalStringVariable::SetLocalStringVariableValue(UObject* owner, ULocalStringVariable* var, FString _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	FString& StringRef = var->GetLocalStringRef(owner);
-	StringRef = _value;
+	FString& StringVariableRef = var->GetLocalStringVariableRef(owner);
+	StringVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalStringVariable::CopyLocalStringValue(UObject* owner, ULocalStringVariable* var, UObject* otherOwner, ULocalStringVariable* other)
+void ULocalStringVariable::CopyLocalStringVariableValue(UObject* owner, ULocalStringVariable* var, UObject* otherOwner, ULocalStringVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	FString& StringRef = var->GetLocalStringRef(owner);
-	FString& otherStringRef = other->GetLocalStringRef(otherOwner);
+	FString& StringVariableRef = var->GetLocalStringVariableRef(owner);
+	FString& otherStringVariableRef = other->GetLocalStringVariableRef(otherOwner);
 
-	StringRef = otherStringRef;
+	StringVariableRef = otherStringVariableRef;
 	var->dirty = true;
 }
 

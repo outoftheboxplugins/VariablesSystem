@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a FVector variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static FVector GetGlobalFVectorValue(UGlobalFVectorVariable* var);
+	static FVector GetGlobalFVectorVariableValue(UGlobalFVectorVariable* var);
 
 	// Get the value of a FVector variable.
-	FVector GetGlobalInternalFVectorValue();
+	FVector GetGlobalInternalFVectorVariableValue();
 
 	// Set the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalFVectorValue(UGlobalFVectorVariable* var, FVector _value);
+	static void SetGlobalFVectorVariableValue(UGlobalFVectorVariable* var, FVector _value);
 
 	// Set the value of a FVector variable.
-	void SetGlobalInternalFVectorValue(FVector _value);
+	void SetGlobalInternalFVectorVariableValue(FVector _value);
 	
 	// Copy the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalFVectorValue(UGlobalFVectorVariable* var, UGlobalFVectorVariable* other);
+	static void CopyGlobalFVectorVariableValue(UGlobalFVectorVariable* var, UGlobalFVectorVariable* other);
 
 	// Copy the value of a FVector variable.
-	void CopyGlobalInternalFVectorValue(UGlobalFVectorVariable* other);
+	void CopyGlobalInternalFVectorVariableValue(UGlobalFVectorVariable* other);
 
 	/**** Base Variable Overrides ****/
 

@@ -17,19 +17,19 @@ class VARIABLESSYSTEM_API ULocalFloatVariable : public UBaseVariable
 public:
 	TMap<UObject*, float> variables;
 
-	// Get the value of a LocalFloat variable.
-	float& GetLocalFloatRef(UObject* owner);
+	// Get the value of a LocalFloatVariable variable.
+	float& GetLocalFloatVariableRef(UObject* owner);
 	
-	// Get the value of a LocalFloat variable.
+	// Get the value of a LocalFloatVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static float GetLocalFloat(UObject* owner, ULocalFloatVariable* var);
+	static float GetLocalFloatVariable(UObject* owner, ULocalFloatVariable* var);
 
-	// Set the value of a LocalFloat variable.
+	// Set the value of a LocalFloatVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalFloatValue(UObject* owner, ULocalFloatVariable* var, float _value);
+	static void SetLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, float _value);
 	
-	// Copy the value of a LocalFloat variable.
+	// Copy the value of a LocalFloatVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalFloatValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other);
+	static void CopyLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other);
 };
 

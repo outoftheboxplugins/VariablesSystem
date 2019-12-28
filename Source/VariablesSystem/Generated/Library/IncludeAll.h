@@ -2,7 +2,7 @@
 #include "VariablesSystem/Generated/Global/GlobalBoolVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalIntVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalFloatVariable.h"
+#include "VariablesSystem/Generated/Global/GlobalStringVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalFRotatorVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalFVectorVariable.h"
-#include "VariablesSystem/Generated/Global/GlobalStringVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalFVector2DVariable.h"

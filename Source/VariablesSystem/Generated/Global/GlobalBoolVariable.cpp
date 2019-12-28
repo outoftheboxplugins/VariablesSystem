@@ -5,7 +5,7 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "CoreMinimal.h"
 
-bool UGlobalBoolVariable::GetGlobalBoolValue(UGlobalBoolVariable* var)
+bool UGlobalBoolVariable::GetGlobalBoolVariableValue(UGlobalBoolVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +18,12 @@ bool UGlobalBoolVariable::GetGlobalBoolValue(UGlobalBoolVariable* var)
 	}
 }
 
-bool UGlobalBoolVariable::GetGlobalInternalBoolValue()
+bool UGlobalBoolVariable::GetGlobalInternalBoolVariableValue()
 {
-	return GetGlobalBoolValue(this);
+	return GetGlobalBoolVariableValue(this);
 }
 
-void UGlobalBoolVariable::SetGlobalBoolValue(UGlobalBoolVariable* var, bool _value)
+void UGlobalBoolVariable::SetGlobalBoolVariableValue(UGlobalBoolVariable* var, bool _value)
 {
 	if (!var) return;
 
@@ -31,12 +31,12 @@ void UGlobalBoolVariable::SetGlobalBoolValue(UGlobalBoolVariable* var, bool _val
 	var->dirty = true;
 }
 
-void UGlobalBoolVariable::SetGlobalInternalBoolValue(bool _value)
+void UGlobalBoolVariable::SetGlobalInternalBoolVariableValue(bool _value)
 {
-	SetGlobalBoolValue(this, _value);
+	SetGlobalBoolVariableValue(this, _value);
 }
 
-void UGlobalBoolVariable::CopyGlobalBoolValue(UGlobalBoolVariable* var, UGlobalBoolVariable* other)
+void UGlobalBoolVariable::CopyGlobalBoolVariableValue(UGlobalBoolVariable* var, UGlobalBoolVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +44,9 @@ void UGlobalBoolVariable::CopyGlobalBoolValue(UGlobalBoolVariable* var, UGlobalB
 	var->dirty = true;
 }
 
-void UGlobalBoolVariable::CopyGlobalInternalBoolValue(UGlobalBoolVariable* other)
+void UGlobalBoolVariable::CopyGlobalInternalBoolVariableValue(UGlobalBoolVariable* other)
 {
-	CopyGlobalBoolValue(this, other);
+	CopyGlobalBoolVariableValue(this, other);
 }
 
 void UGlobalBoolVariable::Save()

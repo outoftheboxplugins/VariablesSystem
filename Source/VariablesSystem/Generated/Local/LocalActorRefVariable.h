@@ -17,19 +17,19 @@ class VARIABLESSYSTEM_API ULocalActorRefVariable : public UBaseVariable
 public:
 	TMap<UObject*, AActor*> variables;
 
-	// Get the value of a LocalActorRef variable.
-	AActor*& GetLocalActorRefRef(UObject* owner);
+	// Get the value of a LocalActorRefVariable variable.
+	AActor*& GetLocalActorRefVariableRef(UObject* owner);
 	
-	// Get the value of a LocalActorRef variable.
+	// Get the value of a LocalActorRefVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static AActor* GetLocalActorRef(UObject* owner, ULocalActorRefVariable* var);
+	static AActor* GetLocalActorRefVariable(UObject* owner, ULocalActorRefVariable* var);
 
-	// Set the value of a LocalActorRef variable.
+	// Set the value of a LocalActorRefVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalActorRefValue(UObject* owner, ULocalActorRefVariable* var, AActor* _value);
+	static void SetLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var, AActor* _value);
 	
-	// Copy the value of a LocalActorRef variable.
+	// Copy the value of a LocalActorRefVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalActorRefValue(UObject* owner, ULocalActorRefVariable* var, UObject* otherOwner, ULocalActorRefVariable* other);
+	static void CopyLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var, UObject* otherOwner, ULocalActorRefVariable* other);
 };
 

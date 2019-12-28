@@ -5,7 +5,7 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "CoreMinimal.h"
 
-FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DValue(UGlobalFVector2DVariable* var)
+FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +18,12 @@ FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DValue(UGlobalFVector2DVari
 	}
 }
 
-FVector2D UGlobalFVector2DVariable::GetGlobalInternalFVector2DValue()
+FVector2D UGlobalFVector2DVariable::GetGlobalInternalFVector2DVariableValue()
 {
-	return GetGlobalFVector2DValue(this);
+	return GetGlobalFVector2DVariableValue(this);
 }
 
-void UGlobalFVector2DVariable::SetGlobalFVector2DValue(UGlobalFVector2DVariable* var, FVector2D _value)
+void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* var, FVector2D _value)
 {
 	if (!var) return;
 
@@ -31,12 +31,12 @@ void UGlobalFVector2DVariable::SetGlobalFVector2DValue(UGlobalFVector2DVariable*
 	var->dirty = true;
 }
 
-void UGlobalFVector2DVariable::SetGlobalInternalFVector2DValue(FVector2D _value)
+void UGlobalFVector2DVariable::SetGlobalInternalFVector2DVariableValue(FVector2D _value)
 {
-	SetGlobalFVector2DValue(this, _value);
+	SetGlobalFVector2DVariableValue(this, _value);
 }
 
-void UGlobalFVector2DVariable::CopyGlobalFVector2DValue(UGlobalFVector2DVariable* var, UGlobalFVector2DVariable* other)
+void UGlobalFVector2DVariable::CopyGlobalFVector2DVariableValue(UGlobalFVector2DVariable* var, UGlobalFVector2DVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +44,9 @@ void UGlobalFVector2DVariable::CopyGlobalFVector2DValue(UGlobalFVector2DVariable
 	var->dirty = true;
 }
 
-void UGlobalFVector2DVariable::CopyGlobalInternalFVector2DValue(UGlobalFVector2DVariable* other)
+void UGlobalFVector2DVariable::CopyGlobalInternalFVector2DVariableValue(UGlobalFVector2DVariable* other)
 {
-	CopyGlobalFVector2DValue(this, other);
+	CopyGlobalFVector2DVariableValue(this, other);
 }
 
 void UGlobalFVector2DVariable::Save()

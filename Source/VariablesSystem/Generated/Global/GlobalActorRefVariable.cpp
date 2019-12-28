@@ -5,7 +5,7 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "CoreMinimal.h"
 
-AActor* UGlobalActorRefVariable::GetGlobalActorRefValue(UGlobalActorRefVariable* var)
+AActor* UGlobalActorRefVariable::GetGlobalActorRefVariableValue(UGlobalActorRefVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +18,12 @@ AActor* UGlobalActorRefVariable::GetGlobalActorRefValue(UGlobalActorRefVariable*
 	}
 }
 
-AActor* UGlobalActorRefVariable::GetGlobalInternalActorRefValue()
+AActor* UGlobalActorRefVariable::GetGlobalInternalActorRefVariableValue()
 {
-	return GetGlobalActorRefValue(this);
+	return GetGlobalActorRefVariableValue(this);
 }
 
-void UGlobalActorRefVariable::SetGlobalActorRefValue(UGlobalActorRefVariable* var, AActor* _value)
+void UGlobalActorRefVariable::SetGlobalActorRefVariableValue(UGlobalActorRefVariable* var, AActor* _value)
 {
 	if (!var) return;
 
@@ -31,12 +31,12 @@ void UGlobalActorRefVariable::SetGlobalActorRefValue(UGlobalActorRefVariable* va
 	var->dirty = true;
 }
 
-void UGlobalActorRefVariable::SetGlobalInternalActorRefValue(AActor* _value)
+void UGlobalActorRefVariable::SetGlobalInternalActorRefVariableValue(AActor* _value)
 {
-	SetGlobalActorRefValue(this, _value);
+	SetGlobalActorRefVariableValue(this, _value);
 }
 
-void UGlobalActorRefVariable::CopyGlobalActorRefValue(UGlobalActorRefVariable* var, UGlobalActorRefVariable* other)
+void UGlobalActorRefVariable::CopyGlobalActorRefVariableValue(UGlobalActorRefVariable* var, UGlobalActorRefVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +44,9 @@ void UGlobalActorRefVariable::CopyGlobalActorRefValue(UGlobalActorRefVariable* v
 	var->dirty = true;
 }
 
-void UGlobalActorRefVariable::CopyGlobalInternalActorRefValue(UGlobalActorRefVariable* other)
+void UGlobalActorRefVariable::CopyGlobalInternalActorRefVariableValue(UGlobalActorRefVariable* other)
 {
-	CopyGlobalActorRefValue(this, other);
+	CopyGlobalActorRefVariableValue(this, other);
 }
 
 void UGlobalActorRefVariable::Save()

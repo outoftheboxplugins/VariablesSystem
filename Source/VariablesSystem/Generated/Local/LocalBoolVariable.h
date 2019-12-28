@@ -17,19 +17,19 @@ class VARIABLESSYSTEM_API ULocalBoolVariable : public UBaseVariable
 public:
 	TMap<UObject*, bool> variables;
 
-	// Get the value of a LocalBool variable.
-	bool& GetLocalBoolRef(UObject* owner);
+	// Get the value of a LocalBoolVariable variable.
+	bool& GetLocalBoolVariableRef(UObject* owner);
 	
-	// Get the value of a LocalBool variable.
+	// Get the value of a LocalBoolVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static bool GetLocalBool(UObject* owner, ULocalBoolVariable* var);
+	static bool GetLocalBoolVariable(UObject* owner, ULocalBoolVariable* var);
 
-	// Set the value of a LocalBool variable.
+	// Set the value of a LocalBoolVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalBoolValue(UObject* owner, ULocalBoolVariable* var, bool _value);
+	static void SetLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var, bool _value);
 	
-	// Copy the value of a LocalBool variable.
+	// Copy the value of a LocalBoolVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalBoolValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other);
+	static void CopyLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other);
 };
 

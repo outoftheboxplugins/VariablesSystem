@@ -5,7 +5,7 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "CoreMinimal.h"
 
-FVector UGlobalFVectorVariable::GetGlobalFVectorValue(UGlobalFVectorVariable* var)
+FVector UGlobalFVectorVariable::GetGlobalFVectorVariableValue(UGlobalFVectorVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +18,12 @@ FVector UGlobalFVectorVariable::GetGlobalFVectorValue(UGlobalFVectorVariable* va
 	}
 }
 
-FVector UGlobalFVectorVariable::GetGlobalInternalFVectorValue()
+FVector UGlobalFVectorVariable::GetGlobalInternalFVectorVariableValue()
 {
-	return GetGlobalFVectorValue(this);
+	return GetGlobalFVectorVariableValue(this);
 }
 
-void UGlobalFVectorVariable::SetGlobalFVectorValue(UGlobalFVectorVariable* var, FVector _value)
+void UGlobalFVectorVariable::SetGlobalFVectorVariableValue(UGlobalFVectorVariable* var, FVector _value)
 {
 	if (!var) return;
 
@@ -31,12 +31,12 @@ void UGlobalFVectorVariable::SetGlobalFVectorValue(UGlobalFVectorVariable* var, 
 	var->dirty = true;
 }
 
-void UGlobalFVectorVariable::SetGlobalInternalFVectorValue(FVector _value)
+void UGlobalFVectorVariable::SetGlobalInternalFVectorVariableValue(FVector _value)
 {
-	SetGlobalFVectorValue(this, _value);
+	SetGlobalFVectorVariableValue(this, _value);
 }
 
-void UGlobalFVectorVariable::CopyGlobalFVectorValue(UGlobalFVectorVariable* var, UGlobalFVectorVariable* other)
+void UGlobalFVectorVariable::CopyGlobalFVectorVariableValue(UGlobalFVectorVariable* var, UGlobalFVectorVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +44,9 @@ void UGlobalFVectorVariable::CopyGlobalFVectorValue(UGlobalFVectorVariable* var,
 	var->dirty = true;
 }
 
-void UGlobalFVectorVariable::CopyGlobalInternalFVectorValue(UGlobalFVectorVariable* other)
+void UGlobalFVectorVariable::CopyGlobalInternalFVectorVariableValue(UGlobalFVectorVariable* other)
 {
-	CopyGlobalFVectorValue(this, other);
+	CopyGlobalFVectorVariableValue(this, other);
 }
 
 void UGlobalFVectorVariable::Save()

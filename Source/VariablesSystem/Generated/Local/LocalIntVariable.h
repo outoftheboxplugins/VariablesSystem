@@ -17,19 +17,19 @@ class VARIABLESSYSTEM_API ULocalIntVariable : public UBaseVariable
 public:
 	TMap<UObject*, int32> variables;
 
-	// Get the value of a LocalInt variable.
-	int32& GetLocalIntRef(UObject* owner);
+	// Get the value of a LocalIntVariable variable.
+	int32& GetLocalIntVariableRef(UObject* owner);
 	
-	// Get the value of a LocalInt variable.
+	// Get the value of a LocalIntVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static int32 GetLocalInt(UObject* owner, ULocalIntVariable* var);
+	static int32 GetLocalIntVariable(UObject* owner, ULocalIntVariable* var);
 
-	// Set the value of a LocalInt variable.
+	// Set the value of a LocalIntVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalIntValue(UObject* owner, ULocalIntVariable* var, int32 _value);
+	static void SetLocalIntVariableValue(UObject* owner, ULocalIntVariable* var, int32 _value);
 	
-	// Copy the value of a LocalInt variable.
+	// Copy the value of a LocalIntVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalIntValue(UObject* owner, ULocalIntVariable* var, UObject* otherOwner, ULocalIntVariable* other);
+	static void CopyLocalIntVariableValue(UObject* owner, ULocalIntVariable* var, UObject* otherOwner, ULocalIntVariable* other);
 };
 

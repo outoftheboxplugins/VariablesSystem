@@ -5,7 +5,7 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "CoreMinimal.h"
 
-float UGlobalFloatVariable::GetGlobalFloatValue(UGlobalFloatVariable* var)
+float UGlobalFloatVariable::GetGlobalFloatVariableValue(UGlobalFloatVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +18,12 @@ float UGlobalFloatVariable::GetGlobalFloatValue(UGlobalFloatVariable* var)
 	}
 }
 
-float UGlobalFloatVariable::GetGlobalInternalFloatValue()
+float UGlobalFloatVariable::GetGlobalInternalFloatVariableValue()
 {
-	return GetGlobalFloatValue(this);
+	return GetGlobalFloatVariableValue(this);
 }
 
-void UGlobalFloatVariable::SetGlobalFloatValue(UGlobalFloatVariable* var, float _value)
+void UGlobalFloatVariable::SetGlobalFloatVariableValue(UGlobalFloatVariable* var, float _value)
 {
 	if (!var) return;
 
@@ -31,12 +31,12 @@ void UGlobalFloatVariable::SetGlobalFloatValue(UGlobalFloatVariable* var, float 
 	var->dirty = true;
 }
 
-void UGlobalFloatVariable::SetGlobalInternalFloatValue(float _value)
+void UGlobalFloatVariable::SetGlobalInternalFloatVariableValue(float _value)
 {
-	SetGlobalFloatValue(this, _value);
+	SetGlobalFloatVariableValue(this, _value);
 }
 
-void UGlobalFloatVariable::CopyGlobalFloatValue(UGlobalFloatVariable* var, UGlobalFloatVariable* other)
+void UGlobalFloatVariable::CopyGlobalFloatVariableValue(UGlobalFloatVariable* var, UGlobalFloatVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +44,9 @@ void UGlobalFloatVariable::CopyGlobalFloatValue(UGlobalFloatVariable* var, UGlob
 	var->dirty = true;
 }
 
-void UGlobalFloatVariable::CopyGlobalInternalFloatValue(UGlobalFloatVariable* other)
+void UGlobalFloatVariable::CopyGlobalInternalFloatVariableValue(UGlobalFloatVariable* other)
 {
-	CopyGlobalFloatValue(this, other);
+	CopyGlobalFloatVariableValue(this, other);
 }
 
 void UGlobalFloatVariable::Save()

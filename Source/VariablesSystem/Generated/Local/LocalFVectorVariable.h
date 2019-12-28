@@ -17,19 +17,19 @@ class VARIABLESSYSTEM_API ULocalFVectorVariable : public UBaseVariable
 public:
 	TMap<UObject*, FVector> variables;
 
-	// Get the value of a LocalFVector variable.
-	FVector& GetLocalFVectorRef(UObject* owner);
+	// Get the value of a LocalFVectorVariable variable.
+	FVector& GetLocalFVectorVariableRef(UObject* owner);
 	
-	// Get the value of a LocalFVector variable.
+	// Get the value of a LocalFVectorVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static FVector GetLocalFVector(UObject* owner, ULocalFVectorVariable* var);
+	static FVector GetLocalFVectorVariable(UObject* owner, ULocalFVectorVariable* var);
 
-	// Set the value of a LocalFVector variable.
+	// Set the value of a LocalFVectorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalFVectorValue(UObject* owner, ULocalFVectorVariable* var, FVector _value);
+	static void SetLocalFVectorVariableValue(UObject* owner, ULocalFVectorVariable* var, FVector _value);
 	
-	// Copy the value of a LocalFVector variable.
+	// Copy the value of a LocalFVectorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalFVectorValue(UObject* owner, ULocalFVectorVariable* var, UObject* otherOwner, ULocalFVectorVariable* other);
+	static void CopyLocalFVectorVariableValue(UObject* owner, ULocalFVectorVariable* var, UObject* otherOwner, ULocalFVectorVariable* other);
 };
 

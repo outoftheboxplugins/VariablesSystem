@@ -17,19 +17,19 @@ class VARIABLESSYSTEM_API ULocalFRotatorVariable : public UBaseVariable
 public:
 	TMap<UObject*, FRotator> variables;
 
-	// Get the value of a LocalFRotator variable.
-	FRotator& GetLocalFRotatorRef(UObject* owner);
+	// Get the value of a LocalFRotatorVariable variable.
+	FRotator& GetLocalFRotatorVariableRef(UObject* owner);
 	
-	// Get the value of a LocalFRotator variable.
+	// Get the value of a LocalFRotatorVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static FRotator GetLocalFRotator(UObject* owner, ULocalFRotatorVariable* var);
+	static FRotator GetLocalFRotatorVariable(UObject* owner, ULocalFRotatorVariable* var);
 
-	// Set the value of a LocalFRotator variable.
+	// Set the value of a LocalFRotatorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalFRotatorValue(UObject* owner, ULocalFRotatorVariable* var, FRotator _value);
+	static void SetLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, FRotator _value);
 	
-	// Copy the value of a LocalFRotator variable.
+	// Copy the value of a LocalFRotatorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalFRotatorValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other);
+	static void CopyLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other);
 };
 

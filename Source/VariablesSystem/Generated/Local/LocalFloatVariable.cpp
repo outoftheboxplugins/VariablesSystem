@@ -3,21 +3,21 @@
 #include "LocalFloatVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFloatVariable::SetFloatValue(float _value)
+//void UFloatVariable::SetFloatVariableValue(float _value)
 //{
-//	SetFloatValue(this, _value);
+//	SetFloatVariableValue(this, _value);
 //}
 //
 
 //
-//void UFloatVariable::CopyFloatValue(UFloatVariable* other)
+//void UFloatVariable::CopyFloatVariableValue(UFloatVariable* other)
 //{
-//	CopyFloatValue(this, other);
+//	CopyFloatVariableValue(this, other);
 //}
 //
 
 
-float ULocalFloatVariable::GetLocalFloat(UObject* owner, ULocalFloatVariable* var)
+float ULocalFloatVariable::GetLocalFloatVariable(UObject* owner, ULocalFloatVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +32,38 @@ float ULocalFloatVariable::GetLocalFloat(UObject* owner, ULocalFloatVariable* va
 	}
 	else
 	{
-		return var->GetLocalFloatRef(owner);
+		return var->GetLocalFloatVariableRef(owner);
 	}
 }
 
-float& ULocalFloatVariable::GetLocalFloatRef(UObject* owner)
+float& ULocalFloatVariable::GetLocalFloatVariableRef(UObject* owner)
 {
 	float& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalFloatVariable::SetLocalFloatValue(UObject* owner, ULocalFloatVariable* var, float _value)
+void ULocalFloatVariable::SetLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, float _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	float& FloatRef = var->GetLocalFloatRef(owner);
-	FloatRef = _value;
+	float& FloatVariableRef = var->GetLocalFloatVariableRef(owner);
+	FloatVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalFloatVariable::CopyLocalFloatValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other)
+void ULocalFloatVariable::CopyLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	float& FloatRef = var->GetLocalFloatRef(owner);
-	float& otherFloatRef = other->GetLocalFloatRef(otherOwner);
+	float& FloatVariableRef = var->GetLocalFloatVariableRef(owner);
+	float& otherFloatVariableRef = other->GetLocalFloatVariableRef(otherOwner);
 
-	FloatRef = otherFloatRef;
+	FloatVariableRef = otherFloatVariableRef;
 	var->dirty = true;
 }
 

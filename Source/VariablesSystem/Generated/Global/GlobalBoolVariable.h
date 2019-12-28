@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a bool variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static bool GetGlobalBoolValue(UGlobalBoolVariable* var);
+	static bool GetGlobalBoolVariableValue(UGlobalBoolVariable* var);
 
 	// Get the value of a bool variable.
-	bool GetGlobalInternalBoolValue();
+	bool GetGlobalInternalBoolVariableValue();
 
 	// Set the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalBoolValue(UGlobalBoolVariable* var, bool _value);
+	static void SetGlobalBoolVariableValue(UGlobalBoolVariable* var, bool _value);
 
 	// Set the value of a bool variable.
-	void SetGlobalInternalBoolValue(bool _value);
+	void SetGlobalInternalBoolVariableValue(bool _value);
 	
 	// Copy the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalBoolValue(UGlobalBoolVariable* var, UGlobalBoolVariable* other);
+	static void CopyGlobalBoolVariableValue(UGlobalBoolVariable* var, UGlobalBoolVariable* other);
 
 	// Copy the value of a bool variable.
-	void CopyGlobalInternalBoolValue(UGlobalBoolVariable* other);
+	void CopyGlobalInternalBoolVariableValue(UGlobalBoolVariable* other);
 
 	/**** Base Variable Overrides ****/
 

@@ -5,7 +5,7 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "CoreMinimal.h"
 
-int32 UGlobalIntVariable::GetGlobalIntValue(UGlobalIntVariable* var)
+int32 UGlobalIntVariable::GetGlobalIntVariableValue(UGlobalIntVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +18,12 @@ int32 UGlobalIntVariable::GetGlobalIntValue(UGlobalIntVariable* var)
 	}
 }
 
-int32 UGlobalIntVariable::GetGlobalInternalIntValue()
+int32 UGlobalIntVariable::GetGlobalInternalIntVariableValue()
 {
-	return GetGlobalIntValue(this);
+	return GetGlobalIntVariableValue(this);
 }
 
-void UGlobalIntVariable::SetGlobalIntValue(UGlobalIntVariable* var, int32 _value)
+void UGlobalIntVariable::SetGlobalIntVariableValue(UGlobalIntVariable* var, int32 _value)
 {
 	if (!var) return;
 
@@ -31,12 +31,12 @@ void UGlobalIntVariable::SetGlobalIntValue(UGlobalIntVariable* var, int32 _value
 	var->dirty = true;
 }
 
-void UGlobalIntVariable::SetGlobalInternalIntValue(int32 _value)
+void UGlobalIntVariable::SetGlobalInternalIntVariableValue(int32 _value)
 {
-	SetGlobalIntValue(this, _value);
+	SetGlobalIntVariableValue(this, _value);
 }
 
-void UGlobalIntVariable::CopyGlobalIntValue(UGlobalIntVariable* var, UGlobalIntVariable* other)
+void UGlobalIntVariable::CopyGlobalIntVariableValue(UGlobalIntVariable* var, UGlobalIntVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +44,9 @@ void UGlobalIntVariable::CopyGlobalIntValue(UGlobalIntVariable* var, UGlobalIntV
 	var->dirty = true;
 }
 
-void UGlobalIntVariable::CopyGlobalInternalIntValue(UGlobalIntVariable* other)
+void UGlobalIntVariable::CopyGlobalInternalIntVariableValue(UGlobalIntVariable* other)
 {
-	CopyGlobalIntValue(this, other);
+	CopyGlobalIntVariableValue(this, other);
 }
 
 void UGlobalIntVariable::Save()

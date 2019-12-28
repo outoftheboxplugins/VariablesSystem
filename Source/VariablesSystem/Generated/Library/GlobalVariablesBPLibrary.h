@@ -7,28 +7,28 @@ class UGlobalVariablesBPLibrary : public UBlueprintFunctionLibrary
 {
     GENERATED_BODY()
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global ActorRef Variable (Thread Safe)"), Category = "VariablesSystem")
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global ActorRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static AActor* GetGlobalActorRefVariableSafe(UGlobalActorRefVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global Bool Variable (Thread Safe)"), Category = "VariablesSystem")
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global BoolVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static bool GetGlobalBoolVariableSafe(UGlobalBoolVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global Int Variable (Thread Safe)"), Category = "VariablesSystem")
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global IntVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static int32 GetGlobalIntVariableSafe(UGlobalIntVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global Float Variable (Thread Safe)"), Category = "VariablesSystem")
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FloatVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static float GetGlobalFloatVariableSafe(UGlobalFloatVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FRotator Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FRotator GetGlobalFRotatorVariableSafe(UGlobalFRotatorVariable* variable);
-
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVector Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FVector GetGlobalFVectorVariableSafe(UGlobalFVectorVariable* variable);
-
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global String Variable (Thread Safe)"), Category = "VariablesSystem")
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global StringVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FString GetGlobalStringVariableSafe(UGlobalStringVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVector2D Variable (Thread Safe)"), Category = "VariablesSystem")
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FRotatorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FRotator GetGlobalFRotatorVariableSafe(UGlobalFRotatorVariable* variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVectorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FVector GetGlobalFVectorVariableSafe(UGlobalFVectorVariable* variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector2D GetGlobalFVector2DVariableSafe(UGlobalFVector2DVariable* variable);
 
 };

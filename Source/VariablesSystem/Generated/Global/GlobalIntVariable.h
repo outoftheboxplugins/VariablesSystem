@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a int32 variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static int32 GetGlobalIntValue(UGlobalIntVariable* var);
+	static int32 GetGlobalIntVariableValue(UGlobalIntVariable* var);
 
 	// Get the value of a int32 variable.
-	int32 GetGlobalInternalIntValue();
+	int32 GetGlobalInternalIntVariableValue();
 
 	// Set the value of a int32 variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalIntValue(UGlobalIntVariable* var, int32 _value);
+	static void SetGlobalIntVariableValue(UGlobalIntVariable* var, int32 _value);
 
 	// Set the value of a int32 variable.
-	void SetGlobalInternalIntValue(int32 _value);
+	void SetGlobalInternalIntVariableValue(int32 _value);
 	
 	// Copy the value of a int32 variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalIntValue(UGlobalIntVariable* var, UGlobalIntVariable* other);
+	static void CopyGlobalIntVariableValue(UGlobalIntVariable* var, UGlobalIntVariable* other);
 
 	// Copy the value of a int32 variable.
-	void CopyGlobalInternalIntValue(UGlobalIntVariable* other);
+	void CopyGlobalInternalIntVariableValue(UGlobalIntVariable* other);
 
 	/**** Base Variable Overrides ****/
 

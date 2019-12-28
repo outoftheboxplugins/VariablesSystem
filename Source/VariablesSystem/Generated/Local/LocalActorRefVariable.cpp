@@ -3,21 +3,21 @@
 #include "LocalActorRefVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UActorRefVariable::SetActorRefValue(AActor* _value)
+//void UActorRefVariable::SetActorRefVariableValue(AActor* _value)
 //{
-//	SetActorRefValue(this, _value);
+//	SetActorRefVariableValue(this, _value);
 //}
 //
 
 //
-//void UActorRefVariable::CopyActorRefValue(UActorRefVariable* other)
+//void UActorRefVariable::CopyActorRefVariableValue(UActorRefVariable* other)
 //{
-//	CopyActorRefValue(this, other);
+//	CopyActorRefVariableValue(this, other);
 //}
 //
 
 
-AActor* ULocalActorRefVariable::GetLocalActorRef(UObject* owner, ULocalActorRefVariable* var)
+AActor* ULocalActorRefVariable::GetLocalActorRefVariable(UObject* owner, ULocalActorRefVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +32,38 @@ AActor* ULocalActorRefVariable::GetLocalActorRef(UObject* owner, ULocalActorRefV
 	}
 	else
 	{
-		return var->GetLocalActorRefRef(owner);
+		return var->GetLocalActorRefVariableRef(owner);
 	}
 }
 
-AActor*& ULocalActorRefVariable::GetLocalActorRefRef(UObject* owner)
+AActor*& ULocalActorRefVariable::GetLocalActorRefVariableRef(UObject* owner)
 {
 	AActor*& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalActorRefVariable::SetLocalActorRefValue(UObject* owner, ULocalActorRefVariable* var, AActor* _value)
+void ULocalActorRefVariable::SetLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var, AActor* _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	AActor*& ActorRefRef = var->GetLocalActorRefRef(owner);
-	ActorRefRef = _value;
+	AActor*& ActorRefVariableRef = var->GetLocalActorRefVariableRef(owner);
+	ActorRefVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalActorRefVariable::CopyLocalActorRefValue(UObject* owner, ULocalActorRefVariable* var, UObject* otherOwner, ULocalActorRefVariable* other)
+void ULocalActorRefVariable::CopyLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var, UObject* otherOwner, ULocalActorRefVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	AActor*& ActorRefRef = var->GetLocalActorRefRef(owner);
-	AActor*& otherActorRefRef = other->GetLocalActorRefRef(otherOwner);
+	AActor*& ActorRefVariableRef = var->GetLocalActorRefVariableRef(owner);
+	AActor*& otherActorRefVariableRef = other->GetLocalActorRefVariableRef(otherOwner);
 
-	ActorRefRef = otherActorRefRef;
+	ActorRefVariableRef = otherActorRefVariableRef;
 	var->dirty = true;
 }
 

@@ -3,21 +3,21 @@
 #include "LocalBoolVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UBoolVariable::SetBoolValue(bool _value)
+//void UBoolVariable::SetBoolVariableValue(bool _value)
 //{
-//	SetBoolValue(this, _value);
+//	SetBoolVariableValue(this, _value);
 //}
 //
 
 //
-//void UBoolVariable::CopyBoolValue(UBoolVariable* other)
+//void UBoolVariable::CopyBoolVariableValue(UBoolVariable* other)
 //{
-//	CopyBoolValue(this, other);
+//	CopyBoolVariableValue(this, other);
 //}
 //
 
 
-bool ULocalBoolVariable::GetLocalBool(UObject* owner, ULocalBoolVariable* var)
+bool ULocalBoolVariable::GetLocalBoolVariable(UObject* owner, ULocalBoolVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +32,38 @@ bool ULocalBoolVariable::GetLocalBool(UObject* owner, ULocalBoolVariable* var)
 	}
 	else
 	{
-		return var->GetLocalBoolRef(owner);
+		return var->GetLocalBoolVariableRef(owner);
 	}
 }
 
-bool& ULocalBoolVariable::GetLocalBoolRef(UObject* owner)
+bool& ULocalBoolVariable::GetLocalBoolVariableRef(UObject* owner)
 {
 	bool& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalBoolVariable::SetLocalBoolValue(UObject* owner, ULocalBoolVariable* var, bool _value)
+void ULocalBoolVariable::SetLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var, bool _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	bool& BoolRef = var->GetLocalBoolRef(owner);
-	BoolRef = _value;
+	bool& BoolVariableRef = var->GetLocalBoolVariableRef(owner);
+	BoolVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalBoolVariable::CopyLocalBoolValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other)
+void ULocalBoolVariable::CopyLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	bool& BoolRef = var->GetLocalBoolRef(owner);
-	bool& otherBoolRef = other->GetLocalBoolRef(otherOwner);
+	bool& BoolVariableRef = var->GetLocalBoolVariableRef(owner);
+	bool& otherBoolVariableRef = other->GetLocalBoolVariableRef(otherOwner);
 
-	BoolRef = otherBoolRef;
+	BoolVariableRef = otherBoolVariableRef;
 	var->dirty = true;
 }
 

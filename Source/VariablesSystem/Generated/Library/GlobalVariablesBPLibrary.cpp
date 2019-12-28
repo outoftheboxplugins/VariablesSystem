@@ -2,41 +2,41 @@
 
     /* STATIC */ AActor* UGlobalVariablesBPLibrary::GetGlobalActorRefVariableSafe(UGlobalActorRefVariable* variable)
     {
-        return UGlobalActorRefVariable::GetGlobalActorRefValue(variable);
+        return UGlobalActorRefVariable::GetGlobalActorRefVariableValue(variable);
     }
 
     /* STATIC */ bool UGlobalVariablesBPLibrary::GetGlobalBoolVariableSafe(UGlobalBoolVariable* variable)
     {
-        return UGlobalBoolVariable::GetGlobalBoolValue(variable);
+        return UGlobalBoolVariable::GetGlobalBoolVariableValue(variable);
     }
 
     /* STATIC */ int32 UGlobalVariablesBPLibrary::GetGlobalIntVariableSafe(UGlobalIntVariable* variable)
     {
-        return UGlobalIntVariable::GetGlobalIntValue(variable);
+        return UGlobalIntVariable::GetGlobalIntVariableValue(variable);
     }
 
     /* STATIC */ float UGlobalVariablesBPLibrary::GetGlobalFloatVariableSafe(UGlobalFloatVariable* variable)
     {
-        return UGlobalFloatVariable::GetGlobalFloatValue(variable);
-    }
-
-    /* STATIC */ FRotator UGlobalVariablesBPLibrary::GetGlobalFRotatorVariableSafe(UGlobalFRotatorVariable* variable)
-    {
-        return UGlobalFRotatorVariable::GetGlobalFRotatorValue(variable);
-    }
-
-    /* STATIC */ FVector UGlobalVariablesBPLibrary::GetGlobalFVectorVariableSafe(UGlobalFVectorVariable* variable)
-    {
-        return UGlobalFVectorVariable::GetGlobalFVectorValue(variable);
+        return UGlobalFloatVariable::GetGlobalFloatVariableValue(variable);
     }
 
     /* STATIC */ FString UGlobalVariablesBPLibrary::GetGlobalStringVariableSafe(UGlobalStringVariable* variable)
     {
-        return UGlobalStringVariable::GetGlobalStringValue(variable);
+        return UGlobalStringVariable::GetGlobalStringVariableValue(variable);
+    }
+
+    /* STATIC */ FRotator UGlobalVariablesBPLibrary::GetGlobalFRotatorVariableSafe(UGlobalFRotatorVariable* variable)
+    {
+        return UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(variable);
+    }
+
+    /* STATIC */ FVector UGlobalVariablesBPLibrary::GetGlobalFVectorVariableSafe(UGlobalFVectorVariable* variable)
+    {
+        return UGlobalFVectorVariable::GetGlobalFVectorVariableValue(variable);
     }
 
     /* STATIC */ FVector2D UGlobalVariablesBPLibrary::GetGlobalFVector2DVariableSafe(UGlobalFVector2DVariable* variable)
     {
-        return UGlobalFVector2DVariable::GetGlobalFVector2DValue(variable);
+        return UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(variable);
     }
 
