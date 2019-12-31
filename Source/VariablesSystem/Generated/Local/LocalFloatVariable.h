@@ -22,7 +22,7 @@ public:
 	
 	// Get the value of a LocalFloatVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static float GetLocalFloatVariable(UObject* owner, ULocalFloatVariable* var);
+	static float GetLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var);
 
 	// Set the value of a LocalFloatVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")

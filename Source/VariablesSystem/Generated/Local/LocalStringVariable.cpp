@@ -3,21 +3,7 @@
 #include "LocalStringVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UStringVariable::SetStringVariableValue(FString _value)
-//{
-//	SetStringVariableValue(this, _value);
-//}
-//
-
-//
-//void UStringVariable::CopyStringVariableValue(UStringVariable* other)
-//{
-//	CopyStringVariableValue(this, other);
-//}
-//
-
-
-FString ULocalStringVariable::GetLocalStringVariable(UObject* owner, ULocalStringVariable* var)
+FString ULocalStringVariable::GetLocalStringVariableValue(UObject* owner, ULocalStringVariable* var)
 {
 	if (owner == nullptr)
 	{

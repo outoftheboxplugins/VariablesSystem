@@ -22,7 +22,7 @@ public:
 	
 	// Get the value of a LocalFVector2DVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static FVector2D GetLocalFVector2DVariable(UObject* owner, ULocalFVector2DVariable* var);
+	static FVector2D GetLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var);
 
 	// Set the value of a LocalFVector2DVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")

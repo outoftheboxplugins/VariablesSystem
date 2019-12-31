@@ -21,7 +21,7 @@ public:
     virtual void AllocateDefaultPins() override;
 
 //K2Node implementation
-public:    
+public:
     virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
     virtual FText GetMenuCategory() const override;
     
@@ -49,5 +49,18 @@ private:
     // Pin Getter
     virtual UEdGraphPin* GetVariableValuePin() const;
     virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const;
+
+    enum EGenericVariablesNodeError
+    {
+        None,
+        UnkownType,
+        GlobalHasOwner,
+        LocalMissingOwner,
+
+    };
+
+    EGenericVariablesNodeError CompileVariablesCompatbility(FName VariableClassName) const;
+
     UEdGraphPin* GetVariablePin() const;
+    UEdGraphPin* GetVariableOwnerPin() const;
 };

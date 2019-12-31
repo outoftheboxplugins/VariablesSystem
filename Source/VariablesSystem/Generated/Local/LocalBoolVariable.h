@@ -22,7 +22,7 @@ public:
 	
 	// Get the value of a LocalBoolVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static bool GetLocalBoolVariable(UObject* owner, ULocalBoolVariable* var);
+	static bool GetLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var);
 
 	// Set the value of a LocalBoolVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")

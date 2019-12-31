@@ -28,13 +28,13 @@ void UBPNode_GenericVariablesSetValue::AllocateDefaultPins()
 //////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-    return LOCTEXT("VariablesSystem_SetVariableNodeName", "Set Generic Global Variable");
+    return LOCTEXT("VariablesSystem_SetVariableNodeName", "Set Generic Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetTooltipText() const
 {
-    return LOCTEXT("VariablesSystem_SetVariableNodetTooltip", "Sets the value of a Global Generic Variable");
+    return LOCTEXT("VariablesSystem_SetVariableNodetTooltip", "Sets the value of a Generic Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -3,21 +3,7 @@
 #include "LocalFVector2DVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFVector2DVariable::SetFVector2DVariableValue(FVector2D _value)
-//{
-//	SetFVector2DVariableValue(this, _value);
-//}
-//
-
-//
-//void UFVector2DVariable::CopyFVector2DVariableValue(UFVector2DVariable* other)
-//{
-//	CopyFVector2DVariableValue(this, other);
-//}
-//
-
-
-FVector2D ULocalFVector2DVariable::GetLocalFVector2DVariable(UObject* owner, ULocalFVector2DVariable* var)
+FVector2D ULocalFVector2DVariable::GetLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var)
 {
 	if (owner == nullptr)
 	{

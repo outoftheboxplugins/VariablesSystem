@@ -3,21 +3,7 @@
 #include "LocalFloatVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFloatVariable::SetFloatVariableValue(float _value)
-//{
-//	SetFloatVariableValue(this, _value);
-//}
-//
-
-//
-//void UFloatVariable::CopyFloatVariableValue(UFloatVariable* other)
-//{
-//	CopyFloatVariableValue(this, other);
-//}
-//
-
-
-float ULocalFloatVariable::GetLocalFloatVariable(UObject* owner, ULocalFloatVariable* var)
+float ULocalFloatVariable::GetLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var)
 {
 	if (owner == nullptr)
 	{

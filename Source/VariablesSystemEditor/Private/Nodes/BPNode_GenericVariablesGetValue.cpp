@@ -23,13 +23,13 @@ void UBPNode_GenericVariablesGetValue::AllocateDefaultPins()
 //////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesGetValue::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-    return LOCTEXT("VariablesSystem_GetVariableNodeName", "Get Generic Global Variable");
+    return LOCTEXT("VariablesSystem_GetVariableNodeName", "Get Generic Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesGetValue::GetTooltipText() const
 {
-    return LOCTEXT("VariablesSystem_GetVariableNodetTooltip", "Returns the value of a Global Generic Variable");
+    return LOCTEXT("VariablesSystem_GetVariableNodetTooltip", "Returns the value of a Generic Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////

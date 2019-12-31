@@ -22,7 +22,7 @@ public:
 	
 	// Get the value of a LocalStringVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static FString GetLocalStringVariable(UObject* owner, ULocalStringVariable* var);
+	static FString GetLocalStringVariableValue(UObject* owner, ULocalStringVariable* var);
 
 	// Set the value of a LocalStringVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")

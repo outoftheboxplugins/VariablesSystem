@@ -3,21 +3,7 @@
 #include "LocalFVectorVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFVectorVariable::SetFVectorVariableValue(FVector _value)
-//{
-//	SetFVectorVariableValue(this, _value);
-//}
-//
-
-//
-//void UFVectorVariable::CopyFVectorVariableValue(UFVectorVariable* other)
-//{
-//	CopyFVectorVariableValue(this, other);
-//}
-//
-
-
-FVector ULocalFVectorVariable::GetLocalFVectorVariable(UObject* owner, ULocalFVectorVariable* var)
+FVector ULocalFVectorVariable::GetLocalFVectorVariableValue(UObject* owner, ULocalFVectorVariable* var)
 {
 	if (owner == nullptr)
 	{

@@ -3,21 +3,7 @@
 #include "LocalIntVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UIntVariable::SetIntVariableValue(int32 _value)
-//{
-//	SetIntVariableValue(this, _value);
-//}
-//
-
-//
-//void UIntVariable::CopyIntVariableValue(UIntVariable* other)
-//{
-//	CopyIntVariableValue(this, other);
-//}
-//
-
-
-int32 ULocalIntVariable::GetLocalIntVariable(UObject* owner, ULocalIntVariable* var)
+int32 ULocalIntVariable::GetLocalIntVariableValue(UObject* owner, ULocalIntVariable* var)
 {
 	if (owner == nullptr)
 	{

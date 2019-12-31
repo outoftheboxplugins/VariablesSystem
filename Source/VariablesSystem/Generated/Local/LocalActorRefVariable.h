@@ -22,7 +22,7 @@ public:
 	
 	// Get the value of a LocalActorRefVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static AActor* GetLocalActorRefVariable(UObject* owner, ULocalActorRefVariable* var);
+	static AActor* GetLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var);
 
 	// Set the value of a LocalActorRefVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")

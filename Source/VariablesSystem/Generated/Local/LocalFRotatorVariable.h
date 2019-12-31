@@ -22,7 +22,7 @@ public:
 	
 	// Get the value of a LocalFRotatorVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static FRotator GetLocalFRotatorVariable(UObject* owner, ULocalFRotatorVariable* var);
+	static FRotator GetLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var);
 
 	// Set the value of a LocalFRotatorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")

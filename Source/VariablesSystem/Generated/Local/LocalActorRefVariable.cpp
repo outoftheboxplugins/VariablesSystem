@@ -3,21 +3,7 @@
 #include "LocalActorRefVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UActorRefVariable::SetActorRefVariableValue(AActor* _value)
-//{
-//	SetActorRefVariableValue(this, _value);
-//}
-//
-
-//
-//void UActorRefVariable::CopyActorRefVariableValue(UActorRefVariable* other)
-//{
-//	CopyActorRefVariableValue(this, other);
-//}
-//
-
-
-AActor* ULocalActorRefVariable::GetLocalActorRefVariable(UObject* owner, ULocalActorRefVariable* var)
+AActor* ULocalActorRefVariable::GetLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var)
 {
 	if (owner == nullptr)
 	{

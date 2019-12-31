@@ -10,19 +10,20 @@
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 
-struct FPinNames {
-    static const FName& GetVariableTextPin() {
-        static const FName VariableTextPin(TEXT("VariableToReference"));
-        return VariableTextPin;
-    }
-};
+const FName VariableOwnerTextPin(TEXT("VariableOwner"));
+const FName VariableReferenceTextPin(TEXT("VariableToReference"));
 
 //////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesBase::AllocateDefaultPins()
 {
-    const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
-    
-    UEdGraphPin* InVariablePin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UBaseVariable::StaticClass(), FPinNames::GetVariableTextPin());
+    UEdGraphPin* InVariableReferencePin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UBaseVariable::StaticClass(), VariableReferenceTextPin);
+
+    UEdGraphPin* InVariableOwnerPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UObject::StaticClass(), VariableOwnerTextPin);
+    InVariableOwnerPin->bAdvancedView = true;
+    if (ENodeAdvancedPins::NoPins == AdvancedPinDisplay)
+    {
+        AdvancedPinDisplay = ENodeAdvancedPins::Hidden;
+    }
 
     Super::AllocateDefaultPins();
 }
@@ -98,17 +99,27 @@ void UBPNode_GenericVariablesBase::ExpandNode(class FKismetCompilerContext& Comp
 
     // Create the specific function node to the variable.
     FName VariableName = GetVariableNameToUse();
+
+    EGenericVariablesNodeError error = CompileVariablesCompatbility(VariableName);
     UK2Node_CallFunction* CallCreateNode = CreateSpecificNode(VariableName, CompilerContext, SourceGraph);
 
     bool bSucceeded = true;
 
-    if (CallCreateNode == nullptr)
+    if (CallCreateNode == nullptr || error != EGenericVariablesNodeError::None)
     {
         bSucceeded = false;
     }
-
     else
     {
+        // Connect owner pin if any.
+        UEdGraphPin* InputOwnerPin = GetVariableOwnerPin();
+        UEdGraphPin* FunctioOwnerPin = CallCreateNode->FindPin(TEXT("owner"));
+
+        if (InputOwnerPin && FunctioOwnerPin)
+        {
+            bSucceeded &= CompilerContext.CopyPinLinksToIntermediate(*InputOwnerPin, *FunctioOwnerPin).CanSafeConnect();
+        }
+
         // Connect Class pin.
         UEdGraphPin* ClassPin = GetVariablePin();
         UEdGraphPin* VariableInput = CallCreateNode->FindPin(TEXT("var"));
@@ -118,11 +129,33 @@ void UBPNode_GenericVariablesBase::ExpandNode(class FKismetCompilerContext& Comp
         UEdGraphPin* ResultPin = GetVariableValuePin();
         UEdGraphPin* ReturnPin = GetVariableLinkPin(CallCreateNode);
         bSucceeded &= ResultPin && ReturnPin && CompilerContext.MovePinLinksToIntermediate(*ResultPin, *ReturnPin).CanSafeConnect();
+
+        bSucceeded &= AdditionalExpand(CompilerContext, CallCreateNode);
     }
 
-    bSucceeded &= AdditionalExpand(CompilerContext, CallCreateNode);
-
     BreakAllNodeLinks();
+
+    switch (error)
+    {
+        case UnkownType:
+        {
+            CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedUnkown", "VariablesSystem - Unkown function for variable type.").ToString(), this);
+
+            break;
+        }
+        case GlobalHasOwner:
+        {
+            CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedGlobalOwner", "VariablesSystem - Global variables do not have a owner, please remove pin and/or value.").ToString(), this);
+
+            break;
+        }
+        case LocalMissingOwner:
+        {
+            CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedLocalOwner", "VariablesSystem - Local variables must have an owner, please conect a pin or set a default value").ToString(), this);
+
+            break;
+        }
+    }
 
     if (!bSucceeded)
     {
@@ -200,9 +233,48 @@ void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType)
 }
 
 //////////////////////////////////////////////////////////////////////////
+UBPNode_GenericVariablesBase::EGenericVariablesNodeError UBPNode_GenericVariablesBase::CompileVariablesCompatbility(FName VariableClassName) const
+{
+    FString VariableClassString; VariableClassName.ToString(VariableClassString);
+
+    UEdGraphPin* OwnerPin = GetVariableOwnerPin();
+    bool bHasOwnerConnection = OwnerPin && (OwnerPin->DefaultObject || OwnerPin->LinkedTo.Num() > 0);
+
+    EGenericVariablesNodeError error = EGenericVariablesNodeError::None;
+    if (VariableClassString.Contains("Global"))
+    {
+        if (bHasOwnerConnection)
+        {
+            error = EGenericVariablesNodeError::GlobalHasOwner;
+        }
+    }
+    else if (VariableClassString.Contains("Local"))
+    {
+        if (!bHasOwnerConnection)
+        {
+            error = EGenericVariablesNodeError::LocalMissingOwner;
+        }
+    }
+    else
+    {
+        error = EGenericVariablesNodeError::UnkownType;
+    }
+
+    return error;
+}
+
+//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesBase::GetVariablePin() const
 {
-    UEdGraphPin* Pin = FindPin(FPinNames::GetVariableTextPin());
+    UEdGraphPin* Pin = FindPin(VariableReferenceTextPin);
+    ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
+    return Pin;
+}
+
+//////////////////////////////////////////////////////////////////////////
+UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableOwnerPin() const
+{
+    UEdGraphPin* Pin = FindPin(VariableOwnerTextPin);
     ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
     return Pin;
 }

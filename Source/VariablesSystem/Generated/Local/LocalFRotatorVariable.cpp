@@ -3,21 +3,7 @@
 #include "LocalFRotatorVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFRotatorVariable::SetFRotatorVariableValue(FRotator _value)
-//{
-//	SetFRotatorVariableValue(this, _value);
-//}
-//
-
-//
-//void UFRotatorVariable::CopyFRotatorVariableValue(UFRotatorVariable* other)
-//{
-//	CopyFRotatorVariableValue(this, other);
-//}
-//
-
-
-FRotator ULocalFRotatorVariable::GetLocalFRotatorVariable(UObject* owner, ULocalFRotatorVariable* var)
+FRotator ULocalFRotatorVariable::GetLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var)
 {
 	if (owner == nullptr)
 	{

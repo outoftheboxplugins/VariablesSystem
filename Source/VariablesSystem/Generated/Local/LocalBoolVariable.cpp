@@ -3,21 +3,7 @@
 #include "LocalBoolVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UBoolVariable::SetBoolVariableValue(bool _value)
-//{
-//	SetBoolVariableValue(this, _value);
-//}
-//
-
-//
-//void UBoolVariable::CopyBoolVariableValue(UBoolVariable* other)
-//{
-//	CopyBoolVariableValue(this, other);
-//}
-//
-
-
-bool ULocalBoolVariable::GetLocalBoolVariable(UObject* owner, ULocalBoolVariable* var)
+bool ULocalBoolVariable::GetLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var)
 {
 	if (owner == nullptr)
 	{
