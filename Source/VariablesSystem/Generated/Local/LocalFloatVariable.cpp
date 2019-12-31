@@ -55,12 +55,12 @@ void ULocalFloatVariable::CopyLocalFloatVariableValue(UObject* owner, ULocalFloa
 
 void ULocalFloatVariable::Save()
 {
-    variables
+    //TODO cleanup
 }
 
 void ULocalFloatVariable::Load()
 {
-    variables.
+    //TODO cleanup
 }
 
 FString ULocalFloatVariable::GetStringValue() const

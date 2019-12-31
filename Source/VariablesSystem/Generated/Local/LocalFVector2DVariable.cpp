@@ -55,12 +55,12 @@ void ULocalFVector2DVariable::CopyLocalFVector2DVariableValue(UObject* owner, UL
 
 void ULocalFVector2DVariable::Save()
 {
-    variables
+    //TODO cleanup
 }
 
 void ULocalFVector2DVariable::Load()
 {
-    variables.
+    //TODO cleanup
 }
 
 FString ULocalFVector2DVariable::GetStringValue() const

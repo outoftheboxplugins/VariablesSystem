@@ -55,12 +55,12 @@ void ULocalBoolVariable::CopyLocalBoolVariableValue(UObject* owner, ULocalBoolVa
 
 void ULocalBoolVariable::Save()
 {
-    variables
+    //TODO cleanup
 }
 
 void ULocalBoolVariable::Load()
 {
-    variables.
+    //TODO cleanup
 }
 
 FString ULocalBoolVariable::GetStringValue() const

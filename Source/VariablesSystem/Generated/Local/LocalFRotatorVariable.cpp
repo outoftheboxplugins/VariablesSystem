@@ -55,12 +55,12 @@ void ULocalFRotatorVariable::CopyLocalFRotatorVariableValue(UObject* owner, ULoc
 
 void ULocalFRotatorVariable::Save()
 {
-    variables
+    //TODO cleanup
 }
 
 void ULocalFRotatorVariable::Load()
 {
-    variables.
+    //TODO cleanup
 }
 
 FString ULocalFRotatorVariable::GetStringValue() const

@@ -55,12 +55,12 @@ void ULocalIntVariable::CopyLocalIntVariableValue(UObject* owner, ULocalIntVaria
 
 void ULocalIntVariable::Save()
 {
-    variables
+    //TODO cleanup
 }
 
 void ULocalIntVariable::Load()
 {
-    variables.
+    //TODO cleanup
 }
 
 FString ULocalIntVariable::GetStringValue() const

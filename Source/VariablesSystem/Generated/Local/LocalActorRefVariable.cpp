@@ -55,12 +55,12 @@ void ULocalActorRefVariable::CopyLocalActorRefVariableValue(UObject* owner, ULoc
 
 void ULocalActorRefVariable::Save()
 {
-    variables
+    //TODO cleanup
 }
 
 void ULocalActorRefVariable::Load()
 {
-    variables.
+    //TODO cleanup
 }
 
 FString ULocalActorRefVariable::GetStringValue() const
