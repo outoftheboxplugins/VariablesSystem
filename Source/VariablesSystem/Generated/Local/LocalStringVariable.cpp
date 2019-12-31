@@ -53,3 +53,39 @@ void ULocalStringVariable::CopyLocalStringVariableValue(UObject* owner, ULocalSt
 	var->dirty = true;
 }
 
+void ULocalStringVariable::Save()
+{
+    variables
+}
+
+void ULocalStringVariable::Load()
+{
+    variables.
+}
+
+FString ULocalStringVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = value;
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+

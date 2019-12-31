@@ -31,5 +31,11 @@ public:
 	// Copy the value of a LocalFloatVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other);
+
+    virtual void Save() override;
+
+    virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };
 

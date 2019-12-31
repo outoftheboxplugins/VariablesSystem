@@ -53,3 +53,39 @@ void ULocalFRotatorVariable::CopyLocalFRotatorVariableValue(UObject* owner, ULoc
 	var->dirty = true;
 }
 
+void ULocalFRotatorVariable::Save()
+{
+    variables
+}
+
+void ULocalFRotatorVariable::Load()
+{
+    variables.
+}
+
+FString ULocalFRotatorVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = UKismetStringLibrary::Conv_RotatorToString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+

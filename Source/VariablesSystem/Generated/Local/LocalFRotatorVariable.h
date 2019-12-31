@@ -31,5 +31,11 @@ public:
 	// Copy the value of a LocalFRotatorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other);
+
+    virtual void Save() override;
+
+    virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };
 

@@ -31,5 +31,11 @@ public:
 	// Copy the value of a LocalFVectorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalFVectorVariableValue(UObject* owner, ULocalFVectorVariable* var, UObject* otherOwner, ULocalFVectorVariable* other);
+
+    virtual void Save() override;
+
+    virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };
 

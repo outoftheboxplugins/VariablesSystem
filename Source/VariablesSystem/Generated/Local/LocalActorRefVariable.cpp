@@ -53,3 +53,39 @@ void ULocalActorRefVariable::CopyLocalActorRefVariableValue(UObject* owner, ULoc
 	var->dirty = true;
 }
 
+void ULocalActorRefVariable::Save()
+{
+    variables
+}
+
+void ULocalActorRefVariable::Load()
+{
+    variables.
+}
+
+FString ULocalActorRefVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = value->GetName();
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+

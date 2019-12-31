@@ -53,3 +53,39 @@ void ULocalFloatVariable::CopyLocalFloatVariableValue(UObject* owner, ULocalFloa
 	var->dirty = true;
 }
 
+void ULocalFloatVariable::Save()
+{
+    variables
+}
+
+void ULocalFloatVariable::Load()
+{
+    variables.
+}
+
+FString ULocalFloatVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = UKismetStringLibrary::Conv_FloatToString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+

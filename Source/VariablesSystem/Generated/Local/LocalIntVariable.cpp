@@ -53,3 +53,39 @@ void ULocalIntVariable::CopyLocalIntVariableValue(UObject* owner, ULocalIntVaria
 	var->dirty = true;
 }
 
+void ULocalIntVariable::Save()
+{
+    variables
+}
+
+void ULocalIntVariable::Load()
+{
+    variables.
+}
+
+FString ULocalIntVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = UKismetStringLibrary::Conv_IntToString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+

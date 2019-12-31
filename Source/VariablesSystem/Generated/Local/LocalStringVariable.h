@@ -31,5 +31,11 @@ public:
 	// Copy the value of a LocalStringVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
 	static void CopyLocalStringVariableValue(UObject* owner, ULocalStringVariable* var, UObject* otherOwner, ULocalStringVariable* other);
+
+    virtual void Save() override;
+
+    virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
 };
 

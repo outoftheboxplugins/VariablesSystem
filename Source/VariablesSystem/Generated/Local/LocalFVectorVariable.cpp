@@ -53,3 +53,39 @@ void ULocalFVectorVariable::CopyLocalFVectorVariableValue(UObject* owner, ULocal
 	var->dirty = true;
 }
 
+void ULocalFVectorVariable::Save()
+{
+    variables
+}
+
+void ULocalFVectorVariable::Load()
+{
+    variables.
+}
+
+FString ULocalFVectorVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = UKismetStringLibrary::Conv_VectorToString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+
