@@ -55,12 +55,24 @@ void ULocalBoolVariable::CopyLocalBoolVariableValue(UObject* owner, ULocalBoolVa
 
 void ULocalBoolVariable::Save()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 void ULocalBoolVariable::Load()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 FString ULocalBoolVariable::GetStringValue() const

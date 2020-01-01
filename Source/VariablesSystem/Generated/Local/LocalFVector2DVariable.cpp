@@ -55,12 +55,24 @@ void ULocalFVector2DVariable::CopyLocalFVector2DVariableValue(UObject* owner, UL
 
 void ULocalFVector2DVariable::Save()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 void ULocalFVector2DVariable::Load()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 FString ULocalFVector2DVariable::GetStringValue() const

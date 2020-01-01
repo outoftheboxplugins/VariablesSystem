@@ -55,12 +55,24 @@ void ULocalStringVariable::CopyLocalStringVariableValue(UObject* owner, ULocalSt
 
 void ULocalStringVariable::Save()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 void ULocalStringVariable::Load()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 FString ULocalStringVariable::GetStringValue() const

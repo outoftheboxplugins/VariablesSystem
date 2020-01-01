@@ -55,12 +55,24 @@ void ULocalActorRefVariable::CopyLocalActorRefVariableValue(UObject* owner, ULoc
 
 void ULocalActorRefVariable::Save()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 void ULocalActorRefVariable::Load()
 {
-    //TODO cleanup
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
 }
 
 FString ULocalActorRefVariable::GetStringValue() const
