@@ -74,6 +74,7 @@ void UGlobalActorRefVariable::Load()
 
 FString UGlobalActorRefVariable::GetStringValue() const
 {
-	return value->GetName();
+    const auto& item = value;
+    return item->GetName();
 }
 

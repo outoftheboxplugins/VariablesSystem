@@ -84,7 +84,7 @@ FString ULocalStringVariable::GetStringValue() const
         const auto& value = var.Value;
         const auto& owner = var.Key;
 
-        FString valueString = value;
+        FString valueString = GetValueAsString(value);
         FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
         FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
 
@@ -99,5 +99,11 @@ FString ULocalStringVariable::GetStringValue() const
     }
 
     return lines;
+}
+
+FString ULocalStringVariable::GetValueAsString(FString value) const
+{
+    const auto& item = value;
+    return item;
 }
 

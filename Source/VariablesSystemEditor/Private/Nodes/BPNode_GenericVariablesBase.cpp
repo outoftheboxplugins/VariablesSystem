@@ -54,8 +54,7 @@ void UBPNode_GenericVariablesBase::PostReconstructNode()
 {
     Super::PostReconstructNode();
 
-    FEdGraphPinType pinType = GetPinTypeFromVariable();
-    PropagatePinType(pinType);
+    UpdatePinTypeFromVariable();
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -69,8 +68,7 @@ void UBPNode_GenericVariablesBase::NotifyPinConnectionListChanged(UEdGraphPin* P
 
         if (VariablePin == Pin)
         {
-            FEdGraphPinType pinType = GetPinTypeFromVariable();
-            PropagatePinType(pinType);
+            UpdatePinTypeFromVariable();
         }
     }
 }
@@ -86,8 +84,7 @@ void UBPNode_GenericVariablesBase::PinDefaultValueChanged(UEdGraphPin* Pin)
 
         if (VariablePin == Pin)
         {
-            FEdGraphPinType pinType = GetPinTypeFromVariable();
-            PropagatePinType(pinType);
+            UpdatePinTypeFromVariable();
         }
     }
 }
@@ -170,15 +167,16 @@ UK2Node_CallFunction* UBPNode_GenericVariablesBase::CreateSpecificNode(FName Var
 }
 
 //////////////////////////////////////////////////////////////////////////
-FEdGraphPinType UBPNode_GenericVariablesBase::GetPinTypeFromVariable()
+void UBPNode_GenericVariablesBase::UpdatePinTypeFromVariable()
 {
     FName VariableClassName = GetVariableNameToUse();
 
     FEdGraphPinType ResultPinType;
+    EPinContainerType ResultContainerType = EPinContainerType::None;
 
     #include "VariablesSystem/Generated/Node/PinTypeFromVariable.h"
 
-    return ResultPinType;
+    PropagatePinType(ResultPinType, ResultContainerType);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -201,7 +199,7 @@ FName UBPNode_GenericVariablesBase::GetVariableNameToUse() const
 }
 
 //////////////////////////////////////////////////////////////////////////
-void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType)
+void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType, EPinContainerType containerType)
 {
     UClass const* CallingContext = NULL;
     if (UBlueprint const* Blueprint = GetBlueprint())
@@ -216,7 +214,7 @@ void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType)
     UEdGraphPin* ResultPin = GetVariableValuePin();
 
     ResultPin->PinType = InType;
-    ResultPin->PinType.ContainerType = EPinContainerType::None;
+    ResultPin->PinType.ContainerType = containerType;
     ResultPin->PinType.bIsReference = false;
 
     const UEdGraphSchema_K2* Schema = GetDefault<UEdGraphSchema_K2>();

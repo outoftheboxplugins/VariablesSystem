@@ -62,3 +62,11 @@
     {
         resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(ULocalFVector2DVariable, GetLocalFVector2DVariableValue), ULocalFVector2DVariable::StaticClass());
     }
+    if (VariableClassName == FName("GlobalFloatArrayVariable"))
+    {
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalFloatArrayVariable, GetGlobalFloatArrayVariableValue), UGlobalFloatArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("LocalFloatArrayVariable"))
+    {
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(ULocalFloatArrayVariable, GetLocalFloatArrayVariableValue), ULocalFloatArrayVariable::StaticClass());
+    }

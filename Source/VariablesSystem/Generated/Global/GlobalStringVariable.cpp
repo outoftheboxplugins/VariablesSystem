@@ -74,6 +74,7 @@ void UGlobalStringVariable::Load()
 
 FString UGlobalStringVariable::GetStringValue() const
 {
-	return value;
+    const auto& item = value;
+    return item;
 }
 

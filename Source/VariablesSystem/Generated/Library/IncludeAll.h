@@ -14,3 +14,5 @@
 #include "VariablesSystem/Generated/Local/LocalFVectorVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalFVector2DVariable.h"
 #include "VariablesSystem/Generated/Local/LocalFVector2DVariable.h"
+#include "VariablesSystem/Generated/Global/GlobalFloatArrayVariable.h"
+#include "VariablesSystem/Generated/Local/LocalFloatArrayVariable.h"

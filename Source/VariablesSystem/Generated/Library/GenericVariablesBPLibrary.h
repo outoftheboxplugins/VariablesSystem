@@ -55,4 +55,10 @@ class UGenericVariablesBPLibrary : public UBlueprintFunctionLibrary
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector2D GetLocalFVector2DVariableSafe(ULocalFVector2DVariable* variable, UObject* owner);
 
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FloatArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<float> GetGlobalFloatArrayVariableSafe(UGlobalFloatArrayVariable* variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local FloatArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<float> GetLocalFloatArrayVariableSafe(ULocalFloatArrayVariable* variable, UObject* owner);
+
 };

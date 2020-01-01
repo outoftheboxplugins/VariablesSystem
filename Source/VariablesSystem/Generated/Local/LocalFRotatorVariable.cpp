@@ -84,7 +84,7 @@ FString ULocalFRotatorVariable::GetStringValue() const
         const auto& value = var.Value;
         const auto& owner = var.Key;
 
-        FString valueString = UKismetStringLibrary::Conv_RotatorToString(value);
+        FString valueString = GetValueAsString(value);
         FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
         FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
 
@@ -99,5 +99,11 @@ FString ULocalFRotatorVariable::GetStringValue() const
     }
 
     return lines;
+}
+
+FString ULocalFRotatorVariable::GetValueAsString(FRotator value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_RotatorToString(item);
 }
 

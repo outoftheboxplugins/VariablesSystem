@@ -74,6 +74,7 @@ void UGlobalIntVariable::Load()
 
 FString UGlobalIntVariable::GetStringValue() const
 {
-	return UKismetStringLibrary::Conv_IntToString(value);
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_IntToString(item);
 }
 

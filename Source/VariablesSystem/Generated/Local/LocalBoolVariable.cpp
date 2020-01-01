@@ -84,7 +84,7 @@ FString ULocalBoolVariable::GetStringValue() const
         const auto& value = var.Value;
         const auto& owner = var.Key;
 
-        FString valueString = UKismetStringLibrary::Conv_BoolToString(value);
+        FString valueString = GetValueAsString(value);
         FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
         FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
 
@@ -99,5 +99,11 @@ FString ULocalBoolVariable::GetStringValue() const
     }
 
     return lines;
+}
+
+FString ULocalBoolVariable::GetValueAsString(bool value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_BoolToString(item);
 }
 

@@ -74,6 +74,7 @@ void UGlobalFVectorVariable::Load()
 
 FString UGlobalFVectorVariable::GetStringValue() const
 {
-	return UKismetStringLibrary::Conv_VectorToString(value);
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_VectorToString(item);
 }
 

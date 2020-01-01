@@ -74,6 +74,7 @@ void UGlobalFRotatorVariable::Load()
 
 FString UGlobalFRotatorVariable::GetStringValue() const
 {
-	return UKismetStringLibrary::Conv_RotatorToString(value);
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_RotatorToString(item);
 }
 

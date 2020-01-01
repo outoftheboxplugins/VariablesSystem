@@ -74,6 +74,7 @@ void UGlobalBoolVariable::Load()
 
 FString UGlobalBoolVariable::GetStringValue() const
 {
-	return UKismetStringLibrary::Conv_BoolToString(value);
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_BoolToString(item);
 }
 

@@ -84,7 +84,7 @@ FString ULocalFVector2DVariable::GetStringValue() const
         const auto& value = var.Value;
         const auto& owner = var.Key;
 
-        FString valueString = UKismetStringLibrary::Conv_Vector2dToString(value);
+        FString valueString = GetValueAsString(value);
         FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
         FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
 
@@ -99,5 +99,11 @@ FString ULocalFVector2DVariable::GetStringValue() const
     }
 
     return lines;
+}
+
+FString ULocalFVector2DVariable::GetValueAsString(FVector2D value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_Vector2dToString(item);
 }
 

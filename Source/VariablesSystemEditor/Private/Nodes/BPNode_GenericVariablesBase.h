@@ -38,13 +38,13 @@ protected:
 
     //Generated Methods
     virtual UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph);
-    FEdGraphPinType GetPinTypeFromVariable();
+    void UpdatePinTypeFromVariable();
 
 // Current node utility
 private:
     // Information about current node
     FName GetVariableNameToUse() const;
-    void PropagatePinType(FEdGraphPinType& InType);
+    void PropagatePinType(FEdGraphPinType& InType, EPinContainerType containerType);
 
     // Pin Getter
     virtual UEdGraphPin* GetVariableValuePin() const;
@@ -56,7 +56,6 @@ private:
         UnkownType,
         GlobalHasOwner,
         LocalMissingOwner,
-
     };
 
     EGenericVariablesNodeError CompileVariablesCompatbility(FName VariableClassName) const;

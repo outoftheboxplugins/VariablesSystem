@@ -37,5 +37,8 @@ public:
     virtual void Load() override;
 
     virtual FString GetStringValue() const override;
+
+private:
+    FString GetValueAsString(float value) const;
 };
 

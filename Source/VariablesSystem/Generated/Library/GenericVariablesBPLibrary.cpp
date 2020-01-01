@@ -80,3 +80,13 @@
         return ULocalFVector2DVariable::GetLocalFVector2DVariableValue(owner, variable);
     }
 
+    /* STATIC */ TArray<float> UGenericVariablesBPLibrary::GetGlobalFloatArrayVariableSafe(UGlobalFloatArrayVariable* variable)
+    {
+        return UGlobalFloatArrayVariable::GetGlobalFloatArrayVariableValue(variable);
+    }
+
+    /* STATIC */ TArray<float> UGenericVariablesBPLibrary::GetLocalFloatArrayVariableSafe(ULocalFloatArrayVariable* variable, UObject* owner)
+    {
+        return ULocalFloatArrayVariable::GetLocalFloatArrayVariableValue(owner, variable);
+    }
+
