@@ -86,25 +86,3 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
     }
-    if (VariableClassName == FName("GlobalStringArrayVariable"))
-    {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_String;
-        ResultContainerType = EPinContainerType::Array;
-    }
-    if (VariableClassName == FName("LocalStringArrayVariable"))
-    {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_String;
-        ResultContainerType = EPinContainerType::Array;
-    }
-    if (VariableClassName == FName("GlobalGameplayTagContainer"))
-    {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
-        ResultContainerType = EPinContainerType::None;
-        ResultPinType.PinSubCategoryObject = FGameplayTagContainer::StaticStruct();
-    }
-    if (VariableClassName == FName("LocalGameplayTagContainer"))
-    {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
-        ResultContainerType = EPinContainerType::None;
-        ResultPinType.PinSubCategoryObject = FGameplayTagContainer::StaticStruct();
-    }

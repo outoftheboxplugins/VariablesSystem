@@ -55,16 +55,4 @@ class UGenericVariablesBPLibrary : public UBlueprintFunctionLibrary
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector2D GetLocalFVector2DVariableSafe(ULocalFVector2DVariable* variable, UObject* owner);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global StringArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static TArray<FString> GetGlobalStringArrayVariableSafe(UGlobalStringArrayVariable* variable);
-
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local StringArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static TArray<FString> GetLocalStringArrayVariableSafe(ULocalStringArrayVariable* variable, UObject* owner);
-
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global GameplayTagContainer Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FGameplayTagContainer GetGlobalGameplayTagContainerSafe(UGlobalGameplayTagContainer* variable);
-
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local GameplayTagContainer Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FGameplayTagContainer GetLocalGameplayTagContainerSafe(ULocalGameplayTagContainer* variable, UObject* owner);
-
 };
