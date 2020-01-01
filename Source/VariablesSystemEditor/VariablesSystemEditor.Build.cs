@@ -22,6 +22,7 @@ public class VariablesSystemEditor : ModuleRules
 				"SlateCore",
 				"UnrealEd",
 				"VariablesSystem",
+                "GameplayTags"
             });
 	}
 }

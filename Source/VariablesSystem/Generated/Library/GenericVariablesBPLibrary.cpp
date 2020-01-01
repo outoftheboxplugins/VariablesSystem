@@ -80,13 +80,23 @@
         return ULocalFVector2DVariable::GetLocalFVector2DVariableValue(owner, variable);
     }
 
-    /* STATIC */ TArray<float> UGenericVariablesBPLibrary::GetGlobalFloatArrayVariableSafe(UGlobalFloatArrayVariable* variable)
+    /* STATIC */ TArray<FString> UGenericVariablesBPLibrary::GetGlobalStringArrayVariableSafe(UGlobalStringArrayVariable* variable)
     {
-        return UGlobalFloatArrayVariable::GetGlobalFloatArrayVariableValue(variable);
+        return UGlobalStringArrayVariable::GetGlobalStringArrayVariableValue(variable);
     }
 
-    /* STATIC */ TArray<float> UGenericVariablesBPLibrary::GetLocalFloatArrayVariableSafe(ULocalFloatArrayVariable* variable, UObject* owner)
+    /* STATIC */ TArray<FString> UGenericVariablesBPLibrary::GetLocalStringArrayVariableSafe(ULocalStringArrayVariable* variable, UObject* owner)
     {
-        return ULocalFloatArrayVariable::GetLocalFloatArrayVariableValue(owner, variable);
+        return ULocalStringArrayVariable::GetLocalStringArrayVariableValue(owner, variable);
+    }
+
+    /* STATIC */ FGameplayTagContainer UGenericVariablesBPLibrary::GetGlobalGameplayTagContainerSafe(UGlobalGameplayTagContainer* variable)
+    {
+        return UGlobalGameplayTagContainer::GetGlobalGameplayTagContainerValue(variable);
+    }
+
+    /* STATIC */ FGameplayTagContainer UGenericVariablesBPLibrary::GetLocalGameplayTagContainerSafe(ULocalGameplayTagContainer* variable, UObject* owner)
+    {
+        return ULocalGameplayTagContainer::GetLocalGameplayTagContainerValue(owner, variable);
     }
 

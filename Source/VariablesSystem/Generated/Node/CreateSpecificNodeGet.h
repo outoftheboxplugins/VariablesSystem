@@ -62,11 +62,19 @@
     {
         resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(ULocalFVector2DVariable, GetLocalFVector2DVariableValue), ULocalFVector2DVariable::StaticClass());
     }
-    if (VariableClassName == FName("GlobalFloatArrayVariable"))
+    if (VariableClassName == FName("GlobalStringArrayVariable"))
     {
-        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalFloatArrayVariable, GetGlobalFloatArrayVariableValue), UGlobalFloatArrayVariable::StaticClass());
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalStringArrayVariable, GetGlobalStringArrayVariableValue), UGlobalStringArrayVariable::StaticClass());
     }
-    if (VariableClassName == FName("LocalFloatArrayVariable"))
+    if (VariableClassName == FName("LocalStringArrayVariable"))
     {
-        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(ULocalFloatArrayVariable, GetLocalFloatArrayVariableValue), ULocalFloatArrayVariable::StaticClass());
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(ULocalStringArrayVariable, GetLocalStringArrayVariableValue), ULocalStringArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalGameplayTagContainer"))
+    {
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalGameplayTagContainer, GetGlobalGameplayTagContainerValue), UGlobalGameplayTagContainer::StaticClass());
+    }
+    if (VariableClassName == FName("LocalGameplayTagContainer"))
+    {
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(ULocalGameplayTagContainer, GetLocalGameplayTagContainerValue), ULocalGameplayTagContainer::StaticClass());
     }
