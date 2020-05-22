@@ -12,8 +12,6 @@
 #include "VariablesSystem/Public/BaseVariable.h"
 #include "VariablesSystem/Public/VariablesSystemHelpers.h"
 
-#include "Runtime/Launch/Resources/Version.h"
-
 const FName ColumnVariableName = FName("Name");
 const FName ColumnVariableValue = FName("Value");
 
@@ -183,12 +181,7 @@ TSharedPtr< SWidget > SVariablesWatchWidget::CreateContextMenu()
 
 void SVariablesWatchWidget::HandleVariableSelected(UBaseVariable* InItem)
 {
-#if ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 24
     GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(InItem);
-#else
-    FAssetEditorManager::Get().OpenEditorForAsset(InItem);
-#endif
-
 }
 
 void SVariablesWatchWidget::AddAllVariables()

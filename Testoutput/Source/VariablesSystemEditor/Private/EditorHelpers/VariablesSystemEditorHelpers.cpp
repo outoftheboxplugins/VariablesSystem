@@ -1,0 +1,18 @@
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
+#include "VariablesSystemEditorHelpers.h"
+
+#include "Slate/Public/Framework/Docking/TabManager.h"
+#include "Slate/Public/Widgets/Docking/SDockTab.h"
+#include "VariablesSystemEditor/Private/Module/VariablesSystemEditorModule.h"
+#include "VariablesSystemEditor/Private/WatchWidget/VariablesWatchWidget.h"
+
+TSharedRef<SDockTab> UVariablesSystemEditorHelpersBPLibrary::OpenOrAddVariablesToWatch(TArray<UBaseVariable*> Variables /*= TArray<UBaseVariable*>()*/)
+{
+    TSharedRef<SDockTab> WatchTab = FGlobalTabmanager::Get()->InvokeTab(FVariablesSystemEditorModule::VariablesWatchTabName);
+    TSharedRef<SVariablesWatchWidget> VariablesWatch = StaticCastSharedRef<SVariablesWatchWidget>(WatchTab->GetContent());
+
+    VariablesWatch->AddVariables(Variables);
+
+    return WatchTab;
+}
