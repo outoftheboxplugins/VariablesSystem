@@ -181,7 +181,7 @@ TSharedPtr< SWidget > SVariablesWatchWidget::CreateContextMenu()
 
 void SVariablesWatchWidget::HandleVariableSelected(UBaseVariable* InItem)
 {
-    FAssetEditorManager::Get().OpenEditorForAsset(InItem);
+	GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(InItem);
 }
 
 void SVariablesWatchWidget::AddAllVariables()
