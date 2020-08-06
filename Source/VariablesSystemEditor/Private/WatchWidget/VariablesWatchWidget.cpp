@@ -3,7 +3,7 @@
 #include "VariablesWatchWidget.h"
 
 #include "AssetData.h"
-#include "AssetDragDropOp.h"
+#include "DragAndDrop/AssetDragDropOp.h"
 #include "AssetRegistryModule.h"
 #include "BaseVariable.h"
 #include "Slate/Public/Framework/MultiBox/MultiBoxBuilder.h"

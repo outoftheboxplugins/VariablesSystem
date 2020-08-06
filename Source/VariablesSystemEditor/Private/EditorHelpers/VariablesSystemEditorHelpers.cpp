@@ -1,5 +1,7 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
+#include "VariablesSystemEditor/Private/EditorHelpers/VariablesSystemEditorHelpers.h"
+
 #include "Slate/Public/Framework/Docking/TabManager.h"
 #include "VariablesSystemEditor/Private/Module/VariablesSystemEditorModule.h"
 #include "VariablesSystemEditor/Private/WatchWidget/VariablesWatchWidget.h"
