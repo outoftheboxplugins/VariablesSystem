@@ -22,24 +22,24 @@ public:
 	
 	// Get the value of a FString variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static FString GetGlobalStringValue(UGlobalStringVariable* var);
+	static FString GetGlobalStringVariableValue(UGlobalStringVariable* var);
 
 	// Get the value of a FString variable.
-	FString GetGlobalInternalStringValue();
+	FString GetGlobalInternalStringVariableValue();
 
 	// Set the value of a FString variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalStringValue(UGlobalStringVariable* var, FString _value);
+	static void SetGlobalStringVariableValue(UGlobalStringVariable* var, FString _value);
 
 	// Set the value of a FString variable.
-	void SetGlobalInternalStringValue(FString _value);
+	void SetGlobalInternalStringVariableValue(FString _value);
 	
 	// Copy the value of a FString variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalStringValue(UGlobalStringVariable* var, UGlobalStringVariable* other);
+	static void CopyGlobalStringVariableValue(UGlobalStringVariable* var, UGlobalStringVariable* other);
 
 	// Copy the value of a FString variable.
-	void CopyGlobalInternalStringValue(UGlobalStringVariable* other);
+	void CopyGlobalInternalStringVariableValue(UGlobalStringVariable* other);
 
 	/**** Base Variable Overrides ****/
 

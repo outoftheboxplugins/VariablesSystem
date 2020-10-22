@@ -2,9 +2,9 @@
 
 #pragma once
 
-#include "Templates/SharedPointer.h"
-#include "Widgets/SCompoundWidget.h"
-#include "Widgets/Views/SListView.h"
+#include "Core/Public/Templates/SharedPointer.h"
+#include "Slate/Public/Widgets/Views/SListView.h"
+#include "SlateCore/Public/Widgets/SCompoundWidget.h"
 
 class UBaseVariable;
 

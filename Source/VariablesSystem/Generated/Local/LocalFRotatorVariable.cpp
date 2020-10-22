@@ -3,21 +3,7 @@
 #include "LocalFRotatorVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFRotatorVariable::SetFRotatorValue(FRotator _value)
-//{
-//	SetFRotatorValue(this, _value);
-//}
-//
-
-//
-//void UFRotatorVariable::CopyFRotatorValue(UFRotatorVariable* other)
-//{
-//	CopyFRotatorValue(this, other);
-//}
-//
-
-
-FRotator ULocalFRotatorVariable::GetLocalFRotator(UObject* owner, ULocalFRotatorVariable* var)
+FRotator ULocalFRotatorVariable::GetLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +18,92 @@ FRotator ULocalFRotatorVariable::GetLocalFRotator(UObject* owner, ULocalFRotator
 	}
 	else
 	{
-		return var->GetLocalFRotatorRef(owner);
+		return var->GetLocalFRotatorVariableRef(owner);
 	}
 }
 
-FRotator& ULocalFRotatorVariable::GetLocalFRotatorRef(UObject* owner)
+FRotator& ULocalFRotatorVariable::GetLocalFRotatorVariableRef(UObject* owner)
 {
 	FRotator& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalFRotatorVariable::SetLocalFRotatorValue(UObject* owner, ULocalFRotatorVariable* var, FRotator _value)
+void ULocalFRotatorVariable::SetLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, FRotator _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	FRotator& FRotatorRef = var->GetLocalFRotatorRef(owner);
-	FRotatorRef = _value;
+	FRotator& FRotatorVariableRef = var->GetLocalFRotatorVariableRef(owner);
+	FRotatorVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalFRotatorVariable::CopyLocalFRotatorValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other)
+void ULocalFRotatorVariable::CopyLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	FRotator& FRotatorRef = var->GetLocalFRotatorRef(owner);
-	FRotator& otherFRotatorRef = other->GetLocalFRotatorRef(otherOwner);
+	FRotator& FRotatorVariableRef = var->GetLocalFRotatorVariableRef(owner);
+	FRotator& otherFRotatorVariableRef = other->GetLocalFRotatorVariableRef(otherOwner);
 
-	FRotatorRef = otherFRotatorRef;
+	FRotatorVariableRef = otherFRotatorVariableRef;
 	var->dirty = true;
+}
+
+void ULocalFRotatorVariable::Save()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+void ULocalFRotatorVariable::Load()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+FString ULocalFRotatorVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = GetValueAsString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+
+FString ULocalFRotatorVariable::GetValueAsString(FRotator value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_RotatorToString(item);
 }
 

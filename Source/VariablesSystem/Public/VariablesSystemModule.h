@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Modules/ModuleInterface.h"
-#include "Engine/World.h"
+#include "Core/Public/Modules/ModuleInterface.h"
+#include "Engine/Classes/Engine/World.h"
 
 /**
  * Implements the VariablesSystem module.

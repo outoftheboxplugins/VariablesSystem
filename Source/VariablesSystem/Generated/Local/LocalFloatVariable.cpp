@@ -3,21 +3,7 @@
 #include "LocalFloatVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFloatVariable::SetFloatValue(float _value)
-//{
-//	SetFloatValue(this, _value);
-//}
-//
-
-//
-//void UFloatVariable::CopyFloatValue(UFloatVariable* other)
-//{
-//	CopyFloatValue(this, other);
-//}
-//
-
-
-float ULocalFloatVariable::GetLocalFloat(UObject* owner, ULocalFloatVariable* var)
+float ULocalFloatVariable::GetLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +18,92 @@ float ULocalFloatVariable::GetLocalFloat(UObject* owner, ULocalFloatVariable* va
 	}
 	else
 	{
-		return var->GetLocalFloatRef(owner);
+		return var->GetLocalFloatVariableRef(owner);
 	}
 }
 
-float& ULocalFloatVariable::GetLocalFloatRef(UObject* owner)
+float& ULocalFloatVariable::GetLocalFloatVariableRef(UObject* owner)
 {
 	float& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalFloatVariable::SetLocalFloatValue(UObject* owner, ULocalFloatVariable* var, float _value)
+void ULocalFloatVariable::SetLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, float _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	float& FloatRef = var->GetLocalFloatRef(owner);
-	FloatRef = _value;
+	float& FloatVariableRef = var->GetLocalFloatVariableRef(owner);
+	FloatVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalFloatVariable::CopyLocalFloatValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other)
+void ULocalFloatVariable::CopyLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	float& FloatRef = var->GetLocalFloatRef(owner);
-	float& otherFloatRef = other->GetLocalFloatRef(otherOwner);
+	float& FloatVariableRef = var->GetLocalFloatVariableRef(owner);
+	float& otherFloatVariableRef = other->GetLocalFloatVariableRef(otherOwner);
 
-	FloatRef = otherFloatRef;
+	FloatVariableRef = otherFloatVariableRef;
 	var->dirty = true;
+}
+
+void ULocalFloatVariable::Save()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+void ULocalFloatVariable::Load()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+FString ULocalFloatVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = GetValueAsString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+
+FString ULocalFloatVariable::GetValueAsString(float value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_FloatToString(item);
 }
 

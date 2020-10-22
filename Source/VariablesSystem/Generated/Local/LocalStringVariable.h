@@ -17,19 +17,28 @@ class VARIABLESSYSTEM_API ULocalStringVariable : public UBaseVariable
 public:
 	TMap<UObject*, FString> variables;
 
-	// Get the value of a LocalString variable.
-	FString& GetLocalStringRef(UObject* owner);
+	// Get the value of a LocalStringVariable variable.
+	FString& GetLocalStringVariableRef(UObject* owner);
 	
-	// Get the value of a LocalString variable.
+	// Get the value of a LocalStringVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static FString GetLocalString(UObject* owner, ULocalStringVariable* var);
+	static FString GetLocalStringVariableValue(UObject* owner, ULocalStringVariable* var);
 
-	// Set the value of a LocalString variable.
+	// Set the value of a LocalStringVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalStringValue(UObject* owner, ULocalStringVariable* var, FString _value);
+	static void SetLocalStringVariableValue(UObject* owner, ULocalStringVariable* var, FString _value);
 	
-	// Copy the value of a LocalString variable.
+	// Copy the value of a LocalStringVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalStringValue(UObject* owner, ULocalStringVariable* var, UObject* otherOwner, ULocalStringVariable* other);
+	static void CopyLocalStringVariableValue(UObject* owner, ULocalStringVariable* var, UObject* otherOwner, ULocalStringVariable* other);
+
+    virtual void Save() override;
+
+    virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
+
+private:
+    FString GetValueAsString(FString value) const;
 };
 

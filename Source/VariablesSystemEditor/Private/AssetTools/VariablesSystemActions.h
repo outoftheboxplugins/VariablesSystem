@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "AssetTypeActions_Base.h"
+#include "AssetTools/Public/AssetTypeActions_Base.h"
 
 class ISlateStyle;
 

@@ -8,9 +8,13 @@
 #include "BaseVariable.h"
 #include "Slate/Public/Framework/MultiBox/MultiBoxBuilder.h"
 #include "Slate/Public/Widgets/Layout/SSpacer.h"
-#include "Toolkits/AssetEditorManager.h"
+#include "UnrealEd/Public/DragAndDrop/AssetDragDropOp.h"
+#include "UnrealEd/Public/Toolkits/AssetEditorManager.h"
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
-#include "VariablesSystemHelpers.h"
+#include "VariablesSystem/Public/BaseVariable.h"
+#include "VariablesSystem/Public/VariablesSystemHelpers.h"
+
+#include "Runtime/Launch/Resources/Version.h"
 
 const FName ColumnVariableName = FName("Name");
 const FName ColumnVariableValue = FName("Value");
@@ -181,7 +185,12 @@ TSharedPtr< SWidget > SVariablesWatchWidget::CreateContextMenu()
 
 void SVariablesWatchWidget::HandleVariableSelected(UBaseVariable* InItem)
 {
-	GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(InItem);
+#if ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 24
+    GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(InItem);
+#else
+    FAssetEditorManager::Get().OpenEditorForAsset(InItem);
+#endif
+
 }
 
 void SVariablesWatchWidget::AddAllVariables()

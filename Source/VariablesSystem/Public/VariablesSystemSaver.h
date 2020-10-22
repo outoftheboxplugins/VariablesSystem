@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "BaseVariable.h"
+#include "VariablesSystem/Public/BaseVariable.h"
 
 #include "VariablesSystemSaver.generated.h"
 
@@ -21,11 +21,11 @@ class VARIABLESSYSTEM_API UVariablesSystemSaver : public UBaseVariable
 public:
     /** Save all the current variables. */
     UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
-        static void SaveAllData(UVariablesSystemSaver* Manager);
+    static void SaveAllData(UVariablesSystemSaver* Manager);
 
     /** Loads all the current variables. */
     UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
-        static void LoadAllData(UVariablesSystemSaver* Manager);
+    static void LoadAllData(UVariablesSystemSaver* Manager);
 
 protected:
 	/** Variables that should be loaded/saved.. */

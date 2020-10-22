@@ -13,6 +13,12 @@
 
 
 
+
+
+
+
+
+
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
 #pragma once
@@ -37,24 +43,24 @@ public:
 	
 	// Get the value of a AActor* variable.
 	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static AActor* GetGlobalActorRefValue(UGlobalActorRefVariable* var);
+	static AActor* GetGlobalActorRefVariableValue(UGlobalActorRefVariable* var);
 
 	// Get the value of a AActor* variable.
-	AActor* GetGlobalInternalActorRefValue();
+	AActor* GetGlobalInternalActorRefVariableValue();
 
 	// Set the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalActorRefValue(UGlobalActorRefVariable* var, AActor* _value);
+	static void SetGlobalActorRefVariableValue(UGlobalActorRefVariable* var, AActor* _value);
 
 	// Set the value of a AActor* variable.
-	void SetGlobalInternalActorRefValue(AActor* _value);
+	void SetGlobalInternalActorRefVariableValue(AActor* _value);
 	
 	// Copy the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalActorRefValue(UGlobalActorRefVariable* var, UGlobalActorRefVariable* other);
+	static void CopyGlobalActorRefVariableValue(UGlobalActorRefVariable* var, UGlobalActorRefVariable* other);
 
 	// Copy the value of a AActor* variable.
-	void CopyGlobalInternalActorRefValue(UGlobalActorRefVariable* other);
+	void CopyGlobalInternalActorRefVariableValue(UGlobalActorRefVariable* other);
 
 	/**** Base Variable Overrides ****/
 

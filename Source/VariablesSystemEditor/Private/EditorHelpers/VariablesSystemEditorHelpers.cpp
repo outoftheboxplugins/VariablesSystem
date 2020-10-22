@@ -1,12 +1,11 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "VariablesSystemEditor/Private/EditorHelpers/VariablesSystemEditorHelpers.h"
+#include "VariablesSystemEditorHelpers.h"
 
 #include "Slate/Public/Framework/Docking/TabManager.h"
+#include "Slate/Public/Widgets/Docking/SDockTab.h"
 #include "VariablesSystemEditor/Private/Module/VariablesSystemEditorModule.h"
 #include "VariablesSystemEditor/Private/WatchWidget/VariablesWatchWidget.h"
-#include "VariablesSystemEditorHelpers.h"
-#include "Widgets/Docking/SDockTab.h"
 
 TSharedRef<SDockTab> UVariablesSystemEditorHelpersBPLibrary::OpenOrAddVariablesToWatch(TArray<UBaseVariable*> Variables /*= TArray<UBaseVariable*>()*/)
 {

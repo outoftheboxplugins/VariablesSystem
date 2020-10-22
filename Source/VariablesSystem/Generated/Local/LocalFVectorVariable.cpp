@@ -3,21 +3,7 @@
 #include "LocalFVectorVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UFVectorVariable::SetFVectorValue(FVector _value)
-//{
-//	SetFVectorValue(this, _value);
-//}
-//
-
-//
-//void UFVectorVariable::CopyFVectorValue(UFVectorVariable* other)
-//{
-//	CopyFVectorValue(this, other);
-//}
-//
-
-
-FVector ULocalFVectorVariable::GetLocalFVector(UObject* owner, ULocalFVectorVariable* var)
+FVector ULocalFVectorVariable::GetLocalFVectorVariableValue(UObject* owner, ULocalFVectorVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +18,92 @@ FVector ULocalFVectorVariable::GetLocalFVector(UObject* owner, ULocalFVectorVari
 	}
 	else
 	{
-		return var->GetLocalFVectorRef(owner);
+		return var->GetLocalFVectorVariableRef(owner);
 	}
 }
 
-FVector& ULocalFVectorVariable::GetLocalFVectorRef(UObject* owner)
+FVector& ULocalFVectorVariable::GetLocalFVectorVariableRef(UObject* owner)
 {
 	FVector& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalFVectorVariable::SetLocalFVectorValue(UObject* owner, ULocalFVectorVariable* var, FVector _value)
+void ULocalFVectorVariable::SetLocalFVectorVariableValue(UObject* owner, ULocalFVectorVariable* var, FVector _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	FVector& FVectorRef = var->GetLocalFVectorRef(owner);
-	FVectorRef = _value;
+	FVector& FVectorVariableRef = var->GetLocalFVectorVariableRef(owner);
+	FVectorVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalFVectorVariable::CopyLocalFVectorValue(UObject* owner, ULocalFVectorVariable* var, UObject* otherOwner, ULocalFVectorVariable* other)
+void ULocalFVectorVariable::CopyLocalFVectorVariableValue(UObject* owner, ULocalFVectorVariable* var, UObject* otherOwner, ULocalFVectorVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	FVector& FVectorRef = var->GetLocalFVectorRef(owner);
-	FVector& otherFVectorRef = other->GetLocalFVectorRef(otherOwner);
+	FVector& FVectorVariableRef = var->GetLocalFVectorVariableRef(owner);
+	FVector& otherFVectorVariableRef = other->GetLocalFVectorVariableRef(otherOwner);
 
-	FVectorRef = otherFVectorRef;
+	FVectorVariableRef = otherFVectorVariableRef;
 	var->dirty = true;
+}
+
+void ULocalFVectorVariable::Save()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+void ULocalFVectorVariable::Load()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+FString ULocalFVectorVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = GetValueAsString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+
+FString ULocalFVectorVariable::GetValueAsString(FVector value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_VectorToString(item);
 }
 

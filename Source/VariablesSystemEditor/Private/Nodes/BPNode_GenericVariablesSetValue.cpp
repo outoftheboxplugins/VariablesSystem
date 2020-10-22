@@ -2,11 +2,11 @@
 
 #include "BPNode_GenericVariablesSetValue.h"
 
+#include "BlueprintGraph/Classes/K2Node_CallFunction.h"
+#include "BlueprintGraph/Public/BlueprintActionDatabaseRegistrar.h"
+#include "BlueprintGraph/Public/BlueprintNodeSpawner.h"
+#include "KismetCompiler/Public/KismetCompiler.h"
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
-#include "K2Node_CallFunction.h"
-#include "KismetCompiler.h"
-#include "BlueprintActionDatabaseRegistrar.h"
-#include "BlueprintNodeSpawner.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 
@@ -28,13 +28,13 @@ void UBPNode_GenericVariablesSetValue::AllocateDefaultPins()
 //////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-    return LOCTEXT("VariablesSystem_SetVariableNodeName", "Set Generic Global Variable");
+    return LOCTEXT("VariablesSystem_SetVariableNodeName", "Set Generic Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetTooltipText() const
 {
-    return LOCTEXT("VariablesSystem_SetVariableNodetTooltip", "Sets the value of a Global Generic Variable");
+    return LOCTEXT("VariablesSystem_SetVariableNodetTooltip", "Sets the value of a Generic Variable");
 }
 
 //////////////////////////////////////////////////////////////////////////
