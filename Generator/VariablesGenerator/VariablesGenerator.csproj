@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3B3D3693-ADD0-4A4B-A141-B618A1578FA2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>VariablesGenerator</RootNamespace>
+    <AssemblyName>VariablesGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="Templates\GlobalCPPTemplate.ttinclude" />
+    <None Include="Templates\GlobalHTemplate.ttinclude" />
+    <None Include="Templates\LibraryTemplate.ttinclude" />
+    <None Include="Templates\LocalCPPTemplate.ttinclude" />
+    <None Include="Templates\LocalHTemplate.ttinclude" />
+    <None Include="Templates\NodeHelpersTemplate.ttinclude" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Templates\GenericVariableGenerator.tt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Variables\GlobalVariableClasses.cs" />
+    <Compile Include="Variables\GlobalVariablesAttributes.cs" />
+    <Compile Include="Variables\GlobalVariablesGenerator.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(DevEnvDir)TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
+(robocopy "$(ProjectDir)Generated" "E:\CodePlugins\Plugins\VariablesSystem\Source\VariablesSystem\Generated" /E /MIR) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 exit 0</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>RMDIR /Q/S foldername "$(ProjectDir)Generated"</PreBuildEvent>
+  </PropertyGroup>
+</Project>

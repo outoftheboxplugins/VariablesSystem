@@ -1,0 +1,113 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ assembly name="VariablesGenerator.dll" #>
+
+<#+ // Generate the CPP file for a generic variable.
+void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
+{
+#>
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
+#include "Global<#=variable.Key.Name#>.h"
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+#include "CoreMinimal.h"
+
+<#=variable.Value.valueType#> UGlobal<#=variable.Key.Name#>::GetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* var)
+{
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return <#=variable.Value.defaultValue#>;
+	}
+	else
+	{
+		return var->value;
+	}
+}
+
+<#=variable.Value.valueType#> UGlobal<#=variable.Key.Name#>::GetGlobalInternal<#=variable.Key.Name#>Value()
+{
+	return GetGlobal<#=variable.Key.Name#>Value(this);
+}
+
+void UGlobal<#=variable.Key.Name#>::SetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* var, <#=variable.Value.valueType#> _value)
+{
+	if (!var) return;
+
+	var->value = _value;
+	var->dirty = true;
+}
+
+void UGlobal<#=variable.Key.Name#>::SetGlobalInternal<#=variable.Key.Name#>Value(<#=variable.Value.valueType#> _value)
+{
+	SetGlobal<#=variable.Key.Name#>Value(this, _value);
+}
+
+void UGlobal<#=variable.Key.Name#>::CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* var, UGlobal<#=variable.Key.Name#>* other)
+{
+	if (!var) return;
+
+	var->value = other->value;
+	var->dirty = true;
+}
+
+void UGlobal<#=variable.Key.Name#>::CopyGlobalInternal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* other)
+{
+	CopyGlobal<#=variable.Key.Name#>Value(this, other);
+}
+
+void UGlobal<#=variable.Key.Name#>::Save()
+{
+	if (dirty == false)
+	{
+		return;
+	}
+
+	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
+	dirty = false;
+}
+
+void UGlobal<#=variable.Key.Name#>::Load()
+{
+	UGlobal<#=variable.Key.Name#>* LoadGameInstance = Cast<UGlobal<#=variable.Key.Name#>>(UGameplayStatics::CreateSaveGameObject(UGlobal<#=variable.Key.Name#>::StaticClass()));
+	LoadGameInstance = Cast<UGlobal<#=variable.Key.Name#>>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
+	
+	if (LoadGameInstance != nullptr)
+	{
+		this->value = LoadGameInstance->value;
+	}
+}
+
+
+FString UGlobal<#=variable.Key.Name#>::GetStringValue() const
+{
+<#+
+    if(variable.Value.nodeContainer != "None")
+    {
+#>
+    TArray<FString> StringValues;
+    for(const auto& item : value)
+    {
+        StringValues.Add(<#=variable.Value.toStringFunction#>);
+    }
+
+    return UKismetStringLibrary::JoinStringArray(StringValues);
+<#+
+    }
+    else
+    {
+#>
+    const auto& item = value;
+    return <#=variable.Value.toStringFunction#>;
+<#+
+    }
+#>
+}
+
+<#+
+}
+#>

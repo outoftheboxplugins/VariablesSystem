@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Source",
+    "\\Source\\VariablesSystem",
+    "\\Source\\VariablesSystem\\Generator",
+    "\\Source\\VariablesSystem\\Generator\\VariablesGenerator"
+  ],
+  "SelectedNode": "\\Source\\VariablesSystem\\Generator\\VariablesGenerator\\GlobalVariableClasses.cs",
+  "PreviewInSolutionExplorer": false
+}

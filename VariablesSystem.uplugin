@@ -16,7 +16,7 @@
   [
     {
       "Name": "VariablesSystem",
-      "Type": "Runtime",
+      "Type": "Runtime"
     },
     {
       "Name": "VariablesSystemEditor",

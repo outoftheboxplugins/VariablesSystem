@@ -1,0 +1,142 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ assembly name="VariablesGenerator.dll" #>
+
+<#+ // Generate the CPP file for a generic local variable
+void GenerateLocalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
+{
+#>
+// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+
+#include "Local<#=variable.Key.Name#>.h"
+#include "Kismet/GameplayStatics.h"
+
+<#=variable.Value.valueType#> ULocal<#=variable.Key.Name#>::GetLocal<#=variable.Key.Name#>Value(UObject* owner, ULocal<#=variable.Key.Name#>* var)
+{
+	if (owner == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing owner"));
+		return <#=variable.Value.defaultValue#>;
+	}
+
+	if (var == nullptr)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
+		return <#=variable.Value.defaultValue#>;
+	}
+	else
+	{
+		return var->GetLocal<#=variable.Key.Name#>Ref(owner);
+	}
+}
+
+<#=variable.Value.valueType#>& ULocal<#=variable.Key.Name#>::GetLocal<#=variable.Key.Name#>Ref(UObject* owner)
+{
+	<#=variable.Value.valueType#>& value = variables.FindOrAdd(owner);
+	return value;
+}
+
+void ULocal<#=variable.Key.Name#>::SetLocal<#=variable.Key.Name#>Value(UObject* owner, ULocal<#=variable.Key.Name#>* var, <#=variable.Value.valueType#> _value)
+{
+
+	if (!var)	return;
+	if (!owner) return;
+
+	<#=variable.Value.valueType#>& <#=variable.Key.Name#>Ref = var->GetLocal<#=variable.Key.Name#>Ref(owner);
+	<#=variable.Key.Name#>Ref = _value;
+	var->dirty = true;
+}
+
+void ULocal<#=variable.Key.Name#>::CopyLocal<#=variable.Key.Name#>Value(UObject* owner, ULocal<#=variable.Key.Name#>* var, UObject* otherOwner, ULocal<#=variable.Key.Name#>* other)
+{
+	if (!var)	return;
+	if (!owner) return;
+	if (!otherOwner) return;
+	if (!other) return;
+	
+	<#=variable.Value.valueType#>& <#=variable.Key.Name#>Ref = var->GetLocal<#=variable.Key.Name#>Ref(owner);
+	<#=variable.Value.valueType#>& other<#=variable.Key.Name#>Ref = other->GetLocal<#=variable.Key.Name#>Ref(otherOwner);
+
+	<#=variable.Key.Name#>Ref = other<#=variable.Key.Name#>Ref;
+	var->dirty = true;
+}
+
+void ULocal<#=variable.Key.Name#>::Save()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+void ULocal<#=variable.Key.Name#>::Load()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+FString ULocal<#=variable.Key.Name#>::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = GetValueAsString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+
+FString ULocal<#=variable.Key.Name#>::GetValueAsString(<#=variable.Value.valueType#> value) const
+{
+<#+
+    if(variable.Value.nodeContainer != "None")
+    {
+#>
+    TArray<FString> StringValues;
+    for(const auto& item : value)
+    {
+        StringValues.Add(<#=variable.Value.toStringFunction#>);
+    }
+
+    return UKismetStringLibrary::JoinStringArray(StringValues);
+<#+
+    }
+    else
+    {
+#>
+    const auto& item = value;
+    return <#=variable.Value.toStringFunction#>;
+<#+
+    }
+#>
+}
+
+<#+
+}
+#>

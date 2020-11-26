@@ -1,0 +1,112 @@
+﻿<#@ template debug="true" hostspecific="true" #>
+
+<#@ assembly name="VariablesGenerator.dll" #>
+
+<#@ include file="GlobalCPPTemplate.ttinclude"#>
+<#@ include file="GlobalHTemplate.ttinclude"#>
+<#@ include file="LibraryTemplate.ttinclude"#>
+<#@ include file="LocalCPPTemplate.ttinclude"#>
+<#@ include file="LocalHTemplate.ttinclude"#>
+<#@ include file="NodeHelpersTemplate.ttinclude"#>
+
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#
+    Dictionary<System.Type, GlobalVariable> allVariables = VariableGenerator.GenerateAllVariables();
+
+    foreach(var variable in allVariables)
+    {
+        SaveGlobalHOutput(variable);
+        SaveGlobalCPPOutput(variable);
+        SaveLocalHOutput(variable);
+        SaveLocalCPPOutput(variable);
+    }
+
+    CreateK2PinTypeFromVariable(allVariables);
+    CreateK2CreateSpecificNodeGet(allVariables);
+    CreateK2CreateSpecificNodeSet(allVariables);
+    CreateK2IncludeAll(allVariables);
+    
+    CreateBlueprintLibraryH(allVariables);
+    CreateBlueprintLibraryCPP(allVariables);
+#>
+
+<#+
+private void SaveGlobalHOutput(KeyValuePair<System.Type, GlobalVariable> variable) 
+{
+    GenerateGlobalHFile(variable);
+    SaveFileAs(@"\Global\Global" + variable.Key.Name + @".h");
+}
+
+private void SaveGlobalCPPOutput(KeyValuePair<System.Type, GlobalVariable> variable)
+{
+    GenerateGlobalCPPFile(variable);
+    SaveFileAs(@"\Global\Global" + variable.Key.Name + @".cpp");
+}
+
+private void SaveLocalHOutput(KeyValuePair<System.Type, GlobalVariable> variable)
+{
+    GenerateLocalHFile(variable);
+    SaveFileAs(@"\Local\Local" + variable.Key.Name + @".h");
+}
+
+private void SaveLocalCPPOutput(KeyValuePair<System.Type, GlobalVariable> variable)
+{
+    GenerateLocalCPPFile(variable);
+    SaveFileAs(@"\Local\Local" + variable.Key.Name + @".cpp");
+}
+
+private void CreateK2PinTypeFromVariable(Dictionary<System.Type, GlobalVariable> variables)
+{
+    GeneratePinTypeFromVariable(variables);
+    SaveFileAs(@"\Node\PinTypeFromVariable.h");
+}
+
+private void CreateK2CreateSpecificNodeGet(Dictionary<System.Type, GlobalVariable> variables)
+{
+    GenerateCreateSpecificNodeGet(variables);
+    SaveFileAs(@"\Node\CreateSpecificNodeGet.h");
+}
+
+private void CreateK2IncludeAll(Dictionary<System.Type, GlobalVariable> variables)
+{
+    GenerateIncludeAll(variables);
+    SaveFileAs(@"\Library\IncludeAll.h");
+}
+
+private void CreateK2CreateSpecificNodeSet(Dictionary<System.Type, GlobalVariable> variables)
+{
+    GenerateCreateSpecificNodeSet(variables);
+    SaveFileAs(@"\Node\CreateSpecificNodeSet.h");
+}
+
+private void CreateBlueprintLibraryH(Dictionary<System.Type, GlobalVariable> variables)
+{
+    GenerateBlueprintLibraryH(variables);
+    SaveFileAs(@"\Library\GenericVariablesBPLibrary.h");
+}
+
+private void CreateBlueprintLibraryCPP(Dictionary<System.Type, GlobalVariable> variables)
+{
+    GenerateBlueprintLibraryCPP(variables);
+    SaveFileAs(@"\Library\GenericVariablesBPLibrary.cpp");
+}
+
+private void SaveFileAs(string destination)
+{
+    // Format the path.
+    string templateDirectory = Path.GetDirectoryName(Host.TemplateFile);
+    string outputFilePath = templateDirectory + @"\..\Generated" + destination;
+
+    // Create directory if missing.
+    System.IO.FileInfo file = new System.IO.FileInfo(outputFilePath);
+    file.Directory.Create();
+
+    // Copy the template to the output file and delete content.
+    File.WriteAllText(outputFilePath, this.GenerationEnvironment.ToString());
+    this.GenerationEnvironment.Remove(0, this.GenerationEnvironment.Length);
+}
+#>

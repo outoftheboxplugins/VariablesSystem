@@ -1,0 +1,75 @@
+﻿<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ assembly name="VariablesGenerator.dll" #>
+
+<#+
+void GenerateIncludeAll(Dictionary<System.Type, GlobalVariable> variables)
+{
+    for (int i = 0; i < variables.Count; i++)
+	{
+#>
+#include "VariablesSystem/Generated/Global/Global<#=variables.Keys.ElementAt(i).Name#>.h"
+#include "VariablesSystem/Generated/Local/Local<#=variables.Keys.ElementAt(i).Name#>.h"
+<#+
+	}
+}
+#>
+
+<#+
+void GenerateBlueprintLibraryH(Dictionary<System.Type, GlobalVariable> variables)
+{
+#>
+#include "Kismet/BlueprintFunctionLibrary.h"
+#include "VariablesSystem/Generated/Library/IncludeAll.h"
+#include "GenericVariablesBPLibrary.generated.h"
+
+UCLASS(meta = (BlueprintThreadSafe))
+class UGenericVariablesBPLibrary : public UBlueprintFunctionLibrary
+{
+    GENERATED_BODY()
+
+<#+
+    for (int i = 0; i < variables.Count; i++)
+    {
+#>
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global <#=variables.Keys.ElementAt(i).Name#> Variable (Thread Safe)"), Category = "VariablesSystem")
+    static <#=variables.Values.ElementAt(i).valueType#> GetGlobal<#=variables.Keys.ElementAt(i).Name#>Safe(UGlobal<#=variables.Keys.ElementAt(i).Name#>* variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local <#=variables.Keys.ElementAt(i).Name#> Variable (Thread Safe)"), Category = "VariablesSystem")
+    static <#=variables.Values.ElementAt(i).valueType#> GetLocal<#=variables.Keys.ElementAt(i).Name#>Safe(ULocal<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner);
+
+<#+
+	}
+#>
+};
+<#+
+}
+#>
+
+<#+
+void GenerateBlueprintLibraryCPP(Dictionary<System.Type, GlobalVariable> variables)
+{
+#>
+#include "GenericVariablesBPLibrary.h"
+
+<#+
+    for (int i = 0; i < variables.Count; i++)
+	{
+#>
+    /* STATIC */ <#=variables.Values.ElementAt(i).valueType#> UGenericVariablesBPLibrary::GetGlobal<#=variables.Keys.ElementAt(i).Name#>Safe(UGlobal<#=variables.Keys.ElementAt(i).Name#>* variable)
+    {
+        return UGlobal<#=variables.Keys.ElementAt(i).Name#>::GetGlobal<#=variables.Keys.ElementAt(i).Name#>Value(variable);
+    }
+
+    /* STATIC */ <#=variables.Values.ElementAt(i).valueType#> UGenericVariablesBPLibrary::GetLocal<#=variables.Keys.ElementAt(i).Name#>Safe(ULocal<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner)
+    {
+        return ULocal<#=variables.Keys.ElementAt(i).Name#>::GetLocal<#=variables.Keys.ElementAt(i).Name#>Value(owner, variable);
+    }
+
+<#+
+	}
+}
+#>
