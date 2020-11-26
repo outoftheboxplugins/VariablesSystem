@@ -28,6 +28,10 @@ class VARIABLESSYSTEM_API UBaseVariable : public USaveGame
 	GENERATED_BODY()
 
 public:
+	UBaseVariable(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual ~UBaseVariable();
+
+public:
     /** Returns the value of the variable as a string.*/
     virtual FString GetStringValue() const { return FString("Invalid Value"); };
 
@@ -35,14 +39,20 @@ public:
 
 // Save & Load
 public:
-    /** Saves the current data of a variable.*/
-    virtual void Save() {};
+	/** Saves the current data of a variable.*/
+	virtual void Save() {};
 
-    /** Loads the data of a variable and assignees it.*/
-    virtual void Load() {};
+	/** Loads the data of a variable and assignees it.*/
+	virtual void Load() {};
 
+protected:
     bool ShouldSave() const { return SaveBehavior == EVariablesSystemSaveType::VSST_SaveOnFinish || SaveBehavior == EVariablesSystemSaveType::VSST_StartAndFinish; }
     bool ShouldLoad() const { return SaveBehavior == EVariablesSystemSaveType::VSST_LoadOnStart  || SaveBehavior == EVariablesSystemSaveType::VSST_StartAndFinish; }
+
+	// World Callbacks
+private:
+	void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params);
+	void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources);
 
 protected:
     /** Returns the location where the variable should be saved.*/
