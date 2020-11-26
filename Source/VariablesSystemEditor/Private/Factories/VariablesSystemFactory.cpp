@@ -2,10 +2,9 @@
 
 #include "VariablesSystemFactory.h"
 
+#include "UnrealEd/Public/Kismet2/SClassPickerDialog.h"
 #include "VariablesSystem/Public/BaseVariable.h"
 #include "VariablesSystemEditor/Private/Factories/VariablesSystemCreateNewFilter.h"
-
-#include "Kismet2/SClassPickerDialog.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 

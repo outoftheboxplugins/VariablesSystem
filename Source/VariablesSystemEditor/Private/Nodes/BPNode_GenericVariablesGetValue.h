@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Core/Public/CoreMinimal.h"
 #include "VariablesSystemEditor/Private/Nodes/BPNode_GenericVariablesBase.h"
 
 #include "BPNode_GenericVariablesGetValue.generated.h"
@@ -10,7 +10,7 @@
 class UEdGraphPin;
 class UK2Node_CallFunction;
 
-UCLASS(MinimalAPI, meta = (Keywords = "variable value global get"))
+UCLASS(MinimalAPI, meta = (Keywords = "variable value global local get"))
 class UBPNode_GenericVariablesGetValue : public UBPNode_GenericVariablesBase
 {
     GENERATED_BODY()

@@ -172,7 +172,11 @@ void UBPNode_GenericVariablesBase::UpdatePinTypeFromVariable()
     FName VariableClassName = GetVariableNameToUse();
 
     FEdGraphPinType ResultPinType;
+<<<<<<< HEAD
+	EPinContainerType ResultContainerType;
+=======
     EPinContainerType ResultContainerType = EPinContainerType::None;
+>>>>>>> origin/Live
 
     #include "VariablesSystem/Generated/Node/PinTypeFromVariable.h"
 

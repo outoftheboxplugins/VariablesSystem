@@ -1,8 +1,8 @@
 {
   "FileVersion": 3,
   "Version": 1,
-  "VersionName": "versionplugin",
-  "EngineVersion": "versionengine",
+  "VersionName": "3.21",
+  "EngineVersion": "4.25",
   "FriendlyName": "Blueprints Variables System",
   "Description": "Truly global and modular variables system creating to create reliable arhitecture for your game.",
   "Category": "Editor",

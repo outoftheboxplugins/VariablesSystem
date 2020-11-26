@@ -37,11 +37,19 @@ void FVariablesSystemEditorModule::RegisterAssetTools()
 
 void FVariablesSystemEditorModule::UnregisterAssetTools()
 {
+<<<<<<< HEAD
+	//if (FAssetToolsModule* AssetToolsModule = FModuleManager::LoadModulePtr<FAssetToolsModule>("AssetTools"))
+	//{
+	//	IAssetTools& AssetTools = AssetToolsModule->Get();
+	//	AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
+	//}
+=======
     if (FModuleManager::Get().IsModuleLoaded("AssetTools"))
     {
         IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
         AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
     }
+>>>>>>> origin/Live
 }
 
 void FVariablesSystemEditorModule::RegisterMenuExtensions()
