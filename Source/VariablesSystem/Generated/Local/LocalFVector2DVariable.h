@@ -17,19 +17,28 @@ class VARIABLESSYSTEM_API ULocalFVector2DVariable : public UBaseVariable
 public:
 	TMap<UObject*, FVector2D> variables;
 
-	// Get the value of a LocalFVector2D variable.
-	FVector2D& GetLocalFVector2DRef(UObject* owner);
+	// Get the value of a LocalFVector2DVariable variable.
+	FVector2D& GetLocalFVector2DVariableRef(UObject* owner);
 	
-	// Get the value of a LocalFVector2D variable.
+	// Get the value of a LocalFVector2DVariable variable.
 	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static FVector2D GetLocalFVector2D(UObject* owner, ULocalFVector2DVariable* var);
+	static FVector2D GetLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var);
 
-	// Set the value of a LocalFVector2D variable.
+	// Set the value of a LocalFVector2DVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocalFVector2DValue(UObject* owner, ULocalFVector2DVariable* var, FVector2D _value);
+	static void SetLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var, FVector2D _value);
 	
-	// Copy the value of a LocalFVector2D variable.
+	// Copy the value of a LocalFVector2DVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocalFVector2DValue(UObject* owner, ULocalFVector2DVariable* var, UObject* otherOwner, ULocalFVector2DVariable* other);
+	static void CopyLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var, UObject* otherOwner, ULocalFVector2DVariable* other);
+
+    virtual void Save() override;
+
+    virtual void Load() override;
+
+    virtual FString GetStringValue() const override;
+
+private:
+    FString GetValueAsString(FVector2D value) const;
 };
 

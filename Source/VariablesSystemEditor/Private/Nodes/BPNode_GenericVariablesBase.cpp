@@ -142,6 +142,7 @@ FEdGraphPinType UBPNode_GenericVariablesBase::GetPinTypeFromVariable()
     FName VariableClassName = GetVariableNameToUse();
 
     FEdGraphPinType ResultPinType;
+	EPinContainerType ResultContainerType;
 
     #include "VariablesSystem/Generated/Node/PinTypeFromVariable.h"
 

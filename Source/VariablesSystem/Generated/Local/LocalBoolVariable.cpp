@@ -3,21 +3,7 @@
 #include "LocalBoolVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UBoolVariable::SetBoolValue(bool _value)
-//{
-//	SetBoolValue(this, _value);
-//}
-//
-
-//
-//void UBoolVariable::CopyBoolValue(UBoolVariable* other)
-//{
-//	CopyBoolValue(this, other);
-//}
-//
-
-
-bool ULocalBoolVariable::GetLocalBool(UObject* owner, ULocalBoolVariable* var)
+bool ULocalBoolVariable::GetLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +18,92 @@ bool ULocalBoolVariable::GetLocalBool(UObject* owner, ULocalBoolVariable* var)
 	}
 	else
 	{
-		return var->GetLocalBoolRef(owner);
+		return var->GetLocalBoolVariableRef(owner);
 	}
 }
 
-bool& ULocalBoolVariable::GetLocalBoolRef(UObject* owner)
+bool& ULocalBoolVariable::GetLocalBoolVariableRef(UObject* owner)
 {
 	bool& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalBoolVariable::SetLocalBoolValue(UObject* owner, ULocalBoolVariable* var, bool _value)
+void ULocalBoolVariable::SetLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var, bool _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	bool& BoolRef = var->GetLocalBoolRef(owner);
-	BoolRef = _value;
+	bool& BoolVariableRef = var->GetLocalBoolVariableRef(owner);
+	BoolVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalBoolVariable::CopyLocalBoolValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other)
+void ULocalBoolVariable::CopyLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	bool& BoolRef = var->GetLocalBoolRef(owner);
-	bool& otherBoolRef = other->GetLocalBoolRef(otherOwner);
+	bool& BoolVariableRef = var->GetLocalBoolVariableRef(owner);
+	bool& otherBoolVariableRef = other->GetLocalBoolVariableRef(otherOwner);
 
-	BoolRef = otherBoolRef;
+	BoolVariableRef = otherBoolVariableRef;
 	var->dirty = true;
+}
+
+void ULocalBoolVariable::Save()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+void ULocalBoolVariable::Load()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+FString ULocalBoolVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = GetValueAsString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+
+FString ULocalBoolVariable::GetValueAsString(bool value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_BoolToString(item);
 }
 

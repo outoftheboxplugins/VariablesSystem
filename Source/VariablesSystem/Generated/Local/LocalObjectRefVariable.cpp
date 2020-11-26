@@ -1,9 +1,9 @@
 // Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
 
-#include "LocalActorRefVariable.h"
+#include "LocalObjectRefVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-AActor* ULocalActorRefVariable::GetLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var)
+UObject* ULocalObjectRefVariable::GetLocalObjectRefVariableValue(UObject* owner, ULocalObjectRefVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -18,42 +18,42 @@ AActor* ULocalActorRefVariable::GetLocalActorRefVariableValue(UObject* owner, UL
 	}
 	else
 	{
-		return var->GetLocalActorRefVariableRef(owner);
+		return var->GetLocalObjectRefVariableRef(owner);
 	}
 }
 
-AActor*& ULocalActorRefVariable::GetLocalActorRefVariableRef(UObject* owner)
+UObject*& ULocalObjectRefVariable::GetLocalObjectRefVariableRef(UObject* owner)
 {
-	AActor*& value = variables.FindOrAdd(owner);
+	UObject*& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalActorRefVariable::SetLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var, AActor* _value)
+void ULocalObjectRefVariable::SetLocalObjectRefVariableValue(UObject* owner, ULocalObjectRefVariable* var, UObject* _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	AActor*& ActorRefVariableRef = var->GetLocalActorRefVariableRef(owner);
-	ActorRefVariableRef = _value;
+	UObject*& ObjectRefVariableRef = var->GetLocalObjectRefVariableRef(owner);
+	ObjectRefVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalActorRefVariable::CopyLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var, UObject* otherOwner, ULocalActorRefVariable* other)
+void ULocalObjectRefVariable::CopyLocalObjectRefVariableValue(UObject* owner, ULocalObjectRefVariable* var, UObject* otherOwner, ULocalObjectRefVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	AActor*& ActorRefVariableRef = var->GetLocalActorRefVariableRef(owner);
-	AActor*& otherActorRefVariableRef = other->GetLocalActorRefVariableRef(otherOwner);
+	UObject*& ObjectRefVariableRef = var->GetLocalObjectRefVariableRef(owner);
+	UObject*& otherObjectRefVariableRef = other->GetLocalObjectRefVariableRef(otherOwner);
 
-	ActorRefVariableRef = otherActorRefVariableRef;
+	ObjectRefVariableRef = otherObjectRefVariableRef;
 	var->dirty = true;
 }
 
-void ULocalActorRefVariable::Save()
+void ULocalObjectRefVariable::Save()
 {
     TArray<UObject*> Keys;
     variables.GetKeys(Keys);
@@ -64,7 +64,7 @@ void ULocalActorRefVariable::Save()
     }
 }
 
-void ULocalActorRefVariable::Load()
+void ULocalObjectRefVariable::Load()
 {
     TArray<UObject*> Keys;
     variables.GetKeys(Keys);
@@ -75,7 +75,7 @@ void ULocalActorRefVariable::Load()
     }
 }
 
-FString ULocalActorRefVariable::GetStringValue() const
+FString ULocalObjectRefVariable::GetStringValue() const
 {
     FString lines;
 
@@ -101,7 +101,7 @@ FString ULocalActorRefVariable::GetStringValue() const
     return lines;
 }
 
-FString ULocalActorRefVariable::GetValueAsString(AActor* value) const
+FString ULocalObjectRefVariable::GetValueAsString(UObject* value) const
 {
     const auto& item = value;
     return item->GetName();

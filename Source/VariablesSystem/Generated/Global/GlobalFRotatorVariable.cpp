@@ -5,7 +5,7 @@
 #include "Kismet/KismetStringLibrary.h"
 #include "CoreMinimal.h"
 
-FRotator UGlobalFRotatorVariable::GetGlobalFRotatorValue(UGlobalFRotatorVariable* var)
+FRotator UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var)
 {
 	if (var == nullptr)
 	{
@@ -18,12 +18,12 @@ FRotator UGlobalFRotatorVariable::GetGlobalFRotatorValue(UGlobalFRotatorVariable
 	}
 }
 
-FRotator UGlobalFRotatorVariable::GetGlobalInternalFRotatorValue()
+FRotator UGlobalFRotatorVariable::GetGlobalInternalFRotatorVariableValue()
 {
-	return GetGlobalFRotatorValue(this);
+	return GetGlobalFRotatorVariableValue(this);
 }
 
-void UGlobalFRotatorVariable::SetGlobalFRotatorValue(UGlobalFRotatorVariable* var, FRotator _value)
+void UGlobalFRotatorVariable::SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var, FRotator _value)
 {
 	if (!var) return;
 
@@ -31,12 +31,12 @@ void UGlobalFRotatorVariable::SetGlobalFRotatorValue(UGlobalFRotatorVariable* va
 	var->dirty = true;
 }
 
-void UGlobalFRotatorVariable::SetGlobalInternalFRotatorValue(FRotator _value)
+void UGlobalFRotatorVariable::SetGlobalInternalFRotatorVariableValue(FRotator _value)
 {
-	SetGlobalFRotatorValue(this, _value);
+	SetGlobalFRotatorVariableValue(this, _value);
 }
 
-void UGlobalFRotatorVariable::CopyGlobalFRotatorValue(UGlobalFRotatorVariable* var, UGlobalFRotatorVariable* other)
+void UGlobalFRotatorVariable::CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var, UGlobalFRotatorVariable* other)
 {
 	if (!var) return;
 
@@ -44,9 +44,9 @@ void UGlobalFRotatorVariable::CopyGlobalFRotatorValue(UGlobalFRotatorVariable* v
 	var->dirty = true;
 }
 
-void UGlobalFRotatorVariable::CopyGlobalInternalFRotatorValue(UGlobalFRotatorVariable* other)
+void UGlobalFRotatorVariable::CopyGlobalInternalFRotatorVariableValue(UGlobalFRotatorVariable* other)
 {
-	CopyGlobalFRotatorValue(this, other);
+	CopyGlobalFRotatorVariableValue(this, other);
 }
 
 void UGlobalFRotatorVariable::Save()
@@ -74,6 +74,7 @@ void UGlobalFRotatorVariable::Load()
 
 FString UGlobalFRotatorVariable::GetStringValue() const
 {
-	return UKismetStringLibrary::Conv_RotatorToString(value);
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_RotatorToString(item);
 }
 

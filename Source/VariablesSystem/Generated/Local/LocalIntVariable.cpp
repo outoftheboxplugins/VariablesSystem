@@ -3,21 +3,7 @@
 #include "LocalIntVariable.h"
 #include "Kismet/GameplayStatics.h"
 
-//void UIntVariable::SetIntValue(int32 _value)
-//{
-//	SetIntValue(this, _value);
-//}
-//
-
-//
-//void UIntVariable::CopyIntValue(UIntVariable* other)
-//{
-//	CopyIntValue(this, other);
-//}
-//
-
-
-int32 ULocalIntVariable::GetLocalInt(UObject* owner, ULocalIntVariable* var)
+int32 ULocalIntVariable::GetLocalIntVariableValue(UObject* owner, ULocalIntVariable* var)
 {
 	if (owner == nullptr)
 	{
@@ -32,38 +18,92 @@ int32 ULocalIntVariable::GetLocalInt(UObject* owner, ULocalIntVariable* var)
 	}
 	else
 	{
-		return var->GetLocalIntRef(owner);
+		return var->GetLocalIntVariableRef(owner);
 	}
 }
 
-int32& ULocalIntVariable::GetLocalIntRef(UObject* owner)
+int32& ULocalIntVariable::GetLocalIntVariableRef(UObject* owner)
 {
 	int32& value = variables.FindOrAdd(owner);
 	return value;
 }
 
-void ULocalIntVariable::SetLocalIntValue(UObject* owner, ULocalIntVariable* var, int32 _value)
+void ULocalIntVariable::SetLocalIntVariableValue(UObject* owner, ULocalIntVariable* var, int32 _value)
 {
 
 	if (!var)	return;
 	if (!owner) return;
 
-	int32& IntRef = var->GetLocalIntRef(owner);
-	IntRef = _value;
+	int32& IntVariableRef = var->GetLocalIntVariableRef(owner);
+	IntVariableRef = _value;
 	var->dirty = true;
 }
 
-void ULocalIntVariable::CopyLocalIntValue(UObject* owner, ULocalIntVariable* var, UObject* otherOwner, ULocalIntVariable* other)
+void ULocalIntVariable::CopyLocalIntVariableValue(UObject* owner, ULocalIntVariable* var, UObject* otherOwner, ULocalIntVariable* other)
 {
 	if (!var)	return;
 	if (!owner) return;
 	if (!otherOwner) return;
 	if (!other) return;
 	
-	int32& IntRef = var->GetLocalIntRef(owner);
-	int32& otherIntRef = other->GetLocalIntRef(otherOwner);
+	int32& IntVariableRef = var->GetLocalIntVariableRef(owner);
+	int32& otherIntVariableRef = other->GetLocalIntVariableRef(otherOwner);
 
-	IntRef = otherIntRef;
+	IntVariableRef = otherIntVariableRef;
 	var->dirty = true;
+}
+
+void ULocalIntVariable::Save()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+void ULocalIntVariable::Load()
+{
+    TArray<UObject*> Keys;
+    variables.GetKeys(Keys);
+
+    for (UObject* Key : Keys)
+    {
+        variables.FindAndRemoveChecked(Key);
+    }
+}
+
+FString ULocalIntVariable::GetStringValue() const
+{
+    FString lines;
+
+    for (auto& var : variables)
+    {
+        const auto& value = var.Value;
+        const auto& owner = var.Key;
+
+        FString valueString = GetValueAsString(value);
+        FString ownerString = owner ? owner->GetName() : FString("Owner destroyed");
+        FString line = FString::Printf(TEXT("%s - %s \n"), *ownerString, *valueString);
+
+        lines.Append(line);
+    }
+
+    lines.TrimEndInline();
+
+    if (lines.IsEmpty())
+    {
+        lines = FString("No values set yet.");
+    }
+
+    return lines;
+}
+
+FString ULocalIntVariable::GetValueAsString(int32 value) const
+{
+    const auto& item = value;
+    return UKismetStringLibrary::Conv_IntToString(item);
 }
 
