@@ -1,27 +1,26 @@
 {
   "FileVersion": 3,
-  "Version": 1,
   "VersionName": "3.21",
   "EngineVersion": "4.25",
-  "FriendlyName": "Blueprints Variables System",
+  "FriendlyName": "Variables System",
   "Description": "Truly global and modular variables system creating to create reliable arhitecture for your game.",
   "Category": "Editor",
   "CreatedBy": "Out-of-the-Box Plugins",
   "CreatedByURL": "https://outofthebox-plugins.com",
-  "DocsURL": "https://bitbucket.org/pasotee-marketplace/variablessystemunreal/wiki/Home",
+  "DocsURL": "https://bitbucket.org/pasotee-marketplace/variablessystem/wiki/Home",
   "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/ba8559b2aa794f20b6e84e7ce338b96f",
   "SupportURL": "https://outofthebox-plugins.com/pages/about",
   "EnabledByDefault": true,
-  "Modules": [
+  "CanContainContent" : false,
+  "Modules": 
+  [
     {
       "Name": "VariablesSystem",
       "Type": "Runtime",
-      "LoadingPhase": "Default"
     },
     {
       "Name": "VariablesSystemEditor",
       "Type": "Editor",
-      "LoadingPhase": "Default",
       "WhitelistPlatforms": [ "Win64", "Win32", "Mac", "Linux" ]
     }
   ]
