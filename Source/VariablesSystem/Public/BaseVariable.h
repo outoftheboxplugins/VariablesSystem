@@ -10,6 +10,7 @@
  * Implements an asset that can store specific types of variables.
  */
 
+// TOSOLVE: Make this a bitmap
 UENUM(BlueprintType)
 enum class EVSSaveType : uint8
 {
@@ -46,8 +47,8 @@ protected:
 	FString GetSaveLocation() const;
 
 private:
-	bool ShouldSave() const { return SaveBehavior == EVSSaveType::VSST_SaveOnFinish || SaveBehavior == EVSSaveType::VSST_StartAndFinish; }
-	bool ShouldLoad() const { return SaveBehavior == EVSSaveType::VSST_LoadOnStart  || SaveBehavior == EVSSaveType::VSST_StartAndFinish; }
+	void SaveIfNeeded();
+	void LoadIfNeeded();
 
 // World Callbacks
 private:

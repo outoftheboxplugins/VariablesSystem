@@ -7,10 +7,8 @@
 UBaseVariable::UBaseVariable(const FObjectInitializer& ObjectInitializer /*= FObjectInitializer::Get()*/)
 	: Super(ObjectInitializer)
 {
-	if (ShouldLoad())
-	{
-		Load();
-	}
+	//TOSOLVE: Check if this makes any sense at all for packed games.
+	LoadIfNeeded();
 
 	FWorldDelegates::OnWorldInitializedActors.AddUObject(this, &UBaseVariable::OnWorldCreationEvent);
 	FWorldDelegates::OnPostWorldCleanup.AddUObject(this, &UBaseVariable::OnWorldDestructionEvent);
@@ -21,26 +19,34 @@ UBaseVariable::~UBaseVariable()
 	FWorldDelegates::OnWorldInitializedActors.RemoveAll(this);
 	FWorldDelegates::OnPostWorldCleanup.RemoveAll(this);
 
-	if (ShouldSave())
+	//TOSOLVE: Check if this makes any sense at all for packed games.
+	SaveIfNeeded();
+}
+
+void UBaseVariable::SaveIfNeeded()
+{
+	if (SaveBehavior == EVSSaveType::VSST_SaveOnFinish || SaveBehavior == EVSSaveType::VSST_StartAndFinish)
 	{
 		Save();
 	}
 }
 
-void UBaseVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
+void UBaseVariable::LoadIfNeeded()
 {
-	if (ShouldLoad())
+	if (SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish)
 	{
 		Load();
 	}
 }
 
+void UBaseVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
+{
+	LoadIfNeeded();
+}
+
 void UBaseVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
 {
-	if (ShouldSave())
-	{
-		Save();
-	}
+	SaveIfNeeded();
 }
 
 FString UBaseVariable::GetSaveLocation() const
