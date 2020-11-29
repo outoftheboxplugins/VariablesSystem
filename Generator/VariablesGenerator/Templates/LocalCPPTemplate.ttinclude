@@ -1,4 +1,4 @@
-﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -9,7 +9,7 @@
 void GenerateLocalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 {
 #>
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "Local<#=variable.Key.Name#>.h"
 #include "Kismet/GameplayStatics.h"
@@ -47,7 +47,7 @@ void ULocal<#=variable.Key.Name#>::SetLocal<#=variable.Key.Name#>Value(UObject* 
 
 	<#=variable.Value.valueType#>& <#=variable.Key.Name#>Ref = var->GetLocal<#=variable.Key.Name#>Ref(owner);
 	<#=variable.Key.Name#>Ref = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocal<#=variable.Key.Name#>::CopyLocal<#=variable.Key.Name#>Value(UObject* owner, ULocal<#=variable.Key.Name#>* var, UObject* otherOwner, ULocal<#=variable.Key.Name#>* other)
@@ -61,7 +61,7 @@ void ULocal<#=variable.Key.Name#>::CopyLocal<#=variable.Key.Name#>Value(UObject*
 	<#=variable.Value.valueType#>& other<#=variable.Key.Name#>Ref = other->GetLocal<#=variable.Key.Name#>Ref(otherOwner);
 
 	<#=variable.Key.Name#>Ref = other<#=variable.Key.Name#>Ref;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocal<#=variable.Key.Name#>::Save()

@@ -1,4 +1,4 @@
-﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -9,7 +9,7 @@
 void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 {
 #>
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "Global<#=variable.Key.Name#>.h"
 #include "Kismet/GameplayStatics.h"
@@ -39,7 +39,7 @@ void UGlobal<#=variable.Key.Name#>::SetGlobal<#=variable.Key.Name#>Value(UGlobal
 	if (!var) return;
 
 	var->value = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobal<#=variable.Key.Name#>::SetGlobalInternal<#=variable.Key.Name#>Value(<#=variable.Value.valueType#> _value)
@@ -52,7 +52,7 @@ void UGlobal<#=variable.Key.Name#>::CopyGlobal<#=variable.Key.Name#>Value(UGloba
 	if (!var) return;
 
 	var->value = other->value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobal<#=variable.Key.Name#>::CopyGlobalInternal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* other)
@@ -62,13 +62,13 @@ void UGlobal<#=variable.Key.Name#>::CopyGlobalInternal<#=variable.Key.Name#>Valu
 
 void UGlobal<#=variable.Key.Name#>::Save()
 {
-	if (dirty == false)
+	if (Dirty == false)
 	{
 		return;
 	}
 
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
-	dirty = false;
+	Dirty = false;
 }
 
 void UGlobal<#=variable.Key.Name#>::Load()

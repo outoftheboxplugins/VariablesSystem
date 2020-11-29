@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "LocalFVector2DVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -36,7 +36,7 @@ void ULocalFVector2DVariable::SetLocalFVector2DVariableValue(UObject* owner, ULo
 
 	FVector2D& FVector2DVariableRef = var->GetLocalFVector2DVariableRef(owner);
 	FVector2DVariableRef = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalFVector2DVariable::CopyLocalFVector2DVariableValue(UObject* owner, ULocalFVector2DVariable* var, UObject* otherOwner, ULocalFVector2DVariable* other)
@@ -50,7 +50,7 @@ void ULocalFVector2DVariable::CopyLocalFVector2DVariableValue(UObject* owner, UL
 	FVector2D& otherFVector2DVariableRef = other->GetLocalFVector2DVariableRef(otherOwner);
 
 	FVector2DVariableRef = otherFVector2DVariableRef;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalFVector2DVariable::Save()

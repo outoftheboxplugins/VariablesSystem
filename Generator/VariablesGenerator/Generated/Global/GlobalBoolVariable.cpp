@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "GlobalBoolVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -28,7 +28,7 @@ void UGlobalBoolVariable::SetGlobalBoolVariableValue(UGlobalBoolVariable* var, b
 	if (!var) return;
 
 	var->value = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalBoolVariable::SetGlobalInternalBoolVariableValue(bool _value)
@@ -41,7 +41,7 @@ void UGlobalBoolVariable::CopyGlobalBoolVariableValue(UGlobalBoolVariable* var, 
 	if (!var) return;
 
 	var->value = other->value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalBoolVariable::CopyGlobalInternalBoolVariableValue(UGlobalBoolVariable* other)
@@ -51,13 +51,13 @@ void UGlobalBoolVariable::CopyGlobalInternalBoolVariableValue(UGlobalBoolVariabl
 
 void UGlobalBoolVariable::Save()
 {
-	if (dirty == false)
+	if (Dirty == false)
 	{
 		return;
 	}
 
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
-	dirty = false;
+	Dirty = false;
 }
 
 void UGlobalBoolVariable::Load()

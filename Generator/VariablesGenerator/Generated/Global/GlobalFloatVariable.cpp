@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "GlobalFloatVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -28,7 +28,7 @@ void UGlobalFloatVariable::SetGlobalFloatVariableValue(UGlobalFloatVariable* var
 	if (!var) return;
 
 	var->value = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalFloatVariable::SetGlobalInternalFloatVariableValue(float _value)
@@ -41,7 +41,7 @@ void UGlobalFloatVariable::CopyGlobalFloatVariableValue(UGlobalFloatVariable* va
 	if (!var) return;
 
 	var->value = other->value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalFloatVariable::CopyGlobalInternalFloatVariableValue(UGlobalFloatVariable* other)
@@ -51,13 +51,13 @@ void UGlobalFloatVariable::CopyGlobalInternalFloatVariableValue(UGlobalFloatVari
 
 void UGlobalFloatVariable::Save()
 {
-	if (dirty == false)
+	if (Dirty == false)
 	{
 		return;
 	}
 
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
-	dirty = false;
+	Dirty = false;
 }
 
 void UGlobalFloatVariable::Load()

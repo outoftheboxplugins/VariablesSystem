@@ -36,7 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>Always</RunPostBuildEvent>
+    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -60,10 +60,23 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>"$(DevEnvDir)TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
-(robocopy "$(ProjectDir)Generated" "E:\CodePlugins\Plugins\VariablesSystem\Source\VariablesSystem\Generated" /E /MIR) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 exit 0</PostBuildEvent>
+    <PostBuildEvent>echo "Generating template classes"
+"$(DevEnvDir)TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
+echo "Generating template classes DONE"
+
+echo "Updating template classes from $(ProjectDir)Generated to $(SolutionDir)..\Source\VariablesSystem\Generated"
+(robocopy "$(ProjectDir)Generated" "$(SolutionDir)..\Source\VariablesSystem\Generated" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (set ERRORLEVEL=0)
+echo "Updating done"
+
+echo "Deleting build files to trigger rebuild"
+echo "Deleting $(SolutionDir)..\Binaries"
+del /F /Q /S "$(SolutionDir)..\Binaries"
+echo "Deleting $(SolutionDir)..\Intermediate"
+del /F /Q /S "$(SolutionDir)..\Intermediate"
+echo "Deleting done"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>RMDIR /Q/S foldername "$(ProjectDir)Generated"</PreBuildEvent>
+    <PreBuildEvent>echo "Deleting $(ProjectDir)Generated"
+del /F /Q  /S "$(ProjectDir)Generated\"</PreBuildEvent>
   </PropertyGroup>
 </Project>

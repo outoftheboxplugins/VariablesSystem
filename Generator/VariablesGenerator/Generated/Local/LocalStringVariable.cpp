@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "LocalStringVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -36,7 +36,7 @@ void ULocalStringVariable::SetLocalStringVariableValue(UObject* owner, ULocalStr
 
 	FString& StringVariableRef = var->GetLocalStringVariableRef(owner);
 	StringVariableRef = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalStringVariable::CopyLocalStringVariableValue(UObject* owner, ULocalStringVariable* var, UObject* otherOwner, ULocalStringVariable* other)
@@ -50,7 +50,7 @@ void ULocalStringVariable::CopyLocalStringVariableValue(UObject* owner, ULocalSt
 	FString& otherStringVariableRef = other->GetLocalStringVariableRef(otherOwner);
 
 	StringVariableRef = otherStringVariableRef;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalStringVariable::Save()

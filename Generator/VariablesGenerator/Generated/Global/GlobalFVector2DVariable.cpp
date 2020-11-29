@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "GlobalFVector2DVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -28,7 +28,7 @@ void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DV
 	if (!var) return;
 
 	var->value = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalFVector2DVariable::SetGlobalInternalFVector2DVariableValue(FVector2D _value)
@@ -41,7 +41,7 @@ void UGlobalFVector2DVariable::CopyGlobalFVector2DVariableValue(UGlobalFVector2D
 	if (!var) return;
 
 	var->value = other->value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalFVector2DVariable::CopyGlobalInternalFVector2DVariableValue(UGlobalFVector2DVariable* other)
@@ -51,13 +51,13 @@ void UGlobalFVector2DVariable::CopyGlobalInternalFVector2DVariableValue(UGlobalF
 
 void UGlobalFVector2DVariable::Save()
 {
-	if (dirty == false)
+	if (Dirty == false)
 	{
 		return;
 	}
 
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
-	dirty = false;
+	Dirty = false;
 }
 
 void UGlobalFVector2DVariable::Load()
