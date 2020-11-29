@@ -1,3 +1,6 @@
 Binaries/
 Intermediate/
 Zips/
+
+Generator/VariablesGenerator/bin
+Generator\VariablesGenerator/obj
