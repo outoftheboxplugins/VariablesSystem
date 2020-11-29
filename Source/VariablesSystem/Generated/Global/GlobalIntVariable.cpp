@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "GlobalIntVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -28,7 +28,7 @@ void UGlobalIntVariable::SetGlobalIntVariableValue(UGlobalIntVariable* var, int3
 	if (!var) return;
 
 	var->value = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalIntVariable::SetGlobalInternalIntVariableValue(int32 _value)
@@ -41,7 +41,7 @@ void UGlobalIntVariable::CopyGlobalIntVariableValue(UGlobalIntVariable* var, UGl
 	if (!var) return;
 
 	var->value = other->value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void UGlobalIntVariable::CopyGlobalInternalIntVariableValue(UGlobalIntVariable* other)
@@ -51,13 +51,13 @@ void UGlobalIntVariable::CopyGlobalInternalIntVariableValue(UGlobalIntVariable* 
 
 void UGlobalIntVariable::Save()
 {
-	if (dirty == false)
+	if (Dirty == false)
 	{
 		return;
 	}
 
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
-	dirty = false;
+	Dirty = false;
 }
 
 void UGlobalIntVariable::Load()

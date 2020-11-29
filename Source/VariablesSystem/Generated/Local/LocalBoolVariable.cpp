@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "LocalBoolVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -36,7 +36,7 @@ void ULocalBoolVariable::SetLocalBoolVariableValue(UObject* owner, ULocalBoolVar
 
 	bool& BoolVariableRef = var->GetLocalBoolVariableRef(owner);
 	BoolVariableRef = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalBoolVariable::CopyLocalBoolVariableValue(UObject* owner, ULocalBoolVariable* var, UObject* otherOwner, ULocalBoolVariable* other)
@@ -50,7 +50,7 @@ void ULocalBoolVariable::CopyLocalBoolVariableValue(UObject* owner, ULocalBoolVa
 	bool& otherBoolVariableRef = other->GetLocalBoolVariableRef(otherOwner);
 
 	BoolVariableRef = otherBoolVariableRef;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalBoolVariable::Save()

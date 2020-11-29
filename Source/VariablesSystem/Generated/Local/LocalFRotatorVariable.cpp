@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "LocalFRotatorVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -36,7 +36,7 @@ void ULocalFRotatorVariable::SetLocalFRotatorVariableValue(UObject* owner, ULoca
 
 	FRotator& FRotatorVariableRef = var->GetLocalFRotatorVariableRef(owner);
 	FRotatorVariableRef = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalFRotatorVariable::CopyLocalFRotatorVariableValue(UObject* owner, ULocalFRotatorVariable* var, UObject* otherOwner, ULocalFRotatorVariable* other)
@@ -50,7 +50,7 @@ void ULocalFRotatorVariable::CopyLocalFRotatorVariableValue(UObject* owner, ULoc
 	FRotator& otherFRotatorVariableRef = other->GetLocalFRotatorVariableRef(otherOwner);
 
 	FRotatorVariableRef = otherFRotatorVariableRef;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalFRotatorVariable::Save()

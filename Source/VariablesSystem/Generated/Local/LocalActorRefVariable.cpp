@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "LocalActorRefVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -36,7 +36,7 @@ void ULocalActorRefVariable::SetLocalActorRefVariableValue(UObject* owner, ULoca
 
 	AActor*& ActorRefVariableRef = var->GetLocalActorRefVariableRef(owner);
 	ActorRefVariableRef = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalActorRefVariable::CopyLocalActorRefVariableValue(UObject* owner, ULocalActorRefVariable* var, UObject* otherOwner, ULocalActorRefVariable* other)
@@ -50,7 +50,7 @@ void ULocalActorRefVariable::CopyLocalActorRefVariableValue(UObject* owner, ULoc
 	AActor*& otherActorRefVariableRef = other->GetLocalActorRefVariableRef(otherOwner);
 
 	ActorRefVariableRef = otherActorRefVariableRef;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalActorRefVariable::Save()

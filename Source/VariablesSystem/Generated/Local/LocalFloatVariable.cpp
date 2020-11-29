@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "LocalFloatVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -36,7 +36,7 @@ void ULocalFloatVariable::SetLocalFloatVariableValue(UObject* owner, ULocalFloat
 
 	float& FloatVariableRef = var->GetLocalFloatVariableRef(owner);
 	FloatVariableRef = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalFloatVariable::CopyLocalFloatVariableValue(UObject* owner, ULocalFloatVariable* var, UObject* otherOwner, ULocalFloatVariable* other)
@@ -50,7 +50,7 @@ void ULocalFloatVariable::CopyLocalFloatVariableValue(UObject* owner, ULocalFloa
 	float& otherFloatVariableRef = other->GetLocalFloatVariableRef(otherOwner);
 
 	FloatVariableRef = otherFloatVariableRef;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalFloatVariable::Save()

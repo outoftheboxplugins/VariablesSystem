@@ -1,16 +1,18 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once 
 
+#include "Engine/Classes/Kismet/BlueprintFunctionLibrary.h"
+
 #include "AssetRegistry/Public/AssetRegistryModule.h"
 #include "Core/Public/Modules/ModuleManager.h"
-#include "Engine/Classes/Kismet/BlueprintFunctionLibrary.h"
-#include "VariablesSystem/Generated/Library/IncludeAll.h"
 
 #include "VariablesSystemHelpers.generated.h"
 
+class UBaseVariable;
+
 /**
- * Various helpers to simply working with/within the Variables System.
+ * Various helpers to simply working with VS Variables.
  */
 
 UCLASS(meta = (BlueprintThreadSafe))
@@ -19,12 +21,20 @@ class VARIABLESSYSTEM_API UVariablesSystemHelpersBPLibrary : public UBlueprintFu
 public:
     GENERATED_BODY()
 
+	// Returns all assets of a certain type from the content browser.
+	template<class T>
+	static TArray<T*> GetAllAssetsOfType();
+
     // Returns all the variables (UObjects) assets from the content browser.
     static TArray<UBaseVariable*> GetAllVariables();
     
-    // Returns all assets of a certain type from the content browser.
-    template<class T>
-    static TArray<T*> GetAllAssetsOfType();
+	// Triggers a Save operation on all the Variable Assets
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
+	static void SaveAllVariables();
+
+	// Triggers a Load operation on all the Variable Assets
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
+	static void LoadAllVariables();
 };
 
 template<class T>

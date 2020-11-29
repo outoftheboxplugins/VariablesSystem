@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "LocalIntVariable.h"
 #include "Kismet/GameplayStatics.h"
@@ -36,7 +36,7 @@ void ULocalIntVariable::SetLocalIntVariableValue(UObject* owner, ULocalIntVariab
 
 	int32& IntVariableRef = var->GetLocalIntVariableRef(owner);
 	IntVariableRef = _value;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalIntVariable::CopyLocalIntVariableValue(UObject* owner, ULocalIntVariable* var, UObject* otherOwner, ULocalIntVariable* other)
@@ -50,7 +50,7 @@ void ULocalIntVariable::CopyLocalIntVariableValue(UObject* owner, ULocalIntVaria
 	int32& otherIntVariableRef = other->GetLocalIntVariableRef(otherOwner);
 
 	IntVariableRef = otherIntVariableRef;
-	var->dirty = true;
+	var->Dirty = true;
 }
 
 void ULocalIntVariable::Save()
