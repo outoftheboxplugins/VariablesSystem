@@ -1,52 +1,57 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #include "GlobalFRotatorVariable.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
+
+#include "VSLog.h"
+
 #include "CoreMinimal.h"
 
-FRotator UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var)
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+
+FRotator UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(const UGlobalFRotatorVariable* Variable)
 {
-	if (var == nullptr)
+	if (Variable)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return FRotator::ZeroRotator;
+		return Variable->Value;
 	}
 	else
 	{
-		return var->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		return FRotator::ZeroRotator;
 	}
 }
 
-FRotator UGlobalFRotatorVariable::GetGlobalInternalFRotatorVariableValue()
+void UGlobalFRotatorVariable::SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, FRotator NewValue)
 {
-	return GetGlobalFRotatorVariableValue(this);
+	if (Variable && Variable->Value != NewValue)
+	{
+		Variable->Value = NewValue;
+		Variable->Dirty = true;
+	}
+	else
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
+	}
 }
 
-void UGlobalFRotatorVariable::SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var, FRotator _value)
+void UGlobalFRotatorVariable::CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, UGlobalFRotatorVariable* Other)
 {
-	if (!var) return;
-
-	var->value = _value;
-	var->Dirty = true;
-}
-
-void UGlobalFRotatorVariable::SetGlobalInternalFRotatorVariableValue(FRotator _value)
-{
-	SetGlobalFRotatorVariableValue(this, _value);
-}
-
-void UGlobalFRotatorVariable::CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var, UGlobalFRotatorVariable* other)
-{
-	if (!var) return;
-
-	var->value = other->value;
-	var->Dirty = true;
-}
-
-void UGlobalFRotatorVariable::CopyGlobalInternalFRotatorVariableValue(UGlobalFRotatorVariable* other)
-{
-	CopyGlobalFRotatorVariableValue(this, other);
+	if (Variable && Other && Variable->Value != Other->Value)
+	{
+		Variable->Value = Other->Value;
+		Variable->Dirty = true;
+	}
+	else if(!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+	}
+	else if(!Other)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+	}
 }
 
 void UGlobalFRotatorVariable::Save()
@@ -67,14 +72,12 @@ void UGlobalFRotatorVariable::Load()
 	
 	if (LoadGameInstance != nullptr)
 	{
-		this->value = LoadGameInstance->value;
+		Value = LoadGameInstance->Value;
 	}
 }
 
-
 FString UGlobalFRotatorVariable::GetStringValue() const
 {
-    const auto& item = value;
+    const auto& item = Value;
     return UKismetStringLibrary::Conv_RotatorToString(item);
 }
-

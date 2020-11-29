@@ -1,4 +1,4 @@
-﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
@@ -11,15 +11,16 @@ void GenerateGlobalHFile(KeyValuePair<System.Type, GlobalVariable> variable)
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #pragma once
 
-#include "UObject/Object.h"
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "Global<#=variable.Key.Name#>.generated.h"
 
 /**
- *
+ * Global <#=variable.Key.Name#> implementation of the BaseVariable
  */
 
 UCLASS(BlueprintType)
@@ -27,38 +28,46 @@ class VARIABLESSYSTEM_API UGlobal<#=variable.Key.Name#> : public UBaseVariable
 {
 	GENERATED_BODY()
 
+// Global static calls
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	<#=variable.Value.valueType#> value;
-	
-	// Get the value of a <#=variable.Value.valueType#> variable.
-	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static <#=variable.Value.valueType#> GetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* var);
+	// Get the value of a <#=variable.Value.globalVariable.valueType#> variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static <#=variable.Value.globalVariable.valueType#> GetGlobal<#=variable.Key.Name#>Value(const UGlobal<#=variable.Key.Name#>* Variable);
 
-	// Get the value of a <#=variable.Value.valueType#> variable.
-	<#=variable.Value.valueType#> GetGlobalInternal<#=variable.Key.Name#>Value();
+	// Set the value of a <#=variable.Value.globalVariable.valueType#> variable.
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
+	static void SetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue);
 
-	// Set the value of a <#=variable.Value.valueType#> variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* var, <#=variable.Value.valueType#> _value);
+	// Copy the value of a <#=variable.Value.globalVariable.valueType#> variable.
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
+	static void CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, UGlobal<#=variable.Key.Name#>* Other);
 
-	// Set the value of a <#=variable.Value.valueType#> variable.
-	void SetGlobalInternal<#=variable.Key.Name#>Value(<#=variable.Value.valueType#> _value);
-	
-	// Copy the value of a <#=variable.Value.valueType#> variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* var, UGlobal<#=variable.Key.Name#>* other);
-
-	// Copy the value of a <#=variable.Value.valueType#> variable.
-	void CopyGlobalInternal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* other);
-
-	/**** Base Variable Overrides ****/
-
-	virtual void Save() override;
-
-	virtual void Load() override;
-
+<#+
+	if(variable.Value.debugInfo != null)
+	{
+#>
+// BaseVariable Debug Interface
+private:
     virtual FString GetStringValue() const override;
+<#+
+	}
+#>
+
+<#+
+	if(variable.Value.extraGeneration != null && variable.Value.extraGeneration.generateSaveLoad)
+	{
+#>
+// BaseVariable Save&Load Interface
+private:
+	virtual void Save() override;
+	virtual void Load() override;
+<#+
+	}
+#>
+
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
+	<#=variable.Value.globalVariable.valueType#> Value;
 };
 <#+
 }

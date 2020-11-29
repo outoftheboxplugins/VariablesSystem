@@ -1,14 +1,15 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #pragma once
 
-#include "UObject/Object.h"
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "GlobalBoolVariable.generated.h"
 
 /**
- *
+ * Global BoolVariable implementation of the BaseVariable
  */
 
 UCLASS(BlueprintType)
@@ -16,36 +17,29 @@ class VARIABLESSYSTEM_API UGlobalBoolVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
+// Global static calls
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	bool value;
-	
 	// Get the value of a bool variable.
-	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static bool GetGlobalBoolVariableValue(UGlobalBoolVariable* var);
-
-	// Get the value of a bool variable.
-	bool GetGlobalInternalBoolVariableValue();
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static bool GetGlobalBoolVariableValue(const UGlobalBoolVariable* Variable);
 
 	// Set the value of a bool variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalBoolVariableValue(UGlobalBoolVariable* var, bool _value);
-
-	// Set the value of a bool variable.
-	void SetGlobalInternalBoolVariableValue(bool _value);
-	
-	// Copy the value of a bool variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalBoolVariableValue(UGlobalBoolVariable* var, UGlobalBoolVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
+	static void SetGlobalBoolVariableValue(UGlobalBoolVariable* Variable, bool NewValue);
 
 	// Copy the value of a bool variable.
-	void CopyGlobalInternalBoolVariableValue(UGlobalBoolVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
+	static void CopyGlobalBoolVariableValue(UGlobalBoolVariable* Variable, UGlobalBoolVariable* Other);
 
-	/**** Base Variable Overrides ****/
-
+// BaseVariable Debug Interface
+private:
+    virtual FString GetStringValue() const override;
+// BaseVariable Save&Load Interface
+private:
 	virtual void Save() override;
-
 	virtual void Load() override;
 
-    virtual FString GetStringValue() const override;
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
+	bool Value;
 };

@@ -1,14 +1,15 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #pragma once
 
-#include "UObject/Object.h"
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "GlobalFVectorVariable.generated.h"
 
 /**
- *
+ * Global FVectorVariable implementation of the BaseVariable
  */
 
 UCLASS(BlueprintType)
@@ -16,36 +17,29 @@ class VARIABLESSYSTEM_API UGlobalFVectorVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
+// Global static calls
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	FVector value;
-	
 	// Get the value of a FVector variable.
-	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static FVector GetGlobalFVectorVariableValue(UGlobalFVectorVariable* var);
-
-	// Get the value of a FVector variable.
-	FVector GetGlobalInternalFVectorVariableValue();
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static FVector GetGlobalFVectorVariableValue(const UGlobalFVectorVariable* Variable);
 
 	// Set the value of a FVector variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalFVectorVariableValue(UGlobalFVectorVariable* var, FVector _value);
-
-	// Set the value of a FVector variable.
-	void SetGlobalInternalFVectorVariableValue(FVector _value);
-	
-	// Copy the value of a FVector variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalFVectorVariableValue(UGlobalFVectorVariable* var, UGlobalFVectorVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
+	static void SetGlobalFVectorVariableValue(UGlobalFVectorVariable* Variable, FVector NewValue);
 
 	// Copy the value of a FVector variable.
-	void CopyGlobalInternalFVectorVariableValue(UGlobalFVectorVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
+	static void CopyGlobalFVectorVariableValue(UGlobalFVectorVariable* Variable, UGlobalFVectorVariable* Other);
 
-	/**** Base Variable Overrides ****/
-
+// BaseVariable Debug Interface
+private:
+    virtual FString GetStringValue() const override;
+// BaseVariable Save&Load Interface
+private:
 	virtual void Save() override;
-
 	virtual void Load() override;
 
-    virtual FString GetStringValue() const override;
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
+	FVector Value;
 };

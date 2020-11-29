@@ -1,80 +1,61 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #include "GlobalActorRefVariable.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
+
+#include "VSLog.h"
+
 #include "CoreMinimal.h"
 
-AActor* UGlobalActorRefVariable::GetGlobalActorRefVariableValue(UGlobalActorRefVariable* var)
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+
+AActor* UGlobalActorRefVariable::GetGlobalActorRefVariableValue(const UGlobalActorRefVariable* Variable)
 {
-	if (var == nullptr)
+	if (Variable)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return nullptr;
+		return Variable->Value;
 	}
 	else
 	{
-		return var->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		return nullptr;
 	}
 }
 
-AActor* UGlobalActorRefVariable::GetGlobalInternalActorRefVariableValue()
+void UGlobalActorRefVariable::SetGlobalActorRefVariableValue(UGlobalActorRefVariable* Variable, AActor* NewValue)
 {
-	return GetGlobalActorRefVariableValue(this);
-}
-
-void UGlobalActorRefVariable::SetGlobalActorRefVariableValue(UGlobalActorRefVariable* var, AActor* _value)
-{
-	if (!var) return;
-
-	var->value = _value;
-	var->Dirty = true;
-}
-
-void UGlobalActorRefVariable::SetGlobalInternalActorRefVariableValue(AActor* _value)
-{
-	SetGlobalActorRefVariableValue(this, _value);
-}
-
-void UGlobalActorRefVariable::CopyGlobalActorRefVariableValue(UGlobalActorRefVariable* var, UGlobalActorRefVariable* other)
-{
-	if (!var) return;
-
-	var->value = other->value;
-	var->Dirty = true;
-}
-
-void UGlobalActorRefVariable::CopyGlobalInternalActorRefVariableValue(UGlobalActorRefVariable* other)
-{
-	CopyGlobalActorRefVariableValue(this, other);
-}
-
-void UGlobalActorRefVariable::Save()
-{
-	if (Dirty == false)
+	if (Variable && Variable->Value != NewValue)
 	{
-		return;
+		Variable->Value = NewValue;
+		Variable->Dirty = true;
 	}
-
-	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
-	Dirty = false;
-}
-
-void UGlobalActorRefVariable::Load()
-{
-	UGlobalActorRefVariable* LoadGameInstance = Cast<UGlobalActorRefVariable>(UGameplayStatics::CreateSaveGameObject(UGlobalActorRefVariable::StaticClass()));
-	LoadGameInstance = Cast<UGlobalActorRefVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	
-	if (LoadGameInstance != nullptr)
+	else
 	{
-		this->value = LoadGameInstance->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
 	}
 }
 
+void UGlobalActorRefVariable::CopyGlobalActorRefVariableValue(UGlobalActorRefVariable* Variable, UGlobalActorRefVariable* Other)
+{
+	if (Variable && Other && Variable->Value != Other->Value)
+	{
+		Variable->Value = Other->Value;
+		Variable->Dirty = true;
+	}
+	else if(!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+	}
+	else if(!Other)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+	}
+}
 
 FString UGlobalActorRefVariable::GetStringValue() const
 {
-    const auto& item = value;
+    const auto& item = Value;
     return item->GetName();
 }
-

@@ -3,43 +3,46 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 
-<#+ // Generate the H file for a generic local variable.
-void GenerateLocalHFile(KeyValuePair<System.Type, GlobalVariable> variable)
+<#+ // Generate the H file for a generic instanced variable.
+void GenerateInstancedHFile(KeyValuePair<System.Type, GlobalVariable> variable)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #pragma once
 
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
-#include "Local<#=variable.Key.Name#>.generated.h"
+
+#include "Instanced<#=variable.Key.Name#>.generated.h"
 
 /**
- *
+ * Instanced <#=variable.Key.Name#> implementation of the BaseVariable
  */
+
 UCLASS(BlueprintType)
-class VARIABLESSYSTEM_API ULocal<#=variable.Key.Name#> : public UBaseVariable
+class VARIABLESSYSTEM_API UInstanced<#=variable.Key.Name#> : public UBaseVariable
 {
 	GENERATED_BODY()
 
 public:
-	TMap<UObject*, <#=variable.Value.valueType#>> variables;
+	TMap<UObject*, <#=variable.Value.globalVariable.valueType#>> variables;
 
-	// Get the value of a Local<#=variable.Key.Name#> variable.
-	<#=variable.Value.valueType#>& GetLocal<#=variable.Key.Name#>Ref(UObject* owner);
+	// Get the value of a Instanced<#=variable.Key.Name#> variable.
+	<#=variable.Value.globalVariable.valueType#>& GetInstanced<#=variable.Key.Name#>Ref(UObject* owner);
 	
-	// Get the value of a Local<#=variable.Key.Name#> variable.
-	UFUNCTION(BlueprintPure, Category = "Var System Local", meta = (BlueprintThreadSafe))
-	static <#=variable.Value.valueType#> GetLocal<#=variable.Key.Name#>Value(UObject* owner, ULocal<#=variable.Key.Name#>* var);
+	// Get the value of a Instanced<#=variable.Key.Name#> variable.
+	UFUNCTION(BlueprintPure, Category = "Var System Instanced", meta = (BlueprintThreadSafe))
+	static <#=variable.Value.globalVariable.valueType#> GetInstanced<#=variable.Key.Name#>Value(UObject* owner, UInstanced<#=variable.Key.Name#>* var);
 
-	// Set the value of a Local<#=variable.Key.Name#> variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void SetLocal<#=variable.Key.Name#>Value(UObject* owner, ULocal<#=variable.Key.Name#>* var, <#=variable.Value.valueType#> _value);
+	// Set the value of a Instanced<#=variable.Key.Name#> variable.
+	UFUNCTION(BlueprintCallable, Category = "Var System Instanced")
+	static void SetInstanced<#=variable.Key.Name#>Value(UObject* owner, UInstanced<#=variable.Key.Name#>* var, <#=variable.Value.globalVariable.valueType#> _value);
 	
-	// Copy the value of a Local<#=variable.Key.Name#> variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System Local")
-	static void CopyLocal<#=variable.Key.Name#>Value(UObject* owner, ULocal<#=variable.Key.Name#>* var, UObject* otherOwner, ULocal<#=variable.Key.Name#>* other);
+	// Copy the value of a Instanced<#=variable.Key.Name#> variable.
+	UFUNCTION(BlueprintCallable, Category = "Var System Instanced")
+	static void CopyInstanced<#=variable.Key.Name#>Value(UObject* owner, UInstanced<#=variable.Key.Name#>* var, UObject* otherOwner, UInstanced<#=variable.Key.Name#>* other);
 
     virtual void Save() override;
 
@@ -48,7 +51,7 @@ public:
     virtual FString GetStringValue() const override;
 
 private:
-    FString GetValueAsString(<#=variable.Value.valueType#> value) const;
+    FString GetValueAsString(<#=variable.Value.globalVariable.valueType#> value) const;
 };
 
 <#+

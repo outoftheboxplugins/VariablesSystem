@@ -1,80 +1,61 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #include "GlobalObjectRefVariable.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
+
+#include "VSLog.h"
+
 #include "CoreMinimal.h"
 
-UObject* UGlobalObjectRefVariable::GetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* var)
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+
+UObject* UGlobalObjectRefVariable::GetGlobalObjectRefVariableValue(const UGlobalObjectRefVariable* Variable)
 {
-	if (var == nullptr)
+	if (Variable)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return nullptr;
+		return Variable->Value;
 	}
 	else
 	{
-		return var->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		return nullptr;
 	}
 }
 
-UObject* UGlobalObjectRefVariable::GetGlobalInternalObjectRefVariableValue()
+void UGlobalObjectRefVariable::SetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UObject* NewValue)
 {
-	return GetGlobalObjectRefVariableValue(this);
-}
-
-void UGlobalObjectRefVariable::SetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* var, UObject* _value)
-{
-	if (!var) return;
-
-	var->value = _value;
-	var->Dirty = true;
-}
-
-void UGlobalObjectRefVariable::SetGlobalInternalObjectRefVariableValue(UObject* _value)
-{
-	SetGlobalObjectRefVariableValue(this, _value);
-}
-
-void UGlobalObjectRefVariable::CopyGlobalObjectRefVariableValue(UGlobalObjectRefVariable* var, UGlobalObjectRefVariable* other)
-{
-	if (!var) return;
-
-	var->value = other->value;
-	var->Dirty = true;
-}
-
-void UGlobalObjectRefVariable::CopyGlobalInternalObjectRefVariableValue(UGlobalObjectRefVariable* other)
-{
-	CopyGlobalObjectRefVariableValue(this, other);
-}
-
-void UGlobalObjectRefVariable::Save()
-{
-	if (Dirty == false)
+	if (Variable && Variable->Value != NewValue)
 	{
-		return;
+		Variable->Value = NewValue;
+		Variable->Dirty = true;
 	}
-
-	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
-	Dirty = false;
-}
-
-void UGlobalObjectRefVariable::Load()
-{
-	UGlobalObjectRefVariable* LoadGameInstance = Cast<UGlobalObjectRefVariable>(UGameplayStatics::CreateSaveGameObject(UGlobalObjectRefVariable::StaticClass()));
-	LoadGameInstance = Cast<UGlobalObjectRefVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	
-	if (LoadGameInstance != nullptr)
+	else
 	{
-		this->value = LoadGameInstance->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
 	}
 }
 
+void UGlobalObjectRefVariable::CopyGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UGlobalObjectRefVariable* Other)
+{
+	if (Variable && Other && Variable->Value != Other->Value)
+	{
+		Variable->Value = Other->Value;
+		Variable->Dirty = true;
+	}
+	else if(!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+	}
+	else if(!Other)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+	}
+}
 
 FString UGlobalObjectRefVariable::GetStringValue() const
 {
-    const auto& item = value;
+    const auto& item = Value;
     return item->GetName();
 }
-

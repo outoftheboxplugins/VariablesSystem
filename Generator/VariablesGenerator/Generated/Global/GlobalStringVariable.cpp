@@ -1,52 +1,57 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #include "GlobalStringVariable.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
+
+#include "VSLog.h"
+
 #include "CoreMinimal.h"
 
-FString UGlobalStringVariable::GetGlobalStringVariableValue(UGlobalStringVariable* var)
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+
+FString UGlobalStringVariable::GetGlobalStringVariableValue(const UGlobalStringVariable* Variable)
 {
-	if (var == nullptr)
+	if (Variable)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return "";
+		return Variable->Value;
 	}
 	else
 	{
-		return var->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		return "";
 	}
 }
 
-FString UGlobalStringVariable::GetGlobalInternalStringVariableValue()
+void UGlobalStringVariable::SetGlobalStringVariableValue(UGlobalStringVariable* Variable, FString NewValue)
 {
-	return GetGlobalStringVariableValue(this);
+	if (Variable && Variable->Value != NewValue)
+	{
+		Variable->Value = NewValue;
+		Variable->Dirty = true;
+	}
+	else
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
+	}
 }
 
-void UGlobalStringVariable::SetGlobalStringVariableValue(UGlobalStringVariable* var, FString _value)
+void UGlobalStringVariable::CopyGlobalStringVariableValue(UGlobalStringVariable* Variable, UGlobalStringVariable* Other)
 {
-	if (!var) return;
-
-	var->value = _value;
-	var->Dirty = true;
-}
-
-void UGlobalStringVariable::SetGlobalInternalStringVariableValue(FString _value)
-{
-	SetGlobalStringVariableValue(this, _value);
-}
-
-void UGlobalStringVariable::CopyGlobalStringVariableValue(UGlobalStringVariable* var, UGlobalStringVariable* other)
-{
-	if (!var) return;
-
-	var->value = other->value;
-	var->Dirty = true;
-}
-
-void UGlobalStringVariable::CopyGlobalInternalStringVariableValue(UGlobalStringVariable* other)
-{
-	CopyGlobalStringVariableValue(this, other);
+	if (Variable && Other && Variable->Value != Other->Value)
+	{
+		Variable->Value = Other->Value;
+		Variable->Dirty = true;
+	}
+	else if(!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+	}
+	else if(!Other)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+	}
 }
 
 void UGlobalStringVariable::Save()
@@ -67,14 +72,12 @@ void UGlobalStringVariable::Load()
 	
 	if (LoadGameInstance != nullptr)
 	{
-		this->value = LoadGameInstance->value;
+		Value = LoadGameInstance->Value;
 	}
 }
 
-
 FString UGlobalStringVariable::GetStringValue() const
 {
-    const auto& item = value;
+    const auto& item = Value;
     return item;
 }
-

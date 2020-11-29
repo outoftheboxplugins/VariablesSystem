@@ -1,52 +1,57 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #include "GlobalFloatVariable.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
+
+#include "VSLog.h"
+
 #include "CoreMinimal.h"
 
-float UGlobalFloatVariable::GetGlobalFloatVariableValue(UGlobalFloatVariable* var)
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+
+float UGlobalFloatVariable::GetGlobalFloatVariableValue(const UGlobalFloatVariable* Variable)
 {
-	if (var == nullptr)
+	if (Variable)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return 0.0f;
+		return Variable->Value;
 	}
 	else
 	{
-		return var->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		return 0.0f;
 	}
 }
 
-float UGlobalFloatVariable::GetGlobalInternalFloatVariableValue()
+void UGlobalFloatVariable::SetGlobalFloatVariableValue(UGlobalFloatVariable* Variable, float NewValue)
 {
-	return GetGlobalFloatVariableValue(this);
+	if (Variable && Variable->Value != NewValue)
+	{
+		Variable->Value = NewValue;
+		Variable->Dirty = true;
+	}
+	else
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
+	}
 }
 
-void UGlobalFloatVariable::SetGlobalFloatVariableValue(UGlobalFloatVariable* var, float _value)
+void UGlobalFloatVariable::CopyGlobalFloatVariableValue(UGlobalFloatVariable* Variable, UGlobalFloatVariable* Other)
 {
-	if (!var) return;
-
-	var->value = _value;
-	var->Dirty = true;
-}
-
-void UGlobalFloatVariable::SetGlobalInternalFloatVariableValue(float _value)
-{
-	SetGlobalFloatVariableValue(this, _value);
-}
-
-void UGlobalFloatVariable::CopyGlobalFloatVariableValue(UGlobalFloatVariable* var, UGlobalFloatVariable* other)
-{
-	if (!var) return;
-
-	var->value = other->value;
-	var->Dirty = true;
-}
-
-void UGlobalFloatVariable::CopyGlobalInternalFloatVariableValue(UGlobalFloatVariable* other)
-{
-	CopyGlobalFloatVariableValue(this, other);
+	if (Variable && Other && Variable->Value != Other->Value)
+	{
+		Variable->Value = Other->Value;
+		Variable->Dirty = true;
+	}
+	else if(!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+	}
+	else if(!Other)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+	}
 }
 
 void UGlobalFloatVariable::Save()
@@ -67,14 +72,12 @@ void UGlobalFloatVariable::Load()
 	
 	if (LoadGameInstance != nullptr)
 	{
-		this->value = LoadGameInstance->value;
+		Value = LoadGameInstance->Value;
 	}
 }
 
-
 FString UGlobalFloatVariable::GetStringValue() const
 {
-    const auto& item = value;
+    const auto& item = Value;
     return UKismetStringLibrary::Conv_FloatToString(item);
 }
-

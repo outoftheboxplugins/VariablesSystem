@@ -1,52 +1,57 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #include "GlobalFVector2DVariable.h"
-#include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetStringLibrary.h"
+
+#include "VSLog.h"
+
 #include "CoreMinimal.h"
 
-FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* var)
+#include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetStringLibrary.h"
+
+FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(const UGlobalFVector2DVariable* Variable)
 {
-	if (var == nullptr)
+	if (Variable)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Missing variable"));
-		return FVector2D::ZeroVector;
+		return Variable->Value;
 	}
 	else
 	{
-		return var->value;
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		return FVector2D::ZeroVector;
 	}
 }
 
-FVector2D UGlobalFVector2DVariable::GetGlobalInternalFVector2DVariableValue()
+void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, FVector2D NewValue)
 {
-	return GetGlobalFVector2DVariableValue(this);
+	if (Variable && Variable->Value != NewValue)
+	{
+		Variable->Value = NewValue;
+		Variable->Dirty = true;
+	}
+	else
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
+	}
 }
 
-void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* var, FVector2D _value)
+void UGlobalFVector2DVariable::CopyGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, UGlobalFVector2DVariable* Other)
 {
-	if (!var) return;
-
-	var->value = _value;
-	var->Dirty = true;
-}
-
-void UGlobalFVector2DVariable::SetGlobalInternalFVector2DVariableValue(FVector2D _value)
-{
-	SetGlobalFVector2DVariableValue(this, _value);
-}
-
-void UGlobalFVector2DVariable::CopyGlobalFVector2DVariableValue(UGlobalFVector2DVariable* var, UGlobalFVector2DVariable* other)
-{
-	if (!var) return;
-
-	var->value = other->value;
-	var->Dirty = true;
-}
-
-void UGlobalFVector2DVariable::CopyGlobalInternalFVector2DVariableValue(UGlobalFVector2DVariable* other)
-{
-	CopyGlobalFVector2DVariableValue(this, other);
+	if (Variable && Other && Variable->Value != Other->Value)
+	{
+		Variable->Value = Other->Value;
+		Variable->Dirty = true;
+	}
+	else if(!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+	}
+	else if(!Other)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+	}
 }
 
 void UGlobalFVector2DVariable::Save()
@@ -67,14 +72,12 @@ void UGlobalFVector2DVariable::Load()
 	
 	if (LoadGameInstance != nullptr)
 	{
-		this->value = LoadGameInstance->value;
+		Value = LoadGameInstance->Value;
 	}
 }
 
-
 FString UGlobalFVector2DVariable::GetStringValue() const
 {
-    const auto& item = value;
+    const auto& item = Value;
     return UKismetStringLibrary::Conv_Vector2dToString(item);
 }
-

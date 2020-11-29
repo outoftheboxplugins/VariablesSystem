@@ -65,7 +65,7 @@
 echo "Generating template classes DONE"
 
 echo "Updating template classes from $(ProjectDir)Generated to $(SolutionDir)..\Source\VariablesSystem\Generated"
-(robocopy "$(ProjectDir)Generated" "$(SolutionDir)..\Source\VariablesSystem\Generated" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (set ERRORLEVEL=0)
+(robocopy "$(ProjectDir)Generated" "$(ProjectDir)..\..\Source\VariablesSystem\Generated" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (set ERRORLEVEL=0)
 echo "Updating done"
 
 echo "Deleting build files to trigger rebuild"

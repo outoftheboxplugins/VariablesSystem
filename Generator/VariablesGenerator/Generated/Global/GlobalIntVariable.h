@@ -1,14 +1,15 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #pragma once
 
-#include "UObject/Object.h"
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "GlobalIntVariable.generated.h"
 
 /**
- *
+ * Global IntVariable implementation of the BaseVariable
  */
 
 UCLASS(BlueprintType)
@@ -16,36 +17,29 @@ class VARIABLESSYSTEM_API UGlobalIntVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
+// Global static calls
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	int32 value;
-	
 	// Get the value of a int32 variable.
-	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static int32 GetGlobalIntVariableValue(UGlobalIntVariable* var);
-
-	// Get the value of a int32 variable.
-	int32 GetGlobalInternalIntVariableValue();
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static int32 GetGlobalIntVariableValue(const UGlobalIntVariable* Variable);
 
 	// Set the value of a int32 variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalIntVariableValue(UGlobalIntVariable* var, int32 _value);
-
-	// Set the value of a int32 variable.
-	void SetGlobalInternalIntVariableValue(int32 _value);
-	
-	// Copy the value of a int32 variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalIntVariableValue(UGlobalIntVariable* var, UGlobalIntVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
+	static void SetGlobalIntVariableValue(UGlobalIntVariable* Variable, int32 NewValue);
 
 	// Copy the value of a int32 variable.
-	void CopyGlobalInternalIntVariableValue(UGlobalIntVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
+	static void CopyGlobalIntVariableValue(UGlobalIntVariable* Variable, UGlobalIntVariable* Other);
 
-	/**** Base Variable Overrides ****/
-
+// BaseVariable Debug Interface
+private:
+    virtual FString GetStringValue() const override;
+// BaseVariable Save&Load Interface
+private:
 	virtual void Save() override;
-
 	virtual void Load() override;
 
-    virtual FString GetStringValue() const override;
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
+	int32 Value;
 };

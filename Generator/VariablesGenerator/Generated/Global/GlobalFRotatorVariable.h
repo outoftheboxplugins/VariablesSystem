@@ -1,14 +1,15 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #pragma once
 
-#include "UObject/Object.h"
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "GlobalFRotatorVariable.generated.h"
 
 /**
- *
+ * Global FRotatorVariable implementation of the BaseVariable
  */
 
 UCLASS(BlueprintType)
@@ -16,36 +17,29 @@ class VARIABLESSYSTEM_API UGlobalFRotatorVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
+// Global static calls
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	FRotator value;
-	
 	// Get the value of a FRotator variable.
-	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static FRotator GetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var);
-
-	// Get the value of a FRotator variable.
-	FRotator GetGlobalInternalFRotatorVariableValue();
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static FRotator GetGlobalFRotatorVariableValue(const UGlobalFRotatorVariable* Variable);
 
 	// Set the value of a FRotator variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var, FRotator _value);
-
-	// Set the value of a FRotator variable.
-	void SetGlobalInternalFRotatorVariableValue(FRotator _value);
-	
-	// Copy the value of a FRotator variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* var, UGlobalFRotatorVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
+	static void SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, FRotator NewValue);
 
 	// Copy the value of a FRotator variable.
-	void CopyGlobalInternalFRotatorVariableValue(UGlobalFRotatorVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
+	static void CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, UGlobalFRotatorVariable* Other);
 
-	/**** Base Variable Overrides ****/
-
+// BaseVariable Debug Interface
+private:
+    virtual FString GetStringValue() const override;
+// BaseVariable Save&Load Interface
+private:
 	virtual void Save() override;
-
 	virtual void Load() override;
 
-    virtual FString GetStringValue() const override;
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
+	FRotator Value;
 };

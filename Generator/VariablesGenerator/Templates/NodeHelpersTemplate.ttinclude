@@ -1,4 +1,4 @@
-﻿<#@ assembly name="System.Core" #>
+<#@ assembly name="System.Core" #>
 <#@ import namespace="System" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
@@ -14,26 +14,26 @@ void GeneratePinTypeFromVariable(Dictionary<System.Type, GlobalVariable> variabl
 #>
     if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i).Name#>"))
     {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=variables.Values.ElementAt(i).nodeType#>;
-        ResultContainerType = EPinContainerType::<#=variables.Values.ElementAt(i).nodeContainer#>;
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=variables.Values.ElementAt(i).globalVariable.nodeType#>;
+        ResultContainerType = EPinContainerType::<#=variables.Values.ElementAt(i).globalVariable.nodeContainer#>;
 <#+
-    if (variables.Values.ElementAt(i).nodeSubType != "")
+    if (variables.Values.ElementAt(i).globalVariable.nodeSubType != "")
     {
 #>
-        ResultPinType.PinSubCategoryObject = <#=variables.Values.ElementAt(i).nodeSubType#>;
+        ResultPinType.PinSubCategoryObject = <#=variables.Values.ElementAt(i).globalVariable.nodeSubType#>;
 <#+
     }
 #>
     }
     if (VariableClassName == FName("Local<#=variables.Keys.ElementAt(i).Name#>"))
     {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=variables.Values.ElementAt(i).nodeType#>;
-        ResultContainerType = EPinContainerType::<#=variables.Values.ElementAt(i).nodeContainer#>;
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=variables.Values.ElementAt(i).globalVariable.nodeType#>;
+        ResultContainerType = EPinContainerType::<#=variables.Values.ElementAt(i).globalVariable.nodeContainer#>;
 <#+
-            if (variables.Values.ElementAt(i).nodeSubType != "")
+            if (variables.Values.ElementAt(i).globalVariable.nodeSubType != "")
             {
 #>
-        ResultPinType.PinSubCategoryObject = <#=variables.Values.ElementAt(i).nodeSubType#>;
+        ResultPinType.PinSubCategoryObject = <#=variables.Values.ElementAt(i).globalVariable.nodeSubType#>;
 <#+
     }
 #>

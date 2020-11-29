@@ -1,3 +1,9 @@
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+#pragma once
+
 #include "VariablesSystem/Generated/Global/GlobalObjectRefVariable.h"
 #include "VariablesSystem/Generated/Local/LocalObjectRefVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalActorRefVariable.h"

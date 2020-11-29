@@ -1,5 +1,13 @@
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+#pragma once
+
 #include "Kismet/BlueprintFunctionLibrary.h"
+
 #include "VariablesSystem/Generated/Library/IncludeAll.h"
+
 #include "GenericVariablesBPLibrary.generated.h"
 
 UCLASS(meta = (BlueprintThreadSafe))
@@ -7,6 +15,7 @@ class UGenericVariablesBPLibrary : public UBlueprintFunctionLibrary
 {
     GENERATED_BODY()
 
+public:
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global ObjectRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static UObject* GetGlobalObjectRefVariableSafe(UGlobalObjectRefVariable* variable);
 

@@ -21,15 +21,16 @@
 
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
 #pragma once
 
-#include "UObject/Object.h"
-#include "UObject/ObjectMacros.h"
 #include "BaseVariable.h"
+
 #include "GlobalObjectRefVariable.generated.h"
 
 /**
- *
+ * Global ObjectRefVariable implementation of the BaseVariable
  */
 
 UCLASS(BlueprintType)
@@ -37,36 +38,25 @@ class VARIABLESSYSTEM_API UGlobalObjectRefVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
+// Global static calls
 public:
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Var System")
-	UObject* value;
-	
 	// Get the value of a UObject* variable.
-	UFUNCTION(BlueprintPure, Category = "Var System", meta = (BlueprintThreadSafe))
-	static UObject* GetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* var);
-
-	// Get the value of a UObject* variable.
-	UObject* GetGlobalInternalObjectRefVariableValue();
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UObject* GetGlobalObjectRefVariableValue(const UGlobalObjectRefVariable* Variable);
 
 	// Set the value of a UObject* variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void SetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* var, UObject* _value);
-
-	// Set the value of a UObject* variable.
-	void SetGlobalInternalObjectRefVariableValue(UObject* _value);
-	
-	// Copy the value of a UObject* variable.
-	UFUNCTION(BlueprintCallable, Category = "Var System")
-	static void CopyGlobalObjectRefVariableValue(UGlobalObjectRefVariable* var, UGlobalObjectRefVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
+	static void SetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UObject* NewValue);
 
 	// Copy the value of a UObject* variable.
-	void CopyGlobalInternalObjectRefVariableValue(UGlobalObjectRefVariable* other);
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
+	static void CopyGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UGlobalObjectRefVariable* Other);
 
-	/**** Base Variable Overrides ****/
-
-	virtual void Save() override;
-
-	virtual void Load() override;
-
+// BaseVariable Debug Interface
+private:
     virtual FString GetStringValue() const override;
+
+protected:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
+	UObject* Value;
 };
