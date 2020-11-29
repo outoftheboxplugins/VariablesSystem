@@ -2,5 +2,9 @@ Binaries/
 Intermediate/
 Zips/
 
+Generator/.vs/
+Generator/VariablesGenerator/.vs/
+Generator/VariablesGenerator/VariablesGenerator.csproj.user
+
 Generator/VariablesGenerator/bin
 Generator/VariablesGenerator/obj
