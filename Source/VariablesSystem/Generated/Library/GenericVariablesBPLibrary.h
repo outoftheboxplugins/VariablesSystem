@@ -19,55 +19,55 @@ public:
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global ObjectRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static UObject* GetGlobalObjectRefVariableSafe(UGlobalObjectRefVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local ObjectRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static UObject* GetLocalObjectRefVariableSafe(ULocalObjectRefVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced ObjectRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static UObject* GetInstancedObjectRefVariableSafe(UInstancedObjectRefVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global ActorRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static AActor* GetGlobalActorRefVariableSafe(UGlobalActorRefVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local ActorRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static AActor* GetLocalActorRefVariableSafe(ULocalActorRefVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced ActorRefVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static AActor* GetInstancedActorRefVariableSafe(UInstancedActorRefVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global BoolVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static bool GetGlobalBoolVariableSafe(UGlobalBoolVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local BoolVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static bool GetLocalBoolVariableSafe(ULocalBoolVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced BoolVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static bool GetInstancedBoolVariableSafe(UInstancedBoolVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global IntVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static int32 GetGlobalIntVariableSafe(UGlobalIntVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local IntVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static int32 GetLocalIntVariableSafe(ULocalIntVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced IntVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static int32 GetInstancedIntVariableSafe(UInstancedIntVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FloatVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static float GetGlobalFloatVariableSafe(UGlobalFloatVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local FloatVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static float GetLocalFloatVariableSafe(ULocalFloatVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FloatVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static float GetInstancedFloatVariableSafe(UInstancedFloatVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global StringVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FString GetGlobalStringVariableSafe(UGlobalStringVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local StringVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FString GetLocalStringVariableSafe(ULocalStringVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced StringVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FString GetInstancedStringVariableSafe(UInstancedStringVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FRotatorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FRotator GetGlobalFRotatorVariableSafe(UGlobalFRotatorVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local FRotatorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FRotator GetLocalFRotatorVariableSafe(ULocalFRotatorVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FRotatorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FRotator GetInstancedFRotatorVariableSafe(UInstancedFRotatorVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVectorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector GetGlobalFVectorVariableSafe(UGlobalFVectorVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local FVectorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FVector GetLocalFVectorVariableSafe(ULocalFVectorVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FVectorVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FVector GetInstancedFVectorVariableSafe(UInstancedFVectorVariable* variable, UObject* owner);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector2D GetGlobalFVector2DVariableSafe(UGlobalFVector2DVariable* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
-    static FVector2D GetLocalFVector2DVariableSafe(ULocalFVector2DVariable* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FVector2D GetInstancedFVector2DVariableSafe(UInstancedFVector2DVariable* variable, UObject* owner);
 
 };

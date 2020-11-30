@@ -11,7 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 
-FString UGlobalStringVariable::GetGlobalStringVariableValue(const UGlobalStringVariable* Variable)
+/* STATIC */ FString UGlobalStringVariable::GetGlobalStringVariableValue(const UGlobalStringVariable* Variable)
 {
 	if (Variable)
 	{
@@ -24,7 +24,7 @@ FString UGlobalStringVariable::GetGlobalStringVariableValue(const UGlobalStringV
 	}
 }
 
-void UGlobalStringVariable::SetGlobalStringVariableValue(UGlobalStringVariable* Variable, FString NewValue)
+/* STATIC */ void UGlobalStringVariable::SetGlobalStringVariableValue(UGlobalStringVariable* Variable, FString NewValue)
 {
 	if (Variable && Variable->Value != NewValue)
 	{
@@ -37,21 +37,27 @@ void UGlobalStringVariable::SetGlobalStringVariableValue(UGlobalStringVariable* 
 	}
 }
 
-void UGlobalStringVariable::CopyGlobalStringVariableValue(UGlobalStringVariable* Variable, UGlobalStringVariable* Other)
+/* STATIC */ void UGlobalStringVariable::CopyGlobalStringVariableValue(UGlobalStringVariable* Variable, UGlobalStringVariable* OtherVariable)
 {
-	if (Variable && Other && Variable->Value != Other->Value)
+	if (Variable && OtherVariable && Variable->Value != OtherVariable->Value)
 	{
-		Variable->Value = Other->Value;
+		Variable->Value = OtherVariable->Value;
 		Variable->Dirty = true;
 	}
 	else if(!Variable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
 	}
-	else if(!Other)
+	else if(!OtherVariable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
 	}
+}
+
+FString UGlobalStringVariable::GetStringValue() const
+{
+    const auto& Item = Value;
+    return Item;
 }
 
 void UGlobalStringVariable::Save()
@@ -74,10 +80,4 @@ void UGlobalStringVariable::Load()
 	{
 		Value = LoadGameInstance->Value;
 	}
-}
-
-FString UGlobalStringVariable::GetStringValue() const
-{
-    const auto& item = Value;
-    return item;
 }

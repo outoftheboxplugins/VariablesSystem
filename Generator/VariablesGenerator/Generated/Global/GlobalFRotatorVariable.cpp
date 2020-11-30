@@ -11,7 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 
-FRotator UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(const UGlobalFRotatorVariable* Variable)
+/* STATIC */ FRotator UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(const UGlobalFRotatorVariable* Variable)
 {
 	if (Variable)
 	{
@@ -24,7 +24,7 @@ FRotator UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(const UGlobalFR
 	}
 }
 
-void UGlobalFRotatorVariable::SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, FRotator NewValue)
+/* STATIC */ void UGlobalFRotatorVariable::SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, FRotator NewValue)
 {
 	if (Variable && Variable->Value != NewValue)
 	{
@@ -37,21 +37,27 @@ void UGlobalFRotatorVariable::SetGlobalFRotatorVariableValue(UGlobalFRotatorVari
 	}
 }
 
-void UGlobalFRotatorVariable::CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, UGlobalFRotatorVariable* Other)
+/* STATIC */ void UGlobalFRotatorVariable::CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, UGlobalFRotatorVariable* OtherVariable)
 {
-	if (Variable && Other && Variable->Value != Other->Value)
+	if (Variable && OtherVariable && Variable->Value != OtherVariable->Value)
 	{
-		Variable->Value = Other->Value;
+		Variable->Value = OtherVariable->Value;
 		Variable->Dirty = true;
 	}
 	else if(!Variable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
 	}
-	else if(!Other)
+	else if(!OtherVariable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
 	}
+}
+
+FString UGlobalFRotatorVariable::GetStringValue() const
+{
+    const auto& Item = Value;
+    return UKismetStringLibrary::Conv_RotatorToString(Item);
 }
 
 void UGlobalFRotatorVariable::Save()
@@ -74,10 +80,4 @@ void UGlobalFRotatorVariable::Load()
 	{
 		Value = LoadGameInstance->Value;
 	}
-}
-
-FString UGlobalFRotatorVariable::GetStringValue() const
-{
-    const auto& item = Value;
-    return UKismetStringLibrary::Conv_RotatorToString(item);
 }

@@ -29,7 +29,7 @@ public:
 
 	// Copy the value of a FString variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalStringVariableValue(UGlobalStringVariable* Variable, UGlobalStringVariable* Other);
+	static void CopyGlobalStringVariableValue(UGlobalStringVariable* Variable, UGlobalStringVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

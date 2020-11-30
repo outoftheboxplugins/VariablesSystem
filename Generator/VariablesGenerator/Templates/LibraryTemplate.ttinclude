@@ -20,7 +20,7 @@ void GenerateIncludeAll(Dictionary<System.Type, GlobalVariable> variables)
 	{
 #>
 #include "VariablesSystem/Generated/Global/Global<#=variables.Keys.ElementAt(i).Name#>.h"
-#include "VariablesSystem/Generated/Local/Local<#=variables.Keys.ElementAt(i).Name#>.h"
+#include "VariablesSystem/Generated/Instanced/Instanced<#=variables.Keys.ElementAt(i).Name#>.h"
 <#+
 	}
 }
@@ -55,8 +55,8 @@ public:
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global <#=variables.Keys.ElementAt(i).Name#> Variable (Thread Safe)"), Category = "VariablesSystem")
     static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetGlobal<#=variables.Keys.ElementAt(i).Name#>Safe(UGlobal<#=variables.Keys.ElementAt(i).Name#>* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Local <#=variables.Keys.ElementAt(i).Name#> Variable (Thread Safe)"), Category = "VariablesSystem")
-    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetLocal<#=variables.Keys.ElementAt(i).Name#>Safe(ULocal<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced <#=variables.Keys.ElementAt(i).Name#> Variable (Thread Safe)"), Category = "VariablesSystem")
+    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetInstanced<#=variables.Keys.ElementAt(i).Name#>Safe(UInstanced<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner);
 
 <#+
 	}
@@ -85,9 +85,9 @@ void GenerateBlueprintLibraryCPP(Dictionary<System.Type, GlobalVariable> variabl
     return UGlobal<#=variables.Keys.ElementAt(i).Name#>::GetGlobal<#=variables.Keys.ElementAt(i).Name#>Value(variable);
 }
 
-/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetLocal<#=variables.Keys.ElementAt(i).Name#>Safe(ULocal<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner)
+/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetInstanced<#=variables.Keys.ElementAt(i).Name#>Safe(UInstanced<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner)
 {
-    return ULocal<#=variables.Keys.ElementAt(i).Name#>::GetLocal<#=variables.Keys.ElementAt(i).Name#>Value(owner, variable);
+    return UInstanced<#=variables.Keys.ElementAt(i).Name#>::GetInstanced<#=variables.Keys.ElementAt(i).Name#>Value(owner, variable);
 }
 
 <#+

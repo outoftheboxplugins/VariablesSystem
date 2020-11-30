@@ -1,0 +1,65 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#+ // Generate the H file for a generic instanced variable.
+void GenerateInstancedHFile(KeyValuePair<System.Type, GlobalVariable> variable)
+{
+#>
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+#pragma once
+
+#include "BaseVariable.h"
+
+#include "Instanced<#=variable.Key.Name#>.generated.h"
+
+/**
+ * Instanced <#=variable.Key.Name#> implementation of the BaseVariable
+ */
+
+UCLASS(BlueprintType)
+class VARIABLESSYSTEM_API UInstanced<#=variable.Key.Name#> : public UBaseVariable
+{
+	GENERATED_BODY()
+
+// Global static calls
+public:
+	// Get the value of a Instanced<#=variable.Key.Name#> variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static <#=variable.Value.globalVariable.valueType#> GetInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable);
+
+	// Set the value of a Instanced<#=variable.Key.Name#> variable.
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
+	static void SetInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue);
+	
+	// Copy the value of a Instanced<#=variable.Key.Name#> variable.
+	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
+	static void CopyInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable, UObject* OtherOwner, UInstanced<#=variable.Key.Name#>* OtherVariable);
+
+private:
+	// Internal getter or creater used to modify values.
+	<#=variable.Value.globalVariable.valueType#>& GetInstanced<#=variable.Key.Name#>Ref(UObject* Owner);
+	
+<#+
+	if(variable.Value.debugInfo != null)
+	{
+#>
+// BaseVariable Debug Interface
+private:
+    virtual FString GetStringValue() const override;
+	FString GetValueAsString(<#=variable.Value.globalVariable.valueType#> Value) const;
+<#+
+	}
+#>
+
+private:
+	TMap<UObject*, <#=variable.Value.globalVariable.valueType#>> VariablesMap;
+};
+
+<#+
+}
+#>

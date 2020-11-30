@@ -29,7 +29,7 @@ public:
 
 	// Copy the value of a int32 variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalIntVariableValue(UGlobalIntVariable* Variable, UGlobalIntVariable* Other);
+	static void CopyGlobalIntVariableValue(UGlobalIntVariable* Variable, UGlobalIntVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

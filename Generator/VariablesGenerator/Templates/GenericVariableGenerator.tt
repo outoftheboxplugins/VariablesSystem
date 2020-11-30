@@ -1,12 +1,12 @@
-﻿<#@ template debug="true" hostspecific="true" #>
+<#@ template debug="true" hostspecific="true" #>
 
 <#@ assembly name="VariablesGenerator.dll" #>
 
 <#@ include file="GlobalCPPTemplate.ttinclude"#>
 <#@ include file="GlobalHTemplate.ttinclude"#>
 <#@ include file="LibraryTemplate.ttinclude"#>
-<#@ include file="LocalCPPTemplate.ttinclude"#>
-<#@ include file="LocalHTemplate.ttinclude"#>
+<#@ include file="InstancedCPPTemplate.ttinclude"#>
+<#@ include file="InstancedHTemplate.ttinclude"#>
 <#@ include file="NodeHelpersTemplate.ttinclude"#>
 
 <#@ assembly name="System.Core" #>
@@ -21,8 +21,8 @@
     {
         SaveGlobalHOutput(variable);
         SaveGlobalCPPOutput(variable);
-        SaveLocalHOutput(variable);
-        SaveLocalCPPOutput(variable);
+        SaveInstancedHOutput(variable);
+        SaveInstancedCPPOutput(variable);
     }
 
     CreateK2PinTypeFromVariable(allVariables);
@@ -47,16 +47,16 @@ private void SaveGlobalCPPOutput(KeyValuePair<System.Type, GlobalVariable> varia
     SaveFileAs(@"\Global\Global" + variable.Key.Name + @".cpp");
 }
 
-private void SaveLocalHOutput(KeyValuePair<System.Type, GlobalVariable> variable)
+private void SaveInstancedHOutput(KeyValuePair<System.Type, GlobalVariable> variable)
 {
-    GenerateLocalHFile(variable);
-    SaveFileAs(@"\Local\Local" + variable.Key.Name + @".h");
+    GenerateInstancedHFile(variable);
+    SaveFileAs(@"\Instanced\Instanced" + variable.Key.Name + @".h");
 }
 
-private void SaveLocalCPPOutput(KeyValuePair<System.Type, GlobalVariable> variable)
+private void SaveInstancedCPPOutput(KeyValuePair<System.Type, GlobalVariable> variable)
 {
-    GenerateLocalCPPFile(variable);
-    SaveFileAs(@"\Local\Local" + variable.Key.Name + @".cpp");
+    GenerateInstancedCPPFile(variable);
+    SaveFileAs(@"\Instanced\Instanced" + variable.Key.Name + @".cpp");
 }
 
 private void CreateK2PinTypeFromVariable(Dictionary<System.Type, GlobalVariable> variables)

@@ -29,7 +29,7 @@ public:
 
 	// Copy the value of a FVector variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalFVectorVariableValue(UGlobalFVectorVariable* Variable, UGlobalFVectorVariable* Other);
+	static void CopyGlobalFVectorVariableValue(UGlobalFVectorVariable* Variable, UGlobalFVectorVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

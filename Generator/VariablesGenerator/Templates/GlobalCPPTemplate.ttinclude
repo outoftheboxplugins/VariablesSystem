@@ -22,7 +22,7 @@ void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 
-<#=variable.Value.globalVariable.valueType#> UGlobal<#=variable.Key.Name#>::GetGlobal<#=variable.Key.Name#>Value(const UGlobal<#=variable.Key.Name#>* Variable)
+/* STATIC */ <#=variable.Value.globalVariable.valueType#> UGlobal<#=variable.Key.Name#>::GetGlobal<#=variable.Key.Name#>Value(const UGlobal<#=variable.Key.Name#>* Variable)
 {
 	if (Variable)
 	{
@@ -35,7 +35,7 @@ void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 	}
 }
 
-void UGlobal<#=variable.Key.Name#>::SetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
+/* STATIC */ void UGlobal<#=variable.Key.Name#>::SetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
 {
 	if (Variable && Variable->Value != NewValue)
 	{
@@ -48,27 +48,60 @@ void UGlobal<#=variable.Key.Name#>::SetGlobal<#=variable.Key.Name#>Value(UGlobal
 	}
 }
 
-void UGlobal<#=variable.Key.Name#>::CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, UGlobal<#=variable.Key.Name#>* Other)
+/* STATIC */ void UGlobal<#=variable.Key.Name#>::CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, UGlobal<#=variable.Key.Name#>* OtherVariable)
 {
-	if (Variable && Other && Variable->Value != Other->Value)
+	if (Variable && OtherVariable && Variable->Value != OtherVariable->Value)
 	{
-		Variable->Value = Other->Value;
+		Variable->Value = OtherVariable->Value;
 		Variable->Dirty = true;
 	}
 	else if(!Variable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
 	}
-	else if(!Other)
+	else if(!OtherVariable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
 	}
 }
 
 <#+
+	if(variable.Value.debugInfo != null)
+	{
+#>
+FString UGlobal<#=variable.Key.Name#>::GetStringValue() const
+{
+<#+
+	if(variable.Value.globalVariable.nodeContainer != "None")
+	{
+#>
+    TArray<FString> StringValues;
+    for(const auto& Item : Value)
+    {
+        StringValues.Add(<#=variable.Value.debugInfo.toStringFunction#>);
+    }
+
+    return UKismetStringLibrary::JoinStringArray(StringValues);
+<#+
+	}
+	else
+	{
+#>
+    const auto& Item = Value;
+    return <#=variable.Value.debugInfo.toStringFunction#>;
+<#+
+	}
+#>
+}
+<#+
+	}
+#>
+
+<#+
 	if(variable.Value.extraGeneration != null && variable.Value.extraGeneration.generateSaveLoad)
 	{
 #>
+
 void UGlobal<#=variable.Key.Name#>::Save()
 {
 	if (Dirty == false)
@@ -90,43 +123,9 @@ void UGlobal<#=variable.Key.Name#>::Load()
 		Value = LoadGameInstance->Value;
 	}
 }
-
 <#+
 	}
 #>
-
-<#+
-	if(variable.Value.debugInfo != null)
-	{
-#>
-FString UGlobal<#=variable.Key.Name#>::GetStringValue() const
-{
-<#+
-	if(variable.Value.globalVariable.nodeContainer != "None")
-	{
-#>
-    TArray<FString> StringValues;
-    for(const auto& item : value)
-    {
-        StringValues.Add(<#=variable.Value.debugInfo.toStringFunction#>);
-    }
-
-    return UKismetStringLibrary::JoinStringArray(StringValues);
-<#+
-	}
-	else
-	{
-#>
-    const auto& item = Value;
-    return <#=variable.Value.debugInfo.toStringFunction#>;
-<#+
-	}
-#>
-}
-<#+
-	}
-#>
-
 <#+
 }
 #>

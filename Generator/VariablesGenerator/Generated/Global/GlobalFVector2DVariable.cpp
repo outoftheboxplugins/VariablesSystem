@@ -11,7 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 
-FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(const UGlobalFVector2DVariable* Variable)
+/* STATIC */ FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(const UGlobalFVector2DVariable* Variable)
 {
 	if (Variable)
 	{
@@ -24,7 +24,7 @@ FVector2D UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(const UGloba
 	}
 }
 
-void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, FVector2D NewValue)
+/* STATIC */ void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, FVector2D NewValue)
 {
 	if (Variable && Variable->Value != NewValue)
 	{
@@ -37,21 +37,27 @@ void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DV
 	}
 }
 
-void UGlobalFVector2DVariable::CopyGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, UGlobalFVector2DVariable* Other)
+/* STATIC */ void UGlobalFVector2DVariable::CopyGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, UGlobalFVector2DVariable* OtherVariable)
 {
-	if (Variable && Other && Variable->Value != Other->Value)
+	if (Variable && OtherVariable && Variable->Value != OtherVariable->Value)
 	{
-		Variable->Value = Other->Value;
+		Variable->Value = OtherVariable->Value;
 		Variable->Dirty = true;
 	}
 	else if(!Variable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
 	}
-	else if(!Other)
+	else if(!OtherVariable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
 	}
+}
+
+FString UGlobalFVector2DVariable::GetStringValue() const
+{
+    const auto& Item = Value;
+    return UKismetStringLibrary::Conv_Vector2dToString(Item);
 }
 
 void UGlobalFVector2DVariable::Save()
@@ -74,10 +80,4 @@ void UGlobalFVector2DVariable::Load()
 	{
 		Value = LoadGameInstance->Value;
 	}
-}
-
-FString UGlobalFVector2DVariable::GetStringValue() const
-{
-    const auto& item = Value;
-    return UKismetStringLibrary::Conv_Vector2dToString(item);
 }

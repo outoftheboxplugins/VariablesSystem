@@ -29,7 +29,7 @@ public:
 
 	// Copy the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalFloatVariableValue(UGlobalFloatVariable* Variable, UGlobalFloatVariable* Other);
+	static void CopyGlobalFloatVariableValue(UGlobalFloatVariable* Variable, UGlobalFloatVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

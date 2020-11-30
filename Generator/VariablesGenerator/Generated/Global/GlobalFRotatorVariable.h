@@ -29,7 +29,7 @@ public:
 
 	// Copy the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, UGlobalFRotatorVariable* Other);
+	static void CopyGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, UGlobalFRotatorVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

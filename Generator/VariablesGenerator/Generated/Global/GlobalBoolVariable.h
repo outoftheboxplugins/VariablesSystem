@@ -29,7 +29,7 @@ public:
 
 	// Copy the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalBoolVariableValue(UGlobalBoolVariable* Variable, UGlobalBoolVariable* Other);
+	static void CopyGlobalBoolVariableValue(UGlobalBoolVariable* Variable, UGlobalBoolVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

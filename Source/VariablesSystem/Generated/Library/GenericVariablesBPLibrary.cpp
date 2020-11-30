@@ -9,9 +9,9 @@
     return UGlobalObjectRefVariable::GetGlobalObjectRefVariableValue(variable);
 }
 
-/* STATIC */ UObject* UGenericVariablesBPLibrary::GetLocalObjectRefVariableSafe(ULocalObjectRefVariable* variable, UObject* owner)
+/* STATIC */ UObject* UGenericVariablesBPLibrary::GetInstancedObjectRefVariableSafe(UInstancedObjectRefVariable* variable, UObject* owner)
 {
-    return ULocalObjectRefVariable::GetLocalObjectRefVariableValue(owner, variable);
+    return UInstancedObjectRefVariable::GetInstancedObjectRefVariableValue(owner, variable);
 }
 
 /* STATIC */ AActor* UGenericVariablesBPLibrary::GetGlobalActorRefVariableSafe(UGlobalActorRefVariable* variable)
@@ -19,9 +19,9 @@
     return UGlobalActorRefVariable::GetGlobalActorRefVariableValue(variable);
 }
 
-/* STATIC */ AActor* UGenericVariablesBPLibrary::GetLocalActorRefVariableSafe(ULocalActorRefVariable* variable, UObject* owner)
+/* STATIC */ AActor* UGenericVariablesBPLibrary::GetInstancedActorRefVariableSafe(UInstancedActorRefVariable* variable, UObject* owner)
 {
-    return ULocalActorRefVariable::GetLocalActorRefVariableValue(owner, variable);
+    return UInstancedActorRefVariable::GetInstancedActorRefVariableValue(owner, variable);
 }
 
 /* STATIC */ bool UGenericVariablesBPLibrary::GetGlobalBoolVariableSafe(UGlobalBoolVariable* variable)
@@ -29,9 +29,9 @@
     return UGlobalBoolVariable::GetGlobalBoolVariableValue(variable);
 }
 
-/* STATIC */ bool UGenericVariablesBPLibrary::GetLocalBoolVariableSafe(ULocalBoolVariable* variable, UObject* owner)
+/* STATIC */ bool UGenericVariablesBPLibrary::GetInstancedBoolVariableSafe(UInstancedBoolVariable* variable, UObject* owner)
 {
-    return ULocalBoolVariable::GetLocalBoolVariableValue(owner, variable);
+    return UInstancedBoolVariable::GetInstancedBoolVariableValue(owner, variable);
 }
 
 /* STATIC */ int32 UGenericVariablesBPLibrary::GetGlobalIntVariableSafe(UGlobalIntVariable* variable)
@@ -39,9 +39,9 @@
     return UGlobalIntVariable::GetGlobalIntVariableValue(variable);
 }
 
-/* STATIC */ int32 UGenericVariablesBPLibrary::GetLocalIntVariableSafe(ULocalIntVariable* variable, UObject* owner)
+/* STATIC */ int32 UGenericVariablesBPLibrary::GetInstancedIntVariableSafe(UInstancedIntVariable* variable, UObject* owner)
 {
-    return ULocalIntVariable::GetLocalIntVariableValue(owner, variable);
+    return UInstancedIntVariable::GetInstancedIntVariableValue(owner, variable);
 }
 
 /* STATIC */ float UGenericVariablesBPLibrary::GetGlobalFloatVariableSafe(UGlobalFloatVariable* variable)
@@ -49,9 +49,9 @@
     return UGlobalFloatVariable::GetGlobalFloatVariableValue(variable);
 }
 
-/* STATIC */ float UGenericVariablesBPLibrary::GetLocalFloatVariableSafe(ULocalFloatVariable* variable, UObject* owner)
+/* STATIC */ float UGenericVariablesBPLibrary::GetInstancedFloatVariableSafe(UInstancedFloatVariable* variable, UObject* owner)
 {
-    return ULocalFloatVariable::GetLocalFloatVariableValue(owner, variable);
+    return UInstancedFloatVariable::GetInstancedFloatVariableValue(owner, variable);
 }
 
 /* STATIC */ FString UGenericVariablesBPLibrary::GetGlobalStringVariableSafe(UGlobalStringVariable* variable)
@@ -59,9 +59,9 @@
     return UGlobalStringVariable::GetGlobalStringVariableValue(variable);
 }
 
-/* STATIC */ FString UGenericVariablesBPLibrary::GetLocalStringVariableSafe(ULocalStringVariable* variable, UObject* owner)
+/* STATIC */ FString UGenericVariablesBPLibrary::GetInstancedStringVariableSafe(UInstancedStringVariable* variable, UObject* owner)
 {
-    return ULocalStringVariable::GetLocalStringVariableValue(owner, variable);
+    return UInstancedStringVariable::GetInstancedStringVariableValue(owner, variable);
 }
 
 /* STATIC */ FRotator UGenericVariablesBPLibrary::GetGlobalFRotatorVariableSafe(UGlobalFRotatorVariable* variable)
@@ -69,9 +69,9 @@
     return UGlobalFRotatorVariable::GetGlobalFRotatorVariableValue(variable);
 }
 
-/* STATIC */ FRotator UGenericVariablesBPLibrary::GetLocalFRotatorVariableSafe(ULocalFRotatorVariable* variable, UObject* owner)
+/* STATIC */ FRotator UGenericVariablesBPLibrary::GetInstancedFRotatorVariableSafe(UInstancedFRotatorVariable* variable, UObject* owner)
 {
-    return ULocalFRotatorVariable::GetLocalFRotatorVariableValue(owner, variable);
+    return UInstancedFRotatorVariable::GetInstancedFRotatorVariableValue(owner, variable);
 }
 
 /* STATIC */ FVector UGenericVariablesBPLibrary::GetGlobalFVectorVariableSafe(UGlobalFVectorVariable* variable)
@@ -79,9 +79,9 @@
     return UGlobalFVectorVariable::GetGlobalFVectorVariableValue(variable);
 }
 
-/* STATIC */ FVector UGenericVariablesBPLibrary::GetLocalFVectorVariableSafe(ULocalFVectorVariable* variable, UObject* owner)
+/* STATIC */ FVector UGenericVariablesBPLibrary::GetInstancedFVectorVariableSafe(UInstancedFVectorVariable* variable, UObject* owner)
 {
-    return ULocalFVectorVariable::GetLocalFVectorVariableValue(owner, variable);
+    return UInstancedFVectorVariable::GetInstancedFVectorVariableValue(owner, variable);
 }
 
 /* STATIC */ FVector2D UGenericVariablesBPLibrary::GetGlobalFVector2DVariableSafe(UGlobalFVector2DVariable* variable)
@@ -89,8 +89,8 @@
     return UGlobalFVector2DVariable::GetGlobalFVector2DVariableValue(variable);
 }
 
-/* STATIC */ FVector2D UGenericVariablesBPLibrary::GetLocalFVector2DVariableSafe(ULocalFVector2DVariable* variable, UObject* owner)
+/* STATIC */ FVector2D UGenericVariablesBPLibrary::GetInstancedFVector2DVariableSafe(UInstancedFVector2DVariable* variable, UObject* owner)
 {
-    return ULocalFVector2DVariable::GetLocalFVector2DVariableValue(owner, variable);
+    return UInstancedFVector2DVariable::GetInstancedFVector2DVariableValue(owner, variable);
 }
 

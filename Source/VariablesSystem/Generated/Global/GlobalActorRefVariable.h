@@ -29,7 +29,7 @@ public:
 
 	// Copy the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalActorRefVariableValue(UGlobalActorRefVariable* Variable, UGlobalActorRefVariable* Other);
+	static void CopyGlobalActorRefVariableValue(UGlobalActorRefVariable* Variable, UGlobalActorRefVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

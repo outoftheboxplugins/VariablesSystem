@@ -50,7 +50,7 @@ public:
 
 	// Copy the value of a UObject* variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UGlobalObjectRefVariable* Other);
+	static void CopyGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UGlobalObjectRefVariable* OtherVariable);
 
 // BaseVariable Debug Interface
 private:

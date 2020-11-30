@@ -11,7 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 
-bool UGlobalBoolVariable::GetGlobalBoolVariableValue(const UGlobalBoolVariable* Variable)
+/* STATIC */ bool UGlobalBoolVariable::GetGlobalBoolVariableValue(const UGlobalBoolVariable* Variable)
 {
 	if (Variable)
 	{
@@ -24,7 +24,7 @@ bool UGlobalBoolVariable::GetGlobalBoolVariableValue(const UGlobalBoolVariable* 
 	}
 }
 
-void UGlobalBoolVariable::SetGlobalBoolVariableValue(UGlobalBoolVariable* Variable, bool NewValue)
+/* STATIC */ void UGlobalBoolVariable::SetGlobalBoolVariableValue(UGlobalBoolVariable* Variable, bool NewValue)
 {
 	if (Variable && Variable->Value != NewValue)
 	{
@@ -37,21 +37,27 @@ void UGlobalBoolVariable::SetGlobalBoolVariableValue(UGlobalBoolVariable* Variab
 	}
 }
 
-void UGlobalBoolVariable::CopyGlobalBoolVariableValue(UGlobalBoolVariable* Variable, UGlobalBoolVariable* Other)
+/* STATIC */ void UGlobalBoolVariable::CopyGlobalBoolVariableValue(UGlobalBoolVariable* Variable, UGlobalBoolVariable* OtherVariable)
 {
-	if (Variable && Other && Variable->Value != Other->Value)
+	if (Variable && OtherVariable && Variable->Value != OtherVariable->Value)
 	{
-		Variable->Value = Other->Value;
+		Variable->Value = OtherVariable->Value;
 		Variable->Dirty = true;
 	}
 	else if(!Variable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
 	}
-	else if(!Other)
+	else if(!OtherVariable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
 	}
+}
+
+FString UGlobalBoolVariable::GetStringValue() const
+{
+    const auto& Item = Value;
+    return UKismetStringLibrary::Conv_BoolToString(Item);
 }
 
 void UGlobalBoolVariable::Save()
@@ -74,10 +80,4 @@ void UGlobalBoolVariable::Load()
 	{
 		Value = LoadGameInstance->Value;
 	}
-}
-
-FString UGlobalBoolVariable::GetStringValue() const
-{
-    const auto& item = Value;
-    return UKismetStringLibrary::Conv_BoolToString(item);
 }

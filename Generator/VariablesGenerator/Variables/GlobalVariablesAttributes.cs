@@ -55,7 +55,7 @@ public class DebugInfoAttribute : Attribute
 {
     public string toStringFunction;
 
-	public DebugInfoAttribute(string toStringFunction = "item->GetName()")
+	public DebugInfoAttribute(string toStringFunction = "Item->GetName()")
 	{
 		this.toStringFunction = toStringFunction;
 	}

@@ -40,7 +40,7 @@ public:
 
 	// Copy the value of a <#=variable.Value.globalVariable.valueType#> variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, UGlobal<#=variable.Key.Name#>* Other);
+	static void CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, UGlobal<#=variable.Key.Name#>* OtherVariable);
 
 <#+
 	if(variable.Value.debugInfo != null)

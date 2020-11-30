@@ -4,7 +4,7 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = UObject::StaticClass();
     }
-    if (VariableClassName == FName("LocalObjectRefVariable"))
+    if (VariableClassName == FName("InstancedObjectRefVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
         ResultContainerType = EPinContainerType::None;
@@ -16,7 +16,7 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = AActor::StaticClass();
     }
-    if (VariableClassName == FName("LocalActorRefVariable"))
+    if (VariableClassName == FName("InstancedActorRefVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
         ResultContainerType = EPinContainerType::None;
@@ -27,7 +27,7 @@
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Boolean;
         ResultContainerType = EPinContainerType::None;
     }
-    if (VariableClassName == FName("LocalBoolVariable"))
+    if (VariableClassName == FName("InstancedBoolVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Boolean;
         ResultContainerType = EPinContainerType::None;
@@ -37,7 +37,7 @@
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Int;
         ResultContainerType = EPinContainerType::None;
     }
-    if (VariableClassName == FName("LocalIntVariable"))
+    if (VariableClassName == FName("InstancedIntVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Int;
         ResultContainerType = EPinContainerType::None;
@@ -47,7 +47,7 @@
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Float;
         ResultContainerType = EPinContainerType::None;
     }
-    if (VariableClassName == FName("LocalFloatVariable"))
+    if (VariableClassName == FName("InstancedFloatVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Float;
         ResultContainerType = EPinContainerType::None;
@@ -57,7 +57,7 @@
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_String;
         ResultContainerType = EPinContainerType::None;
     }
-    if (VariableClassName == FName("LocalStringVariable"))
+    if (VariableClassName == FName("InstancedStringVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_String;
         ResultContainerType = EPinContainerType::None;
@@ -68,7 +68,7 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = TBaseStructure<FRotator>::Get();
     }
-    if (VariableClassName == FName("LocalFRotatorVariable"))
+    if (VariableClassName == FName("InstancedFRotatorVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
         ResultContainerType = EPinContainerType::None;
@@ -80,7 +80,7 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = TBaseStructure<FVector>::Get();
     }
-    if (VariableClassName == FName("LocalFVectorVariable"))
+    if (VariableClassName == FName("InstancedFVectorVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
         ResultContainerType = EPinContainerType::None;
@@ -92,7 +92,7 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
     }
-    if (VariableClassName == FName("LocalFVector2DVariable"))
+    if (VariableClassName == FName("InstancedFVector2DVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
         ResultContainerType = EPinContainerType::None;

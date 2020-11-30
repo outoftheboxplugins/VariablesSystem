@@ -40,11 +40,11 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Templates\InstancedCPPTemplate.ttinclude" />
+    <None Include="Templates\InstancedHTemplate.ttinclude" />
     <None Include="Templates\GlobalCPPTemplate.ttinclude" />
     <None Include="Templates\GlobalHTemplate.ttinclude" />
     <None Include="Templates\LibraryTemplate.ttinclude" />
-    <None Include="Templates\LocalCPPTemplate.ttinclude" />
-    <None Include="Templates\LocalHTemplate.ttinclude" />
     <None Include="Templates\NodeHelpersTemplate.ttinclude" />
   </ItemGroup>
   <ItemGroup>

@@ -1,0 +1,153 @@
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#@ assembly name="VariablesGenerator.dll" #>
+
+<#+ // Generate the CPP file for a generic Instanced variable
+void GenerateInstancedCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
+{
+#>
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+#include "Instanced<#=variable.Key.Name#>.h"
+
+#include "VSLog.h"
+
+/* STATIC */ <#=variable.Value.globalVariable.valueType#> UInstanced<#=variable.Key.Name#>::GetInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable)
+{
+	if (!Owner)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without an owner. Returning default value."));
+		return <#=variable.Value.globalVariable.defaultValue#>;
+	}
+
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value."));
+		return <#=variable.Value.globalVariable.defaultValue#>;
+	}
+	else
+	{
+		return Variable->GetInstanced<#=variable.Key.Name#>Ref(Owner);
+	}
+}
+
+/* STATIC */ void UInstanced<#=variable.Key.Name#>::SetInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
+{
+	if (!Owner)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without an owner."));
+	}
+	else if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without a variable."));
+	}
+	else
+	{
+		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key.Name#>Ref = Variable->GetInstanced<#=variable.Key.Name#>Ref(Owner);
+		
+		if(<#=variable.Key.Name#>Ref != NewValue)
+		{
+			<#=variable.Key.Name#>Ref = NewValue;
+			Variable->Dirty = true;
+		}
+	}
+}
+
+/* STATIC */ void UInstanced<#=variable.Key.Name#>::CopyInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable, UObject* OtherOwner, UInstanced<#=variable.Key.Name#>* OtherVariable)
+{
+	if (!Owner || !OtherOwner)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without an owner."));
+	}
+	else if (!Variable || !OtherVariable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without a variable."));
+	}
+	else
+	{
+		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key.Name#>Ref = Variable->GetInstanced<#=variable.Key.Name#>Ref(Owner);
+		<#=variable.Value.globalVariable.valueType#>& other<#=variable.Key.Name#>Ref = OtherVariable->GetInstanced<#=variable.Key.Name#>Ref(OtherOwner);
+
+		if(<#=variable.Key.Name#>Ref != other<#=variable.Key.Name#>Ref)
+		{
+			<#=variable.Key.Name#>Ref = other<#=variable.Key.Name#>Ref;
+			Variable->Dirty = true;
+		}
+	}
+}
+
+<#=variable.Value.globalVariable.valueType#>& UInstanced<#=variable.Key.Name#>::GetInstanced<#=variable.Key.Name#>Ref(UObject* Owner)
+{
+	return VariablesMap.FindOrAdd(Owner);;
+}
+
+<#+
+	if(variable.Value.debugInfo != null)
+	{
+#>
+FString UInstanced<#=variable.Key.Name#>::GetStringValue() const
+{
+    FString Lines;
+
+    for (auto& Variable : VariablesMap)
+    {
+        const auto& Value = Variable.Value;
+        const auto& Owner = Variable.Key;
+
+        FString ValueString = GetValueAsString(Value);
+        FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
+        FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
+
+        Lines.Append(Line);
+    }
+
+    Lines.TrimEndInline();
+
+    if (Lines.IsEmpty())
+    {
+        Lines = FString("No values set yet.");
+    }
+
+    return Lines;
+}
+
+FString UInstanced<#=variable.Key.Name#>::GetValueAsString(<#=variable.Value.globalVariable.valueType#> Value) const
+{
+<#+
+	if(variable.Value.debugInfo != null)
+	{
+		if(variable.Value.globalVariable.nodeContainer != "None")
+		{
+#>
+    TArray<FString> StringValues;
+    for(const auto& Item : Value)
+    {
+        StringValues.Add(<#=variable.Value.debugInfo.toStringFunction#>);
+    }
+
+    return UKismetStringLibrary::JoinStringArray(StringValues);
+<#+
+		}
+		else
+		{
+#>
+    const auto& Item = Value;
+    return <#=variable.Value.debugInfo.toStringFunction#>;
+<#+
+		}
+	}
+#>
+}
+
+<#+
+	}
+#>
+
+<#+
+}
+#>
