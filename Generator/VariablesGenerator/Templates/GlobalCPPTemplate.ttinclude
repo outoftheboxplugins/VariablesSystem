@@ -6,14 +6,14 @@
 <#@ assembly name="VariablesGenerator.dll" #>
 
 <#+ // Generate the CPP file for a generic variable.
-void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
+void GenerateGlobalCPPFile(KeyValuePair<string, GlobalVariable> variable)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 // GENERATED FILE DO NOT MODIFY DIRECTLY
 
-#include "Global<#=variable.Key.Name#>.h"
+#include "Global<#=variable.Key#>.h"
 
 #include "VSLog.h"
 
@@ -22,7 +22,7 @@ void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetStringLibrary.h"
 
-/* STATIC */ <#=variable.Value.globalVariable.valueType#> UGlobal<#=variable.Key.Name#>::GetGlobal<#=variable.Key.Name#>Value(const UGlobal<#=variable.Key.Name#>* Variable)
+/* STATIC */ <#=variable.Value.globalVariable.valueType#> UGlobal<#=variable.Key#>::GetGlobal<#=variable.Key#>Value(const UGlobal<#=variable.Key#>* Variable)
 {
 	if (Variable)
 	{
@@ -35,7 +35,7 @@ void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 	}
 }
 
-/* STATIC */ void UGlobal<#=variable.Key.Name#>::SetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
+/* STATIC */ void UGlobal<#=variable.Key#>::SetGlobal<#=variable.Key#>Value(UGlobal<#=variable.Key#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
 {
 	if (Variable && Variable->Value != NewValue)
 	{
@@ -48,7 +48,7 @@ void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 	}
 }
 
-/* STATIC */ void UGlobal<#=variable.Key.Name#>::CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, UGlobal<#=variable.Key.Name#>* OtherVariable)
+/* STATIC */ void UGlobal<#=variable.Key#>::CopyGlobal<#=variable.Key#>Value(UGlobal<#=variable.Key#>* Variable, UGlobal<#=variable.Key#>* OtherVariable)
 {
 	if (Variable && OtherVariable && Variable->Value != OtherVariable->Value)
 	{
@@ -69,7 +69,7 @@ void GenerateGlobalCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
 	if(variable.Value.debugInfo != null)
 	{
 #>
-FString UGlobal<#=variable.Key.Name#>::GetStringValue() const
+FString UGlobal<#=variable.Key#>::GetStringValue() const
 {
 <#+
 	if(variable.Value.globalVariable.nodeContainer != "None")
@@ -102,7 +102,7 @@ FString UGlobal<#=variable.Key.Name#>::GetStringValue() const
 	{
 #>
 
-void UGlobal<#=variable.Key.Name#>::Save()
+void UGlobal<#=variable.Key#>::Save()
 {
 	if (Dirty == false)
 	{
@@ -113,10 +113,10 @@ void UGlobal<#=variable.Key.Name#>::Save()
 	Dirty = false;
 }
 
-void UGlobal<#=variable.Key.Name#>::Load()
+void UGlobal<#=variable.Key#>::Load()
 {
-	UGlobal<#=variable.Key.Name#>* LoadGameInstance = Cast<UGlobal<#=variable.Key.Name#>>(UGameplayStatics::CreateSaveGameObject(UGlobal<#=variable.Key.Name#>::StaticClass()));
-	LoadGameInstance = Cast<UGlobal<#=variable.Key.Name#>>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
+	UGlobal<#=variable.Key#>* LoadGameInstance = Cast<UGlobal<#=variable.Key#>>(UGameplayStatics::CreateSaveGameObject(UGlobal<#=variable.Key#>::StaticClass()));
+	LoadGameInstance = Cast<UGlobal<#=variable.Key#>>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
 	
 	if (LoadGameInstance != nullptr)
 	{

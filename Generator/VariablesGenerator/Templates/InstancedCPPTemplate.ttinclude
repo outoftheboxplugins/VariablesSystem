@@ -6,18 +6,18 @@
 <#@ assembly name="VariablesGenerator.dll" #>
 
 <#+ // Generate the CPP file for a generic Instanced variable
-void GenerateInstancedCPPFile(KeyValuePair<System.Type, GlobalVariable> variable)
+void GenerateInstancedCPPFile(KeyValuePair<string, GlobalVariable> variable)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 // GENERATED FILE DO NOT MODIFY DIRECTLY
 
-#include "Instanced<#=variable.Key.Name#>.h"
+#include "Instanced<#=variable.Key#>.h"
 
 #include "VSLog.h"
 
-/* STATIC */ <#=variable.Value.globalVariable.valueType#> UInstanced<#=variable.Key.Name#>::GetInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable)
+/* STATIC */ <#=variable.Value.globalVariable.valueType#> UInstanced<#=variable.Key#>::GetInstanced<#=variable.Key#>Value(UObject* Owner, UInstanced<#=variable.Key#>* Variable)
 {
 	if (!Owner)
 	{
@@ -32,11 +32,11 @@ void GenerateInstancedCPPFile(KeyValuePair<System.Type, GlobalVariable> variable
 	}
 	else
 	{
-		return Variable->GetInstanced<#=variable.Key.Name#>Ref(Owner);
+		return Variable->GetInstanced<#=variable.Key#>Ref(Owner);
 	}
 }
 
-/* STATIC */ void UInstanced<#=variable.Key.Name#>::SetInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
+/* STATIC */ void UInstanced<#=variable.Key#>::SetInstanced<#=variable.Key#>Value(UObject* Owner, UInstanced<#=variable.Key#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
 {
 	if (!Owner)
 	{
@@ -48,17 +48,17 @@ void GenerateInstancedCPPFile(KeyValuePair<System.Type, GlobalVariable> variable
 	}
 	else
 	{
-		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key.Name#>Ref = Variable->GetInstanced<#=variable.Key.Name#>Ref(Owner);
+		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key#>Ref = Variable->GetInstanced<#=variable.Key#>Ref(Owner);
 		
-		if(<#=variable.Key.Name#>Ref != NewValue)
+		if(<#=variable.Key#>Ref != NewValue)
 		{
-			<#=variable.Key.Name#>Ref = NewValue;
+			<#=variable.Key#>Ref = NewValue;
 			Variable->Dirty = true;
 		}
 	}
 }
 
-/* STATIC */ void UInstanced<#=variable.Key.Name#>::CopyInstanced<#=variable.Key.Name#>Value(UObject* Owner, UInstanced<#=variable.Key.Name#>* Variable, UObject* OtherOwner, UInstanced<#=variable.Key.Name#>* OtherVariable)
+/* STATIC */ void UInstanced<#=variable.Key#>::CopyInstanced<#=variable.Key#>Value(UObject* Owner, UInstanced<#=variable.Key#>* Variable, UObject* OtherOwner, UInstanced<#=variable.Key#>* OtherVariable)
 {
 	if (!Owner || !OtherOwner)
 	{
@@ -70,18 +70,18 @@ void GenerateInstancedCPPFile(KeyValuePair<System.Type, GlobalVariable> variable
 	}
 	else
 	{
-		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key.Name#>Ref = Variable->GetInstanced<#=variable.Key.Name#>Ref(Owner);
-		<#=variable.Value.globalVariable.valueType#>& other<#=variable.Key.Name#>Ref = OtherVariable->GetInstanced<#=variable.Key.Name#>Ref(OtherOwner);
+		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key#>Ref = Variable->GetInstanced<#=variable.Key#>Ref(Owner);
+		<#=variable.Value.globalVariable.valueType#>& other<#=variable.Key#>Ref = OtherVariable->GetInstanced<#=variable.Key#>Ref(OtherOwner);
 
-		if(<#=variable.Key.Name#>Ref != other<#=variable.Key.Name#>Ref)
+		if(<#=variable.Key#>Ref != other<#=variable.Key#>Ref)
 		{
-			<#=variable.Key.Name#>Ref = other<#=variable.Key.Name#>Ref;
+			<#=variable.Key#>Ref = other<#=variable.Key#>Ref;
 			Variable->Dirty = true;
 		}
 	}
 }
 
-<#=variable.Value.globalVariable.valueType#>& UInstanced<#=variable.Key.Name#>::GetInstanced<#=variable.Key.Name#>Ref(UObject* Owner)
+<#=variable.Value.globalVariable.valueType#>& UInstanced<#=variable.Key#>::GetInstanced<#=variable.Key#>Ref(UObject* Owner)
 {
 	return VariablesMap.FindOrAdd(Owner);;
 }
@@ -90,7 +90,7 @@ void GenerateInstancedCPPFile(KeyValuePair<System.Type, GlobalVariable> variable
 	if(variable.Value.debugInfo != null)
 	{
 #>
-FString UInstanced<#=variable.Key.Name#>::GetStringValue() const
+FString UInstanced<#=variable.Key#>::GetStringValue() const
 {
     FString Lines;
 
@@ -116,7 +116,7 @@ FString UInstanced<#=variable.Key.Name#>::GetStringValue() const
     return Lines;
 }
 
-FString UInstanced<#=variable.Key.Name#>::GetValueAsString(<#=variable.Value.globalVariable.valueType#> Value) const
+FString UInstanced<#=variable.Key#>::GetValueAsString(<#=variable.Value.globalVariable.valueType#> Value) const
 {
 <#+
 	if(variable.Value.debugInfo != null)

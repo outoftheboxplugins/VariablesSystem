@@ -6,7 +6,7 @@
 <#@ assembly name="VariablesGenerator.dll" #>
 
 <#+
-void GenerateIncludeAll(Dictionary<System.Type, GlobalVariable> variables)
+void GenerateIncludeAll(Dictionary<string, GlobalVariable> variables)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
@@ -19,15 +19,15 @@ void GenerateIncludeAll(Dictionary<System.Type, GlobalVariable> variables)
     for (int i = 0; i < variables.Count; i++)
 	{
 #>
-#include "VariablesSystem/Generated/Global/Global<#=variables.Keys.ElementAt(i).Name#>.h"
-#include "VariablesSystem/Generated/Instanced/Instanced<#=variables.Keys.ElementAt(i).Name#>.h"
+#include "VariablesSystem/Generated/Global/Global<#=variables.Keys.ElementAt(i)#>.h"
+#include "VariablesSystem/Generated/Instanced/Instanced<#=variables.Keys.ElementAt(i)#>.h"
 <#+
 	}
 }
 #>
 
 <#+
-void GenerateBlueprintLibraryH(Dictionary<System.Type, GlobalVariable> variables)
+void GenerateBlueprintLibraryH(Dictionary<string, GlobalVariable> variables)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
@@ -52,11 +52,11 @@ public:
     for (int i = 0; i < variables.Count; i++)
     {
 #>
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global <#=variables.Keys.ElementAt(i).Name#> Variable (Thread Safe)"), Category = "VariablesSystem")
-    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetGlobal<#=variables.Keys.ElementAt(i).Name#>Safe(UGlobal<#=variables.Keys.ElementAt(i).Name#>* variable);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global <#=variables.Keys.ElementAt(i)#> Variable (Thread Safe)"), Category = "VariablesSystem")
+    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetGlobal<#=variables.Keys.ElementAt(i)#>Safe(UGlobal<#=variables.Keys.ElementAt(i)#>* variable);
 
-    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced <#=variables.Keys.ElementAt(i).Name#> Variable (Thread Safe)"), Category = "VariablesSystem")
-    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetInstanced<#=variables.Keys.ElementAt(i).Name#>Safe(UInstanced<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner);
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced <#=variables.Keys.ElementAt(i)#> Variable (Thread Safe)"), Category = "VariablesSystem")
+    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetInstanced<#=variables.Keys.ElementAt(i)#>Safe(UInstanced<#=variables.Keys.ElementAt(i)#>* variable, UObject* owner);
 
 <#+
 	}
@@ -67,7 +67,7 @@ public:
 #>
 
 <#+
-void GenerateBlueprintLibraryCPP(Dictionary<System.Type, GlobalVariable> variables)
+void GenerateBlueprintLibraryCPP(Dictionary<string, GlobalVariable> variables)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
@@ -80,14 +80,14 @@ void GenerateBlueprintLibraryCPP(Dictionary<System.Type, GlobalVariable> variabl
     for (int i = 0; i < variables.Count; i++)
 	{
 #>
-/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetGlobal<#=variables.Keys.ElementAt(i).Name#>Safe(UGlobal<#=variables.Keys.ElementAt(i).Name#>* variable)
+/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetGlobal<#=variables.Keys.ElementAt(i)#>Safe(UGlobal<#=variables.Keys.ElementAt(i)#>* variable)
 {
-    return UGlobal<#=variables.Keys.ElementAt(i).Name#>::GetGlobal<#=variables.Keys.ElementAt(i).Name#>Value(variable);
+    return UGlobal<#=variables.Keys.ElementAt(i)#>::GetGlobal<#=variables.Keys.ElementAt(i)#>Value(variable);
 }
 
-/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetInstanced<#=variables.Keys.ElementAt(i).Name#>Safe(UInstanced<#=variables.Keys.ElementAt(i).Name#>* variable, UObject* owner)
+/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetInstanced<#=variables.Keys.ElementAt(i)#>Safe(UInstanced<#=variables.Keys.ElementAt(i)#>* variable, UObject* owner)
 {
-    return UInstanced<#=variables.Keys.ElementAt(i).Name#>::GetInstanced<#=variables.Keys.ElementAt(i).Name#>Value(owner, variable);
+    return UInstanced<#=variables.Keys.ElementAt(i)#>::GetInstanced<#=variables.Keys.ElementAt(i)#>Value(owner, variable);
 }
 
 <#+

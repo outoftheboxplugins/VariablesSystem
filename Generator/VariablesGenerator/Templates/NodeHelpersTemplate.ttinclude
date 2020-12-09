@@ -7,12 +7,12 @@
 <#@ assembly name="VariablesGenerator.dll" #>
 
 <#+
-void GeneratePinTypeFromVariable(Dictionary<System.Type, GlobalVariable> variables)
+void GeneratePinTypeFromVariable(Dictionary<string, GlobalVariable> variables)
 {
     for (int i = 0; i < variables.Count; i++)
     {
 #>
-    if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i).Name#>"))
+    if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i)#>"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=variables.Values.ElementAt(i).globalVariable.nodeType#>;
         ResultContainerType = EPinContainerType::<#=variables.Values.ElementAt(i).globalVariable.nodeContainer#>;
@@ -25,7 +25,7 @@ void GeneratePinTypeFromVariable(Dictionary<System.Type, GlobalVariable> variabl
     }
 #>
     }
-    if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i).Name#>"))
+    if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i)#>"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_<#=variables.Values.ElementAt(i).globalVariable.nodeType#>;
         ResultContainerType = EPinContainerType::<#=variables.Values.ElementAt(i).globalVariable.nodeContainer#>;
@@ -44,18 +44,18 @@ void GeneratePinTypeFromVariable(Dictionary<System.Type, GlobalVariable> variabl
 #>
 
 <#+
-void GenerateCreateSpecificNodeGet(Dictionary<System.Type, GlobalVariable> variables)
+void GenerateCreateSpecificNodeGet(Dictionary<string, GlobalVariable> variables)
 {
     for (int i = 0; i < variables.Count; i++)
     {
 #>
-    if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i).Name#>"))
+    if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i)#>"))
     {
-        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=variables.Keys.ElementAt(i).Name#>, GetGlobal<#=variables.Keys.ElementAt(i).Name#>Value), UGlobal<#=variables.Keys.ElementAt(i).Name#>::StaticClass());
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=variables.Keys.ElementAt(i)#>, GetGlobal<#=variables.Keys.ElementAt(i)#>Value), UGlobal<#=variables.Keys.ElementAt(i)#>::StaticClass());
     }
-    if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i).Name#>"))
+    if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i)#>"))
     {
-        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstanced<#=variables.Keys.ElementAt(i).Name#>, GetInstanced<#=variables.Keys.ElementAt(i).Name#>Value), UInstanced<#=variables.Keys.ElementAt(i).Name#>::StaticClass());
+        resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstanced<#=variables.Keys.ElementAt(i)#>, GetInstanced<#=variables.Keys.ElementAt(i)#>Value), UInstanced<#=variables.Keys.ElementAt(i)#>::StaticClass());
     }
 <#+
     }
@@ -63,19 +63,19 @@ void GenerateCreateSpecificNodeGet(Dictionary<System.Type, GlobalVariable> varia
 #>
 
 <#+
-void GenerateCreateSpecificNodeSet(Dictionary<System.Type, GlobalVariable> variables)
+void GenerateCreateSpecificNodeSet(Dictionary<string, GlobalVariable> variables)
 {
     for (int i = 0; i < variables.Count; i++)
     {
 #>
-        if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i).Name#>"))
+        if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i)#>"))
         {
-            resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=variables.Keys.ElementAt(i).Name#>, SetGlobal<#=variables.Keys.ElementAt(i).Name#>Value), UGlobal<#=variables.Keys.ElementAt(i).Name#>::StaticClass());
+            resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=variables.Keys.ElementAt(i)#>, SetGlobal<#=variables.Keys.ElementAt(i)#>Value), UGlobal<#=variables.Keys.ElementAt(i)#>::StaticClass());
         }
 
-        if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i).Name#>"))
+        if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i)#>"))
         {
-            resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstanced<#=variables.Keys.ElementAt(i).Name#>, SetInstanced<#=variables.Keys.ElementAt(i).Name#>Value), UInstanced<#=variables.Keys.ElementAt(i).Name#>::StaticClass());
+            resultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstanced<#=variables.Keys.ElementAt(i)#>, SetInstanced<#=variables.Keys.ElementAt(i)#>Value), UInstanced<#=variables.Keys.ElementAt(i)#>::StaticClass());
         }
 <#+
     }

@@ -1,3 +1,5 @@
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
+
 public class BaseVariable { }
 
 [GlobalVar("UObject*", "nullptr", "Object", "UObject::StaticClass()", "None")]
@@ -44,12 +46,6 @@ public class FVectorVariable : BaseVariable { }
 public class FVector2DVariable : BaseVariable { }
 
 // Examples:
-// 
-//[GlobalVariable("TArray<FString>", "TArray<FString>()", "String", "", "Array")]
-//[GenerateExtra(generateSaveLoad = true, generateArray = false)]
-//[DebugInfo("Item")]
-//public class StringArrayVariable : BaseVariable { }
-
 //[GlobalVariable("FGameplayTagContainer", "FGameplayTagContainer()", "Struct", "FGameplayTagContainer::StaticStruct()", "None")]
 //[DebugInfo("Item.ToString()")]
 //public class GameplayTagContainer : BaseVariable { }

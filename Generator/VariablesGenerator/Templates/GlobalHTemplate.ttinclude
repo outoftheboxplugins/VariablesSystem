@@ -6,7 +6,7 @@
 <#@ assembly name="VariablesGenerator.dll" #>
 
 <#+ // Generate the H file for a generic variable.
-void GenerateGlobalHFile(KeyValuePair<System.Type, GlobalVariable> variable)
+void GenerateGlobalHFile(KeyValuePair<string, GlobalVariable> variable)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
@@ -17,14 +17,14 @@ void GenerateGlobalHFile(KeyValuePair<System.Type, GlobalVariable> variable)
 
 #include "BaseVariable.h"
 
-#include "Global<#=variable.Key.Name#>.generated.h"
+#include "Global<#=variable.Key#>.generated.h"
 
 /**
- * Global <#=variable.Key.Name#> implementation of the BaseVariable
+ * Global <#=variable.Key#> implementation of the BaseVariable
  */
 
 UCLASS(BlueprintType)
-class VARIABLESSYSTEM_API UGlobal<#=variable.Key.Name#> : public UBaseVariable
+class VARIABLESSYSTEM_API UGlobal<#=variable.Key#> : public UBaseVariable
 {
 	GENERATED_BODY()
 
@@ -32,15 +32,15 @@ class VARIABLESSYSTEM_API UGlobal<#=variable.Key.Name#> : public UBaseVariable
 public:
 	// Get the value of a <#=variable.Value.globalVariable.valueType#> variable.
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
-	static <#=variable.Value.globalVariable.valueType#> GetGlobal<#=variable.Key.Name#>Value(const UGlobal<#=variable.Key.Name#>* Variable);
+	static <#=variable.Value.globalVariable.valueType#> GetGlobal<#=variable.Key#>Value(const UGlobal<#=variable.Key#>* Variable);
 
 	// Set the value of a <#=variable.Value.globalVariable.valueType#> variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
-	static void SetGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue);
+	static void SetGlobal<#=variable.Key#>Value(UGlobal<#=variable.Key#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue);
 
 	// Copy the value of a <#=variable.Value.globalVariable.valueType#> variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
-	static void CopyGlobal<#=variable.Key.Name#>Value(UGlobal<#=variable.Key.Name#>* Variable, UGlobal<#=variable.Key.Name#>* OtherVariable);
+	static void CopyGlobal<#=variable.Key#>Value(UGlobal<#=variable.Key#>* Variable, UGlobal<#=variable.Key#>* OtherVariable);
 
 <#+
 	if(variable.Value.debugInfo != null)
