@@ -1,32 +1,39 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
-#include "VariablesSystemActions.h"
+#include "VSActions.h"
 
-#include "Slate/Public/Framework/MultiBox/MultiBoxBuilder.h"
-#include "VariablesSystem/Public/BaseVariable.h"
-#include "VariablesSystemEditor/Private/EditorHelpers/VariablesSystemEditorHelpers.h"
+#include "BaseVariable.h"
+#include "VariablesSystemEditorModule.h"
 
-#define VARIABLESSYSTEM_COLOR FColor(224.0f, 20.0f, 23.0f)
+#define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 
-#define LOCTEXT_NAMESPACE "VariablesSystem"
-
-/* FAssetTypeActions_Base overrides
- *****************************************************************************/
-
-bool FVSActions::CanFilter()
+namespace
 {
-	return true;
+	FName AssetCategoryRegisterName = FName(TEXT("OutOfTheBox"));
+	FText AssetCategoryDisplayName = LOCTEXT("OutOfTheBoxCategory", "OutOfTheBox");
 }
 
-uint32 FVSActions::GetCategories()
+//////////////////////////////////////////////////////////////////////////
+// FAssetTypeActions_Base interface
+FVSActions::FVSActions()
 {
-    //TODO: We should move this to our own category really soon.
-	return EAssetTypeCategories::Misc;
+	IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
+	AssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(AssetCategoryRegisterName, AssetCategoryDisplayName);
 }
 
 FText FVSActions::GetName() const
 {
-	return LOCTEXT("VariablesSystem_AssetName", "Variable");
+	return LOCTEXT("AssetName", "Variable");
+}
+
+FColor FVSActions::GetTypeColor() const
+{
+	return FColor(240.0f, 10.0f, 11.0f);
+}
+
+uint32 FVSActions::GetCategories()
+{
+	return AssetCategoryBit;
 }
 
 UClass* FVSActions::GetSupportedClass() const
@@ -34,9 +41,15 @@ UClass* FVSActions::GetSupportedClass() const
 	return UBaseVariable::StaticClass();
 }
 
-FColor FVSActions::GetTypeColor() const
+//////////////////////////////////////////////////////////////////////////
+// Asset Actions
+bool FVSActions::HasActions(const TArray<UObject*>& InObjects) const
 {
-	return VARIABLESSYSTEM_COLOR;
+	auto WeakVariables = GetTypedWeakObjectPtrs<UBaseVariable>(InObjects);
+	TArray<UBaseVariable*> Variables;
+	CopyFromWeakArray(Variables, WeakVariables);
+
+	return Variables.Num() > 0;
 }
 
 void FVSActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
@@ -52,15 +65,12 @@ void FVSActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& Men
         LOCTEXT("AddToWatchToolTip", "Add the selected variables to your watch window."),
         FSlateIcon(),
         FUIAction(
-            FExecuteAction::CreateLambda([=] { /*UVariablesSystemEditorHelpersBPLibrary::OpenOrAddVariablesToWatch(Variables);*/ }),
-            FCanExecuteAction::CreateLambda([=] { return Variables.Num() > 0; })
+            FExecuteAction::CreateLambda([=]() 
+				{ 
+					FVariablesSystemEditorModule::GetModule().OpenOrAddVariablesToWatch(Variables);
+				})
         )
     );
-}
-
-bool FVSActions::HasActions(const TArray<UObject*>& InObjects) const
-{
-    return true;
 }
 
 #undef LOCTEXT_NAMESPACE

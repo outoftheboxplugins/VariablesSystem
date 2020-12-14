@@ -12,6 +12,14 @@ class FVSActions;
 
 class FVariablesSystemEditorModule : public IModuleInterface
 {
+
+// Public Interface
+public:
+	static FVariablesSystemEditorModule& GetModule();
+	static bool IsModuleLoaded();
+
+	TSharedRef<class SDockTab> OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables = TArray<UBaseVariable*>());
+
 //IModuleInterface interface
 private:
 	virtual void StartupModule() override;

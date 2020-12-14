@@ -3,6 +3,7 @@
 #include "VariablesSystemEditorModule.h"
 
 #include "VSLog.h"
+#include "VariablesWatchWidget.h"
 
 #include "AssetToolsModule.h"
 
@@ -11,10 +12,33 @@
 
 namespace 
 {
-	const FName VariablesWatchTabName = FName("VariablesWatchTab");
+	const FName ModuleName = "VariablesSystemEditor";
+	const FName VariablesWatchTabName = "VariablesWatchTab";
 }
 
-#define LOCTEXT_NAMESPACE "VariablesSystem"
+#define LOCTEXT_NAMESPACE "VariablesSystemEditor"
+
+//////////////////////////////////////////////////////////////////////////
+// Public interface
+FVariablesSystemEditorModule& FVariablesSystemEditorModule::GetModule()
+{
+	return FModuleManager::LoadModuleChecked<FVariablesSystemEditorModule>(ModuleName);
+}
+
+bool FVariablesSystemEditorModule::IsModuleLoaded()
+{
+	return FModuleManager::Get().IsModuleLoaded(ModuleName);
+}
+
+TSharedRef<SDockTab> FVariablesSystemEditorModule::OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables /*= TArray<UBaseVariable*>()*/)
+{
+	TSharedRef<SDockTab> WatchTab = FGlobalTabmanager::Get()->InvokeTab(VariablesWatchTabName);
+	TSharedRef<SVariablesWatchWidget> VariablesWatch = StaticCastSharedRef<SVariablesWatchWidget>(WatchTab->GetContent());
+
+	VariablesWatch->AddVariables(Variables);
+
+	return WatchTab;
+}
 
 //////////////////////////////////////////////////////////////////////////
 //IModuleInterface interface
