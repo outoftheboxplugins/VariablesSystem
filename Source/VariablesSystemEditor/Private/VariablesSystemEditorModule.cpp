@@ -1,47 +1,67 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "VariablesSystemEditorModule.h"
 
-#include "Core/Public/Modules/ModuleManager.h"
-#include "EditorStyle/Public/EditorStyleSet.h"
-#include "Slate/Public/Widgets/Docking/SDockTab.h"
-#include "VariablesSystemEditor/Private/AssetTools/VariablesSystemActions.h"
-#include "VariablesSystemEditor/Private/EditorHelpers/VariablesSystemEditorHelpers.h"
-#include "VariablesSystemEditor/Private/WatchWidget/VariablesWatchWidget.h"
-#include "WorkspaceMenuStructure/Public/WorkspaceMenuStructure.h"
-#include "WorkspaceMenuStructure/Public/WorkspaceMenuStructureModule.h"
+#include "VSLog.h"
 
-const FName FVariablesSystemEditorModule::VariablesWatchTabName = FName("VariablesWatchTab");
+#include "AssetToolsModule.h"
+
+#include "WorkspaceMenuStructure.h"
+#include "WorkspaceMenuStructureModule.h"
+
+namespace 
+{
+	const FName VariablesWatchTabName = FName("VariablesWatchTab");
+}
 
 #define LOCTEXT_NAMESPACE "VariablesSystem"
 
+//////////////////////////////////////////////////////////////////////////
+//IModuleInterface interface
 void FVariablesSystemEditorModule::StartupModule()
 {
+	LOG_TRACE();
+
     RegisterAssetTools();
     RegisterMenuExtensions();
 }
 
 void FVariablesSystemEditorModule::ShutdownModule()
 {
+	LOG_TRACE();
+
     UnregisterAssetTools();
     UnregisterMenuExtensions();
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Register & Unregister
 void FVariablesSystemEditorModule::RegisterAssetTools()
 {
-    IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+	if (FAssetToolsModule::IsModuleLoaded())
+	{
+		IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
 
-    AssetActions = MakeShareable(new FVariablesSystemActions);
-    AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
+		AssetActions = MakeShareable(new FVSActions);
+		AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
+	}
+	else
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("FAssetToolsModule not loaded, cannot register asset tools."))
+	}
 }
 
 void FVariablesSystemEditorModule::UnregisterAssetTools()
 {
-    if (FModuleManager::Get().IsModuleLoaded("AssetTools"))
+    if (FAssetToolsModule::IsModuleLoaded())
     {
-        IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
+        IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
         AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
     }
+	else
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("FAssetToolsModule not loaded, cannot unregister asset tools."))
+	}
 }
 
 void FVariablesSystemEditorModule::RegisterMenuExtensions()
@@ -51,15 +71,16 @@ void FVariablesSystemEditorModule::RegisterMenuExtensions()
     WatchTab
         .SetDisplayName(LOCTEXT("VariablesSystem_OpenWatchDisplayName", "Variables Watch"))
         .SetTooltipText(LOCTEXT("VariablesSystem_OpenWatchTooltip", "See the values of your variables assets."))
-        .SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "Launcher.TabIcon"))
         .SetGroup(WorkspaceMenu::GetMenuStructure().GetToolsCategory());
 }
 
 void FVariablesSystemEditorModule::UnregisterMenuExtensions()
 {
-    FGlobalTabmanager::Get()->UnregisterNomadTabSpawner(FName("VariablesWatchTab"));
+    FGlobalTabmanager::Get()->UnregisterNomadTabSpawner(VariablesWatchTabName);
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Extensions
 TSharedRef<SDockTab> FVariablesSystemEditorModule::SpawnVariablesWatchTab(const FSpawnTabArgs& Args)
 {
     return SNew(SDockTab)

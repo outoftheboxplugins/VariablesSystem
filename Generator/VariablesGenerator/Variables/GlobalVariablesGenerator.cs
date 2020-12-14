@@ -4,6 +4,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
+
+
 public class VariableGenerator
 {
 	public static KeyValuePair<string, GlobalVariable> GenerateArrayClass(KeyValuePair<string, GlobalVariable> variablePair)
@@ -69,6 +71,6 @@ public class VariableGenerator
 			}
 		}
 
-        return result;
-    }
+		return result;
+	}
 }

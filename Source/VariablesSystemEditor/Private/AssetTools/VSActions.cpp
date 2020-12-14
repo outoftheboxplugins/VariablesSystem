@@ -13,33 +13,33 @@
 /* FAssetTypeActions_Base overrides
  *****************************************************************************/
 
-bool FVariablesSystemActions::CanFilter()
+bool FVSActions::CanFilter()
 {
 	return true;
 }
 
-uint32 FVariablesSystemActions::GetCategories()
+uint32 FVSActions::GetCategories()
 {
     //TODO: We should move this to our own category really soon.
 	return EAssetTypeCategories::Misc;
 }
 
-FText FVariablesSystemActions::GetName() const
+FText FVSActions::GetName() const
 {
 	return LOCTEXT("VariablesSystem_AssetName", "Variable");
 }
 
-UClass* FVariablesSystemActions::GetSupportedClass() const
+UClass* FVSActions::GetSupportedClass() const
 {
 	return UBaseVariable::StaticClass();
 }
 
-FColor FVariablesSystemActions::GetTypeColor() const
+FColor FVSActions::GetTypeColor() const
 {
 	return VARIABLESSYSTEM_COLOR;
 }
 
-void FVariablesSystemActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
+void FVSActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
 {
     FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
 
@@ -48,17 +48,17 @@ void FVariablesSystemActions::GetActions(const TArray<UObject*>& InObjects, FMen
     CopyFromWeakArray(Variables, WeakVariables);
 
     MenuBuilder.AddMenuEntry(
-        LOCTEXT("VariablesSystem_AddToWatchTitle", "Add to watch"),
-        LOCTEXT("VariablesSystem_AddToWatchToolTip", "Add the selected variables to your watch window."),
+        LOCTEXT("AddToWatchTitle", "Add to watch"),
+        LOCTEXT("AddToWatchToolTip", "Add the selected variables to your watch window."),
         FSlateIcon(),
         FUIAction(
-            FExecuteAction::CreateLambda([=] { UVariablesSystemEditorHelpersBPLibrary::OpenOrAddVariablesToWatch(Variables); }),
+            FExecuteAction::CreateLambda([=] { /*UVariablesSystemEditorHelpersBPLibrary::OpenOrAddVariablesToWatch(Variables);*/ }),
             FCanExecuteAction::CreateLambda([=] { return Variables.Num() > 0; })
         )
     );
 }
 
-bool FVariablesSystemActions::HasActions(const TArray<UObject*>& InObjects) const
+bool FVSActions::HasActions(const TArray<UObject*>& InObjects) const
 {
     return true;
 }

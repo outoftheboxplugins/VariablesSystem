@@ -9,7 +9,7 @@ class ISlateStyle;
 /**
  * Implements actions for Global Variables assets.
  */
-class FVariablesSystemActions : public FAssetTypeActions_Base
+class FVSActions : public FAssetTypeActions_Base
 {
 //FAssetTypeActions_Base overrides
 public:
