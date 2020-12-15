@@ -7,7 +7,7 @@
 
 #include "Kismet2/SClassPickerDialog.h"
 
-#define LOCTEXT_NAMESPACE "VariablesSystem"
+#define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 
 bool FVSFactoryFilter::IsClassAllowed(const FClassViewerInitializationOptions& InInitOptions, const UClass* InClass, TSharedRef< class FClassViewerFilterFuncs > InFilterFuncs)
 {

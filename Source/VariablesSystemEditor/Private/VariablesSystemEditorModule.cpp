@@ -33,7 +33,7 @@ bool FVariablesSystemEditorModule::IsModuleLoaded()
 TSharedRef<SDockTab> FVariablesSystemEditorModule::OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables /*= TArray<UBaseVariable*>()*/)
 {
 	TSharedRef<SDockTab> WatchTab = FGlobalTabmanager::Get()->InvokeTab(VariablesWatchTabName);
-	TSharedRef<SVariablesWatchWidget> VariablesWatch = StaticCastSharedRef<SVariablesWatchWidget>(WatchTab->GetContent());
+	TSharedRef<SVSWatchWidget> VariablesWatch = StaticCastSharedRef<SVSWatchWidget>(WatchTab->GetContent());
 
 	VariablesWatch->AddVariables(Variables);
 
@@ -110,7 +110,7 @@ TSharedRef<SDockTab> FVariablesSystemEditorModule::SpawnVariablesWatchTab(const 
     return SNew(SDockTab)
         .TabRole(ETabRole::NomadTab)
         [
-            SNew(SVariablesWatchWidget)
+            SNew(SVSWatchWidget)
         ];
 }
 

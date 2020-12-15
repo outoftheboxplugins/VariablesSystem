@@ -12,7 +12,6 @@
 class FVSFactoryFilter : public IClassViewerFilter
 {
 public:
-	/** Only children of the classes in this set will be unfiltered */
 	TSet<const UClass*> AllowedChildrenOfClasses;
 	EClassFlags DisallowedClassFlags;
 

@@ -1,73 +1,70 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "VariablesWatchWidget.h"
 
-#include "AssetData.h"
-#include "DragAndDrop/AssetDragDropOp.h"
-#include "AssetRegistryModule.h"
 #include "BaseVariable.h"
-#include "Slate/Public/Framework/MultiBox/MultiBoxBuilder.h"
-#include "Slate/Public/Widgets/Layout/SSpacer.h"
-#include "UnrealEd/Public/DragAndDrop/AssetDragDropOp.h"
-#include "UnrealEd/Public/Toolkits/AssetEditorManager.h"
-#include "VariablesSystem/Generated/Library/IncludeAll.h"
-#include "VariablesSystem/Public/BaseVariable.h"
-#include "VariablesSystem/Public/VariablesSystemHelpers.h"
+#include "VSLog.h"
+#include "VariablesSystemHelpers.h"
 
-#include "Runtime/Launch/Resources/Version.h"
+#include "DragAndDrop/AssetDragDropOp.h"
 
-const FName ColumnVariableName = FName("Name");
-const FName ColumnVariableValue = FName("Value");
+#define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 
-#define LOCTEXT_NAMESPACE "VariablesSystem"
-
-void SVariableRowWidgetItem::Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, UBaseVariable* InListItem)
+namespace
 {
-    Item = InListItem;
-
-    SMultiColumnTableRow< UBaseVariable* >::Construct(FSuperRowType::FArguments(), InOwnerTable);
+	const FName ColumnVariableName = FName("Name");
+	const FName ColumnVariableValue = FName("Value");
 }
 
-TSharedRef<SWidget> SVariableRowWidgetItem::GenerateWidgetForColumn(const FName& ColumnName)
+//////////////////////////////////////////////////////////////////////////
+// SVSVariableRow
+void SVSVariableRow::Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, UBaseVariable* InListItem)
+{
+	FSuperRowType::Construct(InArgs, InOwnerTable);
+
+    Item = InListItem;
+}
+
+TSharedRef<SWidget> SVSVariableRow::GenerateWidgetForColumn(const FName& ColumnName)
 {
     if (ColumnName == ColumnVariableName)
     {
-        return
-            SNew(STextBlock)
+        return SNew(STextBlock)
             .Text(FText::FromName(Item->GetFName()));
     }
     else if (ColumnName == ColumnVariableValue)
     {
-        return 
-            SNew(STextBlock)
+        return SNew(STextBlock)
             .Text(FText::FromString(Item->GetStringValue()));
     }
     else
     {
-        UE_LOG(LogTemp, Error, TEXT("Could not identify this column, please contact the developer"));
-        return SNew(STextBlock).Text(LOCTEXT("VariablesSystem_WatchUnkownColumn", "Unknown Column"));
+        UE_LOG(LogVariablesSystem, Error, TEXT("Could not identify column based on name."));
+        return SNew(STextBlock).Text(LOCTEXT("WatchUnkownColumn", "Unknown Column"));
     }
 }
 
-
-void SVariablesWatchWidget::Construct(const FArguments& InArgs)
+//////////////////////////////////////////////////////////////////////////
+// SVSWatchWidget
+void SVSWatchWidget::Construct(const FArguments& InArgs)
 {
     ChildSlot
     [
         SNew(SVerticalBox)
 
+		// Create a variable list to display each variable on row
         + SVerticalBox::Slot()
         .FillHeight(1.0f)
         [
             SAssignNew(VariablesListView, SListView<UBaseVariable*>)
             .ListItemsSource(&BaseVariables)
-            .OnGenerateRow(this, &SVariablesWatchWidget::MakeVariableTableRow)
-            .OnMouseButtonDoubleClick(this, &SVariablesWatchWidget::HandleVariableSelected)
-            .OnContextMenuOpening(FOnContextMenuOpening::CreateSP(this, &SVariablesWatchWidget::CreateContextMenu))
+            .OnGenerateRow(this, &SVSWatchWidget::MakeVariableTableRow)
+            .OnMouseButtonDoubleClick(this, &SVSWatchWidget::HandleVariableSelected)
+            .OnContextMenuOpening(FOnContextMenuOpening::CreateSP(this, &SVSWatchWidget::CreateContextMenu))
             .HeaderRow(
                 SNew(SHeaderRow)
-                + SHeaderRow::Column(ColumnVariableName).DefaultLabel(LOCTEXT("VariablesSystem_WatchNameColumn", "Name"))
-                + SHeaderRow::Column(ColumnVariableValue).DefaultLabel(LOCTEXT("VariablesSystem_WatchNameValue", "Value"))
+                + SHeaderRow::Column(ColumnVariableName).DefaultLabel(LOCTEXT("WatchNameColumn", "Name"))
+                + SHeaderRow::Column(ColumnVariableValue).DefaultLabel(LOCTEXT("WatchNameValue", "Value"))
             )
         ]
         + SVerticalBox::Slot()
@@ -75,11 +72,13 @@ void SVariablesWatchWidget::Construct(const FArguments& InArgs)
         [
             SNew(SHorizontalBox)
 
+			// Center content
             + SHorizontalBox::Slot()
             [
                 SNew(SSpacer)
             ]
 
+			// Button to add all the variables to the watch
             + SHorizontalBox::Slot()
             .AutoWidth()
             .Padding(.5f)
@@ -88,11 +87,16 @@ void SVariablesWatchWidget::Construct(const FArguments& InArgs)
             [
                 SNew(SButton)
                 .HAlign(HAlign_Center)
-                .Text(LOCTEXT("VariablesSystem_WatchAddAllTitle", "Add All"))
-                .ToolTipText(LOCTEXT("VariablesSystem_WatchAddAllTooltip", "Add all Variables to the watch."))
-                .OnClicked(this, &SVariablesWatchWidget::OnAddButtonClicked)
+                .Text(LOCTEXT("WatchAddAllTitle", "Add All"))
+                .ToolTipText(LOCTEXT("WatchAddAllTooltip", "Add all Variables to the watch."))
+				.OnClicked_Lambda([this]()
+					{
+						AddAllVariables();
+						return FReply::Handled();
+					})
             ]
 
+			// Button to remove all the variables from the watch
             + SHorizontalBox::Slot()
             .AutoWidth()
             .Padding(.5f)
@@ -103,9 +107,14 @@ void SVariablesWatchWidget::Construct(const FArguments& InArgs)
                 .HAlign(HAlign_Center)
                 .Text(LOCTEXT("VariablesSystem_WatchRemoveAllTitle", "Remove All"))
                 .ToolTipText(LOCTEXT("VariablesSystem_WatchRemoveAllTooltip", "Remove all Variables from the watch."))
-                .OnClicked(this, &SVariablesWatchWidget::OnRemoveButtonClicked)
+				.OnClicked_Lambda([this]()
+					{
+						RemoveAllVariables();
+						return FReply::Handled();
+					})
             ]
 
+			// Center content
             + SHorizontalBox::Slot()
             [
                 SNew(SSpacer)
@@ -114,15 +123,26 @@ void SVariablesWatchWidget::Construct(const FArguments& InArgs)
     ];
 }
 
+//////////////////////////////////////////////////////////////////////////
+// Public calls
+void SVSWatchWidget::AddVariables(TArray<UBaseVariable*> VariablesToAdd)
+{
+    for (auto Variable : VariablesToAdd)
+    {
+        BaseVariables.AddUnique(Variable);
+    }
+}
 
-void SVariablesWatchWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
+//////////////////////////////////////////////////////////////////////////
+//SCompoundWidget interface
+void SVSWatchWidget::Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime)
 {
     SCompoundWidget::Tick(AllottedGeometry, InCurrentTime, InDeltaTime);
     
     VariablesListView->RebuildList();
 }
 
-FReply SVariablesWatchWidget::OnDrop(const FGeometry& MyGeometry, const FDragDropEvent& DragDropEvent)
+FReply SVSWatchWidget::OnDrop(const FGeometry& MyGeometry, const FDragDropEvent& DragDropEvent)
 {
     if (TSharedPtr<FDragDropOperation> DragDropOp = DragDropEvent.GetOperation())
     {
@@ -150,93 +170,72 @@ FReply SVariablesWatchWidget::OnDrop(const FGeometry& MyGeometry, const FDragDro
     return FReply::Unhandled();
 }
 
-TSharedRef<ITableRow> SVariablesWatchWidget::MakeVariableTableRow(UBaseVariable* InInfo, const TSharedRef<STableViewBase>& OwnerTable)
+//////////////////////////////////////////////////////////////////////////
+// Callbacks
+TSharedRef<ITableRow> SVSWatchWidget::MakeVariableTableRow(UBaseVariable* InInfo, const TSharedRef<STableViewBase>& OwnerTable)
 {
-    return SNew(SVariableRowWidgetItem, OwnerTable, InInfo);
+    return SNew(SVSVariableRow, OwnerTable, InInfo);
 }
 
-TSharedPtr< SWidget > SVariablesWatchWidget::CreateContextMenu()
+TSharedPtr< SWidget > SVSWatchWidget::CreateContextMenu()
 {
     TArray< UBaseVariable*>SelectedVariables;
-    int32 VariablesCount = VariablesListView->GetSelectedItems(SelectedVariables);
+    VariablesListView->GetSelectedItems(SelectedVariables);
 
-    FMenuBuilder MenuBuilder(true, nullptr);
-
+    FMenuBuilder MenuBuilder(/*bInShouldCloseWindowAfterMenuSelection = */true, nullptr);
     MenuBuilder.BeginSection("Variables System");
     {
         MenuBuilder.AddMenuEntry(
-            LOCTEXT("VariablesSystem_WatchMenuOpenTitle", "Open Variables"),
-            LOCTEXT("VariablesSystem_WatchMenuOpenTooltip", "Open the selected variable assets."),
+            LOCTEXT("WatchMenuOpenTitle",	"Open Variables"),
+            LOCTEXT("WatchMenuOpenTooltip", "Open the selected variable assets."),
             FSlateIcon(),
-            FUIAction(FExecuteAction::CreateSP(this, &SVariablesWatchWidget::OpenVariables, SelectedVariables))
+            FUIAction(FExecuteAction::CreateSP(this, &SVSWatchWidget::OpenVariables, SelectedVariables))
         );
-
         MenuBuilder.AddMenuEntry(
-            LOCTEXT("VariablesSystem_WatchMenuRemoveTitle", "Remove Variables"),
-            LOCTEXT("VariablesSystem_WatchMenuRemoveTooltip", "Remove the selected variable assets."),
+            LOCTEXT("WatchMenuRemoveTitle",		"Remove Variables"),
+            LOCTEXT("WatchMenuRemoveTooltip",	"Remove the selected variable assets."),
             FSlateIcon(),
-            FUIAction(FExecuteAction::CreateSP(this, &SVariablesWatchWidget::RemoveVariables, SelectedVariables))
+            FUIAction(FExecuteAction::CreateSP(this, &SVSWatchWidget::RemoveVariables, SelectedVariables))
         );
     }
+
     MenuBuilder.EndSection();
 
     return MenuBuilder.MakeWidget();
 }
 
-void SVariablesWatchWidget::HandleVariableSelected(UBaseVariable* InItem)
+void SVSWatchWidget::HandleVariableSelected(UBaseVariable* InItem)
 {
-#if ENGINE_MAJOR_VERSION >= 4 && ENGINE_MINOR_VERSION >= 24
-    GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(InItem);
-#else
-    FAssetEditorManager::Get().OpenEditorForAsset(InItem);
-#endif
-
+	GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(InItem);
 }
 
-void SVariablesWatchWidget::AddAllVariables()
+//////////////////////////////////////////////////////////////////////////
+// Internal functionality
+void SVSWatchWidget::AddAllVariables()
 {
-    BaseVariables = UVariablesSystemHelpersBPLibrary::GetAllVariables();
+	TArray<UBaseVariable*> AllVariables = UVariablesSystemHelpersBPLibrary::GetAllVariables();
+	AddVariables(AllVariables);
 }
 
-void SVariablesWatchWidget::RemoveAllVariables()
+void SVSWatchWidget::RemoveAllVariables()
 {
-    BaseVariables.Empty();
+	BaseVariables.Empty();
 }
 
-void SVariablesWatchWidget::AddVariables(TArray<UBaseVariable*> selected)
+void SVSWatchWidget::OpenVariables(TArray<UBaseVariable*> SelectedVariable)
 {
-    for (auto variable : selected)
-    {
-        BaseVariables.AddUnique(variable);
-    }
+	for (auto Variable : SelectedVariable)
+	{
+		HandleVariableSelected(Variable);
+	}
 }
 
-void SVariablesWatchWidget::OpenVariables(TArray<UBaseVariable*> selected)
+void SVSWatchWidget::RemoveVariables(TArray<UBaseVariable*> SelectedVariable)
 {
-    for (auto variable : selected)
-    {
-        HandleVariableSelected(variable);
-    }
-}
-
-void SVariablesWatchWidget::RemoveVariables(TArray<UBaseVariable*> selected)
-{
-    for (auto variable : selected)
-    {
-        BaseVariables.RemoveSwap(variable);
-    }
-}
-
-FReply SVariablesWatchWidget::OnAddButtonClicked()
-{
-    AddAllVariables();
-    return FReply::Handled();
-}
-
-FReply SVariablesWatchWidget::OnRemoveButtonClicked()
-{
-    RemoveAllVariables();
-    return FReply::Handled();
+	for (auto Variable : SelectedVariable)
+	{
+		BaseVariables.RemoveSwap(Variable);
+	}
 }
 
 #undef LOCTEXT_NAMESPACE
