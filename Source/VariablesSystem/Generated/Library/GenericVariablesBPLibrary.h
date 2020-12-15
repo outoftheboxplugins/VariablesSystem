@@ -6,7 +6,7 @@
 
 #include "Kismet/BlueprintFunctionLibrary.h"
 
-#include "VariablesSystem/Generated/Library/IncludeAll.h"
+#include "IncludeAll.h"
 
 #include "GenericVariablesBPLibrary.generated.h"
 

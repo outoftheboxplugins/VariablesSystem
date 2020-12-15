@@ -2,7 +2,7 @@
 
 #pragma once 
 
-#include "Engine/Classes/Kismet/BlueprintFunctionLibrary.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "AssetRegistry/Public/AssetRegistryModule.h"
 #include "Core/Public/Modules/ModuleManager.h"
@@ -61,6 +61,10 @@ TArray<T*> UVariablesSystemHelpersBPLibrary::GetAllAssetsOfType()
             }
         }
     }
+	else
+	{
+		UE_LOG(LogVariablesSystem, Error, TEXT("AssetRegistry Module not loaded!"));
+	}
 
     return Assets;
 }

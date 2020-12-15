@@ -10,6 +10,7 @@ public class VariablesSystemEditor : ModuleRules
 
 		PrivateIncludePaths.AddRange(
 			new string[] {
+				"VariablesSystem/Generated/Library",
 				"VariablesSystemEditor/Private",
 				"VariablesSystemEditor/Private/AssetTools",
 				"VariablesSystemEditor/Private/Factories",

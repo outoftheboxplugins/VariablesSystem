@@ -1,26 +1,32 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "BPNode_GenericVariablesBase.h"
 
-#include "BlueprintGraph/Classes/K2Node_CallFunction.h"
-#include "BlueprintGraph/Public/BlueprintActionDatabaseRegistrar.h"
-#include "BlueprintGraph/Public/BlueprintNodeSpawner.h"
-#include "KismetCompiler/Public/KismetCompiler.h"
-#include "VariablesSystem/Generated/Library/IncludeAll.h"
+#include "K2Node_CallFunction.h"
+#include "KismetCompiler.h"
 
-#define LOCTEXT_NAMESPACE "VariablesSystem"
+#define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 
-const FName VariableOwnerTextPin(TEXT("VariableOwner"));
-const FName VariableReferenceTextPin(TEXT("VariableToReference"));
+namespace
+{
+	const FName InvaliadClassName = TEXT("INVALID_CLASS");
+	const FName VariableOwnerTextPin = TEXT("VariableOwner");
+	const FName VariableReferenceTextPin = TEXT("VariableToReference");
+}
 
 //////////////////////////////////////////////////////////////////////////
+//UEdGraphNode implementation
 void UBPNode_GenericVariablesBase::AllocateDefaultPins()
 {
-    UEdGraphPin* InVariableReferencePin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UBaseVariable::StaticClass(), VariableReferenceTextPin);
+	// Create pin for Variable asset input
+    CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UBaseVariable::StaticClass(), VariableReferenceTextPin);
 
+	// Create pin for Variable owner
     UEdGraphPin* InVariableOwnerPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Object, UObject::StaticClass(), VariableOwnerTextPin);
     InVariableOwnerPin->bAdvancedView = true;
-    if (ENodeAdvancedPins::NoPins == AdvancedPinDisplay)
+
+	// Change only if unset.
+    if (AdvancedPinDisplay == ENodeAdvancedPins::NoPins)
     {
         AdvancedPinDisplay = ENodeAdvancedPins::Hidden;
     }
@@ -29,27 +35,7 @@ void UBPNode_GenericVariablesBase::AllocateDefaultPins()
 }
 
 //////////////////////////////////////////////////////////////////////////
-void UBPNode_GenericVariablesBase::GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const
-{
-    Super::GetMenuActions(ActionRegistrar);
-
-    UClass* Action = GetClass();
-
-    if (ActionRegistrar.IsOpenForRegistration(Action)) {
-        UBlueprintNodeSpawner* Spawner = UBlueprintNodeSpawner::Create(GetClass());
-        check(Spawner != nullptr);
-
-        ActionRegistrar.AddBlueprintAction(Action, Spawner);
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////
-FText UBPNode_GenericVariablesBase::GetMenuCategory() const
-{
-    return LOCTEXT("VariablesSystem_CustomNodeFailedExpand", "VariablesSystem");
-}
-
-//////////////////////////////////////////////////////////////////////////
+//K2Node implementation
 void UBPNode_GenericVariablesBase::PostReconstructNode()
 {
     Super::PostReconstructNode();
@@ -57,236 +43,228 @@ void UBPNode_GenericVariablesBase::PostReconstructNode()
     UpdatePinTypeFromVariable();
 }
 
-//////////////////////////////////////////////////////////////////////////
-void UBPNode_GenericVariablesBase::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
-{
-    Super::NotifyPinConnectionListChanged(Pin);
-
-    if (Pin->ParentPin == nullptr)
-    {
-        UEdGraphPin* VariablePin = GetVariablePin();
-
-        if (VariablePin == Pin)
-        {
-            UpdatePinTypeFromVariable();
-        }
-    }
-}
-
-//////////////////////////////////////////////////////////////////////////
 void UBPNode_GenericVariablesBase::PinDefaultValueChanged(UEdGraphPin* Pin)
 {
     Super::PinDefaultValueChanged(Pin);
 
-    if (Pin->ParentPin == nullptr)
-    {
-        UEdGraphPin* VariablePin = GetVariablePin();
+	if (GetVariablePin() == Pin)
+	{
+		UpdatePinTypeFromVariable();
+	}
+}
 
-        if (VariablePin == Pin)
-        {
-            UpdatePinTypeFromVariable();
-        }
+void UBPNode_GenericVariablesBase::NotifyPinConnectionListChanged(UEdGraphPin* Pin)
+{
+    Super::NotifyPinConnectionListChanged(Pin);
+
+    if (GetVariablePin() == Pin)
+    {
+		UpdatePinTypeFromVariable();
     }
 }
 
-//////////////////////////////////////////////////////////////////////////
-void UBPNode_GenericVariablesBase::ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
+void UBPNode_GenericVariablesBase::ExpandNode(FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
 {
     Super::ExpandNode(CompilerContext, SourceGraph);
 
-    // Create the specific function node to the variable.
-    FName VariableName = GetVariableNameToUse();
+    const FName VariableName = GetVariableNameToUse();
+	
+	if (CheckForCompilationErrors(VariableName, CompilerContext))
+	{
+		// If we have any compilation errors, just early return, the checks performed should log the source of the problem.
+		return;
+	}
 
-    EGenericVariablesNodeError error = CompileVariablesCompatbility(VariableName);
-    UK2Node_CallFunction* CallCreateNode = CreateSpecificNode(VariableName, CompilerContext, SourceGraph);
+	bool bSucceeded = true;
 
-    bool bSucceeded = true;
+	if (UK2Node_CallFunction* CallCreateNode = CreateSpecificNode(VariableName, CompilerContext, SourceGraph))
+	{
+		// Instanced variables also have an owner, so we should connect that pin as well.
+		if (IsInstancedVariable(VariableName))
+		{
+			UEdGraphPin* InputOwnerPin = GetVariableOwnerPin();
+			UEdGraphPin* FunctioOwnerPin = CallCreateNode->FindPin(TEXT("owner"));
+			bSucceeded &= InputOwnerPin && FunctioOwnerPin && CompilerContext.CopyPinLinksToIntermediate(*InputOwnerPin, *FunctioOwnerPin).CanSafeConnect();
+		}
 
-    if (CallCreateNode == nullptr || error != EGenericVariablesNodeError::None)
-    {
-        bSucceeded = false;
-    }
-    else
-    {
-        // Connect owner pin if any.
-        UEdGraphPin* InputOwnerPin = GetVariableOwnerPin();
-        UEdGraphPin* FunctioOwnerPin = CallCreateNode->FindPin(TEXT("owner"));
+		// Connect Class pin.
+		UEdGraphPin* ClassPin = GetVariablePin();
+		UEdGraphPin* VariableInput = CallCreateNode->FindPin(TEXT("var"));
+		bSucceeded &= ClassPin && VariableInput && CompilerContext.CopyPinLinksToIntermediate(*ClassPin, *VariableInput).CanSafeConnect();
 
-        if (InputOwnerPin && FunctioOwnerPin)
-        {
-            bSucceeded &= CompilerContext.CopyPinLinksToIntermediate(*InputOwnerPin, *FunctioOwnerPin).CanSafeConnect();
-        }
+		// Connect Result pin.
+		UEdGraphPin* ResultPin = GetVariableValuePin();
+		UEdGraphPin* ReturnPin = GetVariableLinkPin(CallCreateNode);
+		bSucceeded &= ResultPin && ReturnPin && CompilerContext.MovePinLinksToIntermediate(*ResultPin, *ReturnPin).CanSafeConnect();
 
-        // Connect Class pin.
-        UEdGraphPin* ClassPin = GetVariablePin();
-        UEdGraphPin* VariableInput = CallCreateNode->FindPin(TEXT("var"));
-        bSucceeded &= ClassPin && VariableInput && CompilerContext.CopyPinLinksToIntermediate(*ClassPin, *VariableInput).CanSafeConnect();
+		// Class specific for Get/Set functionality.
+		bSucceeded &= AdditionalExpand(CompilerContext, CallCreateNode);
+	}
+	else
+	{
+		bSucceeded = false;
+	}
 
-        // Connect Result pin.
-        UEdGraphPin* ResultPin = GetVariableValuePin();
-        UEdGraphPin* ReturnPin = GetVariableLinkPin(CallCreateNode);
-        bSucceeded &= ResultPin && ReturnPin && CompilerContext.MovePinLinksToIntermediate(*ResultPin, *ReturnPin).CanSafeConnect();
-
-        bSucceeded &= AdditionalExpand(CompilerContext, CallCreateNode);
-    }
-
+	if (!bSucceeded)
+	{
+		CompilerContext.MessageLog.Error(*LOCTEXT("K2NodeExpansionFailed", "[VariablesSystem] Failed to expand custom node.").ToString(), this);
+	}
+	
     BreakAllNodeLinks();
-
-    switch (error)
-    {
-        case UnkownType:
-        {
-            CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedUnkown", "VariablesSystem - Unkown function for variable type.").ToString(), this);
-
-            break;
-        }
-        case GlobalHasOwner:
-        {
-            CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedGlobalOwner", "VariablesSystem - Global variables do not have a owner, please remove pin and/or value.").ToString(), this);
-
-            break;
-        }
-        case LocalMissingOwner:
-        {
-            CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedLocalOwner", "VariablesSystem - Local variables must have an owner, please conect a pin or set a default value").ToString(), this);
-
-            break;
-        }
-    }
-
-    if (!bSucceeded)
-    {
-        CompilerContext.MessageLog.Error(*LOCTEXT("VariablesSystem_CustomNodeFailedExpand", "VariablesSystem - Failed to expand custom node.").ToString(), this);
-    }
 }
 
-//////////////////////////////////////////////////////////////////////////
-UK2Node_CallFunction* UBPNode_GenericVariablesBase::CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
+FText UBPNode_GenericVariablesBase::GetMenuCategory() const
 {
-    return nullptr;
+	return LOCTEXT("GenericVariableBaseNode_MenuCategory", "VariablesSystem");
 }
 
 //////////////////////////////////////////////////////////////////////////
+//Generated Methods
 void UBPNode_GenericVariablesBase::UpdatePinTypeFromVariable()
 {
-    FName VariableClassName = GetVariableNameToUse();
+    const FName VariableClassName = GetVariableNameToUse();
 
     FEdGraphPinType ResultPinType;
     EPinContainerType ResultContainerType = EPinContainerType::None;
 
+	// This file is generated by the VariablesGenerator and should return the appropriate GraphPinType and PinContinaer types.
     #include "VariablesSystem/Generated/Node/PinTypeFromVariable.h"
 
     PropagatePinType(ResultPinType, ResultContainerType);
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Utility functionality
 FName UBPNode_GenericVariablesBase::GetVariableNameToUse() const
 {
-    FName VariableClassName;
-    UEdGraphPin* ClassPin = GetVariablePin();
-
-    if (ClassPin && ClassPin->DefaultObject && ClassPin->LinkedTo.Num() == 0)
-    {
-        VariableClassName = ClassPin->DefaultObject->GetClass()->GetFName();
-    }
-    else if (ClassPin && ClassPin->LinkedTo.Num())
-    {
-        UEdGraphPin* ClassSource = ClassPin->LinkedTo[0];
-        VariableClassName = ClassSource->PinType.PinSubCategoryObject->GetFName();
-    }
+    FName VariableClassName = InvaliadClassName;
+	if (UEdGraphPin* ClassPin = GetVariablePin())
+	{
+		if (ClassPin->LinkedTo.Num() != 0 && ClassPin->LinkedTo[0])
+		{
+			VariableClassName = ClassPin->LinkedTo[0]->PinType.PinSubCategoryObject->GetFName();
+		}
+		else if (ClassPin->DefaultObject)
+		{
+			VariableClassName = ClassPin->DefaultObject->GetClass()->GetFName();
+		}
+	}
 
     return VariableClassName;
 }
 
-//////////////////////////////////////////////////////////////////////////
+bool UBPNode_GenericVariablesBase::IsGlobalVariable(FName VariableName) const
+{
+	FString VariableClassString; VariableName.ToString(VariableClassString);
+	return VariableClassString.Contains("Global");
+}
+
+bool UBPNode_GenericVariablesBase::IsInstancedVariable(FName VariableName) const
+{
+	FString VariableClassString; VariableName.ToString(VariableClassString);
+	return VariableClassString.Contains("Instanced");
+}
+
+UEdGraphPin* UBPNode_GenericVariablesBase::GetVariablePin() const
+{
+	UEdGraphPin* Pin = FindPin(VariableReferenceTextPin);
+	ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
+	return Pin;
+}
+
+UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableOwnerPin() const
+{
+	UEdGraphPin* Pin = FindPin(VariableOwnerTextPin);
+	ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
+	return Pin;
+}
+
 void UBPNode_GenericVariablesBase::PropagatePinType(FEdGraphPinType& InType, EPinContainerType containerType)
 {
-    UClass const* CallingContext = NULL;
+    const UClass* CallingContext = nullptr;
     if (UBlueprint const* Blueprint = GetBlueprint())
     {
-        CallingContext = Blueprint->GeneratedClass;
-        if (CallingContext == NULL)
-        {
-            CallingContext = Blueprint->ParentClass;
-        }
+		if (Blueprint->GeneratedClass)
+		{
+			CallingContext = Blueprint->GeneratedClass;
+		}
+		else
+		{
+			CallingContext = Blueprint->ParentClass;
+		}
     }
 
     UEdGraphPin* ResultPin = GetVariableValuePin();
 
     ResultPin->PinType = InType;
     ResultPin->PinType.ContainerType = containerType;
+	//TOSOLVE: Investigate this option.
     ResultPin->PinType.bIsReference = false;
 
+
+    // Verify that all previous connections to this pin are still valid with the new type or break them.
     const UEdGraphSchema_K2* Schema = GetDefault<UEdGraphSchema_K2>();
-
-    // Verify that all previous connections to this pin are still valid with the new type
-    for (TArray<UEdGraphPin*>::TIterator ConnectionIt(ResultPin->LinkedTo); ConnectionIt; ++ConnectionIt)
-    {
-        UEdGraphPin* ConnectedPin = *ConnectionIt;
-        if (!Schema->ArePinsCompatible(ResultPin, ConnectedPin, CallingContext))
-        {
-            ResultPin->BreakLinkTo(ConnectedPin);
-        }
-    }
+	for (const auto& ConnectedPin : ResultPin->LinkedTo)
+	{
+		if (!Schema->ArePinsCompatible(ResultPin, ConnectedPin, CallingContext))
+		{
+			ResultPin->BreakLinkTo(ConnectedPin);
+		}
+	}
 }
 
-//////////////////////////////////////////////////////////////////////////
-UBPNode_GenericVariablesBase::EGenericVariablesNodeError UBPNode_GenericVariablesBase::CompileVariablesCompatbility(FName VariableClassName) const
+bool UBPNode_GenericVariablesBase::CheckForCompilationErrors(FName VariableClassName, FKismetCompilerContext& CompilerContext) const
 {
-    FString VariableClassString; VariableClassName.ToString(VariableClassString);
+	enum class EGenericVariablesNodeError
+	{
+		None,
+		UnkownType,
+		GlobalHasOwner,
+		InstancedMissingOwner,
+	} Error = EGenericVariablesNodeError::None;
 
-    UEdGraphPin* OwnerPin = GetVariableOwnerPin();
-    bool bHasOwnerConnection = OwnerPin && (OwnerPin->DefaultObject || OwnerPin->LinkedTo.Num() > 0);
+	const UEdGraphPin* OwnerPin = GetVariableOwnerPin();
+	const bool bHasOwnerConnection = OwnerPin && (OwnerPin->DefaultObject || OwnerPin->LinkedTo.Num() > 0);
 
-    EGenericVariablesNodeError error = EGenericVariablesNodeError::None;
-    if (VariableClassString.Contains("Global"))
-    {
-        if (bHasOwnerConnection)
-        {
-            error = EGenericVariablesNodeError::GlobalHasOwner;
-        }
-    }
-    else if (VariableClassString.Contains("Local"))
-    {
-        if (!bHasOwnerConnection)
-        {
-            error = EGenericVariablesNodeError::LocalMissingOwner;
-        }
-    }
-    else
-    {
-        error = EGenericVariablesNodeError::UnkownType;
-    }
+	const bool bIsGlobalVariable = IsGlobalVariable(VariableClassName);
+	const bool bIsInstancedVariable = IsInstancedVariable(VariableClassName);
 
-    return error;
-}
+	if (!bIsGlobalVariable && !bIsInstancedVariable)
+	{
+		Error = EGenericVariablesNodeError::UnkownType;
+	}
+	else if (bIsGlobalVariable && bHasOwnerConnection)
+	{
+		Error = EGenericVariablesNodeError::GlobalHasOwner;
+	}
+	else if (bIsInstancedVariable && !bHasOwnerConnection)
+	{
+		Error = EGenericVariablesNodeError::InstancedMissingOwner;
+	}
 
-//////////////////////////////////////////////////////////////////////////
-UEdGraphPin* UBPNode_GenericVariablesBase::GetVariablePin() const
-{
-    UEdGraphPin* Pin = FindPin(VariableReferenceTextPin);
-    ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
-    return Pin;
-}
+	switch (Error)
+	{
+		case EGenericVariablesNodeError::UnkownType:
+		{
+			CompilerContext.MessageLog.Error(*LOCTEXT("CustomNodeFailedUnkown", "[VariablesSystem] Unkown function for variable type.").ToString(), this);
 
-//////////////////////////////////////////////////////////////////////////
-UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableOwnerPin() const
-{
-    UEdGraphPin* Pin = FindPin(VariableOwnerTextPin);
-    ensure(nullptr == Pin || Pin->Direction == EGPD_Input);
-    return Pin;
-}
+			break;
+		}
+		case EGenericVariablesNodeError::GlobalHasOwner:
+		{
+			CompilerContext.MessageLog.Error(*LOCTEXT("CustomNodeFailedGlobalOwner", "[VariablesSystem] Global variables do not have a owner, please remove pin and/or value.").ToString(), this);
 
-//////////////////////////////////////////////////////////////////////////
-UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableValuePin() const
-{
-    return nullptr;
-}
+			break;
+		}
+		case EGenericVariablesNodeError::InstancedMissingOwner:
+		{
+			CompilerContext.MessageLog.Error(*LOCTEXT("CustomNodeFailedInstancedOwner", "[VariablesSystem] Instanced variables must have an owner, please conect a pin or set a default value").ToString(), this);
 
-//////////////////////////////////////////////////////////////////////////
-UEdGraphPin* UBPNode_GenericVariablesBase::GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const
-{
-    return nullptr;
+			break;
+		}
+	}
+
+	return Error != EGenericVariablesNodeError::None;
 }
 
 #undef LOCTEXT_NAMESPACE

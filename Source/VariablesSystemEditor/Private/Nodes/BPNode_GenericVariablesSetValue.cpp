@@ -1,4 +1,4 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "BPNode_GenericVariablesSetValue.h"
 
@@ -13,6 +13,8 @@
 const FName PN_InputValue(TEXT("InputValue"));
 
 //////////////////////////////////////////////////////////////////////////
+//UEdGraphNode implementation
+
 void UBPNode_GenericVariablesSetValue::AllocateDefaultPins()
 {
     const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
