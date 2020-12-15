@@ -8,6 +8,15 @@ public class VariablesSystemEditor : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+		PrivateIncludePaths.AddRange(
+			new string[] {
+				"VariablesSystemEditor/Private",
+				"VariablesSystemEditor/Private/AssetTools",
+				"VariablesSystemEditor/Private/Factories",
+				"VariablesSystemEditor/Private/Nodes",
+				"VariablesSystemEditor/Private/WatchWidget"
+			});
+
 		PrivateDependencyModuleNames.AddRange(
 			new string[] {
                 "BlueprintGraph",
@@ -15,6 +24,7 @@ public class VariablesSystemEditor : ModuleRules
                 "CoreUObject",
                 "KismetCompiler",
 				"Core",
+				"WorkspaceMenuStructure",
 				"EditorStyle",
 				"Engine",
 				"InputCore",
