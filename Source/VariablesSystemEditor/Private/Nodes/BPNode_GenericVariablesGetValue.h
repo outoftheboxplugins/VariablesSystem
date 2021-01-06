@@ -20,12 +20,11 @@ public:
 // Generic Overrides
 private:
     virtual UEdGraphPin* GetVariableValuePin() const override;
-    virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const override;
+    virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* NodeFunction) const override;
 
     virtual UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
     
 //K2Node implementation
 public:
     virtual bool IsNodePure() const override { return true; }
-    
 };

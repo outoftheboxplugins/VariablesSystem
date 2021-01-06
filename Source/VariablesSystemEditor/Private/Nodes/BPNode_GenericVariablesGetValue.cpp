@@ -2,10 +2,6 @@
 
 #include "BPNode_GenericVariablesGetValue.h"
 
-//#include "BlueprintGraph/Classes/K2Node_CallFunction.h"
-//#include "BlueprintGraph/Public/BlueprintActionDatabaseRegistrar.h"
-//#include "BlueprintGraph/Public/BlueprintNodeSpawner.h"
-//#include "KismetCompiler/Public/KismetCompiler.h"
 #include "IncludeAll.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystemEditor"
@@ -39,20 +35,20 @@ UEdGraphPin* UBPNode_GenericVariablesGetValue::GetVariableValuePin() const
     return Pin;
 }
 
-UEdGraphPin* UBPNode_GenericVariablesGetValue::GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const
+UEdGraphPin* UBPNode_GenericVariablesGetValue::GetVariableLinkPin(UK2Node_CallFunction* NodeFunction) const
 {
-	return nodeFunction->GetReturnValuePin();
+	return NodeFunction->GetReturnValuePin();
 }
 
 UK2Node_CallFunction* UBPNode_GenericVariablesGetValue::CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
 {
-    UK2Node_CallFunction* resultCreateNode = nullptr;
-    resultCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
+    UK2Node_CallFunction* ResultCreateNode = nullptr;
+    ResultCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
 
     #include "VariablesSystem/Generated/Node/CreateSpecificNodeGet.h"
 
-    resultCreateNode->AllocateDefaultPins();
-    return resultCreateNode;
+    ResultCreateNode->AllocateDefaultPins();
+    return ResultCreateNode;
 }
 
 #undef LOCTEXT_NAMESPACE
