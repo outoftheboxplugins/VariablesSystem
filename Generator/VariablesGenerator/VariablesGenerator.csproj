@@ -68,15 +68,25 @@
 "$(DevEnvDir)TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
 echo "Generating template classes DONE"
 
-echo "Updating template classes from $(ProjectDir)Generated to $(SolutionDir)..\Source\VariablesSystem\Generated"
-(robocopy "$(ProjectDir)Generated" "$(ProjectDir)..\..\Source\VariablesSystem\Generated" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (set ERRORLEVEL=0)
-echo "Updating done"
+set ProjectGeneratedFolder=$(ProjectDir)Generated
+
+if "$(SolutionName)"=="UE4" (
+set TargetProjectFolder=$(SolutionDir)Engine\Plugins\Marketplace\VariablesSystem\
+) else (
+set TargetProjectFolder=$(ProjectDir)..\..\
+)
+
+set TargetGeneratedFolder=%25TargetProjectFolder%25Source\VariablesSystem\Generated
+
+echo "Updating template classes from %25ProjectGeneratedFolder%25 to %25TargetGeneratedFolder%25
+(robocopy "%25ProjectGeneratedFolder%25" "%25TargetGeneratedFolder%25" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (set ERRORLEVEL=0)
+echo "Updating done" ) 
 
 echo "Deleting build files to trigger rebuild"
-echo "Deleting $(SolutionDir)..\Binaries"
-del /F /Q /S "$(SolutionDir)..\Binaries"
-echo "Deleting $(SolutionDir)..\Intermediate"
-del /F /Q /S "$(SolutionDir)..\Intermediate"
+echo "Deleting %25TargetProjectFolder%25..\..\Binaries"
+del /F /Q /S "%25TargetProjectFolder%25..\..\Binaries"
+echo "Deleting %25TargetProjectFolder%25..\..\Intermediate"
+del /F /Q /S "%25TargetProjectFolder%25..\..\Intermediate"
 echo "Deleting done"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
