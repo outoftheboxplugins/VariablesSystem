@@ -40,7 +40,7 @@
     <StartupObject />
   </PropertyGroup>
   <PropertyGroup>
-    <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -64,7 +64,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo "Generating template classes"
+    <PostBuildEvent>echo "Deleting $(ProjectDir)Generated"
+del /F /Q  /S "$(ProjectDir)Generated\"
+
+echo "Generating template classes"
 "TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
 echo "Generating template classes DONE"
 
@@ -90,7 +93,7 @@ del /F /Q /S "%25TargetProjectFolder%25..\..\Intermediate"
 echo "Deleting done"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
-    <PreBuildEvent>echo "Deleting $(ProjectDir)Generated"
-del /F /Q  /S "$(ProjectDir)Generated\"</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

@@ -32,13 +32,11 @@ FText UBPNode_GenericVariablesSetValue::GetNodeTitle(ENodeTitleType::Type TitleT
     return LOCTEXT("SetVariableNodeName", "Set Generic Variable");
 }
 
-//////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetTooltipText() const
 {
     return LOCTEXT("SetVariableNodetTooltip", "Sets the value of a Generic Variable");
 }
 
-//////////////////////////////////////////////////////////////////////////
 bool UBPNode_GenericVariablesSetValue::AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* NodeFunction)
 {
     bool bSucceeded = true;
@@ -61,6 +59,7 @@ bool UBPNode_GenericVariablesSetValue::AdditionalExpand(FKismetCompilerContext& 
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Generic Overrides
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableValuePin() const
 {
     UEdGraphPin* Pin = FindPinChecked(PN_InputValue);
@@ -68,7 +67,6 @@ UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableValuePin() const
     return Pin;
 }
 
-//////////////////////////////////////////////////////////////////////////
 UK2Node_CallFunction* UBPNode_GenericVariablesSetValue::CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
 {
     UK2Node_CallFunction* ResultCreateNode = nullptr;
@@ -80,13 +78,13 @@ UK2Node_CallFunction* UBPNode_GenericVariablesSetValue::CreateSpecificNode(FName
     return ResultCreateNode;
 }
 
-//////////////////////////////////////////////////////////////////////////
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableLinkPin(UK2Node_CallFunction* NodeFunction) const
 {
     return NodeFunction->FindPin(TEXT("_value"));
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Internal helpers
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetThenPin()const
 {
     UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_Then);

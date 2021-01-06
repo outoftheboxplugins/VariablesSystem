@@ -28,7 +28,7 @@
   {
      "Win64":
      [
-        "msbuild $(PluginDir)/Generator/VariablesGenerator.sln /t:Rebuild"
+        "msbuild $(PluginDir)/Generator/VariablesGenerator.sln /t:Build"
      ]
   }
 }
