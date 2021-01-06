@@ -65,7 +65,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>echo "Generating template classes"
-"$(DevEnvDir)TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
+"TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
 echo "Generating template classes DONE"
 
 set ProjectGeneratedFolder=$(ProjectDir)Generated
