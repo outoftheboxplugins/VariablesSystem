@@ -44,15 +44,15 @@
   </PropertyGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Templates\InstancedCPPTemplate.ttinclude" />
-    <None Include="Templates\InstancedHTemplate.ttinclude" />
-    <None Include="Templates\GlobalCPPTemplate.ttinclude" />
-    <None Include="Templates\GlobalHTemplate.ttinclude" />
-    <None Include="Templates\LibraryTemplate.ttinclude" />
-    <None Include="Templates\NodeHelpersTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\InstancedCPPTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\InstancedHTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\GlobalCPPTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\GlobalHTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\LibraryTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\NodeHelpersTemplate.ttinclude" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Templates\GenericVariableGenerator.tt" />
+    <EmbeddedResource Include="Templates\GenericVariableGenerator.tt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
