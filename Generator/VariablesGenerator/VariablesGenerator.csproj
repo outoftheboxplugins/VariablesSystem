@@ -64,12 +64,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo "Deleting $(ProjectDir)Generated"
-del /F /Q  /S "$(ProjectDir)Generated\"
+    <PostBuildEvent>echo Deleting $(ProjectDir)Generated
+del /F /Q  /S "$(ProjectDir)Generated\" &gt;nul
 
-echo "Generating template classes"
+echo Generating template classes
 "TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
-echo "Generating template classes DONE"
+echo Generating template classes DONE
 
 set ProjectGeneratedFolder=$(ProjectDir)Generated
 
@@ -80,17 +80,19 @@ set TargetProjectFolder=$(ProjectDir)..\..\
 )
 
 set TargetGeneratedFolder=%25TargetProjectFolder%25Source\VariablesSystem\Generated
+echo Updating template classes from %25ProjectGeneratedFolder%25 to %25TargetGeneratedFolder%25
+(robocopy "%25ProjectGeneratedFolder%25" "%25TargetGeneratedFolder%25" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (
+set ERRORLEVEL=0)
+echo Updating done!
+echo.
+) 
 
-echo "Updating template classes from %25ProjectGeneratedFolder%25 to %25TargetGeneratedFolder%25
-(robocopy "%25ProjectGeneratedFolder%25" "%25TargetGeneratedFolder%25" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (set ERRORLEVEL=0)
-echo "Updating done" ) 
-
-echo "Deleting build files to trigger rebuild"
-echo "Deleting %25TargetProjectFolder%25..\..\Binaries"
+echo Deleting build files to trigger rebuild
+echo Deleting %25TargetProjectFolder%25..\..\Binaries
 del /F /Q /S "%25TargetProjectFolder%25..\..\Binaries"
-echo "Deleting %25TargetProjectFolder%25..\..\Intermediate"
+echo Deleting %25TargetProjectFolder%25..\..\Intermediate
 del /F /Q /S "%25TargetProjectFolder%25..\..\Intermediate"
-echo "Deleting done"</PostBuildEvent>
+echo Deleting done</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>
