@@ -29,7 +29,7 @@
 	"Win64": 
 	[
 		"echo [VariablesSystem] Updating VariablesSystemGenerator",
-		"msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo"
+		"msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo >nul 2>nul || echo [VariablesSystem] Warning: MSBuild path not setup, skipping buildining the variables generator"
 	]
   }
 }
