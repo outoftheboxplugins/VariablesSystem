@@ -81,3 +81,18 @@ void GenerateCreateSpecificNodeSet(Dictionary<string, GlobalVariable> variables)
     }
 }
 #>
+
+<#+
+void GenerateAssetColorByVariable(Dictionary<string, GlobalVariable> variables)
+{
+    for (int i = 0; i < variables.Count; i++)
+    {
+#>
+	if (Variable->IsA<UGlobal<#=variables.Keys.ElementAt(i)#>>() || Variable->IsA<UInstanced<#=variables.Keys.ElementAt(i)#>>())
+	{
+		return Settings-><#=variables.Values.ElementAt(i).globalVariable.assetColor#>PinTypeColor;
+	}
+<#+
+    }
+}
+#>

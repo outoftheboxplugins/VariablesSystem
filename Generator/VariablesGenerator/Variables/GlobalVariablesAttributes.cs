@@ -32,12 +32,14 @@ public class GlobalVarAttribute : Attribute, ICloneable
     public string nodeType;
     public string nodeSubType;
     public string nodeContainer;
+	public string assetColor;
 
 	public GlobalVarAttribute(string valueType,
 		string defaultValue = "0", 
 		string nodeType = "Object", 
 		string nodeSubType = DefaultNodeSubType, 
-		string nodeContainer = "None")
+		string nodeContainer = "None",
+		string assetColor = "Wildcard")
     {
 		if(nodeSubType == DefaultNodeSubType)
 		{
@@ -49,6 +51,7 @@ public class GlobalVarAttribute : Attribute, ICloneable
         this.nodeType = nodeType;
         this.nodeSubType = nodeSubType;
         this.nodeContainer = nodeContainer;
+		this.assetColor = assetColor;
     }
 
 	public void ToArray()

@@ -32,6 +32,8 @@
     
     CreateBlueprintLibraryH(allVariables);
     CreateBlueprintLibraryCPP(allVariables);
+
+    CreateGenerateAssetColorByVariable(allVariables);
 #>
 
 <#+
@@ -93,6 +95,12 @@ private void CreateBlueprintLibraryCPP(Dictionary<string, GlobalVariable> variab
 {
     GenerateBlueprintLibraryCPP(variables);
     SaveFileAs(@"\Library\GenericVariablesBPLibrary.cpp");
+}
+
+private void CreateGenerateAssetColorByVariable(Dictionary<string, GlobalVariable> variables)
+{
+    GenerateAssetColorByVariable(variables);
+    SaveFileAs(@"\Library\AssetColorByVariable.h");
 }
 
 private void SaveFileAs(string destination)

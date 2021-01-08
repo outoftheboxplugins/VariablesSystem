@@ -14,11 +14,12 @@ public:
 
 // FAssetTypeActions_Base interface
 private:
-    virtual FText GetName() const override;
+	virtual FText GetName() const override;
     virtual FColor GetTypeColor() const override;
     virtual uint32 GetCategories() override;
     
     virtual UClass* GetSupportedClass() const override;
+	virtual TSharedPtr<SWidget> GetThumbnailOverlay(const FAssetData& AssetData) const override;
 
 // Asset Actions
 private:

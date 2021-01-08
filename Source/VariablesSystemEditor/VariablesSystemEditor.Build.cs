@@ -21,6 +21,7 @@ public class VariablesSystemEditor : ModuleRules
 		PrivateDependencyModuleNames.AddRange(
 			new string[] {
                 "BlueprintGraph",
+				"GraphEditor",
                 "ContentBrowser",
                 "CoreUObject",
                 "KismetCompiler",
