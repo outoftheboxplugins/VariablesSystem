@@ -23,6 +23,11 @@ UBaseVariable::~UBaseVariable()
 	SaveIfNeeded();
 }
 
+FString UBaseVariable::GetStringValue() const
+{
+    return FString("Invalid Value");
+}
+
 void UBaseVariable::SaveIfNeeded()
 {
 	if (SaveBehavior == EVSSaveType::VSST_SaveOnFinish || SaveBehavior == EVSSaveType::VSST_StartAndFinish)

@@ -32,7 +32,7 @@ public:
 // Virtual functions for the derived variables to implement
 public:
     // Returns the value of the variable as a string.
-    virtual FString GetStringValue() const	{ return FString("Invalid Value"); };
+    virtual FString GetStringValue() const;
 
 // Save & Load
 public:
