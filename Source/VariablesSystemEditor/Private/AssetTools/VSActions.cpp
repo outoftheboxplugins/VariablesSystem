@@ -2,6 +2,7 @@
 
 #include "VSActions.h"
 
+#include "VariablesSystemEditorModule.h"
 #include "IncludeAll.h"
 
 #include "GraphEditorSettings.h"
