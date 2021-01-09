@@ -4,6 +4,8 @@
 
 #include "GameFramework/SaveGame.h"
 
+#include "Engine/World.h"
+
 #include "BaseVariable.generated.h"
 
 /**
