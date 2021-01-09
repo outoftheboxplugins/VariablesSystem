@@ -1,9 +1,9 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once
 
-#include "Core/Public/CoreMinimal.h"
-#include "BlueprintGraph/Classes/K2Node.h"
+#include "CoreMinimal.h"
+#include "K2Node.h"
 
 #include "BPNode_GenericVariablesBase.generated.h"
 
@@ -11,55 +11,47 @@ class FBlueprintActionDatabaseRegistrar;
 class UEdGraphPin;
 class UK2Node_CallFunction;
 
-UCLASS(MinimalAPI, meta = (Keywords = "variable value global"))
+UCLASS(Abstract)
 class UBPNode_GenericVariablesBase : public UK2Node
 {
     GENERATED_BODY()
 
 //UEdGraphNode implementation
-public:
+protected:
     virtual void AllocateDefaultPins() override;
+	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
 
 //K2Node implementation
-public:
-    virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
-    virtual FText GetMenuCategory() const override;
-    
+private:
     virtual void PostReconstructNode() override;
-    virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
     virtual void PinDefaultValueChanged(UEdGraphPin* Pin) override;
-
+    virtual void NotifyPinConnectionListChanged(UEdGraphPin* Pin) override;
     virtual void ExpandNode(class FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
+
+    virtual FText GetMenuCategory() const override;
     
 // Virtuals for specific behavior (Get/Set)
 protected:
-    // Nodes Details
-    virtual bool AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* nodeFunction) { return true; };
+	virtual bool AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* nodeFunction) { return true; }
+	virtual UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) { return nullptr; }
 
-    //Generated Methods
-    virtual UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph);
+	virtual UEdGraphPin* GetVariableValuePin() const { return nullptr; }
+	virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const { return nullptr; }
+
+//Generated Methods
+private:
     void UpdatePinTypeFromVariable();
 
-// Current node utility
+// Utility functionality
 private:
-    // Information about current node
     FName GetVariableNameToUse() const;
-    void PropagatePinType(FEdGraphPinType& InType, EPinContainerType containerType);
 
-    // Pin Getter
-    virtual UEdGraphPin* GetVariableValuePin() const;
-    virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const;
-
-    enum EGenericVariablesNodeError
-    {
-        None,
-        UnkownType,
-        GlobalHasOwner,
-        LocalMissingOwner,
-    };
-
-    EGenericVariablesNodeError CompileVariablesCompatbility(FName VariableClassName) const;
+	bool IsGlobalVariable(FName VariableName) const;
+	bool IsInstancedVariable(FName VariableName) const;
 
     UEdGraphPin* GetVariablePin() const;
     UEdGraphPin* GetVariableOwnerPin() const;
+
+    void PropagatePinType(FEdGraphPinType& InType, EPinContainerType containerType);
+    bool CheckForCompilationErrors(FName VariableClassName, FKismetCompilerContext& CompilerContext) const;
 };

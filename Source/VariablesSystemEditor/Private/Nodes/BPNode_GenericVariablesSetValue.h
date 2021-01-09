@@ -1,16 +1,12 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once
 
-#include "Core/Public/CoreMinimal.h"
-#include "VariablesSystemEditor/Private/Nodes/BPNode_GenericVariablesBase.h"
+#include "BPNode_GenericVariablesBase.h"
 
 #include "BPNode_GenericVariablesSetValue.generated.h"
 
-class UEdGraphPin;
-class UK2Node_CallFunction;
-
-UCLASS(MinimalAPI, meta = (Keywords = "variable value global local get"))
+UCLASS(MinimalAPI, meta = (Keywords = "variable value global instanced get"))
 class UBPNode_GenericVariablesSetValue : public UBPNode_GenericVariablesBase
 {
     GENERATED_BODY()
@@ -24,10 +20,10 @@ public:
 // Generic Overrides
 private:
     virtual UEdGraphPin* GetVariableValuePin() const override;
-    virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const override;
+    virtual UEdGraphPin* GetVariableLinkPin(UK2Node_CallFunction* NodeFunction) const override;
 
-    virtual bool AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* nodeFunction) override;
     virtual UK2Node_CallFunction* CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph) override;
+    virtual bool AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* NodeFunction) override;
 
 // Internal helpers
 private:

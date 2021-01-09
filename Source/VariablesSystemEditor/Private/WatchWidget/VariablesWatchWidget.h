@@ -1,10 +1,11 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #pragma once
 
-#include "Core/Public/Templates/SharedPointer.h"
-#include "Slate/Public/Widgets/Views/SListView.h"
-#include "SlateCore/Public/Widgets/SCompoundWidget.h"
+#include "CoreMinimal.h"
+
+#include "Widgets/SCompoundWidget.h"
+#include "Widgets/Views/SListView.h"
 
 class UBaseVariable;
 
@@ -12,72 +13,56 @@ class UBaseVariable;
  * Helper class to create a table row with multiple columns for a BaseVariable.
  */
 
-class SVariableRowWidgetItem : public SMultiColumnTableRow< UBaseVariable* >
+class SVSVariableRow : public SMultiColumnTableRow<UBaseVariable*>
 {
 public:
-    SLATE_BEGIN_ARGS(SVariableRowWidgetItem) {}
-    SLATE_END_ARGS()
-
     void Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, UBaseVariable* InListItem);
 
 private:
-    TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName);
+	virtual TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName) override;
 
 private:
     UBaseVariable* Item;
 };
 
-
 /**
- * Creates a widgets to see multiple variables assets at the same time in an uniform list.
+ * Construct a watch to see the name and values of multiple variables at the same time.
  */
 
-class SVariablesWatchWidget : public SCompoundWidget
+class SVSWatchWidget : public SCompoundWidget
 {
 public:
-    SLATE_BEGIN_ARGS(SVariablesWatchWidget) { }
+    SLATE_BEGIN_ARGS(SVSWatchWidget) { }
     SLATE_END_ARGS()
-    
-    virtual ~SVariablesWatchWidget() { }
 
-public:
-    /**
-     * Construct a watch to see the name and values of multiple variables at the same time.
-     *
-     * @param InArgs The declaration data for this widget.
-     * @param Variables The variables we should use put inside the watch (Default = all)
-     */
     void Construct(const FArguments& InArgs);
+    
+// Public calls
+public:
+    void AddVariables(TArray<UBaseVariable*> VariablesToAdd);
 
+//SCompoundWidget interface
+private:
     virtual void Tick(const FGeometry& AllottedGeometry, const double InCurrentTime, const float InDeltaTime) override;
     virtual FReply OnDrop(const FGeometry& MyGeometry, const FDragDropEvent& DragDropEvent) override;
 
+// Callbacks
 private:
-    // Creates a row for a variable from a table.
     TSharedRef<ITableRow> MakeVariableTableRow(UBaseVariable* InInfo, const TSharedRef<STableViewBase>& OwnerTable);
+    TSharedPtr<SWidget> CreateContextMenu();
 
-    // Create the menu drop-down for right-clicking.
-    TSharedPtr< SWidget > CreateContextMenu();
-
-    // Handles selecting a variable from the table.
     void HandleVariableSelected(UBaseVariable* InItem);
 
-public:
+// Internal functionality
+private:
     void AddAllVariables();
     void RemoveAllVariables();
 
-    void AddVariables(TArray<UBaseVariable*> selected);
-    void OpenVariables(TArray<UBaseVariable*> selected);
-    void RemoveVariables(TArray<UBaseVariable*> selected);
+    void OpenVariables(TArray<UBaseVariable*> SelectedVariable);
+    void RemoveVariables(TArray<UBaseVariable*> SelectedVariable);
 
 private:
-    FReply OnAddButtonClicked();
-    FReply OnRemoveButtonClicked();
-
-private:
-    // Slate widget displaying the list of variables.
     TSharedPtr<SListView<UBaseVariable*>> VariablesListView;
     
-    // Reference to the variables currently inside the watch.
     TArray<UBaseVariable*> BaseVariables;
 };

@@ -1,57 +1,59 @@
-// Copyright Out-of-the-Box Plugins 2018-2019. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
 #include "BPNode_GenericVariablesSetValue.h"
 
-#include "BlueprintGraph/Classes/K2Node_CallFunction.h"
-#include "BlueprintGraph/Public/BlueprintActionDatabaseRegistrar.h"
-#include "BlueprintGraph/Public/BlueprintNodeSpawner.h"
-#include "KismetCompiler/Public/KismetCompiler.h"
-#include "VariablesSystem/Generated/Library/IncludeAll.h"
+#include "IncludeAll.h"
 
-#define LOCTEXT_NAMESPACE "VariablesSystem"
+#define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 
-const FName PN_InputValue(TEXT("InputValue"));
+namespace
+{
+	const FName PN_InputValue = TEXT("InputValue");
+	const FName VariableNewValueTextPin = TEXT("NewValue");
+	const FName VariableInputValueTextPin = TEXT("InputValue");
+}
 
 //////////////////////////////////////////////////////////////////////////
+//UEdGraphNode implementation
 void UBPNode_GenericVariablesSetValue::AllocateDefaultPins()
 {
-    const UEdGraphSchema_K2* K2Schema = GetDefault<UEdGraphSchema_K2>();
+	// Create Execute input pin
+    CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, UEdGraphSchema_K2::PN_Execute);
+    
+	// Create Execute output pin (Then)
+	CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, UEdGraphSchema_K2::PN_Then);
 
-    UEdGraphPin* InExec = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Exec, UEdGraphSchema_K2::PN_Execute);
-    UEdGraphPin* OutThen = CreatePin(EGPD_Output, UEdGraphSchema_K2::PC_Exec, UEdGraphSchema_K2::PN_Then);
-
-    UEdGraphPin* ResultPin = CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, PN_InputValue);
+	// Create a pin for the input value, type will be determined later
+    CreatePin(EGPD_Input, UEdGraphSchema_K2::PC_Wildcard, PN_InputValue);
 
     Super::AllocateDefaultPins();
 }
 
-//////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetNodeTitle(ENodeTitleType::Type TitleType) const
 {
-    return LOCTEXT("VariablesSystem_SetVariableNodeName", "Set Generic Variable");
+    return LOCTEXT("SetVariableNodeName", "Set Generic Variable");
 }
 
-//////////////////////////////////////////////////////////////////////////
 FText UBPNode_GenericVariablesSetValue::GetTooltipText() const
 {
-    return LOCTEXT("VariablesSystem_SetVariableNodetTooltip", "Sets the value of a Generic Variable");
+    return LOCTEXT("SetVariableNodetTooltip", "Sets the value of a Generic Variable");
 }
 
-//////////////////////////////////////////////////////////////////////////
-bool UBPNode_GenericVariablesSetValue::AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* nodeFunction)
+bool UBPNode_GenericVariablesSetValue::AdditionalExpand(FKismetCompilerContext& CompilerContext, UK2Node_CallFunction* NodeFunction)
 {
     bool bSucceeded = true;
+
     //connect exe
     {
         UEdGraphPin* SpawnExecPin = GetExecPin();
-        UEdGraphPin* CallExecPin = nodeFunction->GetExecPin();
+        UEdGraphPin* CallExecPin = NodeFunction->GetExecPin();
         bSucceeded &= SpawnExecPin && CallExecPin && CompilerContext.MovePinLinksToIntermediate(*SpawnExecPin, *CallExecPin).CanSafeConnect();
     }
 
     // connect then
     {
         UEdGraphPin* SpawnThenPin = GetThenPin();
-        UEdGraphPin* CallThenPin = nodeFunction->GetThenPin();
+        UEdGraphPin* CallThenPin = NodeFunction->GetThenPin();
         bSucceeded &= SpawnThenPin && CallThenPin && CompilerContext.MovePinLinksToIntermediate(*SpawnThenPin, *CallThenPin).CanSafeConnect();
     }
 
@@ -59,6 +61,7 @@ bool UBPNode_GenericVariablesSetValue::AdditionalExpand(FKismetCompilerContext& 
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Generic Overrides
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableValuePin() const
 {
     UEdGraphPin* Pin = FindPinChecked(PN_InputValue);
@@ -66,25 +69,24 @@ UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableValuePin() const
     return Pin;
 }
 
-//////////////////////////////////////////////////////////////////////////
 UK2Node_CallFunction* UBPNode_GenericVariablesSetValue::CreateSpecificNode(FName VariableClassName, FKismetCompilerContext& CompilerContext, UEdGraph* SourceGraph)
 {
-    UK2Node_CallFunction* resultCreateNode = nullptr;
-    resultCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
+    UK2Node_CallFunction* ResultCreateNode = nullptr;
+    ResultCreateNode = CompilerContext.SpawnIntermediateNode<UK2Node_CallFunction>(this, SourceGraph);
 
     #include "VariablesSystem/Generated/Node/CreateSpecificNodeSet.h"
 
-    resultCreateNode->AllocateDefaultPins();
-    return resultCreateNode;
+    ResultCreateNode->AllocateDefaultPins();
+    return ResultCreateNode;
 }
 
-//////////////////////////////////////////////////////////////////////////
-UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableLinkPin(UK2Node_CallFunction* nodeFunction) const
+UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableLinkPin(UK2Node_CallFunction* NodeFunction) const
 {
-    return nodeFunction->FindPin(TEXT("_value"));
+    return NodeFunction->FindPin(VariableNewValueTextPin);
 }
 
 //////////////////////////////////////////////////////////////////////////
+// Internal helpers
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetThenPin()const
 {
     UEdGraphPin* Pin = FindPinChecked(UEdGraphSchema_K2::PN_Then);

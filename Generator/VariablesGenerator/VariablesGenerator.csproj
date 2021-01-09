@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3B3D3693-ADD0-4A4B-A141-B618A1578FA2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>VariablesGenerator</RootNamespace>
+    <AssemblyName>VariablesGenerator</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\..\Binaries\DotNET\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Development|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\..\Binaries\DotNET\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EmbeddedResource Include="Templates\InstancedCPPTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\InstancedHTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\GlobalCPPTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\GlobalHTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\LibraryTemplate.ttinclude" />
+    <EmbeddedResource Include="Templates\NodeHelpersTemplate.ttinclude" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\GenericVariableGenerator.tt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Variables\GlobalVariableClasses.cs" />
+    <Compile Include="Variables\GlobalVariablesAttributes.cs" />
+    <Compile Include="Variables\GlobalVariablesGenerator.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>echo Deleting $(ProjectDir)Generated
+del /F /Q  /S "$(ProjectDir)Generated\" &gt;nul
+
+echo Generating template classes
+"TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
+echo Generating template classes DONE
+
+set ProjectGeneratedFolder=$(ProjectDir)Generated
+
+if "$(SolutionName)"=="UE4" (
+set TargetProjectFolder=$(SolutionDir)Engine\Plugins\Marketplace\VariablesSystem\
+) else (
+set TargetProjectFolder=$(ProjectDir)..\..\
+)
+
+set TargetGeneratedFolder=%25TargetProjectFolder%25Source\VariablesSystem\Generated
+echo Updating template classes from %25ProjectGeneratedFolder%25 to %25TargetGeneratedFolder%25
+(robocopy "%25ProjectGeneratedFolder%25" "%25TargetGeneratedFolder%25" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (
+set ERRORLEVEL=0)
+echo Updating done!
+echo.
+) 
+
+echo Deleting build files to trigger rebuild
+echo Deleting %25TargetProjectFolder%25..\..\Binaries
+del /F /Q /S "%25TargetProjectFolder%25..\..\Binaries"
+echo Deleting %25TargetProjectFolder%25..\..\Intermediate
+del /F /Q /S "%25TargetProjectFolder%25..\..\Intermediate"
+echo Deleting done</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
+</Project>
