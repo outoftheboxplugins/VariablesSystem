@@ -9,6 +9,7 @@
 namespace
 {
 	const FName PN_InputValue = TEXT("InputValue");
+	const FName VariableInputValueTextPin = TEXT("InputValue");
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -80,7 +81,7 @@ UK2Node_CallFunction* UBPNode_GenericVariablesSetValue::CreateSpecificNode(FName
 
 UEdGraphPin* UBPNode_GenericVariablesSetValue::GetVariableLinkPin(UK2Node_CallFunction* NodeFunction) const
 {
-    return NodeFunction->FindPin(TEXT("_value"));
+    return NodeFunction->FindPin(VariableInputValueTextPin);
 }
 
 //////////////////////////////////////////////////////////////////////////

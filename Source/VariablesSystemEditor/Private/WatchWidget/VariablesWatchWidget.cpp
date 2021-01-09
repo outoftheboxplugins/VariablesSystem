@@ -20,9 +20,10 @@ namespace
 // SVSVariableRow
 void SVSVariableRow::Construct(const FArguments& InArgs, const TSharedRef<STableViewBase>& InOwnerTable, UBaseVariable* InListItem)
 {
-	FSuperRowType::Construct(InArgs, InOwnerTable);
-
+	// Setting the list item since it will be used by the super constructor.
     Item = InListItem;
+
+	FSuperRowType::Construct(InArgs, InOwnerTable);
 }
 
 TSharedRef<SWidget> SVSVariableRow::GenerateWidgetForColumn(const FName& ColumnName)

@@ -20,7 +20,7 @@
     },
     {
       "Name": "VariablesSystemEditor",
-      "Type": "Editor",
+      "Type": "UncookedOnly",
       "WhitelistPlatforms": [ "Win64", "Win32", "Mac", "Linux" ]
     }
   ],
@@ -29,7 +29,7 @@
 	"Win64": 
 	[
 		"echo [VariablesSystem] Updating VariablesSystemGenerator",
-		"msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo >nul 2>nul || echo [VariablesSystem] Warning: MSBuild path not setup, skipping buildining the variables generator"
+		"msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo || echo [VariablesSystem] Warning: MSBuild path not setup or build failed, skipping buildining the variables generator"
 	]
   }
 }

@@ -104,6 +104,6 @@ FString UInstancedObjectRefVariable::GetStringValue() const
 FString UInstancedObjectRefVariable::GetValueAsString(UObject* Value) const
 {
     const auto& Item = Value;
-    return Item->GetName();
+    return Item ? Item->GetName() : "UNSET";
 }
 

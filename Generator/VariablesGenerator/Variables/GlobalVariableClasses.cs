@@ -3,11 +3,11 @@
 public class BaseVariable { }
 
 [GlobalVar("UObject*", "nullptr", "Object", "UObject::StaticClass()", "None", "Object")]
-[DebugInfo()]
+[DebugInfo("Item ? Item->GetName() : \"UNSET\"")]
 public class ObjectRefVariable : BaseVariable { }
 
 [GlobalVar("AActor*", "nullptr", "Object", "AActor::StaticClass()", "None", "SoftObject")]
-[DebugInfo()]
+[DebugInfo("Item ? Item->GetName() : \"UNSET\"")]
 public class ActorRefVariable : BaseVariable { }
 
 [GlobalVar("bool", "false", "Boolean", "", "None", "Boolean")]

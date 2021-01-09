@@ -94,7 +94,7 @@ public class DebugInfoAttribute : Attribute, ICloneable
 {
     public string toStringFunction;
 
-	public DebugInfoAttribute(string toStringFunction = "Item->GetName()")
+	public DebugInfoAttribute(string toStringFunction)
 	{
 		this.toStringFunction = toStringFunction;
 	}

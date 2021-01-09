@@ -19,6 +19,7 @@ class UBPNode_GenericVariablesBase : public UK2Node
 //UEdGraphNode implementation
 protected:
     virtual void AllocateDefaultPins() override;
+	virtual void GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const override;
 
 //K2Node implementation
 private:

@@ -2,6 +2,8 @@
 
 #include "BPNode_GenericVariablesBase.h"
 
+#include "BlueprintActionDatabaseRegistrar.h"
+#include "BlueprintNodeSpawner.h"
 #include "K2Node_CallFunction.h"
 #include "KismetCompiler.h"
 
@@ -32,6 +34,21 @@ void UBPNode_GenericVariablesBase::AllocateDefaultPins()
     }
 
     Super::AllocateDefaultPins();
+}
+
+void UBPNode_GenericVariablesBase::GetMenuActions(FBlueprintActionDatabaseRegistrar& ActionRegistrar) const
+{
+	Super::GetMenuActions(ActionRegistrar);
+
+	UClass* BPClassAction = GetClass();
+
+	if (ActionRegistrar.IsOpenForRegistration(BPClassAction)) 
+	{
+		UBlueprintNodeSpawner* Spawner = UBlueprintNodeSpawner::Create(BPClassAction);
+		check(Spawner != nullptr);
+
+		ActionRegistrar.AddBlueprintAction(BPClassAction, Spawner);
+	}
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -83,13 +100,13 @@ void UBPNode_GenericVariablesBase::ExpandNode(FKismetCompilerContext& CompilerCo
 		if (IsInstancedVariable(VariableName))
 		{
 			UEdGraphPin* InputOwnerPin = GetVariableOwnerPin();
-			UEdGraphPin* FunctioOwnerPin = CallCreateNode->FindPin(TEXT("owner"));
+			UEdGraphPin* FunctioOwnerPin = CallCreateNode->FindPin(VariableOwnerTextPin);
 			bSucceeded &= InputOwnerPin && FunctioOwnerPin && CompilerContext.CopyPinLinksToIntermediate(*InputOwnerPin, *FunctioOwnerPin).CanSafeConnect();
 		}
 
 		// Connect Class pin.
 		UEdGraphPin* ClassPin = GetVariablePin();
-		UEdGraphPin* VariableInput = CallCreateNode->FindPin(TEXT("var"));
+		UEdGraphPin* VariableInput = CallCreateNode->FindPin(VariableReferenceTextPin);
 		bSucceeded &= ClassPin && VariableInput && CompilerContext.CopyPinLinksToIntermediate(*ClassPin, *VariableInput).CanSafeConnect();
 
 		// Connect Result pin.

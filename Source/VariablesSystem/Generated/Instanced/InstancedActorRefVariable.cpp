@@ -104,6 +104,6 @@ FString UInstancedActorRefVariable::GetStringValue() const
 FString UInstancedActorRefVariable::GetValueAsString(AActor* Value) const
 {
     const auto& Item = Value;
-    return Item->GetName();
+    return Item ? Item->GetName() : "UNSET";
 }
 

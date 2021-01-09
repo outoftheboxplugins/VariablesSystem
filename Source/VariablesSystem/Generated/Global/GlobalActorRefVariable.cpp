@@ -57,5 +57,5 @@
 FString UGlobalActorRefVariable::GetStringValue() const
 {
     const auto& Item = Value;
-    return Item->GetName();
+    return Item ? Item->GetName() : "UNSET";
 }
