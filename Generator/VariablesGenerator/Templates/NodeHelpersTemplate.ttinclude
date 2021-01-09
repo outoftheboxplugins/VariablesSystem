@@ -9,6 +9,13 @@
 <#+
 void GeneratePinTypeFromVariable(Dictionary<string, GlobalVariable> variables)
 {
+#>
+
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+<#+
     for (int i = 0; i < variables.Count; i++)
     {
 #>
@@ -46,6 +53,13 @@ void GeneratePinTypeFromVariable(Dictionary<string, GlobalVariable> variables)
 <#+
 void GenerateCreateSpecificNodeGet(Dictionary<string, GlobalVariable> variables)
 {
+#>
+
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+<#+
     for (int i = 0; i < variables.Count; i++)
     {
 #>
@@ -65,18 +79,24 @@ void GenerateCreateSpecificNodeGet(Dictionary<string, GlobalVariable> variables)
 <#+
 void GenerateCreateSpecificNodeSet(Dictionary<string, GlobalVariable> variables)
 {
+#>
+
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+<#+
     for (int i = 0; i < variables.Count; i++)
     {
 #>
-        if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i)#>"))
-        {
-            ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=variables.Keys.ElementAt(i)#>, SetGlobal<#=variables.Keys.ElementAt(i)#>Value), UGlobal<#=variables.Keys.ElementAt(i)#>::StaticClass());
-        }
-
-        if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i)#>"))
-        {
-            ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstanced<#=variables.Keys.ElementAt(i)#>, SetInstanced<#=variables.Keys.ElementAt(i)#>Value), UInstanced<#=variables.Keys.ElementAt(i)#>::StaticClass());
-        }
+    if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i)#>"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=variables.Keys.ElementAt(i)#>, SetGlobal<#=variables.Keys.ElementAt(i)#>Value), UGlobal<#=variables.Keys.ElementAt(i)#>::StaticClass());
+    }
+    if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i)#>"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstanced<#=variables.Keys.ElementAt(i)#>, SetInstanced<#=variables.Keys.ElementAt(i)#>Value), UInstanced<#=variables.Keys.ElementAt(i)#>::StaticClass());
+    }
 <#+
     }
 }
@@ -85,6 +105,13 @@ void GenerateCreateSpecificNodeSet(Dictionary<string, GlobalVariable> variables)
 <#+
 void GenerateAssetColorByVariable(Dictionary<string, GlobalVariable> variables)
 {
+#>
+
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
+<#+
     for (int i = 0; i < variables.Count; i++)
     {
 #>

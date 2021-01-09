@@ -1,3 +1,8 @@
+
+// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
+
+// GENERATED FILE DO NOT MODIFY DIRECTLY
+
     if (VariableClassName == FName("GlobalObjectRefVariable"))
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalObjectRefVariable, GetGlobalObjectRefVariableValue), UGlobalObjectRefVariable::StaticClass());
