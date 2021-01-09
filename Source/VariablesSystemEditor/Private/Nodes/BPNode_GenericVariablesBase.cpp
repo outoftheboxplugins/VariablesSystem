@@ -100,13 +100,13 @@ void UBPNode_GenericVariablesBase::ExpandNode(FKismetCompilerContext& CompilerCo
 		if (IsInstancedVariable(VariableName))
 		{
 			UEdGraphPin* InputOwnerPin = GetVariableOwnerPin();
-			UEdGraphPin* FunctioOwnerPin = CallCreateNode->FindPin(VariableOwnerTextPin);
+			UEdGraphPin* FunctioOwnerPin = CallCreateNode->FindPin(TEXT("VariableOwner"));
 			bSucceeded &= InputOwnerPin && FunctioOwnerPin && CompilerContext.CopyPinLinksToIntermediate(*InputOwnerPin, *FunctioOwnerPin).CanSafeConnect();
 		}
 
 		// Connect Class pin.
 		UEdGraphPin* ClassPin = GetVariablePin();
-		UEdGraphPin* VariableInput = CallCreateNode->FindPin(VariableReferenceTextPin);
+		UEdGraphPin* VariableInput = CallCreateNode->FindPin(TEXT("Variable"));
 		bSucceeded &= ClassPin && VariableInput && CompilerContext.CopyPinLinksToIntermediate(*ClassPin, *VariableInput).CanSafeConnect();
 
 		// Connect Result pin.
