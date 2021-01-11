@@ -12,7 +12,7 @@
 
 namespace 
 {
-	const FName ModuleName = "VariablesSystemEditor";
+	const FName VSEditorModuleName = "VariablesSystemEditor";
 	const FName VariablesWatchTabName = "VariablesWatchTab";
 }
 
@@ -22,12 +22,12 @@ namespace
 // Public interface
 FVariablesSystemEditorModule& FVariablesSystemEditorModule::GetModule()
 {
-	return FModuleManager::LoadModuleChecked<FVariablesSystemEditorModule>(ModuleName);
+	return FModuleManager::LoadModuleChecked<FVariablesSystemEditorModule>(VSEditorModuleName);
 }
 
 bool FVariablesSystemEditorModule::IsModuleLoaded()
 {
-	return FModuleManager::Get().IsModuleLoaded(ModuleName);
+	return FModuleManager::Get().IsModuleLoaded(VSEditorModuleName);
 }
 
 TSharedRef<SDockTab> FVariablesSystemEditorModule::OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables /*= TArray<UBaseVariable*>()*/)
