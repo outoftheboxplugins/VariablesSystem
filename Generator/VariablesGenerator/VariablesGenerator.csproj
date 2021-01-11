@@ -64,7 +64,13 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>echo Deleting $(ProjectDir)Generated
+    <PostBuildEvent>where "TextTransform.exe" /Q
+IF %25ERRORLEVEL%25 NEQ 0 (
+echo TextTransform.exe was not found
+exit /b
+)
+
+echo Deleting $(ProjectDir)Generated
 del /F /Q  /S "$(ProjectDir)Generated\" &gt;nul
 
 echo Generating template classes
