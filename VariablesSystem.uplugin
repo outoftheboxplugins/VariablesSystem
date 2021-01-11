@@ -27,14 +27,7 @@
   "PreBuildSteps":
   {
     "Win64": [
-      "echo [VariablesSystem] Updating VariablesSystemGenerator",
-      "where msbuild /Q",
-      "if %ERRORLEVEL% NEQ 0 (",
-      "echo [VariablesSystem] msbuild was not found",
-      "exit /b",
-      ")",
-
-      "msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo"
+      "$(PluginDir)/Generator/UpdateFileGeneration.bat"
     ]
   }
 }
