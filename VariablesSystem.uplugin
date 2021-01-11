@@ -34,7 +34,7 @@
       "exit /b",
       ")",
 
-      "msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo || echo [VariablesSystem] Warning: MSBuild path not setup or build failed, skipping buildining the variables generator"
+      "msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo"
     ]
   }
 }
