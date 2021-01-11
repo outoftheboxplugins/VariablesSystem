@@ -98,9 +98,9 @@ echo.
 
 echo [VariablesSystem] Deleting build files to trigger rebuild
 echo [VariablesSystem] Deleting %25TargetProjectFolder%25Binaries
-del /F /Q /S "%25TargetProjectFolder%25Binaries"
+del /F /Q /S "%25TargetProjectFolder%25Binaries" &gt; nul
 echo [VariablesSystem] Deleting %25TargetProjectFolder%25Intermediate
-del /F /Q /S "%25TargetProjectFolder%25Intermediate"
+del /F /Q /S "%25TargetProjectFolder%25Intermediate" &gt; nul
 echo [VariablesSystem] Deleting done. Ready to rebuild</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
