@@ -66,16 +66,16 @@
   <PropertyGroup>
     <PostBuildEvent>where "TextTransform.exe" /Q
 IF %25ERRORLEVEL%25 NEQ 0 (
-echo TextTransform.exe was not found
+echo [VariablesSystem] TextTransform.exe was not found
 exit /b
 )
 
-echo Deleting $(ProjectDir)Generated
+echo [VariablesSystem] Deleting $(ProjectDir)Generated
 del /F /Q  /S "$(ProjectDir)Generated\" &gt;nul
 
-echo Generating template classes
+echo [VariablesSystem] Generating template classes
 "TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
-echo Generating template classes DONE
+echo [VariablesSystem] Generating template classes DONE
 
 set ProjectGeneratedFolder=$(ProjectDir)Generated
 
@@ -86,19 +86,19 @@ set TargetProjectFolder=$(ProjectDir)..\..\
 )
 
 set TargetGeneratedFolder=%25TargetProjectFolder%25Source\VariablesSystem\Generated
-echo Updating template classes from %25ProjectGeneratedFolder%25 to %25TargetGeneratedFolder%25
+echo [VariablesSystem] Updating template classes from %25ProjectGeneratedFolder%25 to %25TargetGeneratedFolder%25
 (robocopy "%25ProjectGeneratedFolder%25" "%25TargetGeneratedFolder%25" /E /MIR /NFL /NDL /NJH /NJS /nc /ns /np) ^&amp; IF %25ERRORLEVEL%25 LEQ 1 (
 set ERRORLEVEL=0)
-echo Updating done!
+echo [VariablesSystem] Updating done!
 echo.
 ) 
 
-echo Deleting build files to trigger rebuild
-echo Deleting %25TargetProjectFolder%25..\..\Binaries
+echo [VariablesSystem] Deleting build files to trigger rebuild
+echo [VariablesSystem] Deleting %25TargetProjectFolder%25..\..\Binaries
 del /F /Q /S "%25TargetProjectFolder%25..\..\Binaries"
-echo Deleting %25TargetProjectFolder%25..\..\Intermediate
+echo [VariablesSystem] Deleting %25TargetProjectFolder%25..\..\Intermediate
 del /F /Q /S "%25TargetProjectFolder%25..\..\Intermediate"
-echo Deleting done</PostBuildEvent>
+echo [VariablesSystem] Deleting done. Ready to rebuild</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>

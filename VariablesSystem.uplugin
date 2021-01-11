@@ -26,10 +26,15 @@
   ],
   "PreBuildSteps":
   {
-	"Win64": 
-	[
-		"echo [VariablesSystem] Updating VariablesSystemGenerator",
-		"msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo || echo [VariablesSystem] Warning: MSBuild path not setup or build failed, skipping buildining the variables generator"
-	]
+    "Win64": [
+      "echo [VariablesSystem] Updating VariablesSystemGenerator",
+      "where msbuild /Q",
+      "if %ERRORLEVEL% NEQ 0 (",
+      "echo [VariablesSystem] msbuild was not found",
+      "exit /b",
+      ")",
+
+      "msbuild $(PluginDir)/Generator/VariablesGenerator.sln /target:Build /verbosity:minimal /nologo || echo [VariablesSystem] Warning: MSBuild path not setup or build failed, skipping buildining the variables generator"
+    ]
   }
 }
