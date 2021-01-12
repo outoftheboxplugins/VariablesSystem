@@ -7,6 +7,8 @@
 #include "AssetRegistry/Public/AssetRegistryModule.h"
 #include "Core/Public/Modules/ModuleManager.h"
 
+#include "VSLog.h"
+
 #include "VariablesSystemHelpers.generated.h"
 
 class UBaseVariable;
