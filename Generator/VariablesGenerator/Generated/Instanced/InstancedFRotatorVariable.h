@@ -31,10 +31,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void CopyInstancedFRotatorVariableValue(UObject* Owner, UInstancedFRotatorVariable* Variable, UObject* OtherOwner, UInstancedFRotatorVariable* OtherVariable);
 
+// World Callbacks
+private:
+	virtual void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params) override;
+	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources) override;
+
 private:
 	// Internal getter or creater used to modify values.
 	FRotator& GetInstancedFRotatorVariableRef(UObject* Owner);
-	
+
+	// Removes variables with invalid owner pointers.
+	void CleanupVariables();
+
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;

@@ -31,10 +31,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void CopyInstancedActorRefVariableValue(UObject* Owner, UInstancedActorRefVariable* Variable, UObject* OtherOwner, UInstancedActorRefVariable* OtherVariable);
 
+// World Callbacks
+private:
+	virtual void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params) override;
+	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources) override;
+
 private:
 	// Internal getter or creater used to modify values.
 	AActor*& GetInstancedActorRefVariableRef(UObject* Owner);
-	
+
+	// Removes variables with invalid owner pointers.
+	void CleanupVariables();
+
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;

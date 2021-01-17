@@ -40,10 +40,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void CopyInstanced<#=variable.Key#>Value(UObject* Owner, UInstanced<#=variable.Key#>* Variable, UObject* OtherOwner, UInstanced<#=variable.Key#>* OtherVariable);
 
+// World Callbacks
+private:
+	virtual void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params) override;
+	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources) override;
+
 private:
 	// Internal getter or creater used to modify values.
 	<#=variable.Value.globalVariable.valueType#>& GetInstanced<#=variable.Key#>Ref(UObject* Owner);
-	
+
+	// Removes variables with invalid owner pointers.
+	void CleanupVariables();
+
 <#+
 	if(variable.Value.debugInfo != null)
 	{

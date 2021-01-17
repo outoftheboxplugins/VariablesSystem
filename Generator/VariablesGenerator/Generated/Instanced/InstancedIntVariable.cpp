@@ -70,9 +70,38 @@
 	}
 }
 
+void UInstancedIntVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
+{
+	CleanupVariables();
+}
+
+void UInstancedIntVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
+{
+	CleanupVariables();
+}
+
 int32& UInstancedIntVariable::GetInstancedIntVariableRef(UObject* Owner)
 {
 	return VariablesMap.FindOrAdd(Owner);;
+}
+
+void UInstancedIntVariable::CleanupVariables()
+{
+	int32 index = 0;
+	while(index < VariablesMap.Num())
+	{
+		TArray<FWeakObjectPtr> Owners;
+		VariablesMap.GetKeys(Owners);
+
+		if (!Owners[index].IsValid())
+		{
+			VariablesMap.Remove(Owners[index]);
+		}
+		else
+		{
+			index++;
+		}
+	}
 }
 
 FString UInstancedIntVariable::GetStringValue() const
