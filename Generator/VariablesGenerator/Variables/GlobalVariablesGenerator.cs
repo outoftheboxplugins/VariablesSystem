@@ -37,53 +37,60 @@ public class VariableGenerator
 		return arrayVariables;
 	}
 
-	public static VariableList GenerateAllVariables()
-    {
-        VariableList result = new VariableList();
+	public static VariableList ParseTypeVariablesList()
+	{
+		VariableList result = new VariableList();
 
-        Type[] variablesTypesList = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                            from assemblyType in domainAssembly.GetTypes()
-                                            where typeof(BaseVariable).IsAssignableFrom(assemblyType)
-                                            select assemblyType).ToArray();
+		Type[] variablesTypesList = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
+									 from assemblyType in domainAssembly.GetTypes()
+									 where typeof(BaseVariable).IsAssignableFrom(assemblyType)
+									 select assemblyType).ToArray();
 
-        
+
 		foreach (Type variable in variablesTypesList)
-        {
+		{
 			GlobalVariable globalVariable = new GlobalVariable();
 
-            Attribute[] attrs = Attribute.GetCustomAttributes(variable);
+			Attribute[] attrs = Attribute.GetCustomAttributes(variable);
 
 			foreach (Attribute attr in attrs)
-            {
+			{
 				if (attr is GlobalVarAttribute)
-                {
+				{
 					globalVariable.globalVariable = attr as GlobalVarAttribute;
-                }
+				}
 
-				if(attr is GenerateExtraAttribute)
+				if (attr is GenerateExtraAttribute)
 				{
 					globalVariable.extraGeneration = attr as GenerateExtraAttribute;
 				}
 
-				if(attr is DebugInfoAttribute)
+				if (attr is DebugInfoAttribute)
 				{
 					globalVariable.debugInfo = attr as DebugInfoAttribute;
 				}
-            }
+			}
 
-			if(globalVariable.globalVariable != null)
+			if (globalVariable.globalVariable != null)
 			{
 				result.Add(variable.Name, globalVariable);
 			}
 		}
 
-		VariableList arrayVariablesList = GetArrayVariable(result);
+		return result;
+	}
+
+	public static VariableList GenerateAllVariables()
+    {
+		VariableList allVariables = ParseTypeVariablesList();
+
+		VariableList arrayVariablesList = GetArrayVariable(allVariables);
 
 		foreach(VariableEntry arrayEntry in arrayVariablesList)
 		{
-			result.Add(arrayEntry.Key, arrayEntry.Value);
+			allVariables.Add(arrayEntry.Key, arrayEntry.Value);
 		}
 
-		return result;
+		return allVariables;
 	}
 }
