@@ -57,7 +57,7 @@ private:
 #>
 
 private:
-	TMap<UObject*, <#=variable.Value.globalVariable.valueType#>> VariablesMap;
+	TMap<FWeakObjectPtr, <#=variable.Value.globalVariable.valueType#>> VariablesMap;
 };
 
 <#+

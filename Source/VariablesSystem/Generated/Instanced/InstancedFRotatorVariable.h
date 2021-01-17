@@ -41,6 +41,6 @@ private:
 	FString GetValueAsString(FRotator Value) const;
 
 private:
-	TMap<UObject*, FRotator> VariablesMap;
+	TMap<FWeakObjectPtr, FRotator> VariablesMap;
 };
 

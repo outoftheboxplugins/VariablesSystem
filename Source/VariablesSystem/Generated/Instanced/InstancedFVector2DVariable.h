@@ -41,6 +41,6 @@ private:
 	FString GetValueAsString(FVector2D Value) const;
 
 private:
-	TMap<UObject*, FVector2D> VariablesMap;
+	TMap<FWeakObjectPtr, FVector2D> VariablesMap;
 };
 

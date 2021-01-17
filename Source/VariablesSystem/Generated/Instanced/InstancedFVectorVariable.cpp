@@ -84,11 +84,11 @@ FString UInstancedFVectorVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-        FString ValueString = GetValueAsString(Value);
-        FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
-        FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
+		FString ValueString = GetValueAsString(Value);
+		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
-        Lines.Append(Line);
+		Lines.Append(Line);
     }
 
     Lines.TrimEndInline();

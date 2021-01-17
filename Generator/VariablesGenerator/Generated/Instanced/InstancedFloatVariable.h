@@ -41,6 +41,6 @@ private:
 	FString GetValueAsString(float Value) const;
 
 private:
-	TMap<UObject*, float> VariablesMap;
+	TMap<FWeakObjectPtr, float> VariablesMap;
 };
 
