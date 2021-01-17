@@ -2,13 +2,13 @@
 
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
-
+using VariableEntry = System.Collections.Generic.KeyValuePair<string, GlobalVariable>;
+using VariableList = System.Collections.Generic.Dictionary<string, GlobalVariable>;
 
 public class VariableGenerator
 {
-	public static KeyValuePair<string, GlobalVariable> GenerateArrayClass(KeyValuePair<string, GlobalVariable> variablePair)
+	public static VariableEntry GenerateArrayClass(VariableEntry variablePair)
 	{
 		GlobalVariable globalVariable = variablePair.Value;
 		GlobalVariable globalArrayVariable = (GlobalVariable) globalVariable.Clone();
@@ -19,12 +19,27 @@ public class VariableGenerator
 
 		string newName = variablePair.Key.Replace("Variable", "ArrayVariable");
 
-		return new KeyValuePair<string, GlobalVariable>(newName, globalArrayVariable);
+		return new VariableEntry(newName, globalArrayVariable);
 	}
 
-	public static Dictionary<string, GlobalVariable> GenerateAllVariables()
+	public static VariableList GetArrayVariable(VariableList keyValuePairs)
+	{
+		VariableList arrayVariables = new VariableList();
+		foreach (var pair in keyValuePairs)
+		{
+			if (pair.Value.extraGeneration != null && pair.Value.extraGeneration.generateArray)
+			{
+				VariableEntry arrayVariable = GenerateArrayClass(pair);
+				arrayVariables.Add(arrayVariable.Key, arrayVariable.Value);
+			}
+		}
+
+		return arrayVariables;
+	}
+
+	public static VariableList GenerateAllVariables()
     {
-        Dictionary<string, GlobalVariable> result = new Dictionary<string, GlobalVariable>();
+        VariableList result = new VariableList();
 
         Type[] variablesTypesList = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
                                             from assemblyType in domainAssembly.GetTypes()
@@ -62,13 +77,11 @@ public class VariableGenerator
 			}
 		}
 
+		VariableList arrayVariablesList = GetArrayVariable(result);
 
-		foreach(var pair in  result)
+		foreach(VariableEntry arrayEntry in arrayVariablesList)
 		{
-			if(pair.Value.extraGeneration != null && pair.Value.extraGeneration.generateArray)
-			{
-				result.Append(GenerateArrayClass(pair));
-			}
+			result.Add(arrayEntry.Key, arrayEntry.Value);
 		}
 
 		return result;
