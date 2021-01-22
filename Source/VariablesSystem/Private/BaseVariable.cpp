@@ -30,18 +30,32 @@ FString UBaseVariable::GetStringValue() const
 
 void UBaseVariable::SaveIfNeeded()
 {
-	if (SaveBehavior == EVSSaveType::VSST_SaveOnFinish || SaveBehavior == EVSSaveType::VSST_StartAndFinish)
+	if (HasAnyFlags(RF_ClassDefaultObject))
 	{
-		Save();
+		return;
 	}
+
+	if (SaveBehavior != EVSSaveType::VSST_SaveOnFinish && SaveBehavior != EVSSaveType::VSST_StartAndFinish)
+	{
+		return;
+	}
+
+	Save();
 }
 
 void UBaseVariable::LoadIfNeeded()
 {
-	if (SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish)
+	if (HasAnyFlags(RF_ClassDefaultObject))
 	{
-		Load();
+		return;
 	}
+
+	if (SaveBehavior != EVSSaveType::VSST_LoadOnStart && SaveBehavior != EVSSaveType::VSST_StartAndFinish)
+	{
+		return;
+	}
+
+	Load();
 }
 
 void UBaseVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
