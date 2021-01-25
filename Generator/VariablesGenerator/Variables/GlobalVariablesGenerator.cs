@@ -69,6 +69,11 @@ public class VariableGenerator
 				{
 					globalVariable.debugInfo = attr as DebugInfoAttribute;
 				}
+
+				if(attr is ExtraIncludeAttribute)
+				{
+					globalVariable.extraInclude = attr as ExtraIncludeAttribute;
+				}
 			}
 
 			if (globalVariable.globalVariable != null)

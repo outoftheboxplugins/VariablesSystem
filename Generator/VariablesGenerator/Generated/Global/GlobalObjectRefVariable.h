@@ -26,7 +26,6 @@
 #pragma once
 
 #include "BaseVariable.h"
-
 #include "GlobalObjectRefVariable.generated.h"
 
 /**

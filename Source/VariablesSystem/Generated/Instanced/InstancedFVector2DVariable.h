@@ -5,7 +5,6 @@
 #pragma once
 
 #include "BaseVariable.h"
-
 #include "InstancedFVector2DVariable.generated.h"
 
 /**

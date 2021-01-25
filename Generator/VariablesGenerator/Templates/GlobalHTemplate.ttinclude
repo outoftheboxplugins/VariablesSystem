@@ -16,7 +16,16 @@ void GenerateGlobalHFile(KeyValuePair<string, GlobalVariable> variable)
 #pragma once
 
 #include "BaseVariable.h"
+<#+
+	if(variable.Value.extraInclude != null)
+	{
+#>
+	
+	#include "<#=variable.Value.extraInclude.includePath#>"
 
+<#+
+	}
+#>
 #include "Global<#=variable.Key#>.generated.h"
 
 /**

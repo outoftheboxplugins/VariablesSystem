@@ -9,6 +9,7 @@ public class GlobalVariable : ICloneable
 	public DebugInfoAttribute debugInfo;
 	public GlobalVarAttribute globalVariable;
 	public GenerateExtraAttribute extraGeneration;
+	public ExtraIncludeAttribute extraInclude;
 
 	public object Clone()
 	{
@@ -17,6 +18,7 @@ public class GlobalVariable : ICloneable
 		globalVariableClone.debugInfo		= (DebugInfoAttribute)		debugInfo.Clone();
 		globalVariableClone.globalVariable	= (GlobalVarAttribute)		globalVariable.Clone();
 		globalVariableClone.extraGeneration = (GenerateExtraAttribute)	extraGeneration.Clone();
+		globalVariableClone.extraInclude	= (ExtraIncludeAttribute)	extraInclude.Clone();
 
 		return globalVariableClone;
 	}
@@ -97,6 +99,22 @@ public class DebugInfoAttribute : Attribute, ICloneable
 	public DebugInfoAttribute(string toStringFunction)
 	{
 		this.toStringFunction = toStringFunction;
+	}
+
+	public object Clone()
+	{
+		return MemberwiseClone();
+	}
+}
+
+[AttributeUsage(AttributeTargets.Class)]
+public class ExtraIncludeAttribute : Attribute, ICloneable
+{
+	public string includePath;
+
+	public ExtraIncludeAttribute(string includePath)
+	{
+		this.includePath = includePath;
 	}
 
 	public object Clone()

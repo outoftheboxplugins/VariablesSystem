@@ -5,7 +5,6 @@
 #pragma once
 
 #include "BaseVariable.h"
-
 #include "InstancedActorRefVariable.generated.h"
 
 /**

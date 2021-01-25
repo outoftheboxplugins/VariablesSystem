@@ -70,4 +70,10 @@ public:
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector2D GetInstancedFVector2DVariableSafe(UInstancedFVector2DVariable* variable, UObject* owner);
 
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global GameplayTagContainer Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FGameplayTagContainer GetGlobalGameplayTagContainerSafe(UGlobalGameplayTagContainer* variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced GameplayTagContainer Variable (Thread Safe)"), Category = "VariablesSystem")
+    static FGameplayTagContainer GetInstancedGameplayTagContainerSafe(UInstancedGameplayTagContainer* variable, UObject* owner);
+
 };

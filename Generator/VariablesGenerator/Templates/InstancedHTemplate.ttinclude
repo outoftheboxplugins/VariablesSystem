@@ -14,7 +14,16 @@ void GenerateInstancedHFile(KeyValuePair<string, GlobalVariable> variable)
 #pragma once
 
 #include "BaseVariable.h"
+<#+
+	if(variable.Value.extraInclude != null)
+	{
+#>
+	
+	#include "<#=variable.Value.extraInclude.includePath#>"
 
+<#+
+	}
+#>
 #include "Instanced<#=variable.Key#>.generated.h"
 
 /**

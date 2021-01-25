@@ -5,7 +5,6 @@
 #pragma once
 
 #include "BaseVariable.h"
-
 #include "GlobalStringVariable.generated.h"
 
 /**
