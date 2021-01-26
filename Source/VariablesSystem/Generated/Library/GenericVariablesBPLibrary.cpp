@@ -94,13 +94,3 @@
     return UInstancedFVector2DVariable::GetInstancedFVector2DVariableValue(owner, variable);
 }
 
-/* STATIC */ FGameplayTagContainer UGenericVariablesBPLibrary::GetGlobalGameplayTagContainerSafe(UGlobalGameplayTagContainer* variable)
-{
-    return UGlobalGameplayTagContainer::GetGlobalGameplayTagContainerValue(variable);
-}
-
-/* STATIC */ FGameplayTagContainer UGenericVariablesBPLibrary::GetInstancedGameplayTagContainerSafe(UInstancedGameplayTagContainer* variable, UObject* owner)
-{
-    return UInstancedGameplayTagContainer::GetInstancedGameplayTagContainerValue(owner, variable);
-}
-

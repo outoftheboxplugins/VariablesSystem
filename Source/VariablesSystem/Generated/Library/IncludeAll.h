@@ -22,5 +22,3 @@
 #include "VariablesSystem/Generated/Instanced/InstancedFVectorVariable.h"
 #include "VariablesSystem/Generated/Global/GlobalFVector2DVariable.h"
 #include "VariablesSystem/Generated/Instanced/InstancedFVector2DVariable.h"
-#include "VariablesSystem/Generated/Global/GlobalGameplayTagContainer.h"
-#include "VariablesSystem/Generated/Instanced/InstancedGameplayTagContainer.h"

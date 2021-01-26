@@ -103,15 +103,3 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
     }
-    if (VariableClassName == FName("GlobalGameplayTagContainer"))
-    {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
-        ResultContainerType = EPinContainerType::None;
-        ResultPinType.PinSubCategoryObject = FGameplayTagContainer::StaticStruct();
-    }
-    if (VariableClassName == FName("InstancedGameplayTagContainer"))
-    {
-        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
-        ResultContainerType = EPinContainerType::None;
-        ResultPinType.PinSubCategoryObject = FGameplayTagContainer::StaticStruct();
-    }

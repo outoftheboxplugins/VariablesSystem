@@ -39,7 +39,3 @@
 	{
 		return Settings->VectorPinTypeColor;
 	}
-	if (Variable->IsA<UGlobalGameplayTagContainer>() || Variable->IsA<UInstancedGameplayTagContainer>())
-	{
-		return Settings->StructPinTypeColor;
-	}

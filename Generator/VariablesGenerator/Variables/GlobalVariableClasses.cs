@@ -46,6 +46,7 @@ public class FVectorVariable : BaseVariable { }
 public class FVector2DVariable : BaseVariable { }
 
 // Examples:
-[GlobalVar("FGameplayTagContainer", "FGameplayTagContainer()", "Struct", "FGameplayTagContainer::StaticStruct()", "None", "Struct")]
-[ExtraInclude(@"C:\Unreal\UnrealEngine\Engine\Source\Runtime\GameplayTags\Classes\GameplayTagContainer.h")]
-public class GameplayTagContainer : BaseVariable { }
+// [GlobalVar("FGameplayTagContainer", "FGameplayTagContainer()", "Struct", "FGameplayTagContainer::StaticStruct()", "None", "Struct")]
+// [ExtraInclude(@"GameplayTagContainer.h")]
+// [DebugInfo("Item.ToString()")]
+// public class GameplayTagContainer : BaseVariable { }
