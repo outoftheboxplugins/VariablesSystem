@@ -19,7 +19,7 @@
 	}
 	else
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot get value without a variable. Returning default value."), *GetName());
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
 		return FVector::ZeroVector;
 	}
 }
@@ -33,7 +33,7 @@
 	}
 	else
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot set value without a variable."), *GetName());
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
 	}
 }
 
@@ -46,11 +46,11 @@
 	}
 	else if(!Variable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot copy a value without a variable."), *GetName());
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
 	}
 	else if(!OtherVariable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot copy a value without an other variable."), *GetName());
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
 	}
 }
 
