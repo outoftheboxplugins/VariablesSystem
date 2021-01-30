@@ -19,7 +19,7 @@
 	}
 	else
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot get value without a variable. Returning default value."), *GetName());
 		return FRotator::ZeroRotator;
 	}
 }
@@ -33,7 +33,7 @@
 	}
 	else
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot set value without a variable."), *GetName());
 	}
 }
 
@@ -46,11 +46,11 @@
 	}
 	else if(!Variable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot copy a value without a variable."), *GetName());
 	}
 	else if(!OtherVariable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot copy a value without an other variable."), *GetName());
 	}
 }
 

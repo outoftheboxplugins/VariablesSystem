@@ -10,13 +10,13 @@
 {
 	if (!Owner)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without an owner. Returning default value."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot get instance value without an owner. Returning default value."), *GetName());
 		return FVector::ZeroVector;
 	}
 
 	if (!Variable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot get instance value without a variable. Returning default value."), *GetName());
 		return FVector::ZeroVector;
 	}
 	else
@@ -29,11 +29,11 @@
 {
 	if (!Owner)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without an owner."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot set instance value without an owner."), *GetName());
 	}
 	else if (!Variable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot set instance value without a variable."), *GetName());
 	}
 	else
 	{
@@ -51,11 +51,11 @@
 {
 	if (!Owner || !OtherOwner)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without an owner."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot copy instance value without an owner."), *GetName());
 	}
 	else if (!Variable || !OtherVariable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Variable - %s: Cannot copy instance value without a variable."), *GetName());
 	}
 	else
 	{
