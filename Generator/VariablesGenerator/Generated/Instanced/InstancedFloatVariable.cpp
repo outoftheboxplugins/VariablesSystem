@@ -10,13 +10,17 @@
 {
 	if (!Owner)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without an owner. Returning default value."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without an owner. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
 		return 0.0f;
 	}
 
 	if (!Variable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
 		return 0.0f;
 	}
 	else
@@ -29,11 +33,13 @@
 {
 	if (!Owner)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without an owner."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without an owner. Callstack below:"));
+		PrintScriptCallstack();
 	}
 	else if (!Variable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set instance value without a variable. Callstack below:"));
+		PrintScriptCallstack();
 	}
 	else
 	{
@@ -51,11 +57,13 @@
 {
 	if (!Owner || !OtherOwner)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without an owner."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without an owner. Callstack below:"));
+		PrintScriptCallstack();
 	}
 	else if (!Variable || !OtherVariable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy instance value without a variable. Callstack below:"));
+		PrintScriptCallstack();
 	}
 	else
 	{

@@ -19,7 +19,9 @@
 	}
 	else
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
 		return FVector::ZeroVector;
 	}
 }
@@ -33,7 +35,8 @@
 	}
 	else
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable. Callstack below:"));
+		PrintScriptCallstack();
 	}
 }
 
@@ -46,11 +49,13 @@
 	}
 	else if(!Variable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without a variable. Callstack below:"));
+		PrintScriptCallstack();
 	}
 	else if(!OtherVariable)
 	{
-		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable."));
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot copy a value without an other variable. Callstack below:"));
+		PrintScriptCallstack();
 	}
 }
 

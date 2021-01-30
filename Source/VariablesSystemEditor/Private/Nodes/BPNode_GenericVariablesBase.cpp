@@ -109,11 +109,6 @@ void UBPNode_GenericVariablesBase::ExpandNode(FKismetCompilerContext& CompilerCo
 		UEdGraphPin* VariableInput = CallCreateNode->FindPin(TEXT("Variable"));
 		bSucceeded &= ClassPin && VariableInput && CompilerContext.CopyPinLinksToIntermediate(*ClassPin, *VariableInput).CanSafeConnect();
 
-		if (VariableInput && !VariableInput->HasAnyConnections())
-		{
-			CompilerContext.MessageLog.Warning(*LOCTEXT("K2NodeExpansionWarning", "[VariablesSystem] Missing Variable input during expansion of node.").ToString(), this);
-		}
-
 		// Connect Result pin.
 		UEdGraphPin* ResultPin = GetVariableValuePin();
 		UEdGraphPin* ReturnPin = GetVariableLinkPin(CallCreateNode);
