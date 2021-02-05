@@ -33,7 +33,7 @@
 		Variable->Value = NewValue;
 		Variable->Dirty = true;
 	}
-	else
+	else if(!Variable)
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot set value without a variable. Callstack below:"));
 		PrintScriptCallstack();
