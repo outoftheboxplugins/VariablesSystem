@@ -78,11 +78,12 @@ void UGlobalFRotatorVariable::Save()
 
 void UGlobalFRotatorVariable::Load()
 {
-	UGlobalFRotatorVariable* LoadGameInstance = Cast<UGlobalFRotatorVariable>(UGameplayStatics::CreateSaveGameObject(UGlobalFRotatorVariable::StaticClass()));
-	LoadGameInstance = Cast<UGlobalFRotatorVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	
-	if (LoadGameInstance != nullptr)
+	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
-		Value = LoadGameInstance->Value;
+		if (UGlobalFRotatorVariable* LoadGameInstance = Cast<UGlobalFRotatorVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
+		{
+			Value = LoadGameInstance->Value;
+		}
 	}
+
 }

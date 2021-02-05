@@ -78,11 +78,12 @@ void UGlobalFVector2DVariable::Save()
 
 void UGlobalFVector2DVariable::Load()
 {
-	UGlobalFVector2DVariable* LoadGameInstance = Cast<UGlobalFVector2DVariable>(UGameplayStatics::CreateSaveGameObject(UGlobalFVector2DVariable::StaticClass()));
-	LoadGameInstance = Cast<UGlobalFVector2DVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	
-	if (LoadGameInstance != nullptr)
+	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
-		Value = LoadGameInstance->Value;
+		if (UGlobalFVector2DVariable* LoadGameInstance = Cast<UGlobalFVector2DVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
+		{
+			Value = LoadGameInstance->Value;
+		}
 	}
+
 }

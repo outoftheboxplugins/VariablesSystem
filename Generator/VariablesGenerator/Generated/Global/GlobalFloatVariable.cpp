@@ -78,11 +78,12 @@ void UGlobalFloatVariable::Save()
 
 void UGlobalFloatVariable::Load()
 {
-	UGlobalFloatVariable* LoadGameInstance = Cast<UGlobalFloatVariable>(UGameplayStatics::CreateSaveGameObject(UGlobalFloatVariable::StaticClass()));
-	LoadGameInstance = Cast<UGlobalFloatVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	
-	if (LoadGameInstance != nullptr)
+	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
-		Value = LoadGameInstance->Value;
+		if (UGlobalFloatVariable* LoadGameInstance = Cast<UGlobalFloatVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
+		{
+			Value = LoadGameInstance->Value;
+		}
 	}
+
 }

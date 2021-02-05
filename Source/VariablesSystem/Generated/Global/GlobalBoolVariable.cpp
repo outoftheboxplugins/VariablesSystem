@@ -78,11 +78,12 @@ void UGlobalBoolVariable::Save()
 
 void UGlobalBoolVariable::Load()
 {
-	UGlobalBoolVariable* LoadGameInstance = Cast<UGlobalBoolVariable>(UGameplayStatics::CreateSaveGameObject(UGlobalBoolVariable::StaticClass()));
-	LoadGameInstance = Cast<UGlobalBoolVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	
-	if (LoadGameInstance != nullptr)
+	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
-		Value = LoadGameInstance->Value;
+		if (UGlobalBoolVariable* LoadGameInstance = Cast<UGlobalBoolVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
+		{
+			Value = LoadGameInstance->Value;
+		}
 	}
+
 }

@@ -120,13 +120,14 @@ void UGlobal<#=variable.Key#>::Save()
 
 void UGlobal<#=variable.Key#>::Load()
 {
-	UGlobal<#=variable.Key#>* LoadGameInstance = Cast<UGlobal<#=variable.Key#>>(UGameplayStatics::CreateSaveGameObject(UGlobal<#=variable.Key#>::StaticClass()));
-	LoadGameInstance = Cast<UGlobal<#=variable.Key#>>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	
-	if (LoadGameInstance != nullptr)
+	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
-		Value = LoadGameInstance->Value;
+		if (UGlobal<#=variable.Key#>* LoadGameInstance = Cast<UGlobal<#=variable.Key#>>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
+		{
+			Value = LoadGameInstance->Value;
+		}
 	}
+
 }
 <#+
 	}
