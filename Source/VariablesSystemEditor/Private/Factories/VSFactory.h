@@ -25,18 +25,38 @@ private:
  * Factory responsible for creating Variable assets.
  */
 
-UCLASS()
+UCLASS(abstract)
 class UVSFactory : public UFactory
 {
-    GENERATED_UCLASS_BODY()
+	GENERATED_UCLASS_BODY()
 
 // UFactory interface
 private:
-    virtual bool ShouldShowInNewMenu() const override;
     virtual bool ConfigureProperties() override;
+	virtual bool CanCreateNew() const override { return true; }
+	virtual bool ShouldShowInNewMenu() const override { return true; }
 
     virtual UObject* FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
 
 private:
+	virtual bool ConfigureVariableProperties(UClass*& OutChosenClass) { return false; }
+
+private:
     TSubclassOf<class UBaseVariable> ChoosenVariableType;
+};
+
+UCLASS()
+class UVSInstancedFactory : public UVSFactory
+{
+	GENERATED_UCLASS_BODY()
+
+	virtual bool ConfigureVariableProperties(UClass*& OutChosenClass) override;
+};
+
+UCLASS()
+class UVSGlobalFactory : public UVSFactory
+{
+	GENERATED_UCLASS_BODY()
+
+	virtual bool ConfigureVariableProperties(UClass*& OutChosenClass) override;
 };

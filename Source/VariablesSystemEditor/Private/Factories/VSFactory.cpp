@@ -38,43 +38,15 @@ bool FVSFactoryFilter::IsUnloadedClassAllowed(const FClassViewerInitializationOp
 }
 
 UVSFactory::UVSFactory(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-	SupportedClass = UBaseVariable::StaticClass();
-	bCreateNew = true;
-	bEditorImport = true;
-}
-
-bool UVSFactory::ShouldShowInNewMenu() const
-{
-	return true;
-}
+	: Super(ObjectInitializer) { }
 
 bool UVSFactory::ConfigureProperties()
 {
-    // Reset selection each time a new variable's properties should be selected.
-    ChoosenVariableType = nullptr;
-
-	// Use Custom Filter to allow only for options provided by the variables system.
-	TSharedPtr<FVSFactoryFilter> Filter = MakeShareable(new FVSFactoryFilter);
-	Filter->DisallowedClassFlags = CLASS_Abstract;
-	Filter->AllowedChildrenOfClasses.Add(UBaseVariable::StaticClass());
-
-    // Prepare the configuration options.
-    FClassViewerInitializationOptions Options;
-    Options.Mode = EClassViewerMode::ClassPicker;
-    Options.ClassFilter = Filter;
-
-    // Show the class picker dialog to choose a class.
-	const FText TitleText = LOCTEXT("ClassPicker", "Select the variable type.");
 	UClass* ChosenClass = nullptr;
-	const bool bPressedOk = SClassPickerDialog::PickClass(TitleText, Options, ChosenClass, UBaseVariable::StaticClass());
+	const bool bPressedOk = ConfigureVariableProperties(ChosenClass);
 
     // Copy the selection after dialog closed.
-	if (bPressedOk)
-	{
-		ChoosenVariableType = ChosenClass;
-	}
+	ChoosenVariableType = bPressedOk ? ChosenClass : nullptr;
 
 	return bPressedOk;
 }
@@ -90,6 +62,49 @@ UObject* UVSFactory::FactoryCreateNew(UClass* Class, UObject* InParent, FName Na
 		UE_LOG(LogVariablesSystem, Error, TEXT("Could not create variable based on class. No class was selected."))
         return nullptr;
 	}
+}
+
+namespace FactoryHelpers
+{
+	template<typename T>
+	bool ChooseClass(UClass*& OutChosenClass)
+	{
+		// Use Custom Filter to allow only for options provided by the variables system.
+		TSharedPtr<FVSFactoryFilter> Filter = MakeShareable(new FVSFactoryFilter);
+		Filter->DisallowedClassFlags = CLASS_Abstract;
+		Filter->AllowedChildrenOfClasses.Add(T::StaticClass());
+
+		// Prepare the configuration options.
+		FClassViewerInitializationOptions Options;
+		Options.Mode = EClassViewerMode::ClassPicker;
+		Options.ClassFilter = Filter;
+
+		// Show the class picker dialog to choose a class.
+		const FText TitleText = LOCTEXT("ClassPicker", "Select the variable type.");
+		return SClassPickerDialog::PickClass(TitleText, Options, OutChosenClass, T::StaticClass());
+	}
+}
+
+UVSInstancedFactory::UVSInstancedFactory(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	SupportedClass = UInstancedBaseVariable::StaticClass();
+}
+
+bool UVSInstancedFactory::ConfigureVariableProperties(UClass*& OutChosenClass)
+{
+	return FactoryHelpers::ChooseClass<UInstancedBaseVariable>(OutChosenClass);
+}
+
+UVSGlobalFactory::UVSGlobalFactory(const FObjectInitializer& ObjectInitializer)
+	: Super(ObjectInitializer)
+{
+	SupportedClass = UGlobalBaseVariable::StaticClass();
+}
+
+bool UVSGlobalFactory::ConfigureVariableProperties(UClass*& OutChosenClass)
+{
+	return FactoryHelpers::ChooseClass<UGlobalBaseVariable>(OutChosenClass);
 }
 
 #undef LOCTEXT_NAMESPACE
