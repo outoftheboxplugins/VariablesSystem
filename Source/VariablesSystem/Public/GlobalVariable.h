@@ -8,10 +8,6 @@
 
 #include "GlobalVariable.generated.h"
 
-/**
- * Global implementation of VS Variables
- */
-
 // TOSOLVE: Make this a bitmap
 UENUM(BlueprintType)
 enum class EVSSaveType : uint8
@@ -21,6 +17,10 @@ enum class EVSSaveType : uint8
 	VSST_SaveOnFinish 	       UMETA(DisplayName = "SaveOnFinish"),
 	VSST_StartAndFinish	       UMETA(DisplayName = "StartAndFinish")
 };
+
+/**
+ * Global implementation of VS Variables
+ */
 
 UCLASS(Abstract, BlueprintType, hidecategories=(Object)) 
 class VARIABLESSYSTEM_API UGlobalVariable : public UBaseVariable
