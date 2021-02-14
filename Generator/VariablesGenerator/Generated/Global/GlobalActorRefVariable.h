@@ -37,4 +37,7 @@ private:
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	AActor* Value;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+	AActor* SavedValue;
 };

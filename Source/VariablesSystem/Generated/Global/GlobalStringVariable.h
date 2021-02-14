@@ -41,4 +41,7 @@ private:
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	FString Value;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+	FString SavedValue;
 };

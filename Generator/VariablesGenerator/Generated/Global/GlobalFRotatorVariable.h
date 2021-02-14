@@ -41,4 +41,7 @@ private:
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	FRotator Value;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+	FRotator SavedValue;
 };

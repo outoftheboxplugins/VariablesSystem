@@ -41,4 +41,7 @@ private:
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	bool Value;
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+	bool SavedValue;
 };

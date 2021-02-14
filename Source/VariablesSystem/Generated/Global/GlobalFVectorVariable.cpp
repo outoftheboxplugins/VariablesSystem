@@ -74,6 +74,8 @@ void UGlobalFVectorVariable::Save()
 
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
 	Dirty = false;
+
+	SavedValue = Value;
 }
 
 void UGlobalFVectorVariable::Load()
@@ -83,6 +85,8 @@ void UGlobalFVectorVariable::Load()
 		if (UGlobalFVectorVariable* LoadGameInstance = Cast<UGlobalFVectorVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
 		{
 			Value = LoadGameInstance->Value;
+
+			SavedValue = Value;
 		}
 	}
 

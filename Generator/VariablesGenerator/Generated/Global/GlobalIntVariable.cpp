@@ -74,6 +74,8 @@ void UGlobalIntVariable::Save()
 
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
 	Dirty = false;
+
+	SavedValue = Value;
 }
 
 void UGlobalIntVariable::Load()
@@ -83,6 +85,8 @@ void UGlobalIntVariable::Load()
 		if (UGlobalIntVariable* LoadGameInstance = Cast<UGlobalIntVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
 		{
 			Value = LoadGameInstance->Value;
+
+			SavedValue = Value;
 		}
 	}
 
