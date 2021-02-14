@@ -76,22 +76,7 @@
 	}
 }
 
-void UInstancedBoolVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
-{
-	CleanupVariables();
-}
-
-void UInstancedBoolVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
-{
-	CleanupVariables();
-}
-
-bool& UInstancedBoolVariable::GetInstancedBoolVariableRef(UObject* Owner)
-{
-	return VariablesMap.FindOrAdd(Owner);;
-}
-
-void UInstancedBoolVariable::CleanupVariables()
+void UInstancedBoolVariable::CleanupEntries()
 {
 	int32 index = 0;
 	while(index < VariablesMap.Num())
@@ -108,6 +93,11 @@ void UInstancedBoolVariable::CleanupVariables()
 			index++;
 		}
 	}
+}
+
+bool& UInstancedBoolVariable::GetInstancedBoolVariableRef(UObject* Owner)
+{
+	return VariablesMap.FindOrAdd(Owner);;
 }
 
 FString UInstancedBoolVariable::GetStringValue() const

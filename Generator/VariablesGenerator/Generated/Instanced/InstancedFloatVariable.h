@@ -30,17 +30,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void CopyInstancedFloatVariableValue(UObject* Owner, UInstancedFloatVariable* Variable, UObject* OtherOwner, UInstancedFloatVariable* OtherVariable);
 
-// World Callbacks
 private:
-	virtual void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params) override;
-	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources) override;
+	virtual void CleanupEntries() override;
 
 private:
 	// Internal getter or creater used to modify values.
 	float& GetInstancedFloatVariableRef(UObject* Owner);
-
-	// Removes variables with invalid owner pointers.
-	void CleanupVariables();
 
 // BaseVariable Debug Interface
 private:

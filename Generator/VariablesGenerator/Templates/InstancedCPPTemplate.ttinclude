@@ -87,22 +87,7 @@ void GenerateInstancedCPPFile(KeyValuePair<string, GlobalVariable> variable)
 	}
 }
 
-void UInstanced<#=variable.Key#>::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
-{
-	CleanupVariables();
-}
-
-void UInstanced<#=variable.Key#>::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
-{
-	CleanupVariables();
-}
-
-<#=variable.Value.globalVariable.valueType#>& UInstanced<#=variable.Key#>::GetInstanced<#=variable.Key#>Ref(UObject* Owner)
-{
-	return VariablesMap.FindOrAdd(Owner);;
-}
-
-void UInstanced<#=variable.Key#>::CleanupVariables()
+void UInstanced<#=variable.Key#>::CleanupEntries()
 {
 	int32 index = 0;
 	while(index < VariablesMap.Num())
@@ -119,6 +104,11 @@ void UInstanced<#=variable.Key#>::CleanupVariables()
 			index++;
 		}
 	}
+}
+
+<#=variable.Value.globalVariable.valueType#>& UInstanced<#=variable.Key#>::GetInstanced<#=variable.Key#>Ref(UObject* Owner)
+{
+	return VariablesMap.FindOrAdd(Owner);;
 }
 
 <#+

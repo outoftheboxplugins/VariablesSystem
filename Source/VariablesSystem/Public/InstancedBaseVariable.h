@@ -19,4 +19,12 @@ class VARIABLESSYSTEM_API UInstancedBaseVariable : public UBaseVariable
 public:
     // Returns the value of the variable as a string.
     virtual FString GetStringValue() const;
+
+	// World Callbacks
+private:
+	virtual void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params) override;
+	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources) override;
+
+protected:
+	virtual void CleanupEntries();
 };

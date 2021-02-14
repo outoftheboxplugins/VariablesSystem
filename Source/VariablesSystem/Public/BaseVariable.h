@@ -28,8 +28,8 @@ public:
 
 // World Callbacks
 private:
-	virtual void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params);
-	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources);
+	virtual void OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params) { } 
+	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources) { }
 
 protected:
     // Full description of the variable usage.

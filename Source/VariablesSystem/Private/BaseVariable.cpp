@@ -2,8 +2,6 @@
 
 #include "BaseVariable.h"
 
-#include "VSLog.h"
-
 UBaseVariable::UBaseVariable(const FObjectInitializer& ObjectInitializer /*= FObjectInitializer::Get()*/)
 	: Super(ObjectInitializer)
 {
@@ -18,13 +16,4 @@ UBaseVariable::~UBaseVariable()
 FString UBaseVariable::GetStringValue() const
 {
     return FString("Invalid Value");
-}
-void UBaseVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
-{
-
-}
-
-void UBaseVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
-{
-
 }
