@@ -18,7 +18,7 @@ public:
 	static FVariablesSystemEditorModule& GetModule();
 	static bool IsModuleLoaded();
 
-	TSharedRef<class SDockTab> OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables = TArray<UBaseVariable*>());
+	TSharedPtr<class SDockTab> OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables = TArray<UBaseVariable*>());
 
 //IModuleInterface interface
 private:
