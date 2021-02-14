@@ -65,11 +65,11 @@ void GenerateCreateSpecificNodeGet(Dictionary<string, GlobalVariable> variables)
 #>
     if (VariableClassName == FName("Global<#=variables.Keys.ElementAt(i)#>"))
     {
-        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobal<#=variables.Keys.ElementAt(i)#>, GetGlobal<#=variables.Keys.ElementAt(i)#>Value), UGlobal<#=variables.Keys.ElementAt(i)#>::StaticClass());
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetGlobal<#=variables.Keys.ElementAt(i)#>Safe), UGenericVariablesBPLibrary::StaticClass());
     }
     if (VariableClassName == FName("Instanced<#=variables.Keys.ElementAt(i)#>"))
     {
-        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstanced<#=variables.Keys.ElementAt(i)#>, GetInstanced<#=variables.Keys.ElementAt(i)#>Value), UInstanced<#=variables.Keys.ElementAt(i)#>::StaticClass());
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetInstanced<#=variables.Keys.ElementAt(i)#>Safe), UGenericVariablesBPLibrary::StaticClass());
     }
 <#+
     }

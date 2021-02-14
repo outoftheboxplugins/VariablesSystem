@@ -2,7 +2,7 @@
 
 #include "BPNode_GenericVariablesGetValue.h"
 
-#include "IncludeAll.h"
+#include "GenericVariablesBPLibrary.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 

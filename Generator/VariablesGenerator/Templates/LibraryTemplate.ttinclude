@@ -38,12 +38,12 @@ void GenerateBlueprintLibraryH(Dictionary<string, GlobalVariable> variables)
 
 #include "Kismet/BlueprintFunctionLibrary.h"
 
-#include "VariablesSystem/Generated/Library/IncludeAll.h"
+#include "IncludeAll.h"
 
 #include "GenericVariablesBPLibrary.generated.h"
 
 UCLASS(meta = (BlueprintThreadSafe))
-class UGenericVariablesBPLibrary : public UBlueprintFunctionLibrary
+class VARIABLESSYSTEM_API UGenericVariablesBPLibrary : public UBlueprintFunctionLibrary
 {
     GENERATED_BODY()
 
@@ -53,10 +53,10 @@ public:
     {
 #>
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global <#=variables.Keys.ElementAt(i)#> Variable (Thread Safe)"), Category = "VariablesSystem")
-    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetGlobal<#=variables.Keys.ElementAt(i)#>Safe(UGlobal<#=variables.Keys.ElementAt(i)#>* variable);
+    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetGlobal<#=variables.Keys.ElementAt(i)#>Safe(UGlobal<#=variables.Keys.ElementAt(i)#>* Variable);
 
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced <#=variables.Keys.ElementAt(i)#> Variable (Thread Safe)"), Category = "VariablesSystem")
-    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetInstanced<#=variables.Keys.ElementAt(i)#>Safe(UInstanced<#=variables.Keys.ElementAt(i)#>* variable, UObject* owner);
+    static <#=variables.Values.ElementAt(i).globalVariable.valueType#> GetInstanced<#=variables.Keys.ElementAt(i)#>Safe(UInstanced<#=variables.Keys.ElementAt(i)#>* Variable, UObject* Owner);
 
 <#+
 	}
@@ -80,14 +80,14 @@ void GenerateBlueprintLibraryCPP(Dictionary<string, GlobalVariable> variables)
     for (int i = 0; i < variables.Count; i++)
 	{
 #>
-/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetGlobal<#=variables.Keys.ElementAt(i)#>Safe(UGlobal<#=variables.Keys.ElementAt(i)#>* variable)
+/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetGlobal<#=variables.Keys.ElementAt(i)#>Safe(UGlobal<#=variables.Keys.ElementAt(i)#>* Variable)
 {
-    return UGlobal<#=variables.Keys.ElementAt(i)#>::GetGlobal<#=variables.Keys.ElementAt(i)#>Value(variable);
+    return UGlobal<#=variables.Keys.ElementAt(i)#>::GetGlobal<#=variables.Keys.ElementAt(i)#>Value(Variable);
 }
 
-/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetInstanced<#=variables.Keys.ElementAt(i)#>Safe(UInstanced<#=variables.Keys.ElementAt(i)#>* variable, UObject* owner)
+/* STATIC */ <#=variables.Values.ElementAt(i).globalVariable.valueType#> UGenericVariablesBPLibrary::GetInstanced<#=variables.Keys.ElementAt(i)#>Safe(UInstanced<#=variables.Keys.ElementAt(i)#>* Variable, UObject* Owner)
 {
-    return UInstanced<#=variables.Keys.ElementAt(i)#>::GetInstanced<#=variables.Keys.ElementAt(i)#>Value(owner, variable);
+    return UInstanced<#=variables.Keys.ElementAt(i)#>::GetInstanced<#=variables.Keys.ElementAt(i)#>Value(Owner, Variable);
 }
 
 <#+
