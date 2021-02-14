@@ -48,7 +48,6 @@
 		if(ObjectRefVariableRef != NewValue)
 		{
 			ObjectRefVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(ObjectRefVariableRef != otherObjectRefVariableRef)
 		{
 			ObjectRefVariableRef = otherObjectRefVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }

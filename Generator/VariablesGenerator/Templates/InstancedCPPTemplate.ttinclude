@@ -59,7 +59,6 @@ void GenerateInstancedCPPFile(KeyValuePair<string, GlobalVariable> variable)
 		if(<#=variable.Key#>Ref != NewValue)
 		{
 			<#=variable.Key#>Ref = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -84,7 +83,6 @@ void GenerateInstancedCPPFile(KeyValuePair<string, GlobalVariable> variable)
 		if(<#=variable.Key#>Ref != other<#=variable.Key#>Ref)
 		{
 			<#=variable.Key#>Ref = other<#=variable.Key#>Ref;
-			Variable->Dirty = true;
 		}
 	}
 }

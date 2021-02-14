@@ -48,7 +48,6 @@
 		if(BoolVariableRef != NewValue)
 		{
 			BoolVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(BoolVariableRef != otherBoolVariableRef)
 		{
 			BoolVariableRef = otherBoolVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }

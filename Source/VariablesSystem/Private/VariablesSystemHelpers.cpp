@@ -9,9 +9,14 @@ TArray<UBaseVariable*> UVariablesSystemHelpersBPLibrary::GetAllVariables()
     return UVariablesSystemHelpersBPLibrary::GetAllAssetsOfType<UBaseVariable>();
 }
 
+TArray<UGlobalBaseVariable*> UVariablesSystemHelpersBPLibrary::GetAllGlobalVariables()
+{
+	return UVariablesSystemHelpersBPLibrary::GetAllAssetsOfType<UGlobalBaseVariable>();
+}
+
 void UVariablesSystemHelpersBPLibrary::SaveAllVariables()
 {
-	for (auto& Variable : GetAllVariables())
+	for (auto& Variable : GetAllGlobalVariables())
 	{
 		Variable->Load();
 	}
@@ -19,7 +24,7 @@ void UVariablesSystemHelpersBPLibrary::SaveAllVariables()
 
 void UVariablesSystemHelpersBPLibrary::LoadAllVariables()
 {
-	for (auto& Variable : GetAllVariables())
+	for (auto& Variable : GetAllGlobalVariables())
 	{
 		Variable->Load();
 	}

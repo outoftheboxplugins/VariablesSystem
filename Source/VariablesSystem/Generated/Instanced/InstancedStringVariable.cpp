@@ -48,7 +48,6 @@
 		if(StringVariableRef != NewValue)
 		{
 			StringVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(StringVariableRef != otherStringVariableRef)
 		{
 			StringVariableRef = otherStringVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }

@@ -48,7 +48,6 @@
 		if(FVector2DVariableRef != NewValue)
 		{
 			FVector2DVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(FVector2DVariableRef != otherFVector2DVariableRef)
 		{
 			FVector2DVariableRef = otherFVector2DVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }

@@ -48,7 +48,6 @@
 		if(IntVariableRef != NewValue)
 		{
 			IntVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(IntVariableRef != otherIntVariableRef)
 		{
 			IntVariableRef = otherIntVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }

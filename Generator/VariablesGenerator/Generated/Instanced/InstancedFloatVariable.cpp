@@ -48,7 +48,6 @@
 		if(FloatVariableRef != NewValue)
 		{
 			FloatVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(FloatVariableRef != otherFloatVariableRef)
 		{
 			FloatVariableRef = otherFloatVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }

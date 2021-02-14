@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "BaseVariable.h"
+#include "GlobalBaseVariable.h"
 #include "GlobalFRotatorVariable.generated.h"
 
 /**
@@ -12,7 +12,7 @@
  */
 
 UCLASS(BlueprintType)
-class VARIABLESSYSTEM_API UGlobalFRotatorVariable : public UBaseVariable
+class VARIABLESSYSTEM_API UGlobalFRotatorVariable : public UGlobalBaseVariable
 {
 	GENERATED_BODY()
 

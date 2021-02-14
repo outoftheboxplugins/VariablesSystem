@@ -13,7 +13,7 @@ void GenerateInstancedHFile(KeyValuePair<string, GlobalVariable> variable)
 
 #pragma once
 
-#include "BaseVariable.h"
+#include "InstancedBaseVariable.h"
 <#+
 	if(variable.Value.extraInclude != null)
 	{
@@ -31,7 +31,7 @@ void GenerateInstancedHFile(KeyValuePair<string, GlobalVariable> variable)
  */
 
 UCLASS(BlueprintType)
-class VARIABLESSYSTEM_API UInstanced<#=variable.Key#> : public UBaseVariable
+class VARIABLESSYSTEM_API UInstanced<#=variable.Key#> : public UInstancedBaseVariable
 {
 	GENERATED_BODY()
 

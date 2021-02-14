@@ -48,7 +48,6 @@
 		if(ActorRefVariableRef != NewValue)
 		{
 			ActorRefVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(ActorRefVariableRef != otherActorRefVariableRef)
 		{
 			ActorRefVariableRef = otherActorRefVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }

@@ -48,7 +48,6 @@
 		if(FRotatorVariableRef != NewValue)
 		{
 			FRotatorVariableRef = NewValue;
-			Variable->Dirty = true;
 		}
 	}
 }
@@ -73,7 +72,6 @@
 		if(FRotatorVariableRef != otherFRotatorVariableRef)
 		{
 			FRotatorVariableRef = otherFRotatorVariableRef;
-			Variable->Dirty = true;
 		}
 	}
 }
