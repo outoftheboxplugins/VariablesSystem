@@ -4,14 +4,14 @@
 
 #include "BaseVariable.h"
 
-#include "InstancedBaseVariable.generated.h"
+#include "InstancedVariable.generated.h"
 
 /**
  * Instanced implementation of VS Variables
  */
 
 UCLASS(Abstract, BlueprintType, hidecategories=(Object)) 
-class VARIABLESSYSTEM_API UInstancedBaseVariable : public UBaseVariable
+class VARIABLESSYSTEM_API UInstancedVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 

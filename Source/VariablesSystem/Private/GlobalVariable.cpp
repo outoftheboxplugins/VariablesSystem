@@ -1,26 +1,26 @@
 // Copyright Out-of-the-Box Plugins 2018-2020. All Rights Reserved.
 
-#include "GlobalBaseVariable.h"
+#include "GlobalVariable.h"
 
 #include "VSLog.h"
 
-UGlobalBaseVariable::UGlobalBaseVariable(const FObjectInitializer& ObjectInitializer /*= FObjectInitializer::Get()*/)
+UGlobalVariable::UGlobalVariable(const FObjectInitializer& ObjectInitializer /*= FObjectInitializer::Get()*/)
 	: Super(ObjectInitializer)
 {
 	LoadIfNeeded();
 }
 
-UGlobalBaseVariable::~UGlobalBaseVariable()
+UGlobalVariable::~UGlobalVariable()
 {
 	SaveIfNeeded();
 }
 
-FString UGlobalBaseVariable::GetStringValue() const
+FString UGlobalVariable::GetStringValue() const
 {
     return FString("Global - Invalid Value");
 }
 
-void UGlobalBaseVariable::SaveIfNeeded()
+void UGlobalVariable::SaveIfNeeded()
 {
 	if (HasAnyFlags(RF_ClassDefaultObject))
 	{
@@ -35,7 +35,7 @@ void UGlobalBaseVariable::SaveIfNeeded()
 	Save();
 }
 
-void UGlobalBaseVariable::LoadIfNeeded()
+void UGlobalVariable::LoadIfNeeded()
 {
 	if (HasAnyFlags(RF_ClassDefaultObject))
 	{
@@ -50,17 +50,17 @@ void UGlobalBaseVariable::LoadIfNeeded()
 	Load();
 }
 
-void UGlobalBaseVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
+void UGlobalVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
 {
 	LoadIfNeeded();
 }
 
-void UGlobalBaseVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
+void UGlobalVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
 {
 	SaveIfNeeded();
 }
 
-FString UGlobalBaseVariable::GetSaveLocation() const
+FString UGlobalVariable::GetSaveLocation() const
 {
 	FString SaveDestination;
 	UObjectBaseUtility::GetName(SaveDestination);

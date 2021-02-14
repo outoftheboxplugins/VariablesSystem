@@ -25,7 +25,7 @@
 
 #pragma once
 
-#include "GlobalBaseVariable.h"
+#include "GlobalVariable.h"
 #include "GlobalObjectRefVariable.generated.h"
 
 /**
@@ -33,7 +33,7 @@
  */
 
 UCLASS(BlueprintType)
-class VARIABLESSYSTEM_API UGlobalObjectRefVariable : public UGlobalBaseVariable
+class VARIABLESSYSTEM_API UGlobalObjectRefVariable : public UGlobalVariable
 {
 	GENERATED_BODY()
 

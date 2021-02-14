@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "InstancedBaseVariable.h"
+#include "InstancedVariable.h"
 #include "InstancedFloatVariable.generated.h"
 
 /**
@@ -12,7 +12,7 @@
  */
 
 UCLASS(BlueprintType)
-class VARIABLESSYSTEM_API UInstancedFloatVariable : public UInstancedBaseVariable
+class VARIABLESSYSTEM_API UInstancedFloatVariable : public UInstancedVariable
 {
 	GENERATED_BODY()
 

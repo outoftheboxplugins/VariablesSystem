@@ -31,7 +31,7 @@ public:
     static TArray<UBaseVariable*> GetAllVariables();
 
 	// Returns all the variables (UObjects) assets from the content browser.
-	static TArray<UGlobalBaseVariable*> GetAllGlobalVariables();
+	static TArray<UGlobalVariable*> GetAllGlobalVariables();
     
 	// Triggers a Save operation on all the Variable Assets
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")

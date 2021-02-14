@@ -6,7 +6,7 @@
 
 #include "Engine/World.h"
 
-#include "GlobalBaseVariable.generated.h"
+#include "GlobalVariable.generated.h"
 
 /**
  * Global implementation of VS Variables
@@ -23,13 +23,13 @@ enum class EVSSaveType : uint8
 };
 
 UCLASS(Abstract, BlueprintType, hidecategories=(Object)) 
-class VARIABLESSYSTEM_API UGlobalBaseVariable : public UBaseVariable
+class VARIABLESSYSTEM_API UGlobalVariable : public UBaseVariable
 {
 	GENERATED_BODY()
 
 public:
-	UGlobalBaseVariable(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
-	virtual ~UGlobalBaseVariable();
+	UGlobalVariable(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
+	virtual ~UGlobalVariable();
 
 // Virtual functions for the derived variables to implement
 public:

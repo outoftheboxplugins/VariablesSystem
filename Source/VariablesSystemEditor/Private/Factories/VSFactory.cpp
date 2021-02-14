@@ -88,23 +88,23 @@ namespace FactoryHelpers
 UVSInstancedFactory::UVSInstancedFactory(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	SupportedClass = UInstancedBaseVariable::StaticClass();
+	SupportedClass = UInstancedVariable::StaticClass();
 }
 
 bool UVSInstancedFactory::ConfigureVariableProperties(UClass*& OutChosenClass)
 {
-	return FactoryHelpers::ChooseClass<UInstancedBaseVariable>(OutChosenClass);
+	return FactoryHelpers::ChooseClass<UInstancedVariable>(OutChosenClass);
 }
 
 UVSGlobalFactory::UVSGlobalFactory(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-	SupportedClass = UGlobalBaseVariable::StaticClass();
+	SupportedClass = UGlobalVariable::StaticClass();
 }
 
 bool UVSGlobalFactory::ConfigureVariableProperties(UClass*& OutChosenClass)
 {
-	return FactoryHelpers::ChooseClass<UGlobalBaseVariable>(OutChosenClass);
+	return FactoryHelpers::ChooseClass<UGlobalVariable>(OutChosenClass);
 }
 
 #undef LOCTEXT_NAMESPACE

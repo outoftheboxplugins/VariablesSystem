@@ -15,7 +15,7 @@ void GenerateGlobalHFile(KeyValuePair<string, GlobalVariable> variable)
 
 #pragma once
 
-#include "GlobalBaseVariable.h"
+#include "GlobalVariable.h"
 <#+
 	if(variable.Value.extraInclude != null)
 	{
@@ -33,7 +33,7 @@ void GenerateGlobalHFile(KeyValuePair<string, GlobalVariable> variable)
  */
 
 UCLASS(BlueprintType)
-class VARIABLESSYSTEM_API UGlobal<#=variable.Key#> : public UGlobalBaseVariable
+class VARIABLESSYSTEM_API UGlobal<#=variable.Key#> : public UGlobalVariable
 {
 	GENERATED_BODY()
 
