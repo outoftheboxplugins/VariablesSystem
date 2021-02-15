@@ -34,14 +34,16 @@ public:
 private:
     virtual FString GetStringValue() const override;
 // BaseVariable Save&Load Interface
-private:
-	virtual void Save() override;
-	virtual void Load() override;
+protected:
+	virtual void Save(bool bForce = false) override;
+	virtual void Load(bool bUpdateValue = true) override;
+
+	void PostEditChangeProperty(struct FPropertyChangedEvent& e);
+
+	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+	float SavedValue;
 
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	float Value;
-
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-	float SavedValue;
 };

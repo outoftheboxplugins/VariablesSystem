@@ -107,9 +107,9 @@ FString UGlobal<#=variable.Key#>::GetStringValue() const
 	{
 #>
 
-void UGlobal<#=variable.Key#>::Save()
+void UGlobal<#=variable.Key#>::Save(bool bForce /* = false */)
 {
-	if (Dirty == false)
+	if (!bForce && !Dirty)
 	{
 		return;
 	}
@@ -120,19 +120,40 @@ void UGlobal<#=variable.Key#>::Save()
 	SavedValue = Value;
 }
 
-void UGlobal<#=variable.Key#>::Load()
+void UGlobal<#=variable.Key#>::Load(bool bUpdateValue /* = true */)
 {
 	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
 		if (UGlobal<#=variable.Key#>* LoadGameInstance = Cast<UGlobal<#=variable.Key#>>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
 		{
-			Value = LoadGameInstance->Value;
+			SavedValue = LoadGameInstance->Value;
 
-			SavedValue = Value;
+			if(bUpdateValue)
+			{
+				Value = SavedValue;
+			}
+
 		}
 	}
 
 }
+
+void UGlobal<#=variable.Key#>::PostEditChangeProperty(struct FPropertyChangedEvent& e)
+{
+	const bool bShouldLoad = SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish;
+
+	 if (!bShouldLoad)
+	 {
+		 SavedValue = Value;
+	 }
+	 else
+	 {
+		 Load(false);
+	 }
+
+     Super::PostEditChangeProperty(e);
+}
+
 <#+
 	}
 #>

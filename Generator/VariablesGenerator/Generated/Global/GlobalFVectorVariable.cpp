@@ -65,9 +65,9 @@ FString UGlobalFVectorVariable::GetStringValue() const
     return UKismetStringLibrary::Conv_VectorToString(Item);
 }
 
-void UGlobalFVectorVariable::Save()
+void UGlobalFVectorVariable::Save(bool bForce /* = false */)
 {
-	if (Dirty == false)
+	if (!bForce && !Dirty)
 	{
 		return;
 	}
@@ -78,16 +78,37 @@ void UGlobalFVectorVariable::Save()
 	SavedValue = Value;
 }
 
-void UGlobalFVectorVariable::Load()
+void UGlobalFVectorVariable::Load(bool bUpdateValue /* = true */)
 {
 	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
 		if (UGlobalFVectorVariable* LoadGameInstance = Cast<UGlobalFVectorVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
 		{
-			Value = LoadGameInstance->Value;
+			SavedValue = LoadGameInstance->Value;
 
-			SavedValue = Value;
+			if(bUpdateValue)
+			{
+				Value = SavedValue;
+			}
+
 		}
 	}
 
 }
+
+void UGlobalFVectorVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
+{
+	const bool bShouldLoad = SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish;
+
+	 if (!bShouldLoad)
+	 {
+		 SavedValue = Value;
+	 }
+	 else
+	 {
+		 Load(false);
+	 }
+
+     Super::PostEditChangeProperty(e);
+}
+

@@ -65,9 +65,9 @@ FString UGlobalFloatVariable::GetStringValue() const
     return UKismetStringLibrary::Conv_FloatToString(Item);
 }
 
-void UGlobalFloatVariable::Save()
+void UGlobalFloatVariable::Save(bool bForce /* = false */)
 {
-	if (Dirty == false)
+	if (!bForce && !Dirty)
 	{
 		return;
 	}
@@ -78,16 +78,37 @@ void UGlobalFloatVariable::Save()
 	SavedValue = Value;
 }
 
-void UGlobalFloatVariable::Load()
+void UGlobalFloatVariable::Load(bool bUpdateValue /* = true */)
 {
 	if(UGameplayStatics::DoesSaveGameExist(GetSaveLocation(), 0))
 	{
 		if (UGlobalFloatVariable* LoadGameInstance = Cast<UGlobalFloatVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0)))
 		{
-			Value = LoadGameInstance->Value;
+			SavedValue = LoadGameInstance->Value;
 
-			SavedValue = Value;
+			if(bUpdateValue)
+			{
+				Value = SavedValue;
+			}
+
 		}
 	}
 
 }
+
+void UGlobalFloatVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
+{
+	const bool bShouldLoad = SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish;
+
+	 if (!bShouldLoad)
+	 {
+		 SavedValue = Value;
+	 }
+	 else
+	 {
+		 Load(false);
+	 }
+
+     Super::PostEditChangeProperty(e);
+}
+

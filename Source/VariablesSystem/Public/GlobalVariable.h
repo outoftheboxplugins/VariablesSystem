@@ -31,18 +31,25 @@ public:
 	UGlobalVariable(const FObjectInitializer& ObjectInitializer = FObjectInitializer::Get());
 	virtual ~UGlobalVariable();
 
-// Virtual functions for the derived variables to implement
+	// Virtual functions for the derived variables to implement
 public:
-    // Returns the value of the variable as a string.
-    virtual FString GetStringValue() const;
+	// Returns the value of the variable as a string.
+	virtual FString GetStringValue() const;
 
-// Save & Load
+	// Save & Load
 public:
 	// Saves the current data of a variable.
-	virtual void Save() {};
+	virtual void Save(bool bForce = false) { }
 
 	// Loads the data of a variable and assignees it.
-	virtual void Load() {};
+	virtual void Load(bool bUpdateValue = true) { }
+
+protected:
+	UFUNCTION(BlueprintCallable, CallInEditor, Category = "VariablesSystem")
+	void ManualSave() { Save(true); }
+
+	UFUNCTION(BlueprintCallable, CallInEditor, Category = "VariablesSystem")
+	void ManualLoad() { Load(true); }
 
 protected:
 	// Returns the location where the variable should be saved.

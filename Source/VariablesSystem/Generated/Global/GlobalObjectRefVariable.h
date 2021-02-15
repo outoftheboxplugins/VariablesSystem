@@ -58,7 +58,4 @@ private:
 protected:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	UObject* Value;
-
-	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-	UObject* SavedValue;
 };
