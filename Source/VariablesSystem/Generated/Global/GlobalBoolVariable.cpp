@@ -109,6 +109,6 @@ void UGlobalBoolVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e
 		 Load(false);
 	 }
 
-     Super::PostEditChangeProperty(e);
+     UObject::PostEditChangeProperty(e);
 }
 
