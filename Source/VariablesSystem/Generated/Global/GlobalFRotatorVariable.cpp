@@ -96,6 +96,8 @@ void UGlobalFRotatorVariable::Load(bool bUpdateValue /* = true */)
 
 }
 
+#if WITH_EDITOR
+
 void UGlobalFRotatorVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
 {
 	const bool bShouldLoad = SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish;
@@ -111,4 +113,6 @@ void UGlobalFRotatorVariable::PostEditChangeProperty(struct FPropertyChangedEven
 
      UObject::PostEditChangeProperty(e);
 }
+
+#endif
 

@@ -96,6 +96,8 @@ void UGlobalIntVariable::Load(bool bUpdateValue /* = true */)
 
 }
 
+#if WITH_EDITOR
+
 void UGlobalIntVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
 {
 	const bool bShouldLoad = SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish;
@@ -111,4 +113,6 @@ void UGlobalIntVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
 
      UObject::PostEditChangeProperty(e);
 }
+
+#endif
 

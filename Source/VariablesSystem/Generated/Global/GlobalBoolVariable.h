@@ -38,7 +38,9 @@ protected:
 	virtual void Save(bool bForce = false) override;
 	virtual void Load(bool bUpdateValue = true) override;
 
+#if WITH_EDITOR
 	virtual void PostEditChangeProperty(struct FPropertyChangedEvent& e) override;
+#endif
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
 	bool SavedValue;

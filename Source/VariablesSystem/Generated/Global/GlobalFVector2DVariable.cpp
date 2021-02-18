@@ -96,6 +96,8 @@ void UGlobalFVector2DVariable::Load(bool bUpdateValue /* = true */)
 
 }
 
+#if WITH_EDITOR
+
 void UGlobalFVector2DVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
 {
 	const bool bShouldLoad = SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish;
@@ -111,4 +113,6 @@ void UGlobalFVector2DVariable::PostEditChangeProperty(struct FPropertyChangedEve
 
      UObject::PostEditChangeProperty(e);
 }
+
+#endif
 

@@ -96,6 +96,8 @@ void UGlobalStringVariable::Load(bool bUpdateValue /* = true */)
 
 }
 
+#if WITH_EDITOR
+
 void UGlobalStringVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
 {
 	const bool bShouldLoad = SaveBehavior == EVSSaveType::VSST_LoadOnStart || SaveBehavior == EVSSaveType::VSST_StartAndFinish;
@@ -111,4 +113,6 @@ void UGlobalStringVariable::PostEditChangeProperty(struct FPropertyChangedEvent&
 
      UObject::PostEditChangeProperty(e);
 }
+
+#endif
 
