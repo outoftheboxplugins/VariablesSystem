@@ -111,7 +111,7 @@ void UGlobalFVector2DVariable::PostEditChangeProperty(struct FPropertyChangedEve
 		 Load(false);
 	 }
 
-     UObject::PostEditChangeProperty(e);
+     Super::PostEditChangeProperty(e);
 }
 
 #endif

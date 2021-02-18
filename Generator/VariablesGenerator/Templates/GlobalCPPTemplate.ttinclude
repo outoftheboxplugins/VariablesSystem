@@ -153,7 +153,7 @@ void UGlobal<#=variable.Key#>::PostEditChangeProperty(struct FPropertyChangedEve
 		 Load(false);
 	 }
 
-     UObject::PostEditChangeProperty(e);
+     Super::PostEditChangeProperty(e);
 }
 
 #endif

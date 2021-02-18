@@ -111,7 +111,7 @@ void UGlobalFRotatorVariable::PostEditChangeProperty(struct FPropertyChangedEven
 		 Load(false);
 	 }
 
-     UObject::PostEditChangeProperty(e);
+     Super::PostEditChangeProperty(e);
 }
 
 #endif

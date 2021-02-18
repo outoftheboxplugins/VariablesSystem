@@ -111,7 +111,7 @@ void UGlobalIntVariable::PostEditChangeProperty(struct FPropertyChangedEvent& e)
 		 Load(false);
 	 }
 
-     UObject::PostEditChangeProperty(e);
+     Super::PostEditChangeProperty(e);
 }
 
 #endif

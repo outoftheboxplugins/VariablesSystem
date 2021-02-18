@@ -111,7 +111,7 @@ void UGlobalFloatVariable::PostEditChangeProperty(struct FPropertyChangedEvent& 
 		 Load(false);
 	 }
 
-     UObject::PostEditChangeProperty(e);
+     Super::PostEditChangeProperty(e);
 }
 
 #endif
