@@ -26,5 +26,5 @@ private:
 	virtual void OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources) override;
 
 protected:
-	virtual void CleanupEntries();
+	virtual void CleanupEntries() { }
 };

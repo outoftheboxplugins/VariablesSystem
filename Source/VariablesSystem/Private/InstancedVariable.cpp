@@ -18,8 +18,3 @@ void UInstancedVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnd
 {
 	CleanupEntries();
 }
-
-void UInstancedVariable::CleanupEntries()
-{
-	UE_LOG(LogVariablesSystem, Error, TEXT("UInstancedVariable::CleanupEntries not implemented for this type."));
-}
