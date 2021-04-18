@@ -1,5 +1,4 @@
 // Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
-
 public class BaseVariable { }
 
 [GlobalVar("UObject*", "nullptr", "Object", "UObject::StaticClass()", "None", "Object")]

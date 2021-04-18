@@ -10,7 +10,6 @@ void GenerateGlobalCPPFile(KeyValuePair<string, GlobalVariable> variable)
 {
 #>
 // Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
-
 // GENERATED FILE DO NOT MODIFY DIRECTLY
 
 #include "Global<#=variable.Key#>.h"

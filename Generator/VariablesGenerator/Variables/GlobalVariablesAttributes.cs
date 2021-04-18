@@ -1,5 +1,4 @@
 // Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
-
 using System;
 
 #pragma warning disable CS1717 // Assignment made to same variable
