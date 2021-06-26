@@ -11,6 +11,7 @@
 #include "VariablesSystemHelpers.generated.h"
 
 class UBaseVariable;
+class UGlobalVariable;
 
 /**
  * Various helpers to simply working with VS Variables.

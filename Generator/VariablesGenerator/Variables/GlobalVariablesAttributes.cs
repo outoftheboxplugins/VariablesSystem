@@ -14,10 +14,22 @@ public class GlobalVariable : ICloneable
 	{
 		GlobalVariable globalVariableClone = (GlobalVariable) MemberwiseClone();
 
-		globalVariableClone.debugInfo		= (DebugInfoAttribute)		debugInfo.Clone();
-		globalVariableClone.globalVariable	= (GlobalVarAttribute)		globalVariable.Clone();
-		globalVariableClone.extraGeneration = (GenerateExtraAttribute)	extraGeneration.Clone();
-		globalVariableClone.extraInclude	= (ExtraIncludeAttribute)	extraInclude.Clone();
+		if(debugInfo != null)
+		{
+			globalVariableClone.debugInfo = (DebugInfoAttribute) debugInfo.Clone();
+		}
+		if (globalVariable != null)
+		{
+			globalVariableClone.globalVariable = (GlobalVarAttribute) globalVariable.Clone();
+		}
+		if (extraGeneration != null)
+		{
+			globalVariableClone.extraGeneration = (GenerateExtraAttribute) extraGeneration.Clone();
+		}
+		if(extraInclude != null)
+		{
+			globalVariableClone.extraInclude = (ExtraIncludeAttribute) extraInclude.Clone();
+		}
 
 		return globalVariableClone;
 	}

@@ -67,19 +67,17 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>where "TextTransform.exe" /Q
-IF %25ERRORLEVEL%25 NEQ 0 (
-echo [VariablesSystem] TextTransform.exe was not found
-exit /b
-) else (
-echo [VariablesSystem] TextTransform.exe was found
-)
+    <PostBuildEvent>$(ProjectDir)vswhere.exe -latest -property installationPath &gt; tmpFile 
+set /p installPath= &lt; tmpFile 
+del tmpFile 
+
+echo Trying to find Textransform at "%25installPath%25\Common7\IDE\TextTransform.exe"
 
 echo [VariablesSystem] Deleting $(ProjectDir)Generated
 del /F /Q  /S "$(ProjectDir)Generated\" &gt;nul
 
 echo [VariablesSystem] Generating template classes
-"TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
+"%25installPath%25\Common7\IDE\TextTransform.exe" "$(ProjectDir)Templates\GenericVariableGenerator.tt"
 echo [VariablesSystem] Generating template classes DONE
 
 set ProjectGeneratedFolder=$(ProjectDir)Generated
