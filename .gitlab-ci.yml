@@ -1,0 +1,20 @@
+stages:
+  - prepare
+  - deploy
+
+prepare-job:
+  stage: prepare
+  tags:
+    - linux
+    - unreal
+  script:
+    - Write-Host Let's gooo
+  
+deploy-job:  
+  stage: deploy
+  tags:
+    - linux
+    - unreal
+  script:
+    - echo "Deploying application..."
+    - echo "Application successfully deployed."
