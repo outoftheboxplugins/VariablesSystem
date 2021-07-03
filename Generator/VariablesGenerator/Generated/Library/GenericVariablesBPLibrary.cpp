@@ -93,3 +93,73 @@
     return UInstancedFVector2DVariable::GetInstancedFVector2DVariableValue(Owner, Variable);
 }
 
+/* STATIC */ TArray<bool> UGenericVariablesBPLibrary::GetGlobalBoolArrayVariableSafe(UGlobalBoolArrayVariable* Variable)
+{
+    return UGlobalBoolArrayVariable::GetGlobalBoolArrayVariableValue(Variable);
+}
+
+/* STATIC */ TArray<bool> UGenericVariablesBPLibrary::GetInstancedBoolArrayVariableSafe(UInstancedBoolArrayVariable* Variable, UObject* Owner)
+{
+    return UInstancedBoolArrayVariable::GetInstancedBoolArrayVariableValue(Owner, Variable);
+}
+
+/* STATIC */ TArray<int32> UGenericVariablesBPLibrary::GetGlobalIntArrayVariableSafe(UGlobalIntArrayVariable* Variable)
+{
+    return UGlobalIntArrayVariable::GetGlobalIntArrayVariableValue(Variable);
+}
+
+/* STATIC */ TArray<int32> UGenericVariablesBPLibrary::GetInstancedIntArrayVariableSafe(UInstancedIntArrayVariable* Variable, UObject* Owner)
+{
+    return UInstancedIntArrayVariable::GetInstancedIntArrayVariableValue(Owner, Variable);
+}
+
+/* STATIC */ TArray<float> UGenericVariablesBPLibrary::GetGlobalFloatArrayVariableSafe(UGlobalFloatArrayVariable* Variable)
+{
+    return UGlobalFloatArrayVariable::GetGlobalFloatArrayVariableValue(Variable);
+}
+
+/* STATIC */ TArray<float> UGenericVariablesBPLibrary::GetInstancedFloatArrayVariableSafe(UInstancedFloatArrayVariable* Variable, UObject* Owner)
+{
+    return UInstancedFloatArrayVariable::GetInstancedFloatArrayVariableValue(Owner, Variable);
+}
+
+/* STATIC */ TArray<FString> UGenericVariablesBPLibrary::GetGlobalStringArrayVariableSafe(UGlobalStringArrayVariable* Variable)
+{
+    return UGlobalStringArrayVariable::GetGlobalStringArrayVariableValue(Variable);
+}
+
+/* STATIC */ TArray<FString> UGenericVariablesBPLibrary::GetInstancedStringArrayVariableSafe(UInstancedStringArrayVariable* Variable, UObject* Owner)
+{
+    return UInstancedStringArrayVariable::GetInstancedStringArrayVariableValue(Owner, Variable);
+}
+
+/* STATIC */ TArray<FRotator> UGenericVariablesBPLibrary::GetGlobalFRotatorArrayVariableSafe(UGlobalFRotatorArrayVariable* Variable)
+{
+    return UGlobalFRotatorArrayVariable::GetGlobalFRotatorArrayVariableValue(Variable);
+}
+
+/* STATIC */ TArray<FRotator> UGenericVariablesBPLibrary::GetInstancedFRotatorArrayVariableSafe(UInstancedFRotatorArrayVariable* Variable, UObject* Owner)
+{
+    return UInstancedFRotatorArrayVariable::GetInstancedFRotatorArrayVariableValue(Owner, Variable);
+}
+
+/* STATIC */ TArray<FVector> UGenericVariablesBPLibrary::GetGlobalFVectorArrayVariableSafe(UGlobalFVectorArrayVariable* Variable)
+{
+    return UGlobalFVectorArrayVariable::GetGlobalFVectorArrayVariableValue(Variable);
+}
+
+/* STATIC */ TArray<FVector> UGenericVariablesBPLibrary::GetInstancedFVectorArrayVariableSafe(UInstancedFVectorArrayVariable* Variable, UObject* Owner)
+{
+    return UInstancedFVectorArrayVariable::GetInstancedFVectorArrayVariableValue(Owner, Variable);
+}
+
+/* STATIC */ TArray<FVector2D> UGenericVariablesBPLibrary::GetGlobalFVector2DArrayVariableSafe(UGlobalFVector2DArrayVariable* Variable)
+{
+    return UGlobalFVector2DArrayVariable::GetGlobalFVector2DArrayVariableValue(Variable);
+}
+
+/* STATIC */ TArray<FVector2D> UGenericVariablesBPLibrary::GetInstancedFVector2DArrayVariableSafe(UInstancedFVector2DArrayVariable* Variable, UObject* Owner)
+{
+    return UInstancedFVector2DArrayVariable::GetInstancedFVector2DArrayVariableValue(Owner, Variable);
+}
+

@@ -21,6 +21,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static float GetGlobalFloatVariableValue(const UGlobalFloatVariable* Variable);
 
+    // Get the reference of a float variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UGlobalFloatVariable* GetGlobalMutableFloatVariable(UGlobalFloatVariable* Variable);
+
 	// Set the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
 	static void SetGlobalFloatVariableValue(UGlobalFloatVariable* Variable, float NewValue);
@@ -44,7 +48,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
 	float SavedValue;
 
-protected:
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	float Value;
 };

@@ -21,6 +21,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static FVector2D GetGlobalFVector2DVariableValue(const UGlobalFVector2DVariable* Variable);
 
+    // Get the reference of a FVector2D variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UGlobalFVector2DVariable* GetGlobalMutableFVector2DVariable(UGlobalFVector2DVariable* Variable);
+
 	// Set the value of a FVector2D variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
 	static void SetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, FVector2D NewValue);
@@ -44,7 +48,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
 	FVector2D SavedValue;
 
-protected:
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	FVector2D Value;
 };

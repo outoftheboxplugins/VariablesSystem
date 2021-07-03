@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalActorRefVariable* UGlobalActorRefVariable::GetGlobalMutableActorRefVariable(UGlobalActorRefVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalActorRefVariable::SetGlobalActorRefVariableValue(UGlobalActorRefVariable* Variable, AActor* NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

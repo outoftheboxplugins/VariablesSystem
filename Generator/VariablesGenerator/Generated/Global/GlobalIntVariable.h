@@ -21,6 +21,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static int32 GetGlobalIntVariableValue(const UGlobalIntVariable* Variable);
 
+    // Get the reference of a int32 variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UGlobalIntVariable* GetGlobalMutableIntVariable(UGlobalIntVariable* Variable);
+
 	// Set the value of a int32 variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
 	static void SetGlobalIntVariableValue(UGlobalIntVariable* Variable, int32 NewValue);
@@ -44,7 +48,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
 	int32 SavedValue;
 
-protected:
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	int32 Value;
 };

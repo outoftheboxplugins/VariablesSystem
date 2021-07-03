@@ -38,3 +38,31 @@
 	{
 		return Settings->VectorPinTypeColor;
 	}
+	if (Variable->IsA<UGlobalBoolArrayVariable>() || Variable->IsA<UInstancedBoolArrayVariable>())
+	{
+		return Settings->BooleanPinTypeColor;
+	}
+	if (Variable->IsA<UGlobalIntArrayVariable>() || Variable->IsA<UInstancedIntArrayVariable>())
+	{
+		return Settings->IntPinTypeColor;
+	}
+	if (Variable->IsA<UGlobalFloatArrayVariable>() || Variable->IsA<UInstancedFloatArrayVariable>())
+	{
+		return Settings->FloatPinTypeColor;
+	}
+	if (Variable->IsA<UGlobalStringArrayVariable>() || Variable->IsA<UInstancedStringArrayVariable>())
+	{
+		return Settings->StringPinTypeColor;
+	}
+	if (Variable->IsA<UGlobalFRotatorArrayVariable>() || Variable->IsA<UInstancedFRotatorArrayVariable>())
+	{
+		return Settings->RotatorPinTypeColor;
+	}
+	if (Variable->IsA<UGlobalFVectorArrayVariable>() || Variable->IsA<UInstancedFVectorArrayVariable>())
+	{
+		return Settings->VectorPinTypeColor;
+	}
+	if (Variable->IsA<UGlobalFVector2DArrayVariable>() || Variable->IsA<UInstancedFVector2DArrayVariable>())
+	{
+		return Settings->VectorPinTypeColor;
+	}

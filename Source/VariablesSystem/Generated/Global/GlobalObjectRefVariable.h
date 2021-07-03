@@ -42,6 +42,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static UObject* GetGlobalObjectRefVariableValue(const UGlobalObjectRefVariable* Variable);
 
+    // Get the reference of a UObject* variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UGlobalObjectRefVariable* GetGlobalMutableObjectRefVariable(UGlobalObjectRefVariable* Variable);
+
 	// Set the value of a UObject* variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
 	static void SetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UObject* NewValue);
@@ -54,7 +58,7 @@ public:
 private:
     virtual FString GetStringValue() const override;
 
-protected:
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	UObject* Value;
 };

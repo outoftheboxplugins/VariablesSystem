@@ -21,6 +21,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static bool GetGlobalBoolVariableValue(const UGlobalBoolVariable* Variable);
 
+    // Get the reference of a bool variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UGlobalBoolVariable* GetGlobalMutableBoolVariable(UGlobalBoolVariable* Variable);
+
 	// Set the value of a bool variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
 	static void SetGlobalBoolVariableValue(UGlobalBoolVariable* Variable, bool NewValue);
@@ -44,7 +48,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
 	bool SavedValue;
 
-protected:
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	bool Value;
 };

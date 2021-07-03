@@ -21,6 +21,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static AActor* GetGlobalActorRefVariableValue(const UGlobalActorRefVariable* Variable);
 
+    // Get the reference of a AActor* variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UGlobalActorRefVariable* GetGlobalMutableActorRefVariable(UGlobalActorRefVariable* Variable);
+
 	// Set the value of a AActor* variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
 	static void SetGlobalActorRefVariableValue(UGlobalActorRefVariable* Variable, AActor* NewValue);
@@ -33,7 +37,7 @@ public:
 private:
     virtual FString GetStringValue() const override;
 
-protected:
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	AActor* Value;
 };

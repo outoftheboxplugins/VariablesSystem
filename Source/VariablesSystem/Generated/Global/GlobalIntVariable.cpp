@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalIntVariable* UGlobalIntVariable::GetGlobalMutableIntVariable(UGlobalIntVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalIntVariable::SetGlobalIntVariableValue(UGlobalIntVariable* Variable, int32 NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

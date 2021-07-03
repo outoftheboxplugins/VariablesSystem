@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalFloatVariable* UGlobalFloatVariable::GetGlobalMutableFloatVariable(UGlobalFloatVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalFloatVariable::SetGlobalFloatVariableValue(UGlobalFloatVariable* Variable, float NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalFRotatorVariable* UGlobalFRotatorVariable::GetGlobalMutableFRotatorVariable(UGlobalFRotatorVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalFRotatorVariable::SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, FRotator NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

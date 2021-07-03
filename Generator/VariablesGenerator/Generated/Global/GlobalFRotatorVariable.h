@@ -21,6 +21,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static FRotator GetGlobalFRotatorVariableValue(const UGlobalFRotatorVariable* Variable);
 
+    // Get the reference of a FRotator variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
+	static UGlobalFRotatorVariable* GetGlobalMutableFRotatorVariable(UGlobalFRotatorVariable* Variable);
+
 	// Set the value of a FRotator variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
 	static void SetGlobalFRotatorVariableValue(UGlobalFRotatorVariable* Variable, FRotator NewValue);
@@ -44,7 +48,7 @@ protected:
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
 	FRotator SavedValue;
 
-protected:
+public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
 	FRotator Value;
 };

@@ -31,7 +31,7 @@ void UGlobalVariable::SaveIfNeeded()
 		return;
 	}
 
-	Save();
+	Save(true);
 }
 
 void UGlobalVariable::LoadIfNeeded()

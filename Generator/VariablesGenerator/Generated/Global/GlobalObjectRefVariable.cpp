@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalObjectRefVariable* UGlobalObjectRefVariable::GetGlobalMutableObjectRefVariable(UGlobalObjectRefVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalObjectRefVariable::SetGlobalObjectRefVariableValue(UGlobalObjectRefVariable* Variable, UObject* NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

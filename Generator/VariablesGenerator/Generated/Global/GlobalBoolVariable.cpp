@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalBoolVariable* UGlobalBoolVariable::GetGlobalMutableBoolVariable(UGlobalBoolVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalBoolVariable::SetGlobalBoolVariableValue(UGlobalBoolVariable* Variable, bool NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

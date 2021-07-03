@@ -102,3 +102,79 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
     }
+    if (VariableClassName == FName("GlobalBoolArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Boolean;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("InstancedBoolArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Boolean;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("GlobalIntArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Int;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("InstancedIntArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Int;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("GlobalFloatArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Float;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("InstancedFloatArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Float;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("GlobalStringArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_String;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("InstancedStringArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_String;
+        ResultContainerType = EPinContainerType::Array;
+    }
+    if (VariableClassName == FName("GlobalFRotatorArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = TBaseStructure<FRotator>::Get();
+    }
+    if (VariableClassName == FName("InstancedFRotatorArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = TBaseStructure<FRotator>::Get();
+    }
+    if (VariableClassName == FName("GlobalFVectorArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = TBaseStructure<FVector>::Get();
+    }
+    if (VariableClassName == FName("InstancedFVectorArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = TBaseStructure<FVector>::Get();
+    }
+    if (VariableClassName == FName("GlobalFVector2DArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
+    }
+    if (VariableClassName == FName("InstancedFVector2DArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
+    }

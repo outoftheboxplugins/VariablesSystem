@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalStringVariable* UGlobalStringVariable::GetGlobalMutableStringVariable(UGlobalStringVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalStringVariable::SetGlobalStringVariableValue(UGlobalStringVariable* Variable, FString NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

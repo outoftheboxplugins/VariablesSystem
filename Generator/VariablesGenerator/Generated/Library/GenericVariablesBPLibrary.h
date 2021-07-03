@@ -69,4 +69,46 @@ public:
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector2D GetInstancedFVector2DVariableSafe(UInstancedFVector2DVariable* Variable, UObject* Owner);
 
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global BoolArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<bool> GetGlobalBoolArrayVariableSafe(UGlobalBoolArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced BoolArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<bool> GetInstancedBoolArrayVariableSafe(UInstancedBoolArrayVariable* Variable, UObject* Owner);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global IntArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<int32> GetGlobalIntArrayVariableSafe(UGlobalIntArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced IntArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<int32> GetInstancedIntArrayVariableSafe(UInstancedIntArrayVariable* Variable, UObject* Owner);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FloatArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<float> GetGlobalFloatArrayVariableSafe(UGlobalFloatArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FloatArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<float> GetInstancedFloatArrayVariableSafe(UInstancedFloatArrayVariable* Variable, UObject* Owner);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global StringArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FString> GetGlobalStringArrayVariableSafe(UGlobalStringArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced StringArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FString> GetInstancedStringArrayVariableSafe(UInstancedStringArrayVariable* Variable, UObject* Owner);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FRotatorArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FRotator> GetGlobalFRotatorArrayVariableSafe(UGlobalFRotatorArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FRotatorArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FRotator> GetInstancedFRotatorArrayVariableSafe(UInstancedFRotatorArrayVariable* Variable, UObject* Owner);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVectorArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FVector> GetGlobalFVectorArrayVariableSafe(UGlobalFVectorArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FVectorArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FVector> GetInstancedFVectorArrayVariableSafe(UInstancedFVectorArrayVariable* Variable, UObject* Owner);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global FVector2DArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FVector2D> GetGlobalFVector2DArrayVariableSafe(UGlobalFVector2DArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FVector2DArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<FVector2D> GetInstancedFVector2DArrayVariableSafe(UInstancedFVector2DArrayVariable* Variable, UObject* Owner);
+
 };

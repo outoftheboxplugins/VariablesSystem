@@ -25,6 +25,11 @@
 	}
 }
 
+/* STATIC */ UGlobalFVector2DVariable* UGlobalFVector2DVariable::GetGlobalMutableFVector2DVariable(UGlobalFVector2DVariable* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobalFVector2DVariable::SetGlobalFVector2DVariableValue(UGlobalFVector2DVariable* Variable, FVector2D NewValue)
 {
 	if (Variable && Variable->Value != NewValue)

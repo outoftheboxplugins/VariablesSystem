@@ -8,6 +8,7 @@
 #include "GlobalVariable.generated.h"
 
 // TOSOLVE: Make this a bitmap
+// TOSOLVE: Add flags to force save & load
 UENUM(BlueprintType)
 enum class EVSSaveType : uint8
 {

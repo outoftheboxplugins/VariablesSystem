@@ -74,3 +74,59 @@
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedFVector2DVariable, SetInstancedFVector2DVariableValue), UInstancedFVector2DVariable::StaticClass());
     }
+    if (VariableClassName == FName("GlobalBoolArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalBoolArrayVariable, SetGlobalBoolArrayVariableValue), UGlobalBoolArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedBoolArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedBoolArrayVariable, SetInstancedBoolArrayVariableValue), UInstancedBoolArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalIntArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalIntArrayVariable, SetGlobalIntArrayVariableValue), UGlobalIntArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedIntArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedIntArrayVariable, SetInstancedIntArrayVariableValue), UInstancedIntArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalFloatArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalFloatArrayVariable, SetGlobalFloatArrayVariableValue), UGlobalFloatArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedFloatArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedFloatArrayVariable, SetInstancedFloatArrayVariableValue), UInstancedFloatArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalStringArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalStringArrayVariable, SetGlobalStringArrayVariableValue), UGlobalStringArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedStringArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedStringArrayVariable, SetInstancedStringArrayVariableValue), UInstancedStringArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalFRotatorArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalFRotatorArrayVariable, SetGlobalFRotatorArrayVariableValue), UGlobalFRotatorArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedFRotatorArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedFRotatorArrayVariable, SetInstancedFRotatorArrayVariableValue), UInstancedFRotatorArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalFVectorArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalFVectorArrayVariable, SetGlobalFVectorArrayVariableValue), UGlobalFVectorArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedFVectorArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedFVectorArrayVariable, SetInstancedFVectorArrayVariableValue), UInstancedFVectorArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalFVector2DArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalFVector2DArrayVariable, SetGlobalFVector2DArrayVariableValue), UGlobalFVector2DArrayVariable::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedFVector2DArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedFVector2DArrayVariable, SetInstancedFVector2DArrayVariableValue), UInstancedFVector2DArrayVariable::StaticClass());
+    }
