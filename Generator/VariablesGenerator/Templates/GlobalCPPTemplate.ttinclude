@@ -36,6 +36,11 @@ void GenerateGlobalCPPFile(KeyValuePair<string, GlobalVariable> variable)
 	}
 }
 
+/* STATIC */ UGlobal<#=variable.Key#>* UGlobal<#=variable.Key#>::GetGlobalMutable<#=variable.Key#>(UGlobal<#=variable.Key#>* Variable)
+{
+    return Variable;
+}
+
 /* STATIC */ void UGlobal<#=variable.Key#>::SetGlobal<#=variable.Key#>Value(UGlobal<#=variable.Key#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue)
 {
 	if (Variable && Variable->Value != NewValue)
