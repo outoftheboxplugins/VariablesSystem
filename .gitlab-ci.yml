@@ -1,20 +1,4 @@
-stages:
-  - prepare
-  - deploy
-
-prepare-job:
-  stage: prepare
-  tags:
-    - linux
-    - unreal
-  script:
-    - echo Lets gooo
-  
-deploy-job:  
-  stage: deploy
-  tags:
-    - linux
-    - unreal
-  script:
-    - echo "Deploying application..."
-    - echo "Application successfully deployed."
+include:
+  - project: 'unreal-marketplace/pluginsdevops'
+    ref: Live
+    file: 'plugin-ci.yml'
