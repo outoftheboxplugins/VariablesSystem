@@ -6,6 +6,16 @@
 #include "InstancedVariable.h"
 #include "InstancedFloatVariable.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstancedFloatVariableType
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    float Value;
+};
+
 /**
  * Instanced FloatVariable implementation of the BaseVariable
  */
@@ -21,6 +31,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static float GetInstancedFloatVariableValue(UObject* Owner, UInstancedFloatVariable* Variable);
 
+	// Get the reference of a InstancedFloatVariable variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstancedFloatVariable* GetInstancedMutableFloatVariable(UInstancedFloatVariable* Variable);
+
 	// Set the value of a InstancedFloatVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstancedFloatVariableValue(UObject* Owner, UInstancedFloatVariable* Variable, float NewValue);
@@ -34,14 +48,15 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	float& GetInstancedFloatVariableRef(UObject* Owner);
+	FInstancedFloatVariableType& GetInstancedFloatVariableRef(UObject* Owner);
 
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;
 	FString GetValueAsString(float Value) const;
 
-private:
-	TMap<FWeakObjectPtr, float> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstancedFloatVariableType> VariablesMap;
 };
 

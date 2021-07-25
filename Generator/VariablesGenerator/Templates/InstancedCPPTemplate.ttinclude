@@ -35,7 +35,22 @@ void GenerateInstancedCPPFile(KeyValuePair<string, GlobalVariable> variable)
 	}
 	else
 	{
-		return Variable->GetInstanced<#=variable.Key#>Ref(Owner);
+		return Variable->GetInstanced<#=variable.Key#>Ref(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstanced<#=variable.Key#>* UInstanced<#=variable.Key#>::GetInstancedMutable<#=variable.Key#>(UInstanced<#=variable.Key#>* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -53,11 +68,11 @@ void GenerateInstancedCPPFile(KeyValuePair<string, GlobalVariable> variable)
 	}
 	else
 	{
-		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key#>Ref = Variable->GetInstanced<#=variable.Key#>Ref(Owner);
+		FInstanced<#=variable.Key#>Type& <#=variable.Key#>Ref = Variable->GetInstanced<#=variable.Key#>Ref(Owner);
 		
-		if(<#=variable.Key#>Ref != NewValue)
+		if(<#=variable.Key#>Ref.Value != NewValue)
 		{
-			<#=variable.Key#>Ref = NewValue;
+			<#=variable.Key#>Ref.Value = NewValue;
 		}
 	}
 }
@@ -76,38 +91,24 @@ void GenerateInstancedCPPFile(KeyValuePair<string, GlobalVariable> variable)
 	}
 	else
 	{
-		<#=variable.Value.globalVariable.valueType#>& <#=variable.Key#>Ref = Variable->GetInstanced<#=variable.Key#>Ref(Owner);
-		<#=variable.Value.globalVariable.valueType#>& other<#=variable.Key#>Ref = OtherVariable->GetInstanced<#=variable.Key#>Ref(OtherOwner);
+		FInstanced<#=variable.Key#>Type& <#=variable.Key#>Ref = Variable->GetInstanced<#=variable.Key#>Ref(Owner);
+		FInstanced<#=variable.Key#>Type& other<#=variable.Key#>Ref = OtherVariable->GetInstanced<#=variable.Key#>Ref(OtherOwner);
 
-		if(<#=variable.Key#>Ref != other<#=variable.Key#>Ref)
+		if(<#=variable.Key#>Ref.Value != other<#=variable.Key#>Ref.Value)
 		{
-			<#=variable.Key#>Ref = other<#=variable.Key#>Ref;
+			<#=variable.Key#>Ref.Value = other<#=variable.Key#>Ref.Value;
 		}
 	}
 }
 
 void UInstanced<#=variable.Key#>::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-<#=variable.Value.globalVariable.valueType#>& UInstanced<#=variable.Key#>::GetInstanced<#=variable.Key#>Ref(UObject* Owner)
+FInstanced<#=variable.Key#>Type& UInstanced<#=variable.Key#>::GetInstanced<#=variable.Key#>Ref(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 <#+
@@ -123,8 +124,8 @@ FString UInstanced<#=variable.Key#>::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

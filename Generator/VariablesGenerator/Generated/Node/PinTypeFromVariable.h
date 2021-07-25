@@ -102,6 +102,30 @@
         ResultContainerType = EPinContainerType::None;
         ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
     }
+    if (VariableClassName == FName("GlobalObjectRefArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = UObject::StaticClass();
+    }
+    if (VariableClassName == FName("InstancedObjectRefArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = UObject::StaticClass();
+    }
+    if (VariableClassName == FName("GlobalActorRefArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = AActor::StaticClass();
+    }
+    if (VariableClassName == FName("InstancedActorRefArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = AActor::StaticClass();
+    }
     if (VariableClassName == FName("GlobalBoolArrayVariable"))
     {
         ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Boolean;

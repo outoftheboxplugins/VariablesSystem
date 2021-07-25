@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedActorRefVariableRef(Owner);
+		return Variable->GetInstancedActorRefVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedActorRefVariable* UInstancedActorRefVariable::GetInstancedMutableActorRefVariable(UInstancedActorRefVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		AActor*& ActorRefVariableRef = Variable->GetInstancedActorRefVariableRef(Owner);
+		FInstancedActorRefVariableType& ActorRefVariableRef = Variable->GetInstancedActorRefVariableRef(Owner);
 		
-		if(ActorRefVariableRef != NewValue)
+		if(ActorRefVariableRef.Value != NewValue)
 		{
-			ActorRefVariableRef = NewValue;
+			ActorRefVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		AActor*& ActorRefVariableRef = Variable->GetInstancedActorRefVariableRef(Owner);
-		AActor*& otherActorRefVariableRef = OtherVariable->GetInstancedActorRefVariableRef(OtherOwner);
+		FInstancedActorRefVariableType& ActorRefVariableRef = Variable->GetInstancedActorRefVariableRef(Owner);
+		FInstancedActorRefVariableType& otherActorRefVariableRef = OtherVariable->GetInstancedActorRefVariableRef(OtherOwner);
 
-		if(ActorRefVariableRef != otherActorRefVariableRef)
+		if(ActorRefVariableRef.Value != otherActorRefVariableRef.Value)
 		{
-			ActorRefVariableRef = otherActorRefVariableRef;
+			ActorRefVariableRef.Value = otherActorRefVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedActorRefVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-AActor*& UInstancedActorRefVariable::GetInstancedActorRefVariableRef(UObject* Owner)
+FInstancedActorRefVariableType& UInstancedActorRefVariable::GetInstancedActorRefVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedActorRefVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedActorRefVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

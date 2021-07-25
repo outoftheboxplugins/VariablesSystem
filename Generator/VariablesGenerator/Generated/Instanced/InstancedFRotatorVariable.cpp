@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedFRotatorVariableRef(Owner);
+		return Variable->GetInstancedFRotatorVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedFRotatorVariable* UInstancedFRotatorVariable::GetInstancedMutableFRotatorVariable(UInstancedFRotatorVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		FRotator& FRotatorVariableRef = Variable->GetInstancedFRotatorVariableRef(Owner);
+		FInstancedFRotatorVariableType& FRotatorVariableRef = Variable->GetInstancedFRotatorVariableRef(Owner);
 		
-		if(FRotatorVariableRef != NewValue)
+		if(FRotatorVariableRef.Value != NewValue)
 		{
-			FRotatorVariableRef = NewValue;
+			FRotatorVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		FRotator& FRotatorVariableRef = Variable->GetInstancedFRotatorVariableRef(Owner);
-		FRotator& otherFRotatorVariableRef = OtherVariable->GetInstancedFRotatorVariableRef(OtherOwner);
+		FInstancedFRotatorVariableType& FRotatorVariableRef = Variable->GetInstancedFRotatorVariableRef(Owner);
+		FInstancedFRotatorVariableType& otherFRotatorVariableRef = OtherVariable->GetInstancedFRotatorVariableRef(OtherOwner);
 
-		if(FRotatorVariableRef != otherFRotatorVariableRef)
+		if(FRotatorVariableRef.Value != otherFRotatorVariableRef.Value)
 		{
-			FRotatorVariableRef = otherFRotatorVariableRef;
+			FRotatorVariableRef.Value = otherFRotatorVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedFRotatorVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-FRotator& UInstancedFRotatorVariable::GetInstancedFRotatorVariableRef(UObject* Owner)
+FInstancedFRotatorVariableType& UInstancedFRotatorVariable::GetInstancedFRotatorVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedFRotatorVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedFRotatorVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

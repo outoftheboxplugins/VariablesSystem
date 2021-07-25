@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedBoolArrayVariableRef(Owner);
+		return Variable->GetInstancedBoolArrayVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedBoolArrayVariable* UInstancedBoolArrayVariable::GetInstancedMutableBoolArrayVariable(UInstancedBoolArrayVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		TArray<bool>& BoolArrayVariableRef = Variable->GetInstancedBoolArrayVariableRef(Owner);
+		FInstancedBoolArrayVariableType& BoolArrayVariableRef = Variable->GetInstancedBoolArrayVariableRef(Owner);
 		
-		if(BoolArrayVariableRef != NewValue)
+		if(BoolArrayVariableRef.Value != NewValue)
 		{
-			BoolArrayVariableRef = NewValue;
+			BoolArrayVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		TArray<bool>& BoolArrayVariableRef = Variable->GetInstancedBoolArrayVariableRef(Owner);
-		TArray<bool>& otherBoolArrayVariableRef = OtherVariable->GetInstancedBoolArrayVariableRef(OtherOwner);
+		FInstancedBoolArrayVariableType& BoolArrayVariableRef = Variable->GetInstancedBoolArrayVariableRef(Owner);
+		FInstancedBoolArrayVariableType& otherBoolArrayVariableRef = OtherVariable->GetInstancedBoolArrayVariableRef(OtherOwner);
 
-		if(BoolArrayVariableRef != otherBoolArrayVariableRef)
+		if(BoolArrayVariableRef.Value != otherBoolArrayVariableRef.Value)
 		{
-			BoolArrayVariableRef = otherBoolArrayVariableRef;
+			BoolArrayVariableRef.Value = otherBoolArrayVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedBoolArrayVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-TArray<bool>& UInstancedBoolArrayVariable::GetInstancedBoolArrayVariableRef(UObject* Owner)
+FInstancedBoolArrayVariableType& UInstancedBoolArrayVariable::GetInstancedBoolArrayVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedBoolArrayVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedBoolArrayVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

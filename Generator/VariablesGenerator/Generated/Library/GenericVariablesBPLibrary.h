@@ -69,6 +69,18 @@ public:
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced FVector2DVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static FVector2D GetInstancedFVector2DVariableSafe(UInstancedFVector2DVariable* Variable, UObject* Owner);
 
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global ObjectRefArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<UObject*> GetGlobalObjectRefArrayVariableSafe(UGlobalObjectRefArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced ObjectRefArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<UObject*> GetInstancedObjectRefArrayVariableSafe(UInstancedObjectRefArrayVariable* Variable, UObject* Owner);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global ActorRefArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<AActor*> GetGlobalActorRefArrayVariableSafe(UGlobalActorRefArrayVariable* Variable);
+
+    UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Instanced ActorRefArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
+    static TArray<AActor*> GetInstancedActorRefArrayVariableSafe(UInstancedActorRefArrayVariable* Variable, UObject* Owner);
+
     UFUNCTION(BlueprintPure, meta = (DisplayName = "Get Global BoolArrayVariable Variable (Thread Safe)"), Category = "VariablesSystem")
     static TArray<bool> GetGlobalBoolArrayVariableSafe(UGlobalBoolArrayVariable* Variable);
 

@@ -6,6 +6,16 @@
 #include "InstancedVariable.h"
 #include "InstancedFVector2DArrayVariable.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstancedFVector2DArrayVariableType
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TArray<FVector2D> Value;
+};
+
 /**
  * Instanced FVector2DArrayVariable implementation of the BaseVariable
  */
@@ -21,6 +31,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static TArray<FVector2D> GetInstancedFVector2DArrayVariableValue(UObject* Owner, UInstancedFVector2DArrayVariable* Variable);
 
+	// Get the reference of a InstancedFVector2DArrayVariable variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstancedFVector2DArrayVariable* GetInstancedMutableFVector2DArrayVariable(UInstancedFVector2DArrayVariable* Variable);
+
 	// Set the value of a InstancedFVector2DArrayVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstancedFVector2DArrayVariableValue(UObject* Owner, UInstancedFVector2DArrayVariable* Variable, TArray<FVector2D> NewValue);
@@ -34,14 +48,15 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	TArray<FVector2D>& GetInstancedFVector2DArrayVariableRef(UObject* Owner);
+	FInstancedFVector2DArrayVariableType& GetInstancedFVector2DArrayVariableRef(UObject* Owner);
 
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;
 	FString GetValueAsString(TArray<FVector2D> Value) const;
 
-private:
-	TMap<FWeakObjectPtr, TArray<FVector2D>> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstancedFVector2DArrayVariableType> VariablesMap;
 };
 

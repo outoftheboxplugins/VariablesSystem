@@ -6,6 +6,16 @@
 #include "InstancedVariable.h"
 #include "InstancedFRotatorArrayVariable.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstancedFRotatorArrayVariableType
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TArray<FRotator> Value;
+};
+
 /**
  * Instanced FRotatorArrayVariable implementation of the BaseVariable
  */
@@ -21,6 +31,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static TArray<FRotator> GetInstancedFRotatorArrayVariableValue(UObject* Owner, UInstancedFRotatorArrayVariable* Variable);
 
+	// Get the reference of a InstancedFRotatorArrayVariable variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstancedFRotatorArrayVariable* GetInstancedMutableFRotatorArrayVariable(UInstancedFRotatorArrayVariable* Variable);
+
 	// Set the value of a InstancedFRotatorArrayVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstancedFRotatorArrayVariableValue(UObject* Owner, UInstancedFRotatorArrayVariable* Variable, TArray<FRotator> NewValue);
@@ -34,14 +48,15 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	TArray<FRotator>& GetInstancedFRotatorArrayVariableRef(UObject* Owner);
+	FInstancedFRotatorArrayVariableType& GetInstancedFRotatorArrayVariableRef(UObject* Owner);
 
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;
 	FString GetValueAsString(TArray<FRotator> Value) const;
 
-private:
-	TMap<FWeakObjectPtr, TArray<FRotator>> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstancedFRotatorArrayVariableType> VariablesMap;
 };
 

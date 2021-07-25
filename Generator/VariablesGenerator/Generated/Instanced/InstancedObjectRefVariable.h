@@ -6,6 +6,16 @@
 #include "InstancedVariable.h"
 #include "InstancedObjectRefVariable.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstancedObjectRefVariableType
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    UObject* Value;
+};
+
 /**
  * Instanced ObjectRefVariable implementation of the BaseVariable
  */
@@ -21,6 +31,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static UObject* GetInstancedObjectRefVariableValue(UObject* Owner, UInstancedObjectRefVariable* Variable);
 
+	// Get the reference of a InstancedObjectRefVariable variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstancedObjectRefVariable* GetInstancedMutableObjectRefVariable(UInstancedObjectRefVariable* Variable);
+
 	// Set the value of a InstancedObjectRefVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstancedObjectRefVariableValue(UObject* Owner, UInstancedObjectRefVariable* Variable, UObject* NewValue);
@@ -34,14 +48,15 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	UObject*& GetInstancedObjectRefVariableRef(UObject* Owner);
+	FInstancedObjectRefVariableType& GetInstancedObjectRefVariableRef(UObject* Owner);
 
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;
 	FString GetValueAsString(UObject* Value) const;
 
-private:
-	TMap<FWeakObjectPtr, UObject*> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstancedObjectRefVariableType> VariablesMap;
 };
 

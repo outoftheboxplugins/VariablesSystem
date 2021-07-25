@@ -74,6 +74,22 @@
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetInstancedFVector2DVariableSafe), UGenericVariablesBPLibrary::StaticClass());
     }
+    if (VariableClassName == FName("GlobalObjectRefArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetGlobalObjectRefArrayVariableSafe), UGenericVariablesBPLibrary::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedObjectRefArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetInstancedObjectRefArrayVariableSafe), UGenericVariablesBPLibrary::StaticClass());
+    }
+    if (VariableClassName == FName("GlobalActorRefArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetGlobalActorRefArrayVariableSafe), UGenericVariablesBPLibrary::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedActorRefArrayVariable"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetInstancedActorRefArrayVariableSafe), UGenericVariablesBPLibrary::StaticClass());
+    }
     if (VariableClassName == FName("GlobalBoolArrayVariable"))
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetGlobalBoolArrayVariableSafe), UGenericVariablesBPLibrary::StaticClass());

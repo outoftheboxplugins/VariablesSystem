@@ -6,6 +6,16 @@
 #include "InstancedVariable.h"
 #include "InstancedIntArrayVariable.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstancedIntArrayVariableType
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TArray<int32> Value;
+};
+
 /**
  * Instanced IntArrayVariable implementation of the BaseVariable
  */
@@ -21,6 +31,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static TArray<int32> GetInstancedIntArrayVariableValue(UObject* Owner, UInstancedIntArrayVariable* Variable);
 
+	// Get the reference of a InstancedIntArrayVariable variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstancedIntArrayVariable* GetInstancedMutableIntArrayVariable(UInstancedIntArrayVariable* Variable);
+
 	// Set the value of a InstancedIntArrayVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstancedIntArrayVariableValue(UObject* Owner, UInstancedIntArrayVariable* Variable, TArray<int32> NewValue);
@@ -34,14 +48,15 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	TArray<int32>& GetInstancedIntArrayVariableRef(UObject* Owner);
+	FInstancedIntArrayVariableType& GetInstancedIntArrayVariableRef(UObject* Owner);
 
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;
 	FString GetValueAsString(TArray<int32> Value) const;
 
-private:
-	TMap<FWeakObjectPtr, TArray<int32>> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstancedIntArrayVariableType> VariablesMap;
 };
 

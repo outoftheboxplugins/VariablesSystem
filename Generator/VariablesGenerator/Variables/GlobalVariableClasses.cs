@@ -2,10 +2,12 @@
 public class BaseVariable { }
 
 [GlobalVar("UObject*", "nullptr", "Object", "UObject::StaticClass()", "None", "Object")]
+[GenerateExtra(generateSaveLoad = false, generateArray = true)]
 [DebugInfo("Item ? Item->GetName() : \"UNSET\"")]
 public class ObjectRefVariable : BaseVariable { }
 
 [GlobalVar("AActor*", "nullptr", "Object", "AActor::StaticClass()", "None", "SoftObject")]
+[GenerateExtra(generateSaveLoad = false, generateArray = true)]
 [DebugInfo("Item ? Item->GetName() : \"UNSET\"")]
 public class ActorRefVariable : BaseVariable { }
 

@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedFVector2DVariableRef(Owner);
+		return Variable->GetInstancedFVector2DVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedFVector2DVariable* UInstancedFVector2DVariable::GetInstancedMutableFVector2DVariable(UInstancedFVector2DVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		FVector2D& FVector2DVariableRef = Variable->GetInstancedFVector2DVariableRef(Owner);
+		FInstancedFVector2DVariableType& FVector2DVariableRef = Variable->GetInstancedFVector2DVariableRef(Owner);
 		
-		if(FVector2DVariableRef != NewValue)
+		if(FVector2DVariableRef.Value != NewValue)
 		{
-			FVector2DVariableRef = NewValue;
+			FVector2DVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		FVector2D& FVector2DVariableRef = Variable->GetInstancedFVector2DVariableRef(Owner);
-		FVector2D& otherFVector2DVariableRef = OtherVariable->GetInstancedFVector2DVariableRef(OtherOwner);
+		FInstancedFVector2DVariableType& FVector2DVariableRef = Variable->GetInstancedFVector2DVariableRef(Owner);
+		FInstancedFVector2DVariableType& otherFVector2DVariableRef = OtherVariable->GetInstancedFVector2DVariableRef(OtherOwner);
 
-		if(FVector2DVariableRef != otherFVector2DVariableRef)
+		if(FVector2DVariableRef.Value != otherFVector2DVariableRef.Value)
 		{
-			FVector2DVariableRef = otherFVector2DVariableRef;
+			FVector2DVariableRef.Value = otherFVector2DVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedFVector2DVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-FVector2D& UInstancedFVector2DVariable::GetInstancedFVector2DVariableRef(UObject* Owner)
+FInstancedFVector2DVariableType& UInstancedFVector2DVariable::GetInstancedFVector2DVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedFVector2DVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedFVector2DVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

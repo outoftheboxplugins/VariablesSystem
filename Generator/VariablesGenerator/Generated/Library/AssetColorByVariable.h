@@ -38,6 +38,14 @@
 	{
 		return Settings->VectorPinTypeColor;
 	}
+	if (Variable->IsA<UGlobalObjectRefArrayVariable>() || Variable->IsA<UInstancedObjectRefArrayVariable>())
+	{
+		return Settings->ObjectPinTypeColor;
+	}
+	if (Variable->IsA<UGlobalActorRefArrayVariable>() || Variable->IsA<UInstancedActorRefArrayVariable>())
+	{
+		return Settings->SoftObjectPinTypeColor;
+	}
 	if (Variable->IsA<UGlobalBoolArrayVariable>() || Variable->IsA<UInstancedBoolArrayVariable>())
 	{
 		return Settings->BooleanPinTypeColor;

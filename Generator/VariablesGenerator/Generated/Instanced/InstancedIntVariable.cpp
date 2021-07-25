@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedIntVariableRef(Owner);
+		return Variable->GetInstancedIntVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedIntVariable* UInstancedIntVariable::GetInstancedMutableIntVariable(UInstancedIntVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		int32& IntVariableRef = Variable->GetInstancedIntVariableRef(Owner);
+		FInstancedIntVariableType& IntVariableRef = Variable->GetInstancedIntVariableRef(Owner);
 		
-		if(IntVariableRef != NewValue)
+		if(IntVariableRef.Value != NewValue)
 		{
-			IntVariableRef = NewValue;
+			IntVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		int32& IntVariableRef = Variable->GetInstancedIntVariableRef(Owner);
-		int32& otherIntVariableRef = OtherVariable->GetInstancedIntVariableRef(OtherOwner);
+		FInstancedIntVariableType& IntVariableRef = Variable->GetInstancedIntVariableRef(Owner);
+		FInstancedIntVariableType& otherIntVariableRef = OtherVariable->GetInstancedIntVariableRef(OtherOwner);
 
-		if(IntVariableRef != otherIntVariableRef)
+		if(IntVariableRef.Value != otherIntVariableRef.Value)
 		{
-			IntVariableRef = otherIntVariableRef;
+			IntVariableRef.Value = otherIntVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedIntVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-int32& UInstancedIntVariable::GetInstancedIntVariableRef(UObject* Owner)
+FInstancedIntVariableType& UInstancedIntVariable::GetInstancedIntVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedIntVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedIntVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

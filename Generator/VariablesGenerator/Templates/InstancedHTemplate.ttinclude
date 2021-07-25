@@ -25,6 +25,16 @@ void GenerateInstancedHFile(KeyValuePair<string, GlobalVariable> variable)
 #>
 #include "Instanced<#=variable.Key#>.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstanced<#=variable.Key#>Type
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    <#=variable.Value.globalVariable.valueType#> Value;
+};
+
 /**
  * Instanced <#=variable.Key#> implementation of the BaseVariable
  */
@@ -40,6 +50,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static <#=variable.Value.globalVariable.valueType#> GetInstanced<#=variable.Key#>Value(UObject* Owner, UInstanced<#=variable.Key#>* Variable);
 
+	// Get the reference of a Instanced<#=variable.Key#> variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstanced<#=variable.Key#>* GetInstancedMutable<#=variable.Key#>(UInstanced<#=variable.Key#>* Variable);
+
 	// Set the value of a Instanced<#=variable.Key#> variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstanced<#=variable.Key#>Value(UObject* Owner, UInstanced<#=variable.Key#>* Variable, <#=variable.Value.globalVariable.valueType#> NewValue);
@@ -53,7 +67,7 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	<#=variable.Value.globalVariable.valueType#>& GetInstanced<#=variable.Key#>Ref(UObject* Owner);
+	FInstanced<#=variable.Key#>Type& GetInstanced<#=variable.Key#>Ref(UObject* Owner);
 
 <#+
 	if(variable.Value.debugInfo != null)
@@ -67,8 +81,9 @@ private:
 	}
 #>
 
-private:
-	TMap<FWeakObjectPtr, <#=variable.Value.globalVariable.valueType#>> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstanced<#=variable.Key#>Type> VariablesMap;
 };
 
 <#+

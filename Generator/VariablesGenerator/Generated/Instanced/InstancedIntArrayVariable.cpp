@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedIntArrayVariableRef(Owner);
+		return Variable->GetInstancedIntArrayVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedIntArrayVariable* UInstancedIntArrayVariable::GetInstancedMutableIntArrayVariable(UInstancedIntArrayVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		TArray<int32>& IntArrayVariableRef = Variable->GetInstancedIntArrayVariableRef(Owner);
+		FInstancedIntArrayVariableType& IntArrayVariableRef = Variable->GetInstancedIntArrayVariableRef(Owner);
 		
-		if(IntArrayVariableRef != NewValue)
+		if(IntArrayVariableRef.Value != NewValue)
 		{
-			IntArrayVariableRef = NewValue;
+			IntArrayVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		TArray<int32>& IntArrayVariableRef = Variable->GetInstancedIntArrayVariableRef(Owner);
-		TArray<int32>& otherIntArrayVariableRef = OtherVariable->GetInstancedIntArrayVariableRef(OtherOwner);
+		FInstancedIntArrayVariableType& IntArrayVariableRef = Variable->GetInstancedIntArrayVariableRef(Owner);
+		FInstancedIntArrayVariableType& otherIntArrayVariableRef = OtherVariable->GetInstancedIntArrayVariableRef(OtherOwner);
 
-		if(IntArrayVariableRef != otherIntArrayVariableRef)
+		if(IntArrayVariableRef.Value != otherIntArrayVariableRef.Value)
 		{
-			IntArrayVariableRef = otherIntArrayVariableRef;
+			IntArrayVariableRef.Value = otherIntArrayVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedIntArrayVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-TArray<int32>& UInstancedIntArrayVariable::GetInstancedIntArrayVariableRef(UObject* Owner)
+FInstancedIntArrayVariableType& UInstancedIntArrayVariable::GetInstancedIntArrayVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedIntArrayVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedIntArrayVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

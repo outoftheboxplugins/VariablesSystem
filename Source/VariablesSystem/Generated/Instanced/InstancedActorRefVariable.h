@@ -6,6 +6,16 @@
 #include "InstancedVariable.h"
 #include "InstancedActorRefVariable.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstancedActorRefVariableType
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    AActor* Value;
+};
+
 /**
  * Instanced ActorRefVariable implementation of the BaseVariable
  */
@@ -21,6 +31,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static AActor* GetInstancedActorRefVariableValue(UObject* Owner, UInstancedActorRefVariable* Variable);
 
+	// Get the reference of a InstancedActorRefVariable variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstancedActorRefVariable* GetInstancedMutableActorRefVariable(UInstancedActorRefVariable* Variable);
+
 	// Set the value of a InstancedActorRefVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstancedActorRefVariableValue(UObject* Owner, UInstancedActorRefVariable* Variable, AActor* NewValue);
@@ -34,14 +48,15 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	AActor*& GetInstancedActorRefVariableRef(UObject* Owner);
+	FInstancedActorRefVariableType& GetInstancedActorRefVariableRef(UObject* Owner);
 
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;
 	FString GetValueAsString(AActor* Value) const;
 
-private:
-	TMap<FWeakObjectPtr, AActor*> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstancedActorRefVariableType> VariablesMap;
 };
 

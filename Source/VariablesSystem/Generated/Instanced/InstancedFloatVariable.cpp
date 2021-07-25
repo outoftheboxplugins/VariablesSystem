@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedFloatVariableRef(Owner);
+		return Variable->GetInstancedFloatVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedFloatVariable* UInstancedFloatVariable::GetInstancedMutableFloatVariable(UInstancedFloatVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		float& FloatVariableRef = Variable->GetInstancedFloatVariableRef(Owner);
+		FInstancedFloatVariableType& FloatVariableRef = Variable->GetInstancedFloatVariableRef(Owner);
 		
-		if(FloatVariableRef != NewValue)
+		if(FloatVariableRef.Value != NewValue)
 		{
-			FloatVariableRef = NewValue;
+			FloatVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		float& FloatVariableRef = Variable->GetInstancedFloatVariableRef(Owner);
-		float& otherFloatVariableRef = OtherVariable->GetInstancedFloatVariableRef(OtherOwner);
+		FInstancedFloatVariableType& FloatVariableRef = Variable->GetInstancedFloatVariableRef(Owner);
+		FInstancedFloatVariableType& otherFloatVariableRef = OtherVariable->GetInstancedFloatVariableRef(OtherOwner);
 
-		if(FloatVariableRef != otherFloatVariableRef)
+		if(FloatVariableRef.Value != otherFloatVariableRef.Value)
 		{
-			FloatVariableRef = otherFloatVariableRef;
+			FloatVariableRef.Value = otherFloatVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedFloatVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-float& UInstancedFloatVariable::GetInstancedFloatVariableRef(UObject* Owner)
+FInstancedFloatVariableType& UInstancedFloatVariable::GetInstancedFloatVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedFloatVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedFloatVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedStringArrayVariableRef(Owner);
+		return Variable->GetInstancedStringArrayVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedStringArrayVariable* UInstancedStringArrayVariable::GetInstancedMutableStringArrayVariable(UInstancedStringArrayVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		TArray<FString>& StringArrayVariableRef = Variable->GetInstancedStringArrayVariableRef(Owner);
+		FInstancedStringArrayVariableType& StringArrayVariableRef = Variable->GetInstancedStringArrayVariableRef(Owner);
 		
-		if(StringArrayVariableRef != NewValue)
+		if(StringArrayVariableRef.Value != NewValue)
 		{
-			StringArrayVariableRef = NewValue;
+			StringArrayVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		TArray<FString>& StringArrayVariableRef = Variable->GetInstancedStringArrayVariableRef(Owner);
-		TArray<FString>& otherStringArrayVariableRef = OtherVariable->GetInstancedStringArrayVariableRef(OtherOwner);
+		FInstancedStringArrayVariableType& StringArrayVariableRef = Variable->GetInstancedStringArrayVariableRef(Owner);
+		FInstancedStringArrayVariableType& otherStringArrayVariableRef = OtherVariable->GetInstancedStringArrayVariableRef(OtherOwner);
 
-		if(StringArrayVariableRef != otherStringArrayVariableRef)
+		if(StringArrayVariableRef.Value != otherStringArrayVariableRef.Value)
 		{
-			StringArrayVariableRef = otherStringArrayVariableRef;
+			StringArrayVariableRef.Value = otherStringArrayVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedStringArrayVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-TArray<FString>& UInstancedStringArrayVariable::GetInstancedStringArrayVariableRef(UObject* Owner)
+FInstancedStringArrayVariableType& UInstancedStringArrayVariable::GetInstancedStringArrayVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedStringArrayVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedStringArrayVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);

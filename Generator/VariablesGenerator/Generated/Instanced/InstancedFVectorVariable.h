@@ -6,6 +6,16 @@
 #include "InstancedVariable.h"
 #include "InstancedFVectorVariable.generated.h"
 
+USTRUCT(BlueprintType)
+struct FInstancedFVectorVariableType
+{
+    GENERATED_USTRUCT_BODY();
+
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    FVector Value;
+};
+
 /**
  * Instanced FVectorVariable implementation of the BaseVariable
  */
@@ -21,6 +31,10 @@ public:
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
 	static FVector GetInstancedFVectorVariableValue(UObject* Owner, UInstancedFVectorVariable* Variable);
 
+	// Get the reference of a InstancedFVectorVariable variable.
+	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe))
+	static UInstancedFVectorVariable* GetInstancedMutableFVectorVariable(UInstancedFVectorVariable* Variable);
+
 	// Set the value of a InstancedFVectorVariable variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem")
 	static void SetInstancedFVectorVariableValue(UObject* Owner, UInstancedFVectorVariable* Variable, FVector NewValue);
@@ -34,14 +48,15 @@ private:
 
 private:
 	// Internal getter or creater used to modify values.
-	FVector& GetInstancedFVectorVariableRef(UObject* Owner);
+	FInstancedFVectorVariableType& GetInstancedFVectorVariableRef(UObject* Owner);
 
 // BaseVariable Debug Interface
 private:
     virtual FString GetStringValue() const override;
 	FString GetValueAsString(FVector Value) const;
 
-private:
-	TMap<FWeakObjectPtr, FVector> VariablesMap;
+public:
+    UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
+    TMap<UObject*, FInstancedFVectorVariableType> VariablesMap;
 };
 

@@ -24,7 +24,22 @@
 	}
 	else
 	{
-		return Variable->GetInstancedFloatArrayVariableRef(Owner);
+		return Variable->GetInstancedFloatArrayVariableRef(Owner).Value;
+	}
+}
+
+/* STATIC */ UInstancedFloatArrayVariable* UInstancedFloatArrayVariable::GetInstancedMutableFloatArrayVariable(UInstancedFloatArrayVariable* Variable)
+{
+	if (!Variable)
+	{
+		UE_LOG(LogVariablesSystem, Warning, TEXT("Cannot get instance value without a variable. Returning default value. Callstack below:"));
+		PrintScriptCallstack();
+
+		return nullptr;
+	}
+	else
+	{
+		return Variable;
 	}
 }
 
@@ -42,11 +57,11 @@
 	}
 	else
 	{
-		TArray<float>& FloatArrayVariableRef = Variable->GetInstancedFloatArrayVariableRef(Owner);
+		FInstancedFloatArrayVariableType& FloatArrayVariableRef = Variable->GetInstancedFloatArrayVariableRef(Owner);
 		
-		if(FloatArrayVariableRef != NewValue)
+		if(FloatArrayVariableRef.Value != NewValue)
 		{
-			FloatArrayVariableRef = NewValue;
+			FloatArrayVariableRef.Value = NewValue;
 		}
 	}
 }
@@ -65,38 +80,24 @@
 	}
 	else
 	{
-		TArray<float>& FloatArrayVariableRef = Variable->GetInstancedFloatArrayVariableRef(Owner);
-		TArray<float>& otherFloatArrayVariableRef = OtherVariable->GetInstancedFloatArrayVariableRef(OtherOwner);
+		FInstancedFloatArrayVariableType& FloatArrayVariableRef = Variable->GetInstancedFloatArrayVariableRef(Owner);
+		FInstancedFloatArrayVariableType& otherFloatArrayVariableRef = OtherVariable->GetInstancedFloatArrayVariableRef(OtherOwner);
 
-		if(FloatArrayVariableRef != otherFloatArrayVariableRef)
+		if(FloatArrayVariableRef.Value != otherFloatArrayVariableRef.Value)
 		{
-			FloatArrayVariableRef = otherFloatArrayVariableRef;
+			FloatArrayVariableRef.Value = otherFloatArrayVariableRef.Value;
 		}
 	}
 }
 
 void UInstancedFloatArrayVariable::CleanupEntries()
 {
-	int32 index = 0;
-	while(index < VariablesMap.Num())
-	{
-		TArray<FWeakObjectPtr> Owners;
-		VariablesMap.GetKeys(Owners);
-
-		if (!Owners[index].IsValid())
-		{
-			VariablesMap.Remove(Owners[index]);
-		}
-		else
-		{
-			index++;
-		}
-	}
+    VariablesMap.Empty();
 }
 
-TArray<float>& UInstancedFloatArrayVariable::GetInstancedFloatArrayVariableRef(UObject* Owner)
+FInstancedFloatArrayVariableType& UInstancedFloatArrayVariable::GetInstancedFloatArrayVariableRef(UObject* Owner)
 {
-	return VariablesMap.FindOrAdd(Owner);;
+	return VariablesMap.FindOrAdd(Owner);
 }
 
 FString UInstancedFloatArrayVariable::GetStringValue() const
@@ -108,8 +109,8 @@ FString UInstancedFloatArrayVariable::GetStringValue() const
         const auto& Value = Variable.Value;
         const auto& Owner = Variable.Key;
 
-		FString ValueString = GetValueAsString(Value);
-		FString OwnerString = Owner.IsValid() ? Owner.Get()->GetName() : FString("Invalid Owner");
+		FString ValueString = GetValueAsString(Value.Value);
+		FString OwnerString = Owner ? Owner->GetName() : FString("Invalid Owner");
 		FString Line = FString::Printf(TEXT("%s - %s \n"), *OwnerString, *ValueString);
 
 		Lines.Append(Line);
