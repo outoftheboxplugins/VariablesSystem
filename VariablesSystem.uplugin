@@ -1,33 +1,26 @@
 {
-  "FileVersion": 3,
-  "VersionName": "3.21",
-  "EngineVersion": "4.25",
-  "FriendlyName": "Variables System",
-  "Description": "Truly global and modular variables system creating to create reliable arhitecture for your game.",
-  "Category": "Editor",
-  "CreatedBy": "Out-of-the-Box Plugins",
-  "CreatedByURL": "https://outofthebox-plugins.com",
-  "DocsURL": "https://bitbucket.org/pasotee-marketplace/variablessystem/wiki/Home",
-  "MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/ba8559b2aa794f20b6e84e7ce338b96f",
-  "SupportURL": "https://outofthebox-plugins.com/pages/about",
-  "EnabledByDefault": true,
-  "CanContainContent" : false,
-  "Modules": 
-  [
-    {
-      "Name": "VariablesSystem",
-      "Type": "Runtime"
-    },
-    {
-      "Name": "VariablesSystemEditor",
-      "Type": "UncookedOnly",
-      "WhitelistPlatforms": [ "Win64", "Win32", "Mac", "Linux" ]
-    }
-  ],
-  "PreBuildSteps":
-  {
-    "Win64": [
-      "$(PluginDir)/Generator/UpdateFileGeneration.bat"
-    ]
-  }
+	"FileVersion": 3,
+	"VersionName": "5.1",
+	"EngineVersion": "4.25",
+	"FriendlyName": "Variables System",
+	"Description": "Truly global and modular variables system creating to create reliable arhitecture for your game.",
+	"Category": "Editor",
+	"CreatedBy": "Out-of-the-Box Plugins",
+	"CreatedByURL": "https://outofthebox-plugins.com",
+	"DocsURL": "https://gitlab.com/unreal-marketplace/VariablesSystem/-/wikis/home",
+	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/ba8559b2aa794f20b6e84e7ce338b96f",
+	"SupportURL": "https://gitlab.com/unreal-marketplace/VariablesSystem/-/wikis/home",
+	"EnabledByDefault": true,
+	"CanContainContent" : false,
+	"Modules": [	
+		{
+			"Name": "VariablesSystem",
+			"Type": "Runtime"
+		},
+		{
+			"Name": "VariablesSystemEditor",
+			"Type": "UncookedOnly",
+			"WhitelistPlatforms": [ "Win64", "Win32", "Mac", "Linux" ]
+		}
+	]
 }
