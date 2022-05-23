@@ -51,12 +51,18 @@ void UGlobalVariable::LoadIfNeeded()
 
 void UGlobalVariable::OnWorldCreationEvent(const UWorld::FActorsInitializedParams& params)
 {
-	LoadIfNeeded();
+	if(params.World && params.World->IsGameWorld())
+	{
+		LoadIfNeeded();
+	}
 }
 
 void UGlobalVariable::OnWorldDestructionEvent(UWorld* World, bool bSessionEnded, bool bCleanupResources)
 {
-	SaveIfNeeded();
+	if(World && World->IsGameWorld())
+	{
+		SaveIfNeeded();
+	}
 }
 
 FString UGlobalVariable::GetSaveLocation() const
