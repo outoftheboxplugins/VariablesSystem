@@ -50,5 +50,5 @@ protected:
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
-	TArray<int32> Value;
+	TArray<int32> Value = {};
 };

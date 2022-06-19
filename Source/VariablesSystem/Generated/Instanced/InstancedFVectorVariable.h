@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedFVectorVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    FVector Value;
+    FVector Value  = FVector::ZeroVector;
 };
 
 /**

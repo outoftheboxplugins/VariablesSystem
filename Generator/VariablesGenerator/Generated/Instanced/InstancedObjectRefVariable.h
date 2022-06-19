@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedObjectRefVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    UObject* Value;
+    UObject* Value  = nullptr;
 };
 
 /**

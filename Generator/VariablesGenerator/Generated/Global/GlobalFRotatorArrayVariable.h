@@ -50,5 +50,5 @@ protected:
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
-	TArray<FRotator> Value;
+	TArray<FRotator> Value = {};
 };

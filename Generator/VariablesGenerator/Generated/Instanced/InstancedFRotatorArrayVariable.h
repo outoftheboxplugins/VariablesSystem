@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedFRotatorArrayVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    TArray<FRotator> Value;
+    TArray<FRotator> Value  = TArray<FRotator>();
 };
 
 /**

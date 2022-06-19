@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedFloatArrayVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    TArray<float> Value;
+    TArray<float> Value  = TArray<float>();
 };
 
 /**

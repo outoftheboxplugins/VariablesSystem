@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedIntVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    int32 Value;
+    int32 Value  = 0;
 };
 
 /**

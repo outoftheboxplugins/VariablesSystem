@@ -39,5 +39,5 @@ private:
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
-	TArray<AActor*> Value;
+	TArray<AActor*> Value = {};
 };

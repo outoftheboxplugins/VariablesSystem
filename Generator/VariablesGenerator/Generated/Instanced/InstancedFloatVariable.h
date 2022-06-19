@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedFloatVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    float Value;
+    float Value  = 0.0f;
 };
 
 /**

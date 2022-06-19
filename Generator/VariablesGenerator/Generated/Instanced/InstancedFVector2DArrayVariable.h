@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedFVector2DArrayVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    TArray<FVector2D> Value;
+    TArray<FVector2D> Value  = TArray<FVector2D>();
 };
 
 /**

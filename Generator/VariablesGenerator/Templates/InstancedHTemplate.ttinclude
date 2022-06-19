@@ -28,11 +28,11 @@ void GenerateInstancedHFile(KeyValuePair<string, GlobalVariable> variable)
 USTRUCT(BlueprintType)
 struct FInstanced<#=variable.Key#>Type
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    <#=variable.Value.globalVariable.valueType#> Value;
+    <#=variable.Value.globalVariable.valueType#> Value  = <#=variable.Value.globalVariable.defaultValue#>;
 };
 
 /**

@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedActorRefVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    AActor* Value;
+    AActor* Value  = nullptr;
 };
 
 /**

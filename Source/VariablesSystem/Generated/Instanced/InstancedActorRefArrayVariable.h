@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedActorRefArrayVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    TArray<AActor*> Value;
+    TArray<AActor*> Value  = TArray<AActor*>();
 };
 
 /**

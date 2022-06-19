@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedFRotatorVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    FRotator Value;
+    FRotator Value  = FRotator::ZeroRotator;
 };
 
 /**

@@ -9,11 +9,11 @@
 USTRUCT(BlueprintType)
 struct FInstancedBoolVariableType
 {
-    GENERATED_USTRUCT_BODY();
+    GENERATED_BODY();
 
 public:
     UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-    bool Value;
+    bool Value  = false;
 };
 
 /**

@@ -86,7 +86,7 @@ protected:
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
-	<#=variable.Value.globalVariable.valueType#> Value;
+	<#=variable.Value.globalVariable.valueType#> Value = {};
 };
 <#+
 }

@@ -60,5 +60,5 @@ private:
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
-	UObject* Value;
+	UObject* Value = {};
 };
