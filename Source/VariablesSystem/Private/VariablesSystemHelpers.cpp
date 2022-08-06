@@ -17,7 +17,7 @@ void UVariablesSystemHelpersBPLibrary::SaveAllVariables()
 {
 	for (auto& Variable : GetAllGlobalVariables())
 	{
-		Variable->Load();
+		Variable->Save();
 	}
 }
 
