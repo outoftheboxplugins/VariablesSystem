@@ -11,20 +11,20 @@ class FVSActions;
 
 class FVariablesSystemEditorModule : public IModuleInterface
 {
-
-// Public Interface
+	// Public Interface
 public:
 	static FVariablesSystemEditorModule& GetModule();
 	static bool IsModuleLoaded();
 
 	TSharedPtr<class SDockTab> OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables = TArray<UBaseVariable*>());
+	void OnPasteVariables();
 
-//IModuleInterface interface
+	// IModuleInterface interface
 private:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 
-// Register & Unregister
+	// Register & Unregister
 private:
 	void RegisterAssetTools();
 	void UnregisterAssetTools();
@@ -32,9 +32,9 @@ private:
 	void RegisterMenuExtensions();
 	void UnregisterMenuExtensions();
 
-// Extensions
+	// Extensions
 private:
-    TSharedRef<SDockTab> SpawnVariablesWatchTab(const FSpawnTabArgs& Args);
+	TSharedRef<SDockTab> SpawnVariablesWatchTab(const FSpawnTabArgs& Args);
 
 private:
 	TSharedPtr<FVSActions> AssetActions;

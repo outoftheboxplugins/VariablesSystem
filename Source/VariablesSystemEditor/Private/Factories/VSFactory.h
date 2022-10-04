@@ -1,9 +1,8 @@
 // Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
 #pragma once
 
-#include "Factories/Factory.h"
-
 #include "ClassViewerFilter.h"
+#include "Factories/Factory.h"
 
 #include "VSFactory.generated.h"
 
@@ -15,9 +14,12 @@ public:
 	EClassFlags DisallowedClassFlags;
 
 private:
-	virtual bool IsClassAllowed(const FClassViewerInitializationOptions& InInitOptions, const UClass* InClass, TSharedRef<class FClassViewerFilterFuncs> InFilterFuncs) override;
+	virtual bool IsClassAllowed(const FClassViewerInitializationOptions& InInitOptions, const UClass* InClass,
+		TSharedRef<class FClassViewerFilterFuncs> InFilterFuncs) override;
 
-	virtual bool IsUnloadedClassAllowed(const FClassViewerInitializationOptions& InInitOptions, const TSharedRef<const class IUnloadedBlueprintData> InUnloadedClassData, TSharedRef<class FClassViewerFilterFuncs> InFilterFuncs) override;
+	virtual bool IsUnloadedClassAllowed(const FClassViewerInitializationOptions& InInitOptions,
+		const TSharedRef<const class IUnloadedBlueprintData> InUnloadedClassData,
+		TSharedRef<class FClassViewerFilterFuncs> InFilterFuncs) override;
 };
 
 /**
@@ -29,19 +31,29 @@ class UVSFactory : public UFactory
 {
 	GENERATED_UCLASS_BODY()
 
-// UFactory interface
+	// UFactory interface
 private:
-    virtual bool ConfigureProperties() override;
-	virtual bool CanCreateNew() const override { return true; }
-	virtual bool ShouldShowInNewMenu() const override { return true; }
+	virtual bool ConfigureProperties() override;
+	virtual bool CanCreateNew() const override
+	{
+		return true;
+	}
+	virtual bool ShouldShowInNewMenu() const override
+	{
+		return true;
+	}
 
-    virtual UObject* FactoryCreateNew(UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
+	virtual UObject* FactoryCreateNew(
+		UClass* Class, UObject* InParent, FName Name, EObjectFlags Flags, UObject* Context, FFeedbackContext* Warn) override;
+
+public:
+	TSubclassOf<class UBaseVariable> ChoosenVariableType;
 
 private:
-	virtual bool ConfigureVariableProperties(UClass*& OutChosenClass) { return false; }
-
-private:
-    TSubclassOf<class UBaseVariable> ChoosenVariableType;
+	virtual bool ConfigureVariableProperties(UClass*& OutChosenClass)
+	{
+		return false;
+	}
 };
 
 UCLASS()
