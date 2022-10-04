@@ -3,6 +3,7 @@
 
 #include "AssetToolsModule.h"
 #include "ContentBrowserDataMenuContexts.h"
+#include "ContentBrowserDataSubsystem.h"
 #include "ToolMenus.h"
 #include "VSFactory.h"
 #include "VSLog.h"
@@ -45,11 +46,15 @@ TSharedPtr<SDockTab> FVariablesSystemEditorModule::OpenOrAddVariablesToWatch(
 
 static const TCHAR* VAR_PREFIX = TEXT("BPVar");
 
-void FVariablesSystemEditorModule::OnPasteVariables()
+void FVariablesSystemEditorModule::OnPasteVariables(const FString& Path)
 {
+	UContentBrowserDataSubsystem* ContentBrowserDataSubsystem = GEditor->GetEditorSubsystem<UContentBrowserDataSubsystem>();
+	FString PackagePath;
+	ContentBrowserDataSubsystem->TryConvertVirtualPath(Path, PackagePath);
+
 	FString ClipboardText;
 	FPlatformApplicationMisc::ClipboardPaste(ClipboardText);
-	if (!ensure(ClipboardText.StartsWith(VAR_PREFIX, ESearchCase::CaseSensitive)))
+	if (!(ClipboardText.StartsWith(VAR_PREFIX, ESearchCase::CaseSensitive)))
 	{
 		return;
 	}
@@ -66,14 +71,14 @@ void FVariablesSystemEditorModule::OnPasteVariables()
 			FAssetToolsModule& AssetToolsModule = FAssetToolsModule::GetModule();
 			FString NewPackageName;
 			FString NewAssetName;
-			FString DefaultName = FString::Printf(TEXT("/Game/Cinematics/Sequences/%s"), *Description.VarName.ToString());
+			FString DefaultName = FString::Printf(TEXT("%s/%s"), *PackagePath, *Description.VarName.ToString());
 			// Sequences created in VR editor will have a sequential VRSequencer00X naming scheme and be stored in Game/Sequences
 			AssetToolsModule.Get().CreateUniqueAssetName(DefaultName, TEXT(""), NewPackageName, NewAssetName);
 
 			UVSGlobalFactory* Factory = NewObject<UVSGlobalFactory>();
 			UClass* TargetClass = UGlobalIntVariable::StaticClass();
 			Factory->ChoosenVariableType = TargetClass;
-			AssetToolsModule.Get().CreateAsset(NewAssetName, TEXT("/Game/Cinematics/Sequences"), TargetClass, Factory);
+			AssetToolsModule.Get().CreateAsset(NewAssetName, PackagePath, TargetClass, Factory);
 		}
 	}
 }
@@ -101,10 +106,17 @@ void FVariablesSystemEditorModule::StartupModule()
 					InSection.FindContext<UContentBrowserDataMenuContext_AddNewMenu>();
 				if (AddNewMenuContext && AddNewMenuContext->bCanBeModified && AddNewMenuContext->bContainsValidPackagePath)
 				{
+					TArray<FName> SelectedPaths = AddNewMenuContext->SelectedPaths;
+
 					InSection.AddMenuEntry("PasteVariables", LOCTEXT("PasteVariables", "PasteVariables"),
 						LOCTEXT("PasteVariablesTooltip", "PasteVariablesTooltip"), FSlateIcon(),
-						FUIAction(
-							FExecuteAction::CreateRaw(this, &FVariablesSystemEditorModule::OnPasteVariables), FCanExecuteAction()));
+						FUIAction(FExecuteAction::CreateLambda(
+									  [=]()
+									  {
+										  const FString SelectedPath = SelectedPaths[0].ToString();
+										  OnPasteVariables(SelectedPath);
+									  }),
+							FCanExecuteAction::CreateLambda([=]() { return SelectedPaths.Num() > 0; })));
 				}
 			}));
 }
