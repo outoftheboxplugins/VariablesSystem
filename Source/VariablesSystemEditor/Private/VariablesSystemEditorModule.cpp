@@ -46,18 +46,26 @@ TSharedPtr<SDockTab> FVariablesSystemEditorModule::OpenOrAddVariablesToWatch(
 
 static const TCHAR* VAR_PREFIX = TEXT("BPVar");
 
-void FVariablesSystemEditorModule::OnPasteVariables(const FString& Path)
+bool FVariablesSystemEditorModule::CanPasteVariable() const
 {
-	UContentBrowserDataSubsystem* ContentBrowserDataSubsystem = GEditor->GetEditorSubsystem<UContentBrowserDataSubsystem>();
-	FString PackagePath;
-	ContentBrowserDataSubsystem->TryConvertVirtualPath(Path, PackagePath);
-
 	FString ClipboardText;
 	FPlatformApplicationMisc::ClipboardPaste(ClipboardText);
-	if (!(ClipboardText.StartsWith(VAR_PREFIX, ESearchCase::CaseSensitive)))
+	return ClipboardText.StartsWith(VAR_PREFIX, ESearchCase::CaseSensitive);
+}
+
+void FVariablesSystemEditorModule::OnPasteVariables(const FString& Path)
+{
+	if (!CanPasteVariable())
 	{
 		return;
 	}
+
+	FString ClipboardText;
+	FPlatformApplicationMisc::ClipboardPaste(ClipboardText);
+
+	UContentBrowserDataSubsystem* ContentBrowserDataSubsystem = GEditor->GetEditorSubsystem<UContentBrowserDataSubsystem>();
+	FString PackagePath;
+	ContentBrowserDataSubsystem->TryConvertVirtualPath(Path, PackagePath);
 
 	FBPVariableDescription Description;
 	FStringOutputDevice Errors;
@@ -92,11 +100,8 @@ void FVariablesSystemEditorModule::StartupModule()
 	RegisterAssetTools();
 	RegisterMenuExtensions();
 
-	// Adding Bridge entry to Content Browser context and New menu.
 	UToolMenu* ContextMenu = UToolMenus::Get()->ExtendMenu("ContentBrowser.AddNewContextMenu");
-	// FToolMenuSection& ContextMenuSection = ContextMenu->AddSection("ContentBrowserMegascans", LOCTEXT("GetContentMenuHeading",
-	// "Quixel Content"));
-	FToolMenuSection& ContextMenuSection = ContextMenu->FindOrAddSection("ContentBrowserGetContent");
+	FToolMenuSection& ContextMenuSection = ContextMenu->AddSection("AdvancedActions", INVTEXT("AdvancedActions"));
 
 	ContextMenuSection.AddDynamicEntry("PasteVariables",
 		FNewToolMenuSectionDelegate::CreateLambda(
@@ -116,7 +121,12 @@ void FVariablesSystemEditorModule::StartupModule()
 										  const FString SelectedPath = SelectedPaths[0].ToString();
 										  OnPasteVariables(SelectedPath);
 									  }),
-							FCanExecuteAction::CreateLambda([=]() { return SelectedPaths.Num() > 0; })));
+							FCanExecuteAction::CreateLambda(
+								[=]()
+								{
+									const bool bCanPaste = SelectedPaths.Num() > 0 && CanPasteVariable();
+									return bCanPaste;
+								})));
 				}
 			}));
 }

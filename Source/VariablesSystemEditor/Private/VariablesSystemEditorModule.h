@@ -17,6 +17,7 @@ public:
 	static bool IsModuleLoaded();
 
 	TSharedPtr<class SDockTab> OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables = TArray<UBaseVariable*>());
+	bool CanPasteVariable() const;
 	void OnPasteVariables(const FString& Path);
 
 	// IModuleInterface interface
