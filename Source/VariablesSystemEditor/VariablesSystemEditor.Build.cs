@@ -19,6 +19,8 @@ public class VariablesSystemEditor : ModuleRules
 
 		PrivateDependencyModuleNames.AddRange(
 			new string[] {
+				"ApplicationCore",
+				"ToolMenus",
                 "BlueprintGraph",
 				"GraphEditor",
                 "ContentBrowser",
@@ -32,6 +34,7 @@ public class VariablesSystemEditor : ModuleRules
 				"Slate",
 				"SlateCore",
 				"UnrealEd",
+				"ContentBrowserData",
 				"VariablesSystem",
                 "GameplayTags"
             });
