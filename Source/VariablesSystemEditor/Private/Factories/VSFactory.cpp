@@ -2,6 +2,8 @@
 #include "VSFactory.h"
 
 #include "BaseVariable.h"
+#include "GlobalVariable.h"
+#include "InstancedVariable.h"
 #include "Kismet2/SClassPickerDialog.h"
 #include "VSLog.h"
 

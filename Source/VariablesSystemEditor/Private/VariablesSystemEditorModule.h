@@ -2,6 +2,7 @@
 #pragma once
 
 #include "Modules/ModuleInterface.h"
+#include "VSContentBrowserExtensions.h"
 
 class FVSActions;
 
@@ -17,8 +18,6 @@ public:
 	static bool IsModuleLoaded();
 
 	TSharedPtr<class SDockTab> OpenOrAddVariablesToWatch(TArray<class UBaseVariable*> Variables = TArray<UBaseVariable*>());
-	bool CanPasteVariable() const;
-	void OnPasteVariables(const FString& Path);
 
 	// IModuleInterface interface
 private:
@@ -33,12 +32,16 @@ private:
 	void RegisterMenuExtensions();
 	void UnregisterMenuExtensions();
 
+	void RegisterCBExtensions();
+	void UnregisterCBExtensions();
+
 	// Extensions
 private:
 	TSharedRef<SDockTab> SpawnVariablesWatchTab(const FSpawnTabArgs& Args);
 
 private:
 	TSharedPtr<FVSActions> AssetActions;
+	TSharedPtr<FVSContentBrowserExtensions> ContentBrowserExtensions;
 };
 
 IMPLEMENT_MODULE(FVariablesSystemEditorModule, VariablesSystemEditor);
