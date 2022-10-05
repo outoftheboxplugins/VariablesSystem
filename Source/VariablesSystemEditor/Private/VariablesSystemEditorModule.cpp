@@ -120,7 +120,13 @@ void FVariablesSystemEditorModule::UnregisterCBExtensions()
 // Extensions
 TSharedRef<SDockTab> FVariablesSystemEditorModule::SpawnVariablesWatchTab(const FSpawnTabArgs& Args)
 {
-	return SNew(SDockTab).TabRole(ETabRole::NomadTab)[SNew(SVSWatchWidget)];
+	// clang-format off
+	return SNew(SDockTab)
+		.TabRole(ETabRole::NomadTab)
+		[
+			SNew(SVSWatchWidget)
+		];
+	// clang-format on
 }
 
 #undef LOCTEXT_NAMESPACE
