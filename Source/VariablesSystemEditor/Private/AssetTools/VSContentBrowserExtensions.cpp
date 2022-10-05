@@ -8,7 +8,7 @@
 #include "ToolMenus.h"
 #include "VSFactory.h"
 #include "VariablesSystem/Generated/Global/GlobalIntVariable.h"
-#include "Windows/WindowsPlatformApplicationMisc.h"
+#include "HAL/PlatformApplicationMisc.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 
