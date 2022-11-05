@@ -96,13 +96,10 @@ void FVsCustomVariableEditor::AddReferencedObjects(FReferenceCollector& Collecto
 
 void FVsCustomVariableEditor::PreChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
-	CommandAsset->Save();
 }
 
 void FVsCustomVariableEditor::PostChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
-	CommandAsset->Load();
-
 	if (Struct && CommandAsset && CommandAsset->StructType == Struct)
 	{
 		HandlePostChange();

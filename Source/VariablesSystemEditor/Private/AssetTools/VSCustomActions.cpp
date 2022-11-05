@@ -52,7 +52,7 @@ void FVSCustomActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TShare
 	// open an individual editor for all the currently selected assets
 	for (UObject* Object : InObjects)
 	{
-		if (UGlobalCustomVariable* CommandAsset = Cast<UGlobalCustomVariable>(Object);)
+		if (UGlobalCustomVariable* CommandAsset = Cast<UGlobalCustomVariable>(Object))
 		{
 			const TSharedRef<FVsCustomVariableEditor> EditorToolkit = MakeShared<FVsCustomVariableEditor>();
 			EditorToolkit->Initialize(CommandAsset, Mode, EditWithinLevelEditor);

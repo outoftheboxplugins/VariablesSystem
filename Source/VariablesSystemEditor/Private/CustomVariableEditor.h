@@ -14,23 +14,27 @@ public:
 		UGlobalCustomVariable* InVariable, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
 
 private:
-	// FAssetEditorToolkit interface
+	// Begin FAssetEditorToolkit interface
 	virtual void RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
 	virtual void UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager) override;
+	// End FAssetEditorToolkit interface
 
-	// IToolkit interface
+	// Being IToolkit interface
 	virtual FText GetBaseToolkitName() const override;
 	virtual FName GetToolkitFName() const override;
 	virtual FLinearColor GetWorldCentricTabColorScale() const override;
 	virtual FString GetWorldCentricTabPrefix() const override;
+	// End IToolkit interface
 
-	// FGCObject interface
+	// Begin FGCObject interface
 	virtual void AddReferencedObjects(FReferenceCollector& Collector) override;
+	// End FGCObject interface
 
-	// INotifyOnStructChanged interface
+	// Being INotifyOnStructChanged interface
 	virtual void PreChange(const class UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info) override;
 	virtual void PostChange(
 		const class UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info) override;
+	// End INotifyOnStructChanged interface
 
 	void OnSuggestionFromPanelSelected(const FString& Suggestion);
 
