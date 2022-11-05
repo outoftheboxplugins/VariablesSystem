@@ -4,6 +4,7 @@
 
 #include "EditorReimportHandler.h"
 #include "EditorStyleSet.h"
+#include "IStructureDetailsView.h"
 #include "ToolMenus.h"
 #include "UObject/NameTypes.h"
 #include "Widgets/Docking/SDockTab.h"
@@ -154,11 +155,23 @@ void FVsCustomVariableEditor::OnSuggestionFromPanelSelected(const FString& Sugge
 
 TSharedRef<SDockTab> FVsCustomVariableEditor::SpawnTabCommandDetails(const FSpawnTabArgs& Args)
 {
-	check(Args.GetTabId() == CommandAssetEditor::CommandDetailsTabId);
 	FPropertyEditorModule& PropertyEditorModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
-	const FDetailsViewArgs DetailsViewArgs(false, false, false, FDetailsViewArgs::ObjectsUseNameArea, false);
-	TSharedPtr<IDetailsView> DetailsView = PropertyEditorModule.CreateDetailView(DetailsViewArgs);
-	DetailsView->SetObject(CommandAsset);
+
+	FDetailsViewArgs DetailsViewArgs;
+	DetailsViewArgs.bUpdatesFromSelection = false;
+	DetailsViewArgs.bLockable = false;
+	DetailsViewArgs.bAllowSearch = false;
+	DetailsViewArgs.bShowPropertyMatrixButton = false;
+	DetailsViewArgs.NameAreaSettings = FDetailsViewArgs::HideNameArea;
+	DetailsViewArgs.ViewIdentifier = NAME_None;
+	DetailsViewArgs.bShowCustomFilterOption = false;
+	DetailsViewArgs.bShowOptions = false;
+
+	FStructureDetailsViewArgs StructViewArgs;
+
+	TSharedRef<FStructOnScope> StructOnScope = MakeShared<FStructOnScope>(CommandAsset->RowStruct /*, CommandAsset->RowData*/);
+	TSharedRef<IStructureDetailsView> StructureDetailsView =
+		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 
 	// clang-format off
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
@@ -166,7 +179,7 @@ TSharedRef<SDockTab> FVsCustomVariableEditor::SpawnTabCommandDetails(const FSpaw
 		.Label(NSLOCTEXT("EnvironmentQueryEditor", "PropertiesTab", "Details"))
 		.Label(LOCTEXT("PropertiesTab", "Details"))
 		[
-			DetailsView.ToSharedRef()
+			StructureDetailsView->GetWidget().ToSharedRef()
 		];
 	// clang-format on
 
