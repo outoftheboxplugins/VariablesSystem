@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameFramework/SaveGame.h"
 #include "UObject/Object.h"
 
 #include "GlobalCustomVariable.generated.h"
@@ -11,7 +12,7 @@
  *
  */
 UCLASS(Blueprintable, BlueprintType)
-class VARIABLESSYSTEM_API UGlobalCustomVariable : public UObject
+class VARIABLESSYSTEM_API UGlobalCustomVariable : public USaveGame
 {
 	GENERATED_BODY()
 
@@ -19,8 +20,8 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = DataTable, meta = (DisplayThumbnail = "false"))
 	TObjectPtr<UScriptStruct> RowStruct;
 
-	uint8* RowData;
+	UPROPERTY(SaveGame)
+	TArray<uint8> SavedData;
 
-	void SaveStructData(FStructuredArchiveSlot Slot);
-	void LoadStructData(FStructuredArchiveSlot Slot);
+	// uint8* RowData;
 };

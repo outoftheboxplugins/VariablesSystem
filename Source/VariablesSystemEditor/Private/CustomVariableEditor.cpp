@@ -160,7 +160,8 @@ void FVsCustomVariableEditor::HandlePostChange()
 
 	FStructureDetailsViewArgs StructViewArgs;
 
-	TSharedRef<FStructOnScope> StructOnScope = MakeShared<FStructOnScope>(CommandAsset->RowStruct, CommandAsset->RowData);
+	TSharedRef<FStructOnScope> StructOnScope =
+		MakeShared<FStructOnScope>(CommandAsset->RowStruct, CommandAsset->SavedData.GetData());
 	TSharedRef<IStructureDetailsView> StructureDetailsView =
 		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 

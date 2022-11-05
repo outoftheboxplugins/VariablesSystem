@@ -191,9 +191,8 @@ UObject* UVSCustomFactory::FactoryCreateNew(
 		if (DataTable)
 		{
 			DataTable->RowStruct = const_cast<UScriptStruct*>(ToRawPtr(Struct));
-			DataTable->RowData =
-				(uint8*) FMemory::Malloc(DataTable->RowStruct->GetStructureSize() ? DataTable->RowStruct->GetStructureSize() : 1);
-			DataTable->RowStruct->InitializeStruct(DataTable->RowData);
+			DataTable->SavedData.SetNumZeroed(DataTable->RowStruct->GetStructureSize());
+			DataTable->RowStruct->InitializeStruct(DataTable->SavedData.GetData());
 		}
 	}
 	return DataTable;
