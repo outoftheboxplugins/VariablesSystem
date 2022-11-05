@@ -11,7 +11,7 @@ class FVsCustomVariableEditor : public FAssetEditorToolkit, public FGCObject, pu
 {
 public:
 	void Initialize(
-		UGlobalCustomVariable* InCommand, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
+		UGlobalCustomVariable* InVariable, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost);
 
 private:
 	// FAssetEditorToolkit interface
@@ -31,9 +31,6 @@ private:
 	virtual void PreChange(const class UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info) override;
 	virtual void PostChange(
 		const class UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info) override;
-
-	// Menu & Toolbar commands
-	void RegisterToolBar();
 
 	void OnSuggestionFromPanelSelected(const FString& Suggestion);
 

@@ -190,9 +190,9 @@ UObject* UVSCustomFactory::FactoryCreateNew(
 		DataTable = MakeNewDataTable(InParent, Name, Flags);
 		if (DataTable)
 		{
-			DataTable->RowStruct = const_cast<UScriptStruct*>(ToRawPtr(Struct));
-			DataTable->SavedData.SetNumZeroed(DataTable->RowStruct->GetStructureSize());
-			DataTable->RowStruct->InitializeStruct(DataTable->SavedData.GetData());
+			DataTable->StructType = const_cast<UScriptStruct*>(ToRawPtr(Struct));
+			DataTable->StructData.SetNumZeroed(DataTable->StructType->GetStructureSize());
+			DataTable->StructType->InitializeStruct(DataTable->StructData.GetData());
 		}
 	}
 	return DataTable;

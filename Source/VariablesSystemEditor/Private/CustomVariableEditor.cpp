@@ -2,6 +2,8 @@
 
 #include "CustomVariableEditor.h"
 
+// TODO: Check if all the includes here are needed
+// TODO: Put all the engine includes betwenn <>
 #include "EditorReimportHandler.h"
 #include "EditorStyleSet.h"
 #include "IStructureDetailsView.h"
@@ -9,78 +11,40 @@
 #include "UObject/NameTypes.h"
 #include "Widgets/Docking/SDockTab.h"
 
-#define LOCTEXT_NAMESPACE "AutomationWizard"
+#define LOCTEXT_NAMESPACE "VariablesSystem"
 
-namespace CommandAssetEditor
+namespace
 {
-static const FName AppIdentifier("CommandEditorApp");
-static const FName CommandEditorTabId("CommandEditor");
-static const FName CommandDetailsTabId("CommandDetails");
-static const FName CommandSuggestionsTabId("CommandSuggestions");
-}	 // namespace CommandAssetEditor
-
-void FVsCustomVariableEditor::RegisterToolBar()
-{
-	const FName MenuName = GetToolMenuToolbarName();
-
-	// Our button is already registered to the toolbar, no need to re-register.
-	if (UToolMenus::Get()->IsMenuRegistered(MenuName))
-	{
-		return;
-	}
-
-	// Find the toolbar
-	UToolMenu* ToolBar = UToolMenus::Get()->RegisterMenu(MenuName, "AssetEditor.DefaultToolBar", EMultiBoxType::ToolBar);
-	const FToolMenuInsert InsertAfterAssetSection("Asset", EToolMenuInsertType::After);
-}
+const FName AppIdentifier("CustomVariableEditor");
+const FName VariableDetailsTabId("VariableDetails");
+}	 // namespace
 
 void FVsCustomVariableEditor::Initialize(
-	UGlobalCustomVariable* InCommand, const EToolkitMode::Type InMode, const TSharedPtr<class IToolkitHost>& InToolkitHost)
+	UGlobalCustomVariable* InVariable, const EToolkitMode::Type InMode, const TSharedPtr<IToolkitHost>& InToolkitHost)
 {
-	CommandAsset = InCommand;
+	CommandAsset = InVariable;
+
+	// TODO: Check if this is needed for undo/redo. Do we need to inherit from the undo client as well ?
 	CommandAsset->SetFlags(RF_Transactional);
 
 	// clang-format off
-	// create tab layout
 	const TSharedRef<FTabManager::FLayout> Layout = FTabManager::NewLayout("Standalone_CommandAssetEditor")
 	->AddArea
 	(
-		FTabManager::NewPrimaryArea() ->SetOrientation(Orient_Vertical)
+		//TODO: Add a second split tab where the user could change the struct blueprint directly so he doesn't have to open 2 editors at the same time
+		FTabManager::NewPrimaryArea()->SetOrientation(Orient_Horizontal)
 		->Split
 		(
-			FTabManager::NewStack()
-			->SetSizeCoefficient(0.1f)
-			->SetHideTabWell( true )
-			->AddTab(GetToolbarTabId(), ETabState::OpenedTab)
-		)
-		->Split
-		(
-			FTabManager::NewSplitter() ->SetOrientation(Orient_Horizontal) ->SetSizeCoefficient(0.9f)
-			->Split
-			(
-			FTabManager::NewStack()
-				->AddTab(CommandAssetEditor::CommandEditorTabId, ETabState::OpenedTab)
-				->SetHideTabWell(true)
-				->SetSizeCoefficient(0.7f)
-			)
-			->Split
-			(
-				FTabManager::NewStack()
-				->SetSizeCoefficient(0.3f)
-				->SetForegroundTab(CommandAssetEditor::CommandDetailsTabId)
-				->AddTab( CommandAssetEditor::CommandDetailsTabId, ETabState::OpenedTab )
-				->AddTab( CommandAssetEditor::CommandSuggestionsTabId, ETabState::OpenedTab )
-			)
 			
+			FTabManager::NewStack()
+			->SetSizeCoefficient(0.5f)
+			->SetForegroundTab(VariableDetailsTabId)
+			->AddTab(VariableDetailsTabId, ETabState::OpenedTab)
 		)
 	);
 	// clang-format on
 
-	RegisterToolBar();
-
-	FAssetEditorToolkit::InitAssetEditor(InMode, InToolkitHost, CommandAssetEditor::AppIdentifier, Layout, true, true, InCommand);
-
-	RegenerateMenusAndToolbars();
+	FAssetEditorToolkit::InitAssetEditor(InMode, InToolkitHost, AppIdentifier, Layout, true, true, InVariable);
 }
 
 void FVsCustomVariableEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
@@ -92,8 +56,7 @@ void FVsCustomVariableEditor::RegisterTabSpawners(const TSharedRef<FTabManager>&
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
 
 	InTabManager
-		->RegisterTabSpawner(
-			CommandAssetEditor::CommandDetailsTabId, FOnSpawnTab::CreateSP(this, &FVsCustomVariableEditor::SpawnTabCommandDetails))
+		->RegisterTabSpawner(VariableDetailsTabId, FOnSpawnTab::CreateSP(this, &FVsCustomVariableEditor::SpawnTabCommandDetails))
 		.SetDisplayName(LOCTEXT("CommandDetailsTabName", "Command Details"))
 		.SetGroup(WorkspaceMenuCategoryRef)
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
@@ -103,8 +66,7 @@ void FVsCustomVariableEditor::UnregisterTabSpawners(const TSharedRef<FTabManager
 {
 	FAssetEditorToolkit::UnregisterTabSpawners(InTabManager);
 
-	InTabManager->UnregisterTabSpawner(CommandAssetEditor::CommandEditorTabId);
-	InTabManager->UnregisterTabSpawner(CommandAssetEditor::CommandDetailsTabId);
+	InTabManager->UnregisterTabSpawner(VariableDetailsTabId);
 }
 
 FText FVsCustomVariableEditor::GetBaseToolkitName() const
@@ -134,11 +96,14 @@ void FVsCustomVariableEditor::AddReferencedObjects(FReferenceCollector& Collecto
 
 void FVsCustomVariableEditor::PreChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
+	CommandAsset->Save();
 }
 
 void FVsCustomVariableEditor::PostChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
-	if (Struct && CommandAsset && CommandAsset->RowStruct == Struct)
+	CommandAsset->Load();
+
+	if (Struct && CommandAsset && CommandAsset->StructType == Struct)
 	{
 		HandlePostChange();
 	}
@@ -146,6 +111,7 @@ void FVsCustomVariableEditor::PostChange(const UUserDefinedStruct* Struct, FStru
 
 void FVsCustomVariableEditor::HandlePostChange()
 {
+	// TODO: can we handle struct changes better property wise?
 	FPropertyEditorModule& PropertyEditorModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
 
 	FDetailsViewArgs DetailsViewArgs;
@@ -161,7 +127,7 @@ void FVsCustomVariableEditor::HandlePostChange()
 	FStructureDetailsViewArgs StructViewArgs;
 
 	TSharedRef<FStructOnScope> StructOnScope =
-		MakeShared<FStructOnScope>(CommandAsset->RowStruct, CommandAsset->SavedData.GetData());
+		MakeShared<FStructOnScope>(CommandAsset->StructType, CommandAsset->StructData.GetData());
 	TSharedRef<IStructureDetailsView> StructureDetailsView =
 		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 

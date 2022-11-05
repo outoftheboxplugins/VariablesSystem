@@ -1,36 +1,35 @@
 // Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
 #include "VSActions.h"
 
-#include "VariablesSystemEditorModule.h"
-#include "IncludeAll.h"
-
 #include "GraphEditorSettings.h"
+#include "IncludeAll.h"
 #include "LevelEditor.h"
+#include "VariablesSystemEditorModule.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 
 namespace
 {
-	FColor EditorAssetBackgroundColor = FColor(77.0f, 77.0f, 77.0f);
-	uint32 ThumbnailSize = 72;
+FColor EditorAssetBackgroundColor = FColor(77.0f, 77.0f, 77.0f);
+uint32 ThumbnailSize = 72;
 
-	FName AssetCategoryRegisterName = FName(TEXT("OutOfTheBox"));
-	FText AssetCategoryDisplayName = LOCTEXT("OutOfTheBoxCategory", "OutOfTheBox");
+FName AssetCategoryRegisterName = FName(TEXT("OutOfTheBox"));
+FText AssetCategoryDisplayName = LOCTEXT("OutOfTheBoxCategory", "OutOfTheBox");
 
-	FLinearColor GetAssetColorByVariable(const UBaseVariable* Variable)
+FLinearColor GetAssetColorByVariable(const UBaseVariable* Variable)
+{
+	const UGraphEditorSettings* Settings = GetDefault<UGraphEditorSettings>();
+
+	if (!Variable || !Settings)
 	{
-		const UGraphEditorSettings* Settings = GetDefault<UGraphEditorSettings>();
-
-		if (!Variable || !Settings)
-		{
-			return FLinearColor::White;
-		}
-
-		#include "AssetColorByVariable.h"
-
-		return Settings->WildcardPinTypeColor;
+		return FLinearColor::White;
 	}
+
+#include "AssetColorByVariable.h"
+
+	return Settings->WildcardPinTypeColor;
 }
+}	 // namespace
 
 //////////////////////////////////////////////////////////////////////////
 // FAssetTypeActions_Base interface
@@ -42,7 +41,7 @@ FVSActions::FVSActions()
 
 FText FVSActions::GetName() const
 {
-	// Abstract function that must be implemented, leaving it blank autocomplets with type value.
+	// Abstract function that must be implemented, but leaving it blank so autocomplete with type value.
 	return LOCTEXT("EmptyText", "");
 }
 
@@ -66,7 +65,8 @@ TSharedPtr<SWidget> FVSActions::GetThumbnailOverlay(const FAssetData& AssetData)
 	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
 	TSharedPtr<FAssetThumbnailPool> ThumbnailPool = LevelEditorModule.GetFirstLevelEditor()->GetThumbnailPool();
 
-	TSharedRef<FAssetThumbnail> AssetThumbnail = MakeShared<FAssetThumbnail>(AssetData, ThumbnailSize, ThumbnailSize, ThumbnailPool);
+	TSharedRef<FAssetThumbnail> AssetThumbnail =
+		MakeShared<FAssetThumbnail>(AssetData, ThumbnailSize, ThumbnailSize, ThumbnailPool);
 	FAssetThumbnailConfig ThumbnailConfig;
 
 	if (UBaseVariable* VariableAsset = Cast<UBaseVariable>(AssetData.GetAsset()))
@@ -90,23 +90,16 @@ bool FVSActions::HasActions(const TArray<UObject*>& InObjects) const
 
 void FVSActions::GetActions(const TArray<UObject*>& InObjects, FMenuBuilder& MenuBuilder)
 {
-    FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
+	FAssetTypeActions_Base::GetActions(InObjects, MenuBuilder);
 
-    auto WeakVariables = GetTypedWeakObjectPtrs<UBaseVariable>(InObjects);
-    TArray<UBaseVariable*> Variables;
-    CopyFromWeakArray(Variables, WeakVariables);
+	auto WeakVariables = GetTypedWeakObjectPtrs<UBaseVariable>(InObjects);
+	TArray<UBaseVariable*> Variables;
+	CopyFromWeakArray(Variables, WeakVariables);
 
-    MenuBuilder.AddMenuEntry(
-        LOCTEXT("AddToWatchTitle", "Add to watch"),
-        LOCTEXT("AddToWatchToolTip", "Add the selected variables to your watch window."),
-        FSlateIcon(),
-        FUIAction(
-            FExecuteAction::CreateLambda([=]() 
-				{ 
-					FVariablesSystemEditorModule::GetModule().OpenOrAddVariablesToWatch(Variables);
-				})
-        )
-    );
+	MenuBuilder.AddMenuEntry(LOCTEXT("AddToWatchTitle", "Add to watch"),
+		LOCTEXT("AddToWatchToolTip", "Add the selected variables to your watch window."), FSlateIcon(),
+		FUIAction(FExecuteAction::CreateLambda(
+			[=]() { FVariablesSystemEditorModule::GetModule().OpenOrAddVariablesToWatch(Variables); })));
 }
 
 #undef LOCTEXT_NAMESPACE
