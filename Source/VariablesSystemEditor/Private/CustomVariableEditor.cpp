@@ -140,9 +140,10 @@ void FVsCustomVariableEditor::HandlePostChange()
 		[
 			SNew(SHorizontalBox)
 			+SHorizontalBox::Slot()
+			.AutoWidth()
 			[
 				SNew(SButton)
-				.Text(LOCTEXT("Save", "Save"))
+				.Text(LOCTEXT("Save", "Manual Save"))
 				.OnClicked_Lambda([=]()
 				{
 					CommandAsset->Save();
@@ -150,9 +151,10 @@ void FVsCustomVariableEditor::HandlePostChange()
 				})
 			]
 			+SHorizontalBox::Slot()
+			.AutoWidth()
 			[
 				SNew(SButton)
-				.Text(LOCTEXT("Load", "Load"))
+				.Text(LOCTEXT("Load", "Manual Load"))
 				.OnClicked_Lambda([=]()
 				{
 					CommandAsset->Load();
