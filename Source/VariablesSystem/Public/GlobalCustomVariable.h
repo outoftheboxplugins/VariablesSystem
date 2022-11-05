@@ -22,6 +22,11 @@ public:
 
 	UPROPERTY(SaveGame)
 	TArray<uint8> SavedData;
+	
+	FString GetSaveLocation() const;
+
+	void Save();
+	void Load();
 
 	// uint8* RowData;
 };

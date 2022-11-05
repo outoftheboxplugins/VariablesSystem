@@ -165,7 +165,44 @@ void FVsCustomVariableEditor::HandlePostChange()
 	TSharedRef<IStructureDetailsView> StructureDetailsView =
 		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 
-	SpawnedTab->SetContent(StructureDetailsView->GetWidget().ToSharedRef());
+	// clang-format off
+	TSharedRef<SWidget> Inspector = SNew(SVerticalBox)
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.HAlign(HAlign_Center)
+		.Padding(30)
+		[
+			StructureDetailsView->GetWidget().ToSharedRef()
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.HAlign(HAlign_Center)
+		[
+			SNew(SButton)
+			.HAlign(HAlign_Center)
+			.Text(LOCTEXT("Save", "Save"))
+			.OnClicked_Lambda([=]()
+			{
+				CommandAsset->Save();
+				return FReply::Handled();
+			})
+		]
+		+ SVerticalBox::Slot()
+		.AutoHeight()
+		.HAlign(HAlign_Center)
+		[
+			SNew(SButton)
+			.HAlign(HAlign_Center)
+			.Text(LOCTEXT("Load", "Load"))
+			.OnClicked_Lambda([=]()
+			{
+				CommandAsset->Load();
+				return FReply::Handled();
+			})
+		];
+	// clang-format on
+
+	SpawnedTab->SetContent(Inspector);
 }
 
 void FVsCustomVariableEditor::OnSuggestionFromPanelSelected(const FString& Suggestion)
