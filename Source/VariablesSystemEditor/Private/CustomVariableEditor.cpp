@@ -173,6 +173,8 @@ TSharedRef<SDockTab> FVsCustomVariableEditor::SpawnTabCommandDetails(const FSpaw
 	TSharedRef<IStructureDetailsView> StructureDetailsView =
 		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 
+	// TODO: On struct change this needs to be updated
+
 	// clang-format off
 	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
 		.Icon( FEditorStyle::GetBrush("SoundClassEditor.Tabs.Properties") )
