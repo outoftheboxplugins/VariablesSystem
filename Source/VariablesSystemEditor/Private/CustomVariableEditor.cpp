@@ -132,36 +132,33 @@ void FVsCustomVariableEditor::HandlePostChange()
 	TSharedRef<SWidget> Inspector = SNew(SVerticalBox)
 		+ SVerticalBox::Slot()
 		.AutoHeight()
-		.HAlign(HAlign_Center)
-		.Padding(30)
 		[
 			StructureDetailsView->GetWidget().ToSharedRef()
 		]
 		+ SVerticalBox::Slot()
 		.AutoHeight()
-		.HAlign(HAlign_Center)
 		[
-			SNew(SButton)
-			.HAlign(HAlign_Center)
-			.Text(LOCTEXT("Save", "Save"))
-			.OnClicked_Lambda([=]()
-			{
-				CommandAsset->Save();
-				return FReply::Handled();
-			})
-		]
-		+ SVerticalBox::Slot()
-		.AutoHeight()
-		.HAlign(HAlign_Center)
-		[
-			SNew(SButton)
-			.HAlign(HAlign_Center)
-			.Text(LOCTEXT("Load", "Load"))
-			.OnClicked_Lambda([=]()
-			{
-				CommandAsset->Load();
-				return FReply::Handled();
-			})
+			SNew(SHorizontalBox)
+			+SHorizontalBox::Slot()
+			[
+				SNew(SButton)
+				.Text(LOCTEXT("Save", "Save"))
+				.OnClicked_Lambda([=]()
+				{
+					CommandAsset->Save();
+					return FReply::Handled();
+				})
+			]
+			+SHorizontalBox::Slot()
+			[
+				SNew(SButton)
+				.Text(LOCTEXT("Load", "Load"))
+				.OnClicked_Lambda([=]()
+				{
+					CommandAsset->Load();
+					return FReply::Handled();
+				})
+			]
 		];
 	// clang-format on
 
