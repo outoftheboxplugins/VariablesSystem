@@ -2,6 +2,7 @@
 
 #include "VSCustomActions.h"
 
+#include "CustomVariableEditor.h"
 #include "GlobalCustomVariable.h"
 
 #define LOCTEXT_NAMESPACE "AutomationWizard"
@@ -20,7 +21,7 @@ FVSCustomActions::FVSCustomActions()
 
 FText FVSCustomActions::GetName() const
 {
-	return LOCTEXT("AssetName", "Automation Command");
+	return LOCTEXT("AssetName", "Automation Command 2");
 }
 
 FColor FVSCustomActions::GetTypeColor() const
@@ -36,6 +37,21 @@ uint32 FVSCustomActions::GetCategories()
 UClass* FVSCustomActions::GetSupportedClass() const
 {
 	return UGlobalCustomVariable::StaticClass();
+}
+
+void FVSCustomActions::OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor)
+{
+	const EToolkitMode::Type Mode = EditWithinLevelEditor.IsValid() ? EToolkitMode::WorldCentric : EToolkitMode::Standalone;
+
+	for (auto ObjIt = InObjects.CreateConstIterator(); ObjIt; ++ObjIt)
+	{
+		const auto CommandAsset = Cast<UGlobalCustomVariable>(*ObjIt);
+		if (CommandAsset != nullptr)
+		{
+			TSharedRef<FVsCustomVariableEditor> EditorToolkit = MakeShared<FVsCustomVariableEditor>();
+			EditorToolkit->Initialize(CommandAsset, Mode, EditWithinLevelEditor);
+		}
+	}
 }
 
 #undef LOCTEXT_NAMESPACE

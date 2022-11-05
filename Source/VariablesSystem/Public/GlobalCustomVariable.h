@@ -10,7 +10,7 @@
 /**
  *
  */
-UCLASS(abstract, Blueprintable)
+UCLASS(Blueprintable, BlueprintType)
 class VARIABLESSYSTEM_API UGlobalCustomVariable : public UObject
 {
 	GENERATED_BODY()
@@ -18,4 +18,9 @@ class VARIABLESSYSTEM_API UGlobalCustomVariable : public UObject
 public:
 	UPROPERTY(VisibleAnywhere, Category = DataTable, meta = (DisplayThumbnail = "false"))
 	TObjectPtr<UScriptStruct> RowStruct;
+
+	uint8* RowData;
+
+	void SaveStructData(FStructuredArchiveSlot Slot);
+	void LoadStructData(FStructuredArchiveSlot Slot);
 };

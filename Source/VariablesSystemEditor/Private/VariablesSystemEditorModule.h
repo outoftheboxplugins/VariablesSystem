@@ -5,6 +5,7 @@
 #include "VSContentBrowserExtensions.h"
 
 class FVSActions;
+class FVSCustomActions;
 
 /**
  * Implements the VariablesSystem editor module.
@@ -41,6 +42,7 @@ private:
 
 private:
 	TSharedPtr<FVSActions> AssetActions;
+	TSharedPtr<FVSCustomActions> CustomAssetActions;
 	TSharedPtr<FVSContentBrowserExtensions> ContentBrowserExtensions;
 };
 

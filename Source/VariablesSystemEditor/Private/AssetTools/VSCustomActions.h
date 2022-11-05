@@ -18,6 +18,8 @@ private:
 	virtual uint32 GetCategories() override;
 	virtual UClass* GetSupportedClass() const override;
 
+	virtual void OpenAssetEditor(const TArray<UObject*>& InObjects, TSharedPtr<IToolkitHost> EditWithinLevelEditor) override;
+
 private:
 	EAssetTypeCategories::Type AssetCategoryBit;
 };
