@@ -76,7 +76,6 @@ void FVsCustomVariableEditor::Initialize(
 	);
 	// clang-format on
 
-	BindEditorCommands();
 	RegisterToolBar();
 
 	FAssetEditorToolkit::InitAssetEditor(InMode, InToolkitHost, CommandAssetEditor::AppIdentifier, Layout, true, true, InCommand);
@@ -133,27 +132,19 @@ void FVsCustomVariableEditor::AddReferencedObjects(FReferenceCollector& Collecto
 	Collector.AddReferencedObject(CommandAsset);
 }
 
-void FVsCustomVariableEditor::BindEditorCommands()
+void FVsCustomVariableEditor::PreChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
 }
 
-void FVsCustomVariableEditor::RunCurrentCommand()
+void FVsCustomVariableEditor::PostChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
-	if (!ensureMsgf(CommandAsset, TEXT("Cannot run command, currently edited command is invalid.")))
+	if (Struct && CommandAsset && CommandAsset->RowStruct == Struct)
 	{
-		return;
+		HandlePostChange();
 	}
 }
 
-void FVsCustomVariableEditor::OnSuggestionFromPanelSelected(const FString& Suggestion)
-{
-	if (CommandEditorWidget.IsValid())
-	{
-		// CommandEditorWidget->AddExternalSuggestion(Suggestion);
-	}
-}
-
-TSharedRef<SDockTab> FVsCustomVariableEditor::SpawnTabCommandDetails(const FSpawnTabArgs& Args)
+void FVsCustomVariableEditor::HandlePostChange()
 {
 	FPropertyEditorModule& PropertyEditorModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
 
@@ -173,19 +164,29 @@ TSharedRef<SDockTab> FVsCustomVariableEditor::SpawnTabCommandDetails(const FSpaw
 	TSharedRef<IStructureDetailsView> StructureDetailsView =
 		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 
-	// TODO: On struct change this needs to be updated
+	SpawnedTab->SetContent(StructureDetailsView->GetWidget().ToSharedRef());
+}
 
+void FVsCustomVariableEditor::OnSuggestionFromPanelSelected(const FString& Suggestion)
+{
+	if (CommandEditorWidget.IsValid())
+	{
+		// CommandEditorWidget->AddExternalSuggestion(Suggestion);
+	}
+}
+
+TSharedRef<SDockTab> FVsCustomVariableEditor::SpawnTabCommandDetails(const FSpawnTabArgs& Args)
+{
 	// clang-format off
-	TSharedRef<SDockTab> SpawnedTab = SNew(SDockTab)
+	SAssignNew(SpawnedTab, SDockTab)
 		.Icon( FEditorStyle::GetBrush("SoundClassEditor.Tabs.Properties") )
 		.Label(NSLOCTEXT("EnvironmentQueryEditor", "PropertiesTab", "Details"))
-		.Label(LOCTEXT("PropertiesTab", "Details"))
-		[
-			StructureDetailsView->GetWidget().ToSharedRef()
-		];
+		.Label(LOCTEXT("PropertiesTab", "Details"));
 	// clang-format on
 
-	return SpawnedTab;
+	HandlePostChange();
+
+	return SpawnedTab.ToSharedRef();
 }
 
 #undef LOCTEXT_NAMESPACE

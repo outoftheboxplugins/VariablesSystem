@@ -3,10 +3,11 @@
 #pragma once
 
 #include "GlobalCustomVariable.h"
+#include "Kismet2/StructureEditorUtils.h"
 
 class SAwCommandArgumentsEditor;
 
-class FVsCustomVariableEditor : public FAssetEditorToolkit, public FGCObject
+class FVsCustomVariableEditor : public FAssetEditorToolkit, public FGCObject, public FStructureEditorUtils::INotifyOnStructChanged
 {
 public:
 	void Initialize(
@@ -26,15 +27,20 @@ private:
 	// FGCObject interface
 	virtual void AddReferencedObjects(FReferenceCollector& Collector) override;
 
+	// INotifyOnStructChanged interface
+	virtual void PreChange(const class UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info) override;
+	virtual void PostChange(
+		const class UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info) override;
+
 	// Menu & Toolbar commands
 	void RegisterToolBar();
-	void BindEditorCommands();
-	void RunCurrentCommand();
 
 	void OnSuggestionFromPanelSelected(const FString& Suggestion);
 
 	// Callback for spawning the Properties tab.
 	TSharedRef<SDockTab> SpawnTabCommandDetails(const FSpawnTabArgs& Args);
+
+	void HandlePostChange();
 
 private:
 	// Command that is currently edited
@@ -42,4 +48,6 @@ private:
 
 	// Editor text widget where the arguments are edited
 	TSharedPtr<SAwCommandArgumentsEditor> CommandEditorWidget;
+
+	TSharedPtr<SDockTab> SpawnedTab;
 };
