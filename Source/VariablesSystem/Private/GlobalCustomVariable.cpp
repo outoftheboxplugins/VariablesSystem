@@ -54,10 +54,12 @@ void UGlobalCustomVariable::Load()
 		return;
 	}
 
-	const int32 StructSize = StructType->GetStructureSize();
-	StructDataPtr = static_cast<uint8*>(FMemory::Malloc(StructSize));
+	// release any memory we are currently holding
+	FMemory::Free(StructDataPtr);
+
+	StructDataPtr = static_cast<uint8*>(FMemory::Malloc(StructType->GetStructureSize()));
 	StructType->InitializeStruct(StructDataPtr);
-	FMemory::Memcpy(StructDataPtr, SavedData->StructSavedData.GetData(), StructSize);
+	FMemory::Memcpy(StructDataPtr, SavedData->StructSavedData.GetData(), SavedData->StructSavedData.Num());
 }
 
 void UGlobalCustomVariable::CleanBeforeStructChange()
