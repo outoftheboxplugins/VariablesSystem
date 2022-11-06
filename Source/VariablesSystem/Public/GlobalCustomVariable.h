@@ -18,8 +18,13 @@ public:
 	UPROPERTY()
 	TObjectPtr<UScriptStruct> StructType;
 
-	UPROPERTY(SaveGame)
-	TArray<uint8> StructData;
+	// UPROPERTY(SaveGame)
+	// TArray<uint8> StructData;
+
+	UPROPERTY(Transient)
+	TArray<uint8> RowsSerializedWithTags;
+
+	uint8* StructDataPtr = nullptr;
 
 	/**
 	 * @brief Saves the current value of the variable to disk
@@ -29,6 +34,17 @@ public:
 	 * @brief Loads the value saved on disk and sets the instance to it
 	 */
 	void Load();
+
+	virtual void CleanBeforeStructChange();
+	virtual void RestoreAfterStructChange();
+
+	void SaveStructData(FStructuredArchiveSlot Slot);
+	void LoadStructData(FStructuredArchiveSlot Slot);
+
+	void EmptyTable();
+
+	UPROPERTY(Transient)
+	TSet<TObjectPtr<UObject>> TemporarilyReferencedObjects;
 
 private:
 	/**

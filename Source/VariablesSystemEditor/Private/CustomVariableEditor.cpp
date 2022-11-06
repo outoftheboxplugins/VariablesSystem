@@ -96,10 +96,13 @@ void FVsCustomVariableEditor::AddReferencedObjects(FReferenceCollector& Collecto
 
 void FVsCustomVariableEditor::PreChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
+	CommandAsset->CleanBeforeStructChange();
 }
 
 void FVsCustomVariableEditor::PostChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
+	CommandAsset->RestoreAfterStructChange();
+
 	if (Struct && CommandAsset && CommandAsset->StructType == Struct)
 	{
 		HandlePostChange();
@@ -123,8 +126,7 @@ void FVsCustomVariableEditor::HandlePostChange()
 
 	FStructureDetailsViewArgs StructViewArgs;
 
-	TSharedRef<FStructOnScope> StructOnScope =
-		MakeShared<FStructOnScope>(CommandAsset->StructType, CommandAsset->StructData.GetData());
+	TSharedRef<FStructOnScope> StructOnScope = MakeShared<FStructOnScope>(CommandAsset->StructType, CommandAsset->StructDataPtr);
 	TSharedRef<IStructureDetailsView> StructureDetailsView =
 		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 
