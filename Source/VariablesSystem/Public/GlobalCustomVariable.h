@@ -15,16 +15,12 @@ class VARIABLESSYSTEM_API UGlobalCustomVariable : public USaveGame
 	GENERATED_BODY()
 
 public:
-	UPROPERTY()
-	TObjectPtr<UScriptStruct> StructType;
+	void SetStructType(TObjectPtr<UScriptStruct> InStructType);
+	TObjectPtr<UScriptStruct> GetStructType() const;
+	uint8* GetDataPtr() const;
 
-	// UPROPERTY(SaveGame)
-	// TArray<uint8> StructData;
-
-	UPROPERTY(Transient)
-	TArray<uint8> RowsSerializedWithTags;
-
-	uint8* StructDataPtr = nullptr;
+	void CleanBeforeStructChange();
+	void RestoreAfterStructChange();
 
 	/**
 	 * @brief Saves the current value of the variable to disk
@@ -35,13 +31,24 @@ public:
 	 */
 	void Load();
 
-	virtual void CleanBeforeStructChange();
-	virtual void RestoreAfterStructChange();
+private:
+	/**
+	 * @brief Type of the struct we are currently holding
+	 */
+	UPROPERTY()
+	TObjectPtr<UScriptStruct> StructType;
+	/**
+	 * @brief Data representing the struct we want to save/load
+	 */
+	UPROPERTY(SaveGame)
+	TArray<uint8> StructSavedData;
+	/**
+	 * @brief Data representing the struct we own
+	 */
+	uint8* StructDataPtr = nullptr;
 
 	void SaveStructData(FStructuredArchiveSlot Slot);
 	void LoadStructData(FStructuredArchiveSlot Slot);
-
-	void EmptyTable();
 
 	UPROPERTY(Transient)
 	TSet<TObjectPtr<UObject>> TemporarilyReferencedObjects;

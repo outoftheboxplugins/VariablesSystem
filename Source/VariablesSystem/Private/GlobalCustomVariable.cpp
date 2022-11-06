@@ -13,9 +13,32 @@ FString UGlobalCustomVariable::GetSaveLocation() const
 	return GetName();
 }
 
+void UGlobalCustomVariable::SetStructType(TObjectPtr<UScriptStruct> InStructType)
+{
+	StructType = InStructType;
+
+	StructDataPtr = static_cast<uint8*>(FMemory::Malloc(StructType->GetStructureSize()));
+	StructType->InitializeStruct(StructDataPtr);
+}
+
+TObjectPtr<UScriptStruct> UGlobalCustomVariable::GetStructType() const
+{
+	return StructType;
+}
+
+uint8* UGlobalCustomVariable::GetDataPtr() const
+{
+	return StructDataPtr;
+}
+
 void UGlobalCustomVariable::Save()
 {
+	const int32 StructSize = StructType->GetStructureSize();
+	StructSavedData.SetNumZeroed(StructSize);
+	FMemory::Memcpy(StructSavedData.GetData(), StructDataPtr, StructSize);
+
 	UGameplayStatics::SaveGameToSlot(this, GetSaveLocation(), 0);
+	StructSavedData.Empty();
 }
 
 void UGlobalCustomVariable::Load()
@@ -26,66 +49,25 @@ void UGlobalCustomVariable::Load()
 	}
 
 	const UGlobalCustomVariable* SavedData = Cast<UGlobalCustomVariable>(UGameplayStatics::LoadGameFromSlot(GetSaveLocation(), 0));
-	if (!SavedData)
+	if (!SavedData || SavedData->StructSavedData.IsEmpty())
 	{
 		return;
 	}
 
-	// StructData = SavedData->StructData;
+	const int32 StructSize = StructType->GetStructureSize();
+	StructDataPtr = static_cast<uint8*>(FMemory::Malloc(StructSize));
+	StructType->InitializeStruct(StructDataPtr);
+	FMemory::Memcpy(StructDataPtr, SavedData->StructSavedData.GetData(), StructSize);
 }
 
 void UGlobalCustomVariable::CleanBeforeStructChange()
 {
-	RowsSerializedWithTags.Reset();
-	{
-		class FRawStructWriter : public FObjectWriter
-		{
-			TSet<TObjectPtr<UObject>>& TemporarilyReferencedObjects;
-
-		public:
-			FRawStructWriter(TArray<uint8>& InBytes, TSet<TObjectPtr<UObject>>& InTemporarilyReferencedObjects)
-				: FObjectWriter(InBytes), TemporarilyReferencedObjects(InTemporarilyReferencedObjects)
-			{
-			}
-			virtual FArchive& operator<<(class UObject*& Res) override
-			{
-				FObjectWriter::operator<<(Res);
-				TemporarilyReferencedObjects.Add(Res);
-				return *this;
-			}
-		};
-
-		FRawStructWriter MemoryWriter(RowsSerializedWithTags, TemporarilyReferencedObjects);
-		SaveStructData(FStructuredArchiveFromArchive(MemoryWriter).GetSlot());
-	}
-
-	Modify();
+	Save();
 }
 
 void UGlobalCustomVariable::RestoreAfterStructChange()
 {
-	{
-		class FRawStructReader : public FObjectReader
-		{
-		public:
-			FRawStructReader(TArray<uint8>& InBytes) : FObjectReader(InBytes)
-			{
-			}
-			virtual FArchive& operator<<(class UObject*& Res) override
-			{
-				UObject* Object = nullptr;
-				FObjectReader::operator<<(Object);
-				FWeakObjectPtr WeakObjectPtr = Object;
-				Res = WeakObjectPtr.Get();
-				return *this;
-			}
-		};
-
-		FRawStructReader MemoryReader(RowsSerializedWithTags);
-		LoadStructData(FStructuredArchiveFromArchive(MemoryReader).GetSlot());
-	}
-	TemporarilyReferencedObjects.Empty();
-	RowsSerializedWithTags.Empty();
+	Load();
 }
 
 void UGlobalCustomVariable::SaveStructData(FStructuredArchiveSlot Slot)
@@ -122,15 +104,10 @@ void UGlobalCustomVariable::LoadStructData(FStructuredArchiveSlot Slot)
 		FName RowName;
 		RowRecord << SA_VALUE(TEXT("Name"), RowName);
 
-		// Load row data
 		uint8* RowData = (uint8*) FMemory::Malloc(LoadUsingStruct->GetStructureSize());
-
-		// And be sure to call DestroyScriptStruct later
 		LoadUsingStruct->InitializeStruct(RowData);
-
 		LoadUsingStruct->SerializeItem(RowRecord.EnterField(SA_FIELD_NAME(TEXT("Value"))), RowData, nullptr);
 
 		StructDataPtr = RowData;
-		// StructData = TArrayView<uint8>(RowData, static_cast<int32>(LoadUsingStruct->GetStructureSize()));
 	}
 }

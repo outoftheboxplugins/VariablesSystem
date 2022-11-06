@@ -190,9 +190,8 @@ UObject* UVSCustomFactory::FactoryCreateNew(
 		DataTable = MakeNewDataTable(InParent, Name, Flags);
 		if (DataTable)
 		{
-			DataTable->StructType = const_cast<UScriptStruct*>(ToRawPtr(Struct));
-			DataTable->StructDataPtr = (uint8*) FMemory::Malloc(DataTable->StructType->GetStructureSize());
-			DataTable->StructType->InitializeStruct(DataTable->StructDataPtr);
+			TObjectPtr<UScriptStruct> SelectedStruct = const_cast<UScriptStruct*>(ToRawPtr(Struct));
+			DataTable->SetStructType(SelectedStruct);
 		}
 	}
 	return DataTable;

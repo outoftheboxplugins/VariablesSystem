@@ -94,6 +94,16 @@ void FVsCustomVariableEditor::AddReferencedObjects(FReferenceCollector& Collecto
 	Collector.AddReferencedObject(CommandAsset);
 }
 
+void FVsCustomVariableEditor::NotifyPreChange(FProperty* PropertyAboutToChange)
+{
+	CommandAsset->Modify();
+}
+
+void FVsCustomVariableEditor::NotifyPostChange(const FPropertyChangedEvent& PropertyChangedEvent, FProperty* PropertyThatChanged)
+{
+	CommandAsset->MarkPackageDirty();
+}
+
 void FVsCustomVariableEditor::PreChange(const UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info)
 {
 	CommandAsset->CleanBeforeStructChange();
@@ -103,7 +113,7 @@ void FVsCustomVariableEditor::PostChange(const UUserDefinedStruct* Struct, FStru
 {
 	CommandAsset->RestoreAfterStructChange();
 
-	if (Struct && CommandAsset && CommandAsset->StructType == Struct)
+	if (Struct && CommandAsset && CommandAsset->GetStructType() == Struct)
 	{
 		HandlePostChange();
 	}
@@ -126,7 +136,8 @@ void FVsCustomVariableEditor::HandlePostChange()
 
 	FStructureDetailsViewArgs StructViewArgs;
 
-	TSharedRef<FStructOnScope> StructOnScope = MakeShared<FStructOnScope>(CommandAsset->StructType, CommandAsset->StructDataPtr);
+	TSharedRef<FStructOnScope> StructOnScope =
+		MakeShared<FStructOnScope>(CommandAsset->GetStructType(), CommandAsset->GetDataPtr());
 	TSharedRef<IStructureDetailsView> StructureDetailsView =
 		PropertyEditorModule.CreateStructureDetailView(DetailsViewArgs, StructViewArgs, StructOnScope);
 
@@ -160,6 +171,9 @@ void FVsCustomVariableEditor::HandlePostChange()
 				.OnClicked_Lambda([=]()
 				{
 					CommandAsset->Load();
+
+					//TODO: This should not be directly called, the loading should interally trigger a change (if needed)
+					HandlePostChange();
 					return FReply::Handled();
 				})
 			]

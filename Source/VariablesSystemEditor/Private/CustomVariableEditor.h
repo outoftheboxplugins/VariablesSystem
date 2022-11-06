@@ -7,7 +7,10 @@
 
 class SAwCommandArgumentsEditor;
 
-class FVsCustomVariableEditor : public FAssetEditorToolkit, public FGCObject, public FStructureEditorUtils::INotifyOnStructChanged
+class FVsCustomVariableEditor : public FAssetEditorToolkit,
+								public FGCObject,
+								public FStructureEditorUtils::INotifyOnStructChanged,
+								public FNotifyHook
 {
 public:
 	void Initialize(
@@ -29,6 +32,11 @@ private:
 	// Begin FGCObject interface
 	virtual void AddReferencedObjects(FReferenceCollector& Collector) override;
 	// End FGCObject interface
+
+	// Begin FNotifyHook interface
+	virtual void NotifyPreChange(FProperty* PropertyAboutToChange) override;
+	virtual void NotifyPostChange(const FPropertyChangedEvent& PropertyChangedEvent, FProperty* PropertyThatChanged) override;
+	// End FNotifyHook interface
 
 	// Being INotifyOnStructChanged interface
 	virtual void PreChange(const class UUserDefinedStruct* Struct, FStructureEditorUtils::EStructureEditorChangeInfo Info) override;
