@@ -66,7 +66,7 @@
 FString UGlobalFloatVariable::GetStringValue() const
 {
     const auto& Item = Value;
-    return UKismetStringLibrary::Conv_FloatToString(Item);
+    return FString::SanitizeFloat(Item);
 }
 
 void UGlobalFloatVariable::Save(bool bForce /* = false */)
@@ -119,4 +119,3 @@ void UGlobalFloatVariable::PostEditChangeProperty(struct FPropertyChangedEvent& 
 }
 
 #endif
-

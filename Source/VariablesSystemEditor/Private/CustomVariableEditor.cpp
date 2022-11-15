@@ -59,7 +59,7 @@ void FVsCustomVariableEditor::RegisterTabSpawners(const TSharedRef<FTabManager>&
 		->RegisterTabSpawner(VariableDetailsTabId, FOnSpawnTab::CreateSP(this, &FVsCustomVariableEditor::SpawnTabCommandDetails))
 		.SetDisplayName(LOCTEXT("CommandDetailsTabName", "Command Details"))
 		.SetGroup(WorkspaceMenuCategoryRef)
-		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Viewports"));
+		.SetIcon(FSlateIcon(FAppStyle::GetAppStyleSetName(), "LevelEditor.Tabs.Viewports"));
 }
 
 void FVsCustomVariableEditor::UnregisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
@@ -195,8 +195,6 @@ TSharedRef<SDockTab> FVsCustomVariableEditor::SpawnTabCommandDetails(const FSpaw
 {
 	// clang-format off
 	SAssignNew(SpawnedTab, SDockTab)
-		.Icon( FEditorStyle::GetBrush("SoundClassEditor.Tabs.Properties") )
-		.Label(NSLOCTEXT("EnvironmentQueryEditor", "PropertiesTab", "Details"))
 		.Label(LOCTEXT("PropertiesTab", "Details"));
 	// clang-format on
 

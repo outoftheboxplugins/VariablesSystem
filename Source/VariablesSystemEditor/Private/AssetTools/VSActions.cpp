@@ -62,11 +62,8 @@ UClass* FVSActions::GetSupportedClass() const
 
 TSharedPtr<SWidget> FVSActions::GetThumbnailOverlay(const FAssetData& AssetData) const
 {
-	FLevelEditorModule& LevelEditorModule = FModuleManager::LoadModuleChecked<FLevelEditorModule>("LevelEditor");
-	TSharedPtr<FAssetThumbnailPool> ThumbnailPool = LevelEditorModule.GetFirstLevelEditor()->GetThumbnailPool();
-
 	TSharedRef<FAssetThumbnail> AssetThumbnail =
-		MakeShared<FAssetThumbnail>(AssetData, ThumbnailSize, ThumbnailSize, ThumbnailPool);
+		MakeShared<FAssetThumbnail>(AssetData, ThumbnailSize, ThumbnailSize, UThumbnailManager::Get().GetSharedThumbnailPool());
 	FAssetThumbnailConfig ThumbnailConfig;
 
 	if (UBaseVariable* VariableAsset = Cast<UBaseVariable>(AssetData.GetAsset()))

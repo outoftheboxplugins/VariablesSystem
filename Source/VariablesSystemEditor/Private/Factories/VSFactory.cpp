@@ -82,7 +82,7 @@ bool ChooseClass(UClass*& OutChosenClass)
 	// Prepare the configuration options.
 	FClassViewerInitializationOptions Options;
 	Options.Mode = EClassViewerMode::ClassPicker;
-	Options.ClassFilter = Filter;
+	Options.ClassFilters.Add(Filter.ToSharedRef());
 
 	// Show the class picker dialog to choose a class.
 	const FText TitleText = LOCTEXT("ClassPicker", "Select the variable type.");

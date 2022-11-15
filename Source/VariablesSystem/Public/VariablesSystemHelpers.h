@@ -3,8 +3,8 @@
 
 #include "Kismet/BlueprintFunctionLibrary.h"
 
-#include "AssetRegistry/Public/AssetRegistryModule.h"
-#include "Core/Public/Modules/ModuleManager.h"
+#include "AssetRegistryModule.h"
+#include "Modules/ModuleManager.h"
 
 #include "VSLog.h"
 
@@ -53,7 +53,7 @@ TArray<T*> UVariablesSystemHelpersBPLibrary::GetAllAssetsOfType()
         TArray<FAssetData> assetDatas;
 
         FARFilter SearchFilter;
-        SearchFilter.ClassNames.Add(T::StaticClass()->GetFName());
+        SearchFilter.ClassPaths.Add(T::StaticClass()->GetClassPathName());
         SearchFilter.bRecursiveClasses = true;
 
         AssetRegistryModule.Get().GetAssets(SearchFilter, assetDatas);

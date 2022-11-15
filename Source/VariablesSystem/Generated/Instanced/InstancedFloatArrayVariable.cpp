@@ -131,9 +131,8 @@ FString UInstancedFloatArrayVariable::GetValueAsString(TArray<float> Value) cons
     TArray<FString> StringValues;
     for(const auto& Item : Value)
     {
-        StringValues.Add(UKismetStringLibrary::Conv_FloatToString(Item));
+        StringValues.Add(FString::SanitizeFloat(Item));
     }
 
     return UKismetStringLibrary::JoinStringArray(StringValues);
 }
-

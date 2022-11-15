@@ -129,6 +129,5 @@ FString UInstancedFloatVariable::GetStringValue() const
 FString UInstancedFloatVariable::GetValueAsString(float Value) const
 {
     const auto& Item = Value;
-    return UKismetStringLibrary::Conv_FloatToString(Item);
+    return FString::SanitizeFloat(Item);
 }
-

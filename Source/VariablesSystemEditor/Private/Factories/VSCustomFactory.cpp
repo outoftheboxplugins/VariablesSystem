@@ -98,7 +98,7 @@ bool UVSCustomFactory::ConfigureProperties()
 				330)[SNew(SVerticalBox)
 
 					 + SVerticalBox::Slot().FillHeight(1.0f).MaxHeight(500)[SNew(SBorder).Padding(4).BorderImage(
-						   FEditorStyle::GetBrush("ToolPanel.GroupBorder"))[StructViewerModule.CreateStructViewer(
+						   FAppStyle::GetBrush("ToolPanel.GroupBorder"))[StructViewerModule.CreateStructViewer(
 						   Options, FOnStructPicked::CreateSP(this, &FVSCustomFactoryUI::OnPickedStruct))]]];
 		}
 
@@ -120,7 +120,7 @@ bool UVSCustomFactory::ConfigureProperties()
 				.SupportsMaximize(false)
 				[
 					SNew(SBorder)
-					.BorderImage(FEditorStyle::GetBrush("Menu.Background"))
+					.BorderImage(FAppStyle::GetBrush("Menu.Background"))
 					.Padding(10)
 					[
 						SNew(SVerticalBox)

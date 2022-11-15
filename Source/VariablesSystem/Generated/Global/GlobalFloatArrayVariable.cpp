@@ -68,7 +68,7 @@ FString UGlobalFloatArrayVariable::GetStringValue() const
     TArray<FString> StringValues;
     for(const auto& Item : Value)
     {
-        StringValues.Add(UKismetStringLibrary::Conv_FloatToString(Item));
+        StringValues.Add(FString::SanitizeFloat(Item));
     }
 
     return UKismetStringLibrary::JoinStringArray(StringValues);
@@ -124,4 +124,3 @@ void UGlobalFloatArrayVariable::PostEditChangeProperty(struct FPropertyChangedEv
 }
 
 #endif
-
