@@ -106,14 +106,10 @@ void FVariablesSystemEditorModule::UnregisterMenuExtensions()
 
 void FVariablesSystemEditorModule::RegisterCBExtensions()
 {
-	ContentBrowserExtensions = MakeShared<FVSContentBrowserExtensions>();
-	ContentBrowserExtensions->Register();
 }
 
 void FVariablesSystemEditorModule::UnregisterCBExtensions()
 {
-	ContentBrowserExtensions->Unregister();
-	ContentBrowserExtensions.Reset();
 }
 
 //////////////////////////////////////////////////////////////////////////

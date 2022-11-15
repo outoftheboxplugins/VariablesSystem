@@ -2,7 +2,6 @@
 #pragma once
 
 #include "Modules/ModuleInterface.h"
-#include "VSContentBrowserExtensions.h"
 
 class FVSActions;
 
@@ -41,7 +40,6 @@ private:
 
 private:
 	TSharedPtr<FVSActions> AssetActions;
-	TSharedPtr<FVSContentBrowserExtensions> ContentBrowserExtensions;
 };
 
 IMPLEMENT_MODULE(FVariablesSystemEditorModule, VariablesSystemEditor);
