@@ -3,7 +3,6 @@
 
 #include "AssetToolsModule.h"
 #include "VSActions.h"
-#include "VSCustomActions.h"
 #include "VSLog.h"
 #include "VariablesWatchWidget.h"
 #include "WorkspaceMenuStructure.h"
@@ -70,8 +69,6 @@ void FVariablesSystemEditorModule::RegisterAssetTools()
 
 		AssetActions = MakeShared<FVSActions>();
 		AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
-		CustomAssetActions = MakeShared<FVSCustomActions>();
-		AssetTools.RegisterAssetTypeActions(CustomAssetActions.ToSharedRef());
 	}
 	else
 	{
@@ -85,7 +82,6 @@ void FVariablesSystemEditorModule::UnregisterAssetTools()
 	{
 		IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
 		AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
-		AssetTools.UnregisterAssetTypeActions(CustomAssetActions.ToSharedRef());
 	}
 	else
 	{
