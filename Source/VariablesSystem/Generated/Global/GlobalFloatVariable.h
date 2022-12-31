@@ -1,9 +1,10 @@
-// Copyright Out-of-the-Box Plugins 2018-2021. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2023. All Rights Reserved.
 // GENERATED FILE DO NOT MODIFY DIRECTLY
 
 #pragma once
 
 #include "GlobalVariable.h"
+
 #include "GlobalFloatVariable.generated.h"
 
 /**
@@ -15,28 +16,28 @@ class VARIABLESSYSTEM_API UGlobalFloatVariable : public UGlobalVariable
 {
 	GENERATED_BODY()
 
-// Global static calls
+	// Global static calls
 public:
 	// Get the value of a float variable.
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
-	static float GetGlobalFloatVariableValue(const UGlobalFloatVariable* Variable);
+	static double GetGlobalFloatVariableValue(const UGlobalFloatVariable* Variable);
 
-    // Get the reference of a float variable.
+	// Get the reference of a float variable.
 	UFUNCTION(BlueprintPure, Category = "VariablesSystem", meta = (BlueprintThreadSafe, Keywords = "Get Global value"))
 	static UGlobalFloatVariable* GetGlobalMutableFloatVariable(UGlobalFloatVariable* Variable);
 
 	// Set the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Set Global value"))
-	static void SetGlobalFloatVariableValue(UGlobalFloatVariable* Variable, float NewValue);
+	static void SetGlobalFloatVariableValue(UGlobalFloatVariable* Variable, double NewValue);
 
 	// Copy the value of a float variable.
 	UFUNCTION(BlueprintCallable, Category = "VariablesSystem", meta = (Keywords = "Copy Global value"))
 	static void CopyGlobalFloatVariableValue(UGlobalFloatVariable* Variable, UGlobalFloatVariable* OtherVariable);
 
-// BaseVariable Debug Interface
+	// BaseVariable Debug Interface
 private:
-    virtual FString GetStringValue() const override;
-// BaseVariable Save&Load Interface
+	virtual FString GetStringValue() const override;
+	// BaseVariable Save&Load Interface
 protected:
 	virtual void Save(bool bForce = false) override;
 	virtual void Load(bool bUpdateValue = true) override;
@@ -46,9 +47,9 @@ protected:
 #endif
 
 	UPROPERTY(BlueprintReadWrite, VisibleAnywhere, Category = "VariablesSystem")
-	float SavedValue;
+	double SavedValue;
 
 public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "VariablesSystem")
-	float Value = {};
+	double Value = {};
 };
