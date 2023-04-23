@@ -76,7 +76,7 @@ FString UGlobalStringArrayVariable::GetStringValue() const
 
 void UGlobalStringArrayVariable::Save(bool bForce /* = false */)
 {
-	if (!bForce && !Dirty)
+	if (GetOutermost() == GetTransientPackage() || (!Dirty && !bForce))
 	{
 		return;
 	}

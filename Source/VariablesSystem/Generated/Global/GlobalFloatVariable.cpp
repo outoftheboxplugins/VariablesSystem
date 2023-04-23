@@ -69,7 +69,7 @@ FString UGlobalFloatVariable::GetStringValue() const
 
 void UGlobalFloatVariable::Save(bool bForce /* = false */)
 {
-	if (!bForce && !Dirty)
+	if (GetOutermost() == GetTransientPackage() || (!Dirty && !bForce))
 	{
 		return;
 	}

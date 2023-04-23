@@ -76,7 +76,7 @@ FString UGlobalFVector2DArrayVariable::GetStringValue() const
 
 void UGlobalFVector2DArrayVariable::Save(bool bForce /* = false */)
 {
-	if (!bForce && !Dirty)
+	if (GetOutermost() == GetTransientPackage() || (!Dirty && !bForce))
 	{
 		return;
 	}

@@ -71,7 +71,7 @@ FString UGlobalFVectorVariable::GetStringValue() const
 
 void UGlobalFVectorVariable::Save(bool bForce /* = false */)
 {
-	if (!bForce && !Dirty)
+	if (GetOutermost() == GetTransientPackage() || (!Dirty && !bForce))
 	{
 		return;
 	}

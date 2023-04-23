@@ -76,7 +76,7 @@ FString UGlobalFRotatorArrayVariable::GetStringValue() const
 
 void UGlobalFRotatorArrayVariable::Save(bool bForce /* = false */)
 {
-	if (!bForce && !Dirty)
+	if (GetOutermost() == GetTransientPackage() || (!Dirty && !bForce))
 	{
 		return;
 	}
