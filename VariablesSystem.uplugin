@@ -12,7 +12,7 @@
 	"SupportURL": "https://gitlab.com/unreal-marketplace/VariablesSystem/-/wikis/home",
 	"EnabledByDefault": true,
 	"CanContainContent" : false,
-	"Modules": [	
+	"Modules": [
 		{
 			"Name": "VariablesSystem",
 			"Type": "Runtime"
