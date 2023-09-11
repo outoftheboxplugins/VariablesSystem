@@ -4,6 +4,7 @@
 #include "InstancedObjectRefArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<UObject*> UInstancedObjectRefArrayVariable::GetInstancedObjectRefArrayVariableValue(UObject* Owner, UInstancedObjectRefArrayVariable* Variable)
 {
@@ -134,6 +135,6 @@ FString UInstancedObjectRefArrayVariable::GetValueAsString(TArray<UObject*> Valu
         StringValues.Add(Item ? Item->GetName() : "UNSET");
     }
 
-    return UKismetStringLibrary::JoinStringArray(StringValues);
+	return UKismetStringLibrary::JoinStringArray(StringValues);
 }
 

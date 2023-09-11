@@ -4,6 +4,7 @@
 #include "InstancedStringArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<FString> UInstancedStringArrayVariable::GetInstancedStringArrayVariableValue(UObject* Owner, UInstancedStringArrayVariable* Variable)
 {
