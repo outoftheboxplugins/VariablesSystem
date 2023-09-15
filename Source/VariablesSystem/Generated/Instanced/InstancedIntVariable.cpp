@@ -4,6 +4,7 @@
 #include "InstancedIntVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ int32 UInstancedIntVariable::GetInstancedIntVariableValue(UObject* Owner, UInstancedIntVariable* Variable)
 {
