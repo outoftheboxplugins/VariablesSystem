@@ -74,6 +74,14 @@
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedFVector2DVariable, SetInstancedFVector2DVariableValue), UInstancedFVector2DVariable::StaticClass());
     }
+    if (VariableClassName == FName("GlobalGameplayTagContainer"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalGameplayTagContainer, SetGlobalGameplayTagContainerValue), UGlobalGameplayTagContainer::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedGameplayTagContainer"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UInstancedGameplayTagContainer, SetInstancedGameplayTagContainerValue), UInstancedGameplayTagContainer::StaticClass());
+    }
     if (VariableClassName == FName("GlobalObjectRefArrayVariable"))
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGlobalObjectRefArrayVariable, SetGlobalObjectRefArrayVariableValue), UGlobalObjectRefArrayVariable::StaticClass());

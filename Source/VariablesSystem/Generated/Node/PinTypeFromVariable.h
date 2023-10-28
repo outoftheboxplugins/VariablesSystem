@@ -98,20 +98,32 @@ if (VariableClassName == FName("GlobalFVector2DVariable"))
 	ResultContainerType = EPinContainerType::None;
 	ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
 }
-if (VariableClassName == FName("InstancedFVector2DVariable"))
-{
-	ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
-	ResultContainerType = EPinContainerType::None;
-	ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
-}
-if (VariableClassName == FName("GlobalObjectRefArrayVariable"))
-{
-	ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
-	ResultContainerType = EPinContainerType::Array;
-	ResultPinType.PinSubCategoryObject = UObject::StaticClass();
-}
-if (VariableClassName == FName("InstancedObjectRefArrayVariable"))
-{
+    if (VariableClassName == FName("InstancedFVector2DVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::None;
+        ResultPinType.PinSubCategoryObject = TBaseStructure<FVector2D>::Get();
+    }
+    if (VariableClassName == FName("GlobalGameplayTagContainer"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::None;
+        ResultPinType.PinSubCategoryObject = FGameplayTagContainer::StaticStruct();
+    }
+    if (VariableClassName == FName("InstancedGameplayTagContainer"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Struct;
+        ResultContainerType = EPinContainerType::None;
+        ResultPinType.PinSubCategoryObject = FGameplayTagContainer::StaticStruct();
+    }
+    if (VariableClassName == FName("GlobalObjectRefArrayVariable"))
+    {
+        ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
+        ResultContainerType = EPinContainerType::Array;
+        ResultPinType.PinSubCategoryObject = UObject::StaticClass();
+    }
+    if (VariableClassName == FName("InstancedObjectRefArrayVariable"))
+    {
 	ResultPinType.PinCategory = UEdGraphSchema_K2::PC_Object;
 	ResultContainerType = EPinContainerType::Array;
 	ResultPinType.PinSubCategoryObject = UObject::StaticClass();

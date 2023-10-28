@@ -93,6 +93,16 @@
     return UInstancedFVector2DVariable::GetInstancedFVector2DVariableValue(Owner, Variable);
 }
 
+/* STATIC */ FGameplayTagContainer UGenericVariablesBPLibrary::GetGlobalGameplayTagContainerSafe(UGlobalGameplayTagContainer* Variable)
+{
+    return UGlobalGameplayTagContainer::GetGlobalGameplayTagContainerValue(Variable);
+}
+
+/* STATIC */ FGameplayTagContainer UGenericVariablesBPLibrary::GetInstancedGameplayTagContainerSafe(UInstancedGameplayTagContainer* Variable, UObject* Owner)
+{
+    return UInstancedGameplayTagContainer::GetInstancedGameplayTagContainerValue(Owner, Variable);
+}
+
 /* STATIC */ TArray<UObject*> UGenericVariablesBPLibrary::GetGlobalObjectRefArrayVariableSafe(UGlobalObjectRefArrayVariable* Variable)
 {
     return UGlobalObjectRefArrayVariable::GetGlobalObjectRefArrayVariableValue(Variable);

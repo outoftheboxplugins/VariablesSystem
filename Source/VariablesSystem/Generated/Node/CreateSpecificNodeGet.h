@@ -74,6 +74,14 @@
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetInstancedFVector2DVariableSafe), UGenericVariablesBPLibrary::StaticClass());
     }
+    if (VariableClassName == FName("GlobalGameplayTagContainer"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetGlobalGameplayTagContainerSafe), UGenericVariablesBPLibrary::StaticClass());
+    }
+    if (VariableClassName == FName("InstancedGameplayTagContainer"))
+    {
+        ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetInstancedGameplayTagContainerSafe), UGenericVariablesBPLibrary::StaticClass());
+    }
     if (VariableClassName == FName("GlobalObjectRefArrayVariable"))
     {
         ResultCreateNode->FunctionReference.SetExternalMember(GET_FUNCTION_NAME_CHECKED(UGenericVariablesBPLibrary, GetGlobalObjectRefArrayVariableSafe), UGenericVariablesBPLibrary::StaticClass());
