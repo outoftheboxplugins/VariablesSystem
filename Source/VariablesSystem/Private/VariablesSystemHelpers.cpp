@@ -2,6 +2,7 @@
 #include "VariablesSystemHelpers.h"
 
 #include "BaseVariable.h"
+#include "GlobalVariable.h"
 
 TArray<UBaseVariable*> UVariablesSystemHelpersBPLibrary::GetAllVariables()
 {

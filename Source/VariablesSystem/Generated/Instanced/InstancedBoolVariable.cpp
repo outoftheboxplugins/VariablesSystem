@@ -4,6 +4,7 @@
 #include "InstancedBoolVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ bool UInstancedBoolVariable::GetInstancedBoolVariableValue(UObject* Owner, UInstancedBoolVariable* Variable)
 {

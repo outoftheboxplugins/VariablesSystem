@@ -4,6 +4,7 @@
 #include "InstancedFVectorArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<FVector> UInstancedFVectorArrayVariable::GetInstancedFVectorArrayVariableValue(UObject* Owner, UInstancedFVectorArrayVariable* Variable)
 {

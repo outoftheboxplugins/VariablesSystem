@@ -41,5 +41,3 @@ private:
 private:
 	TSharedPtr<FVSActions> AssetActions;
 };
-
-IMPLEMENT_MODULE(FVariablesSystemEditorModule, VariablesSystemEditor);

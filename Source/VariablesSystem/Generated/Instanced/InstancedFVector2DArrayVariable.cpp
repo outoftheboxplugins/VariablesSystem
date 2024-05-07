@@ -4,6 +4,7 @@
 #include "InstancedFVector2DArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<FVector2D> UInstancedFVector2DArrayVariable::GetInstancedFVector2DArrayVariableValue(UObject* Owner, UInstancedFVector2DArrayVariable* Variable)
 {

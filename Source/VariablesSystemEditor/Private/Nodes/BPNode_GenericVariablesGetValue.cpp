@@ -2,6 +2,8 @@
 #include "BPNode_GenericVariablesGetValue.h"
 
 #include "GenericVariablesBPLibrary.h"
+#include "K2Node_CallFunction.h"
+#include "KismetCompiler.h"
 
 #define LOCTEXT_NAMESPACE "VariablesSystemEditor"
 

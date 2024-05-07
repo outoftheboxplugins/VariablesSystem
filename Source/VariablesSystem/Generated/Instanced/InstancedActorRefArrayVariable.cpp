@@ -4,6 +4,7 @@
 #include "InstancedActorRefArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<AActor*> UInstancedActorRefArrayVariable::GetInstancedActorRefArrayVariableValue(UObject* Owner, UInstancedActorRefArrayVariable* Variable)
 {

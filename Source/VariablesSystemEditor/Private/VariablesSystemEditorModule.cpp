@@ -126,3 +126,5 @@ TSharedRef<SDockTab> FVariablesSystemEditorModule::SpawnVariablesWatchTab(const 
 }
 
 #undef LOCTEXT_NAMESPACE
+
+IMPLEMENT_MODULE(FVariablesSystemEditorModule, VariablesSystemEditor);

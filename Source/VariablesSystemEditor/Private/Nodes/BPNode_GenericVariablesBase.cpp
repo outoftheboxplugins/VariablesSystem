@@ -1,8 +1,10 @@
 // Copyright Out-of-the-Box Plugins 2018-2023. All Rights Reserved.
 #include "BPNode_GenericVariablesBase.h"
 
+#include "BaseVariable.h"
 #include "BlueprintActionDatabaseRegistrar.h"
 #include "BlueprintNodeSpawner.h"
+#include "GameplayTagContainer.h"
 #include "K2Node_CallFunction.h"
 #include "KismetCompiler.h"
 

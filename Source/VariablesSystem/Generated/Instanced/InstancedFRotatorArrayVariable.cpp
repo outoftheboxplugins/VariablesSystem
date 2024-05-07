@@ -4,6 +4,7 @@
 #include "InstancedFRotatorArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<FRotator> UInstancedFRotatorArrayVariable::GetInstancedFRotatorArrayVariableValue(UObject* Owner, UInstancedFRotatorArrayVariable* Variable)
 {

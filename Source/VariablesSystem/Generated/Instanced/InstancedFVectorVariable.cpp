@@ -4,6 +4,7 @@
 #include "InstancedFVectorVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ FVector UInstancedFVectorVariable::GetInstancedFVectorVariableValue(UObject* Owner, UInstancedFVectorVariable* Variable)
 {

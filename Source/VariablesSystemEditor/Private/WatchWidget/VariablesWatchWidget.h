@@ -2,11 +2,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "BaseVariable.h"
 
 #include "Widgets/SCompoundWidget.h"
 #include "Widgets/Views/SListView.h"
-
-class UBaseVariable;
 
 /**
  * Helper class to create a table row with multiple columns for a BaseVariable.
@@ -21,7 +20,7 @@ private:
 	virtual TSharedRef<SWidget> GenerateWidgetForColumn(const FName& ColumnName) override;
 
 private:
-    UBaseVariable* Item;
+    UBaseVariable* Item = nullptr;
 };
 
 /**

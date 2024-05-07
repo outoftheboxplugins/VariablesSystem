@@ -4,6 +4,7 @@
 #include "InstancedFRotatorVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ FRotator UInstancedFRotatorVariable::GetInstancedFRotatorVariableValue(UObject* Owner, UInstancedFRotatorVariable* Variable)
 {

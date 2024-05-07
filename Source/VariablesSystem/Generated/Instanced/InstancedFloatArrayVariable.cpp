@@ -4,6 +4,7 @@
 #include "InstancedFloatArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<float> UInstancedFloatArrayVariable::GetInstancedFloatArrayVariableValue(UObject* Owner, UInstancedFloatArrayVariable* Variable)
 {

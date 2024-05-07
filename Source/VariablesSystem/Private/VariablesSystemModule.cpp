@@ -12,3 +12,5 @@ void FVariablesSystemModule::ShutdownModule()
 {
 	LOG_TRACE();
 }
+
+IMPLEMENT_MODULE(FVariablesSystemModule, VariablesSystem);

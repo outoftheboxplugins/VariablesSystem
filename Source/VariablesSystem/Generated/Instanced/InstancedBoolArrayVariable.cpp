@@ -4,6 +4,7 @@
 #include "InstancedBoolArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<bool> UInstancedBoolArrayVariable::GetInstancedBoolArrayVariableValue(UObject* Owner, UInstancedBoolArrayVariable* Variable)
 {

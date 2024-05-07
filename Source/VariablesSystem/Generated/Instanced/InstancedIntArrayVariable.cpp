@@ -4,6 +4,7 @@
 #include "InstancedIntArrayVariable.h"
 
 #include "VSLog.h"
+#include "Kismet/KismetStringLibrary.h"
 
 /* STATIC */ TArray<int32> UInstancedIntArrayVariable::GetInstancedIntArrayVariableValue(UObject* Owner, UInstancedIntArrayVariable* Variable)
 {
