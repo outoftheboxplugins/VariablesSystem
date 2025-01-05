@@ -1,5 +1,5 @@
 
-// Copyright Out-of-the-Box Plugins 2018-2023. All Rights Reserved.
+// Copyright Out-of-the-Box Plugins 2018-2025. All Rights Reserved.
 // GENERATED FILE DO NOT MODIFY DIRECTLY
 
     if (VariableClassName == FName("GlobalObjectRefVariable"))
