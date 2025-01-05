@@ -1,25 +1,26 @@
 {
 	"FileVersion": 3,
-	"EngineVersion": "5.4",
-	"VersionName": "1.0",
+	"EngineVersion": "5.5",
+	"VersionName": "",
 	"FriendlyName": "Variables System",
 	"Description": "Truly global and modular variables system creating to create reliable arhitecture for your game.",
 	"Category": "Editor",
 	"CreatedBy": "Out-of-the-Box Plugins",
 	"CreatedByURL": "https://outofthebox-plugins.com",
-	"DocsURL": "https://gitlab.com/unreal-marketplace/VariablesSystem/-/wikis/home",
+	"DocsURL": "https://outofthebox-plugins.notion.site/Variables-System-17246052c3568052a75ccd3c9f1eb315",
 	"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/ba8559b2aa794f20b6e84e7ce338b96f",
-	"SupportURL": "https://gitlab.com/unreal-marketplace/VariablesSystem/-/wikis/home",
+	"SupportURL": "https://discord.gg/2cD5MwB",
 	"EnabledByDefault": true,
-	"CanContainContent" : false,
+	"CanContainContent": false,
 	"Modules": [
 		{
 			"Name": "VariablesSystem",
-			"Type": "Runtime"
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
 		},
 		{
 			"Name": "VariablesSystemEditor",
-			"Type": "UncookedOnly",
+			"Type": "Editor",
 			"WhitelistPlatforms": [ "Win64", "Mac", "Linux" ]
 		}
 	]
