@@ -1,6 +1,6 @@
 {
 	"FileVersion": 3,
-	"EngineVersion": "5.5",
+	"EngineVersion": "5.8",
 	"VersionName": "",
 	"FriendlyName": "Variables System",
 	"Description": "Truly global and modular variables system creating to create reliable arhitecture for your game.",
