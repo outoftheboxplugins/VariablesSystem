@@ -9,14 +9,14 @@
 class FVSActions : public FAssetTypeActions_Base
 {
 public:
-	FVSActions();
+	FVSActions(UClass* InSupportedClass);
 
 // FAssetTypeActions_Base interface
 private:
 	virtual FText GetName() const override;
     virtual FColor GetTypeColor() const override;
     virtual uint32 GetCategories() override;
-    
+
     virtual UClass* GetSupportedClass() const override;
 	virtual TSharedPtr<SWidget> GetThumbnailOverlay(const FAssetData& AssetData) const override;
 
@@ -27,4 +27,6 @@ private:
 
 private:
 	EAssetTypeCategories::Type AssetCategoryBit;
+
+	UClass* SupportedClass;
 };

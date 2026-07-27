@@ -39,5 +39,5 @@ private:
 	TSharedRef<SDockTab> SpawnVariablesWatchTab(const FSpawnTabArgs& Args);
 
 private:
-	TSharedPtr<FVSActions> AssetActions;
+	TArray<TSharedPtr<FVSActions>> AssetActions;
 };

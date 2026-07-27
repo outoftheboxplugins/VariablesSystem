@@ -10,7 +10,6 @@
 
 namespace
 {
-FColor EditorAssetBackgroundColor = FColor(77.0f, 77.0f, 77.0f);
 uint32 ThumbnailSize = 72;
 
 FName AssetCategoryRegisterName = FName(TEXT("OutOfTheBox"));
@@ -33,7 +32,8 @@ FLinearColor GetAssetColorByVariable(const UBaseVariable* Variable)
 
 //////////////////////////////////////////////////////////////////////////
 // FAssetTypeActions_Base interface
-FVSActions::FVSActions()
+FVSActions::FVSActions(UClass* InSupportedClass)
+	: SupportedClass(InSupportedClass)
 {
 	IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
 	AssetCategoryBit = AssetTools.RegisterAdvancedAssetCategory(AssetCategoryRegisterName, AssetCategoryDisplayName);
@@ -41,13 +41,19 @@ FVSActions::FVSActions()
 
 FText FVSActions::GetName() const
 {
-	// Abstract function that must be implemented, but leaving it blank so autocomplete with type value.
-	return LOCTEXT("EmptyText", "");
+	// Leave abstract classes unnamed to avoid extra type filter entries.
+	if (!SupportedClass || SupportedClass->HasAnyClassFlags(CLASS_Abstract))
+	{
+		return FText::GetEmpty();
+	}
+
+	return SupportedClass->GetDisplayNameText();
 }
 
 FColor FVSActions::GetTypeColor() const
 {
-	return EditorAssetBackgroundColor;
+	const UBaseVariable* VariableCDO = SupportedClass ? Cast<UBaseVariable>(SupportedClass->GetDefaultObject()) : nullptr;
+	return GetAssetColorByVariable(VariableCDO).ToFColor(true);
 }
 
 uint32 FVSActions::GetCategories()
@@ -57,7 +63,7 @@ uint32 FVSActions::GetCategories()
 
 UClass* FVSActions::GetSupportedClass() const
 {
-	return UBaseVariable::StaticClass();
+	return SupportedClass;
 }
 
 TSharedPtr<SWidget> FVSActions::GetThumbnailOverlay(const FAssetData& AssetData) const

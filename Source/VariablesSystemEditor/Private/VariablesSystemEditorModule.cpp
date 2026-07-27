@@ -2,6 +2,8 @@
 #include "VariablesSystemEditorModule.h"
 
 #include "AssetToolsModule.h"
+#include "BaseVariable.h"
+#include "UObject/UObjectHash.h"
 #include "VSActions.h"
 #include "VSLog.h"
 #include "VariablesWatchWidget.h"
@@ -67,8 +69,20 @@ void FVariablesSystemEditorModule::RegisterAssetTools()
 	{
 		IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
 
-		AssetActions = MakeShared<FVSActions>();
-		AssetTools.RegisterAssetTypeActions(AssetActions.ToSharedRef());
+		TArray<UClass*> VariableClasses;
+		GetDerivedClasses(UBaseVariable::StaticClass(), VariableClasses, /*bRecursive*/ true);
+
+		for (UClass* VariableClass : VariableClasses)
+		{
+			if (!VariableClass || VariableClass->HasAnyClassFlags(CLASS_Deprecated | CLASS_NewerVersionExists))
+			{
+				continue;
+			}
+
+			TSharedRef<FVSActions> Action = MakeShared<FVSActions>(VariableClass);
+			AssetTools.RegisterAssetTypeActions(Action);
+			AssetActions.Add(Action);
+		}
 	}
 	else
 	{
@@ -81,12 +95,17 @@ void FVariablesSystemEditorModule::UnregisterAssetTools()
 	if (FAssetToolsModule::IsModuleLoaded())
 	{
 		IAssetTools& AssetTools = FAssetToolsModule::GetModule().Get();
-		AssetTools.UnregisterAssetTypeActions(AssetActions.ToSharedRef());
+		for (const TSharedPtr<FVSActions>& Action : AssetActions)
+		{
+			AssetTools.UnregisterAssetTypeActions(Action.ToSharedRef());
+		}
 	}
 	else
 	{
 		UE_LOG(LogVariablesSystem, Warning, TEXT("FAssetToolsModule not loaded, cannot unregister asset tools."))
 	}
+
+	AssetActions.Empty();
 }
 
 void FVariablesSystemEditorModule::RegisterMenuExtensions()
